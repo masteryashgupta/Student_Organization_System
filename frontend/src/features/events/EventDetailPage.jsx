@@ -73,7 +73,6 @@ export default function EventDetailPage() {
   });
 
   // 3. Fetch Member Status for Dynamic Pricing
-  // // MOCK /api/members/me: swap at integration
   const { data: memberStatus } = useQuery({
     queryKey: ['member-status', user?.id],
     queryFn: fetchMemberStatus,

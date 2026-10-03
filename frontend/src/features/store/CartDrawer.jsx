@@ -24,7 +24,6 @@ export default function CartDrawer() {
   const [isProcessing, setIsProcessing] = useState(false);
 
   // Fetch Member Discount from Contract Endpoint
-  // // MOCK /api/members/me: swap at integration
   const { data: memberDiscountData } = useQuery({
     queryKey: ['memberDiscount'],
     queryFn: async () => {

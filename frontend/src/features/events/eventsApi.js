@@ -24,15 +24,13 @@ export async function fetchEventAvailability(id) {
 
 export async function fetchMemberStatus() {
   /**
-   * // MOCK /api/members/me: swap at integration
-   * Attempts to fetch member discount contract; falls back gracefully
-   * to non-member status (0% discount) if endpoint is unavailable or user is not logged in.
+   * Fetches member discount contract (/api/members/me); falls back gracefully
+   * to non-member status (0% discount) if user is unauthenticated.
    */
   try {
     const res = await api.get('/members/me');
     return res.data;
   } catch (err) {
-    // // MOCK /api/members/me: swap at integration
     return {
       is_active_member: false,
       tier: null,

@@ -8,8 +8,7 @@ from core.services import record_transaction
 
 def get_user_merch_discount_pct(user) -> Decimal:
     """
-    Retrieves member merch discount percentage for the given user.
-    # MOCK /api/members/me: swap at integration
+    Retrieves member merch discount percentage for the given user from Membership tier.
     """
     if not user or not user.is_authenticated:
         return Decimal('0.00')
@@ -20,7 +19,6 @@ def get_user_merch_discount_pct(user) -> Decimal:
         if membership.is_active_member and membership.tier:
             return Decimal(str(membership.tier.merch_discount_pct))
     except Exception:
-        # Fallback to 0% if member profile does not exist or members module uninitialized
         return Decimal('0.00')
 
     return Decimal('0.00')

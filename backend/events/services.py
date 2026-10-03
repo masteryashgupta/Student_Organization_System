@@ -91,12 +91,7 @@ def check_event_availability(event: Event, quantity: int = 1) -> dict:
 def get_buyer_member_info(request=None, user=None) -> dict:
     """
     Determines whether the buyer is an active club member and any discount pct.
-    
-    // MOCK /api/members/me: swap at integration
-    By contract, calls GET /api/members/me or queries membership status.
-    Until fully integrated, defaults unauthenticated or mocked buyers to non-member (0% discount).
     """
-    # // MOCK /api/members/me: swap at integration
     if user and user.is_authenticated:
         try:
             from members.models import Membership
@@ -110,7 +105,6 @@ def get_buyer_member_info(request=None, user=None) -> dict:
         except Exception:
             pass
 
-    # // MOCK /api/members/me: swap at integration
     return {
         'is_active_member': False,
         'tier': None,
@@ -171,7 +165,6 @@ def purchase_ticket(event_id: int, buyer_user=None, holder_name: str = "", holde
         raise ValidationError({"detail": "This event is completely sold out. No tickets remaining."})
 
     # 3. Determine pricing (member vs nonmember)
-    # // MOCK /api/members/me: swap at integration
     member_info = get_buyer_member_info(request=request, user=buyer_user)
     ticket_type, price_paid = calculate_ticket_price(event, member_info)
 
