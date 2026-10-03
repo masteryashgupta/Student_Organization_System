@@ -6,7 +6,6 @@ import { useCart } from './CartContext';
 import { useAuth } from '../../lib/AuthContext';
 import { Badge } from '../../components/ui/Badge';
 import { Button } from '../../components/ui/Button';
-import { Input } from '../../components/ui/Input';
 import CartDrawer from './CartDrawer';
 import api from '../../lib/api';
 
@@ -14,7 +13,6 @@ const CATEGORIES = [
   { id: 'all', label: 'All Merch' },
   { id: 'hoodie', label: 'Hoodies' },
   { id: 'tee', label: 'T-Shirts' },
-  { id: 'sweatshirt', label: 'Sweatshirts' },
   { id: 'cap', label: 'Caps & Hats' },
   { id: 'accessory', label: 'Accessories' },
   { id: 'sticker', label: 'Stickers' },
@@ -79,27 +77,26 @@ export default function ProductCatalogPage() {
           </div>
 
           {/* Quick Cart & Order History Buttons */}
-          <div className="flex items-center gap-3">
-            <Link to="/store/orders">
-              <Button variant="secondary" size="md">
+          <div className="flex items-center gap-3 shrink-0">
+            <Link to="/store/orders" className="shrink-0">
+              <Button variant="secondary" size="md" className="px-5 py-2.5 text-sm font-semibold">
                 My Orders
               </Button>
             </Link>
 
-            <Button
-              variant="primary"
-              size="md"
+            <button
+              type="button"
               onClick={openDrawer}
-              className="relative shadow-sm bg-[#714B67] hover:bg-[#5B3B52] text-white"
+              className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold bg-[#714B67] hover:bg-[#5B3B52] text-white shadow-sm transition-all duration-150 active:scale-[0.99] shrink-0"
             >
-              <ShoppingBag className="w-4 h-4 mr-2" />
+              <ShoppingBag className="w-4 h-4 shrink-0" />
               <span>Cart</span>
               {totalItems > 0 && (
-                <span className="ml-2 px-2 py-0.5 rounded-full bg-emerald-600 text-white text-xs font-black animate-pulse">
+                <span className="px-2 py-0.5 rounded-full bg-emerald-500 text-white text-xs font-black shrink-0">
                   {totalItems}
                 </span>
               )}
-            </Button>
+            </button>
           </div>
         </div>
       </div>
@@ -192,9 +189,9 @@ export default function ProductCatalogPage() {
       {/* Products Grid */}
       {isLoading ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {[1, 2, 3, 4, 5, 6, 7, 8].map((n) => (
+          {[1, 2, 3, 4, 5, 6].map((n) => (
             <div key={n} className="rounded-2xl bg-white border border-border p-4 space-y-3 animate-pulse shadow-sm">
-              <div className="w-full h-52 bg-gray-100 rounded-xl" />
+              <div className="w-full aspect-square bg-gray-100 rounded-xl" />
               <div className="h-4 bg-gray-100 rounded w-3/4" />
               <div className="h-4 bg-gray-100 rounded w-1/2" />
             </div>
@@ -228,7 +225,7 @@ export default function ProductCatalogPage() {
           )}
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {products.map((product) => {
             const hasStock = product.is_in_stock && product.total_stock > 0;
             const isLowStock = product.total_stock > 0 && product.total_stock <= 5;
@@ -237,15 +234,16 @@ export default function ProductCatalogPage() {
             return (
               <div
                 key={product.id}
-                className="group relative rounded-2xl bg-white border border-border hover:border-[#714B67]/50 hover:shadow-lg transition-all duration-200 flex flex-col justify-between overflow-hidden shadow-odoo-card"
+                className="group relative rounded-2xl bg-white border border-border hover:border-[#714B67]/50 hover:shadow-xl transition-all duration-300 flex flex-col justify-between overflow-hidden shadow-odoo-card"
               >
                 {/* Product Image Showcase */}
-                <div className="relative h-60 w-full bg-[#F4F6F8] overflow-hidden flex items-center justify-center border-b border-border">
+                <div className="relative aspect-square w-full bg-[#F8FAFC] overflow-hidden flex items-center justify-center border-b border-border">
                   {product.image ? (
                     <img
                       src={product.image}
                       alt={product.name}
-                      className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
+                      loading="lazy"
+                      className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 ease-out"
                     />
                   ) : (
                     <div className="flex flex-col items-center justify-center text-[#66636A]">
@@ -255,14 +253,14 @@ export default function ProductCatalogPage() {
                   )}
 
                   {/* Badges on Image */}
-                  <div className="absolute top-3 left-3 flex flex-col gap-1.5">
+                  <div className="absolute top-3.5 left-3.5 flex flex-col gap-1.5">
                     <Badge variant="accent" size="sm">
                       {product.type_display || product.type?.toUpperCase()}
                     </Badge>
                   </div>
 
                   {/* Stock Availability Pill */}
-                  <div className="absolute top-3 right-3">
+                  <div className="absolute top-3.5 right-3.5">
                     {!hasStock ? (
                       <span className="px-2.5 py-1 rounded-full text-[11px] font-bold bg-rose-50 text-rose-800 border border-rose-200 shadow-sm">
                         Sold Out
@@ -285,7 +283,7 @@ export default function ProductCatalogPage() {
                     <h3 className="text-base font-bold text-[#222222] group-hover:text-[#714B67] transition-colors line-clamp-1">
                       {product.name}
                     </h3>
-                    <p className="text-xs text-[#66636A] mt-1 line-clamp-2 leading-relaxed">
+                    <p className="text-xs text-[#66636A] mt-1.5 line-clamp-2 leading-relaxed">
                       {product.description || 'Premium official Skyline Club student merchandise.'}
                     </p>
                   </div>
@@ -302,7 +300,7 @@ export default function ProductCatalogPage() {
                           <span
                             key={v.id || v.size}
                             title={`Size ${v.size}: ${v.stock_qty} available`}
-                            className={`px-2 py-0.5 rounded-md text-[11px] font-bold transition-all ${
+                            className={`px-2.5 py-1 rounded-md text-[11px] font-bold transition-all ${
                               inStock
                                 ? 'bg-[#F4F6F8] text-[#222222] border border-border'
                                 : 'bg-gray-100 text-gray-400 border border-gray-200 line-through opacity-60'
@@ -316,17 +314,17 @@ export default function ProductCatalogPage() {
                   </div>
 
                   {/* Price & Action */}
-                  <div className="pt-3 border-t border-border flex items-center justify-between">
+                  <div className="pt-3.5 border-t border-border flex items-center justify-between">
                     <div>
-                      <span className="text-xs text-[#66636A] block">Retail Price</span>
-                      <span className="text-lg font-black text-[#222222]">${Number(product.price).toFixed(2)}</span>
+                      <span className="text-[11px] font-semibold text-[#66636A] uppercase tracking-wider block">Retail Price</span>
+                      <span className="text-xl font-black text-[#222222]">${Number(product.price).toFixed(2)}</span>
                     </div>
 
                     <Link to={`/store/${product.id}`}>
                       <Button
                         variant={hasStock ? 'primary' : 'outline'}
-                        size="sm"
-                        className={`group-hover:translate-x-0.5 transition-transform ${hasStock ? 'bg-[#714B67] hover:bg-[#5B3B52] text-white shadow-sm' : ''}`}
+                        size="md"
+                        className={`group-hover:translate-x-0.5 transition-transform px-4 py-2 ${hasStock ? 'bg-[#714B67] hover:bg-[#5B3B52] text-white shadow-sm' : ''}`}
                       >
                         <span>{hasStock ? 'Select Size' : 'View Item'}</span>
                         <ArrowRight className="w-3.5 h-3.5 ml-1" />
