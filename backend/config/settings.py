@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     # 'store',
     # 'tasks',
     'finance',
-    # 'announcements',
+    'announcements',
 ]
 
 AUTH_USER_MODEL = 'accounts.User'
