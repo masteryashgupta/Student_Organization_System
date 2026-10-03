@@ -4,6 +4,7 @@ import uuid
 from decimal import Decimal
 import qrcode
 from django.db import transaction
+from django.db.models import Sum, Count, Q
 from django.utils import timezone
 from rest_framework.exceptions import ValidationError
 from .models import Event, Ticket
@@ -286,3 +287,53 @@ def get_event_checkin_feed(event: Event, limit: int = 50) -> dict:
         "attendance_pct": attendance_pct,
         "recent_checkins": feed_items,
     }
+
+
+def get_event_stats(event: Event) -> dict:
+    """
+    Computes comprehensive post-event and live statistics derived directly from the tickets ledger:
+    - Tickets sold (total and broken down by member/non-member)
+    - Attendance (checked-in count)
+    - Attendance rate (checked-in count / tickets sold)
+    - Revenue (sum of price_paid, split by member and non-member)
+    
+    All figures are derived directly in real-time from the Ticket rows (Single Source of Truth).
+    """
+    active_tickets = event.tickets.exclude(status=Ticket.STATUS_CANCELLED)
+
+    agg = active_tickets.aggregate(
+        total_sold=Count('id'),
+        member_sold=Count('id', filter=Q(type=Ticket.TYPE_MEMBER)),
+        nonmember_sold=Count('id', filter=Q(type=Ticket.TYPE_NONMEMBER)),
+        checked_in_count=Count('id', filter=Q(status=Ticket.STATUS_CHECKED_IN)),
+        total_revenue=Sum('price_paid', default=Decimal('0.00')),
+        member_revenue=Sum('price_paid', filter=Q(type=Ticket.TYPE_MEMBER), default=Decimal('0.00')),
+        nonmember_revenue=Sum('price_paid', filter=Q(type=Ticket.TYPE_NONMEMBER), default=Decimal('0.00')),
+    )
+
+    total_sold = agg['total_sold'] or 0
+    checked_in_count = agg['checked_in_count'] or 0
+    attendance_rate = round((checked_in_count / total_sold * 100), 2) if total_sold > 0 else 0.0
+
+    return {
+        "event_id": event.id,
+        "event_title": event.title,
+        "capacity": event.capacity,
+        "tickets_sold": total_sold,
+        "tickets_sold_breakdown": {
+            "member": agg['member_sold'] or 0,
+            "nonmember": agg['nonmember_sold'] or 0,
+        },
+        "attendance": checked_in_count,
+        "attendance_rate": attendance_rate,
+        "revenue": {
+            "total": agg['total_revenue'] or Decimal('0.00'),
+            "member": agg['member_revenue'] or Decimal('0.00'),
+            "nonmember": agg['nonmember_revenue'] or Decimal('0.00'),
+        },
+        "total_revenue": agg['total_revenue'] or Decimal('0.00'),
+        "member_revenue": agg['member_revenue'] or Decimal('0.00'),
+        "nonmember_revenue": agg['nonmember_revenue'] or Decimal('0.00'),
+        "checked_in_count": checked_in_count,
+    }
+

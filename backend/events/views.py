@@ -12,12 +12,14 @@ from .serializers import (
     TicketSerializer,
     TicketPurchaseSerializer,
     CheckInFeedSerializer,
+    EventStatsSerializer,
 )
 from .services import (
     get_event_availability,
     purchase_ticket,
     check_in_ticket,
     get_event_checkin_feed,
+    get_event_stats,
     generate_ticket_qr_bytes,
     generate_ticket_qr_data_url,
 )
@@ -96,6 +98,19 @@ class EventViewSet(viewsets.ModelViewSet):
         event = self.get_object()
         data = get_event_checkin_feed(event)
         serializer = CheckInFeedSerializer(data)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    @action(detail=True, methods=['get'], permission_classes=[IsOfficer], url_path='stats')
+    def stats(self, request, pk=None):
+        """
+        GET /api/events/{id}/stats
+        Returns post-event/live stats: tickets sold, attendance (checked-in count),
+        attendance rate, and revenue (sum of price_paid, split by member/non-member).
+        Restricted to Officers.
+        """
+        event = self.get_object()
+        data = get_event_stats(event)
+        serializer = EventStatsSerializer(data)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
