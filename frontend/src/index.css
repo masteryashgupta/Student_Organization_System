@@ -7,20 +7,16 @@
 @layer base {
   :root {
     --canvas-bg: #FFFFFF;
-    --canvas-gradient: radial-gradient(circle at 50% 0%, #D6F1FA 0%, #EBF8FD 28%, #F8FCFD 50%, #FFFFFF 85%);
+    --canvas-gradient: radial-gradient(circle at 50% 0%, #F3EAF2 0%, #F8F4F8 20%, #F8FCFD 55%, #FFFFFF 100%);
     --text-main: #0F172A;
     --text-muted: #64748B;
     --border-subtle: #E2E8F0;
-    --accent: #0EA5E9;
-    --accent-hover: #0284C7;
-  }
-
-  .dark {
-    --canvas-bg: #0B0F19;
-    --canvas-gradient: radial-gradient(circle at 50% 0%, #1E293B 0%, #0F172A 35%, #0B0F19 85%);
-    --text-main: #F8FAFC;
-    --text-muted: #94A3B8;
-    --border-subtle: rgba(255, 255, 255, 0.1);
+    --accent: #714B67;
+    --accent-hover: #5B3B52;
+    --brand-primary: #714B67;
+    --brand-hover: #5B3B52;
+    --brand-light: #F8F2F7;
+    --brand-border: #D4BFD2;
   }
 
   html, body {
@@ -42,7 +38,7 @@
   }
 
   body::selection {
-    background-color: #0EA5E9;
+    background-color: #714B67;
     color: #ffffff;
   }
 
@@ -51,15 +47,6 @@
     letter-spacing: -0.03em;
     font-weight: 700;
   }
-
-  /* --- Dark Mode Overrides for static Tailwind semantic tokens --- */
-  /* Tailwind resolves text-ink, bg-canvas etc. to static hex values.
-     These rules ensure they adapt in dark mode when .dark is on <html>. */
-  .dark .text-ink { color: #F8FAFC; }
-  .dark .text-ink-muted { color: #94A3B8; }
-  .dark .text-ink-subtle { color: #64748B; }
-  .dark .bg-canvas { background-color: #0F172A; }
-  .dark .bg-muted { background-color: #1E293B; }
 }
 
 /* Once UI Floating Pill Navigation */
@@ -71,12 +58,7 @@
   box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05), 0 2px 6px -1px rgba(0, 0, 0, 0.02);
 }
 
-.dark .pill-navbar {
-  background: rgba(15, 23, 42, 0.85);
-  border-color: rgba(255, 255, 255, 0.12);
-  box-shadow: 0 8px 32px -4px rgba(0, 0, 0, 0.5);
-  color: #F8FAFC;
-}
+
 
 /* Once UI Dual Badge Pill */
 .dual-badge-pill {
@@ -84,9 +66,9 @@
   align-items: center;
   gap: 8px;
   border-radius: 9999px;
-  background-color: rgba(224, 242, 254, 0.75);
-  border: 1px solid rgba(186, 230, 253, 0.85);
-  color: #0369A1;
+  background-color: #FAF5F9;
+  border: 1px solid #D4BFD2;
+  color: #714B67;
   font-size: 0.8125rem;
   font-weight: 600;
   padding: 5px 14px;
@@ -94,26 +76,15 @@
   transition: all 0.2s ease;
 }
 
-.dark .dual-badge-pill {
-  background-color: rgba(14, 165, 233, 0.15);
-  border-color: rgba(14, 165, 233, 0.3);
-  color: #38BDF8;
-}
-
 .dual-badge-pill:hover {
-  background-color: rgba(224, 242, 254, 0.95);
-  border-color: rgba(125, 211, 252, 0.9);
-}
-
-.dark .dual-badge-pill:hover {
-  background-color: rgba(14, 165, 233, 0.25);
-  border-color: rgba(14, 165, 233, 0.5);
+  background-color: #F3EAF2;
+  border-color: #A97B9F;
 }
 
 .dual-badge-divider {
   width: 1px;
   height: 12px;
-  background-color: rgba(14, 165, 233, 0.35);
+  background-color: rgba(113, 75, 103, 0.35);
 }
 
 /* Entity / Avatar Link Pill */
@@ -132,11 +103,7 @@
   transition: all 0.2s ease;
 }
 
-.dark .avatar-link-pill {
-  background-color: #1E293B;
-  border-color: rgba(255, 255, 255, 0.12);
-  color: #F8FAFC;
-}
+
 
 .avatar-link-pill:hover {
   border-color: #CBD5E1;
@@ -144,10 +111,7 @@
   transform: translateY(-1px);
 }
 
-.dark .avatar-link-pill:hover {
-  border-color: rgba(255, 255, 255, 0.25);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-}
+
 
 /* Once UI Dark Showcase Container — theme-aware */
 .showcase-dark-frame {
@@ -158,12 +122,7 @@
   color: #0F172A;
 }
 
-.dark .showcase-dark-frame {
-  background: #090D16;
-  border-color: rgba(255, 255, 255, 0.1);
-  box-shadow: 0 25px 60px -15px rgba(15, 23, 42, 0.45);
-  color: white;
-}
+
 
 @media (min-width: 640px) {
   .showcase-dark-frame {
@@ -171,11 +130,7 @@
   }
 }
 
-/* Footer Dark Mode */
-.dark footer {
-  border-color: rgba(255, 255, 255, 0.1);
-  background: rgba(9, 13, 22, 0.7);
-}
+
 
 /* Smooth micro-transitions */
 button, a {

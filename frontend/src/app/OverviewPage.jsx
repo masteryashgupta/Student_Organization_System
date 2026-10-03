@@ -38,16 +38,16 @@ export default function OverviewPage() {
     <div className="w-full space-y-16 sm:space-y-24 pb-20">
       {/* 1. HERO SECTION (Matched to Once UI Reference) */}
       <section className="pt-8 sm:pt-14 pb-4 text-center relative max-w-4xl mx-auto space-y-6">
-        {/* Dual-Segment Pill Badge (like "Once UI | Featured work" in reference) */}
+        {/* Dual-Segment Pill Badge */}
         <div className="flex justify-center">
           <div className="dual-badge-pill">
             <span className="font-bold">Skyline UI</span>
             <span className="dual-badge-divider"></span>
-            <span className="font-medium text-sky-800">Featured Platform</span>
+            <span className="font-medium text-[#714B67]">Campus Organization OS</span>
           </div>
         </div>
 
-        {/* Hero Headline (Clean Geometric Sans with Tight Tracking) */}
+        {/* Hero Headline */}
         <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold text-[#0F172A] tracking-[-0.035em] leading-[1.08] max-w-3xl mx-auto">
           Building bridges between students, campus, and community
         </h1>
@@ -57,16 +57,16 @@ export default function OverviewPage() {
           The unified student organization portal for Skyline College. Coordinate campus galas, join active project teams, track live ledger finances, and order club gear.
         </p>
 
-        {/* Entity / Avatar Link Pill (like "About – Selene Yu" in reference) */}
+        {/* Entity / Avatar Link Pill */}
         <div className="flex justify-center pt-2">
           <Link
             to="/members"
             className="avatar-link-pill group"
           >
-            <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-sky-500 to-indigo-600 text-white flex items-center justify-center font-bold text-xs shadow-sm">
+            <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-[#714B67] to-[#5B3B52] text-white flex items-center justify-center font-bold text-xs shadow-sm">
               S
             </div>
-            <span className="text-sm font-semibold text-[#0F172A] group-hover:text-sky-600 transition-colors">
+            <span className="text-sm font-semibold text-[#0F172A] group-hover:text-[#714B67] transition-colors">
               About – Skyline Student Association
             </span>
             <ChevronRight className="w-4 h-4 text-slate-400 group-hover:translate-x-0.5 transition-transform" />
@@ -286,7 +286,7 @@ export default function OverviewPage() {
                   }`}
                 >
                   <div className="flex items-center justify-between">
-                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-sky-500/15 text-sky-600 dark:text-sky-300 border border-sky-400/20 uppercase tracking-wider">
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-sky-500/15 text-sky-600 border border-sky-400/20 uppercase tracking-wider">
                       Frontend
                     </span>
                     <span className="text-[10px] font-semibold text-rose-500 bg-rose-500/10 px-2 py-0.5 rounded-md border border-rose-500/20">
@@ -307,7 +307,7 @@ export default function OverviewPage() {
                   >
                     Convert navigation and card tokens to modern minimalist SaaS aesthetic.
                   </p>
-                  <div className="pt-2 flex items-center justify-between border-t border-slate-100 dark:border-white/5 text-[11px]">
+                  <div className="pt-2 flex items-center justify-between border-t border-slate-100 text-[11px]">
                     <div className="flex items-center gap-1.5">
                       <div className="w-5 h-5 rounded-full bg-sky-100 text-sky-700 font-bold text-[9px] flex items-center justify-center">
                         YG
@@ -329,10 +329,10 @@ export default function OverviewPage() {
                   }`}
                 >
                   <div className="flex items-center justify-between">
-                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-emerald-500/15 text-emerald-600 dark:text-emerald-300 border border-emerald-400/20 uppercase tracking-wider">
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-emerald-500/15 text-emerald-600 border border-emerald-400/20 uppercase tracking-wider">
                       Logistics
                     </span>
-                    <span className="text-[10px] font-medium text-slate-500 bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded-md">
+                    <span className="text-[10px] font-medium text-slate-500 bg-slate-100 px-2 py-0.5 rounded-md">
                       Normal
                     </span>
                   </div>
@@ -350,7 +350,7 @@ export default function OverviewPage() {
                   >
                     Verify banquet menus and vegetarian options for 100 ticket holders.
                   </p>
-                  <div className="pt-2 flex items-center justify-between border-t border-slate-100 dark:border-white/5 text-[11px]">
+                  <div className="pt-2 flex items-center justify-between border-t border-slate-100 text-[11px]">
                     <div className="flex items-center gap-1.5">
                       <div className="w-5 h-5 rounded-full bg-emerald-100 text-emerald-700 font-bold text-[9px] flex items-center justify-center">
                         SY
@@ -406,7 +406,7 @@ export default function OverviewPage() {
                   }`}
                 >
                   <div className="flex items-center justify-between">
-                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-indigo-500/15 text-indigo-600 dark:text-indigo-300 border border-indigo-400/20 uppercase tracking-wider">
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-indigo-500/15 text-indigo-600 border border-indigo-400/20 uppercase tracking-wider">
                       Backend
                     </span>
                     <span className="text-[10px] font-bold text-red-600 bg-red-500/15 px-2 py-0.5 rounded-md border border-red-500/30 flex items-center gap-1">
@@ -427,7 +427,7 @@ export default function OverviewPage() {
                   >
                     Atomic database verification preventing double check-in at venue door.
                   </p>
-                  <div className="pt-2 flex items-center justify-between border-t border-slate-100 dark:border-white/5 text-[11px]">
+                  <div className="pt-2 flex items-center justify-between border-t border-slate-100 text-[11px]">
                     <div className="flex items-center gap-1.5">
                       <div className="w-5 h-5 rounded-full bg-indigo-100 text-indigo-700 font-bold text-[9px] flex items-center justify-center">
                         AL
@@ -449,10 +449,10 @@ export default function OverviewPage() {
                   }`}
                 >
                   <div className="flex items-center justify-between">
-                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-amber-500/15 text-amber-600 dark:text-amber-300 border border-amber-400/20 uppercase tracking-wider">
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-amber-500/15 text-amber-600 border border-amber-400/20 uppercase tracking-wider">
                       Store
                     </span>
-                    <span className="text-[10px] font-medium text-slate-500 bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded-md">
+                    <span className="text-[10px] font-medium text-slate-500 bg-slate-100 px-2 py-0.5 rounded-md">
                       Normal
                     </span>
                   </div>
@@ -470,7 +470,7 @@ export default function OverviewPage() {
                   >
                     Per-size stock reservation with real-time depletion triggers.
                   </p>
-                  <div className="pt-2 flex items-center justify-between border-t border-slate-100 dark:border-white/5 text-[11px]">
+                  <div className="pt-2 flex items-center justify-between border-t border-slate-100 text-[11px]">
                     <div className="flex items-center gap-1.5">
                       <div className="w-5 h-5 rounded-full bg-amber-100 text-amber-700 font-bold text-[9px] flex items-center justify-center">
                         JD
@@ -526,10 +526,10 @@ export default function OverviewPage() {
                   }`}
                 >
                   <div className="flex items-center justify-between">
-                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-purple-500/15 text-purple-600 dark:text-purple-300 border border-purple-400/20 uppercase tracking-wider">
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-purple-500/15 text-purple-600 border border-purple-400/20 uppercase tracking-wider">
                       Audit
                     </span>
-                    <span className="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-md bg-emerald-500/15 text-emerald-600 dark:text-emerald-300 border border-emerald-400/30">
+                    <span className="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-md bg-emerald-500/15 text-emerald-600 border border-emerald-400/30">
                       <CheckCircle2 className="w-3 h-3" /> Verified
                     </span>
                   </div>
@@ -547,7 +547,7 @@ export default function OverviewPage() {
                   >
                     159 unit & integration tests passing with 100% verified math integrity.
                   </p>
-                  <div className="pt-2 flex items-center justify-between border-t border-slate-100 dark:border-white/5 text-[11px]">
+                  <div className="pt-2 flex items-center justify-between border-t border-slate-100 text-[11px]">
                     <span className="text-slate-500 text-[10px]">Zero discrepancies</span>
                     <span className="font-mono text-[10px] text-emerald-600 font-semibold">100% Passing</span>
                   </div>
@@ -556,7 +556,7 @@ export default function OverviewPage() {
                 {/* Open Full Kanban Board Button */}
                 <Link
                   to="/tasks"
-                  className="block text-center py-2.5 rounded-xl text-xs font-bold transition-all shadow-sm bg-sky-600 hover:bg-sky-700 text-white"
+                  className="block text-center py-2.5 rounded-xl text-xs font-bold transition-all shadow-sm bg-[#714B67] hover:bg-[#5B3B52] text-white"
                 >
                   Open Full Kanban Board &rarr;
                 </Link>
@@ -574,7 +574,7 @@ export default function OverviewPage() {
                     : 'bg-white/[0.04] border border-white/10'
                 }`}
               >
-                <Badge variant="accent" size="sm" className="bg-sky-500/20 text-sky-700 dark:text-sky-300 border-sky-400/30">
+                <Badge variant="primary" size="sm">
                   Upcoming Flagship
                 </Badge>
                 <h4 className={`text-base font-bold ${frameTheme === 'light' ? 'text-[#0F172A]' : 'text-white'}`}>
@@ -587,13 +587,13 @@ export default function OverviewPage() {
                   <span className={frameTheme === 'light' ? 'text-slate-500' : 'text-slate-400'}>
                     Tickets Available:
                   </span>
-                  <span className="font-bold text-emerald-600 dark:text-emerald-400 font-mono">42 / 100 Seats</span>
+                  <span className="font-bold text-emerald-600 font-mono">42 / 100 Seats</span>
                 </div>
                 <Link to="/events" className="block pt-2">
                   <Button
                     variant="primary"
                     size="sm"
-                    className="w-full font-bold bg-sky-600 hover:bg-sky-700 text-white"
+                    className="w-full font-bold shadow-sm"
                   >
                     Reserve Ticket ($15.00)
                   </Button>
@@ -620,7 +620,7 @@ export default function OverviewPage() {
                   <span className={frameTheme === 'light' ? 'text-slate-500' : 'text-slate-400'}>
                     Registration:
                   </span>
-                  <span className="font-bold text-sky-600 dark:text-sky-400">Free for Members</span>
+                  <span className="font-bold text-[#714B67]">Free for Members</span>
                 </div>
                 <Link to="/events" className="block pt-2">
                   <Button
@@ -659,7 +659,7 @@ export default function OverviewPage() {
                   <Button
                     variant="secondary"
                     size="sm"
-                    className="w-full bg-sky-500/15 text-sky-700 dark:text-sky-300 hover:bg-sky-500/25 border border-sky-400/30 font-semibold"
+                    className="w-full font-semibold"
                   >
                     <QrCode className="w-3.5 h-3.5 mr-1.5" /> Launch QR Scanner
                   </Button>
@@ -681,7 +681,7 @@ export default function OverviewPage() {
                 <span className={`text-xs uppercase font-semibold ${frameTheme === 'light' ? 'text-slate-500' : 'text-slate-400'}`}>
                   Treasury Balance
                 </span>
-                <div className="text-3xl font-black text-emerald-600 dark:text-emerald-400 mt-2 font-mono">
+                <div className="text-3xl font-black text-emerald-600 mt-2 font-mono">
                   $14,850.00
                 </div>
                 <p className={`text-xs mt-1 ${frameTheme === 'light' ? 'text-slate-500' : 'text-slate-400'}`}>
@@ -699,7 +699,7 @@ export default function OverviewPage() {
                 <span className={`text-xs uppercase font-semibold ${frameTheme === 'light' ? 'text-slate-500' : 'text-slate-400'}`}>
                   Active Fundraisers
                 </span>
-                <div className="text-3xl font-black text-sky-600 dark:text-sky-400 mt-2 font-mono">
+                <div className="text-3xl font-black text-[#714B67] mt-2 font-mono">
                   $3,200.00
                 </div>
                 <p className={`text-xs mt-1 ${frameTheme === 'light' ? 'text-slate-500' : 'text-slate-400'}`}>
@@ -726,7 +726,7 @@ export default function OverviewPage() {
                   <Button
                     variant="primary"
                     size="sm"
-                    className="w-full font-bold bg-sky-600 hover:bg-sky-700 text-white"
+                    className="w-full font-bold shadow-sm"
                   >
                     File Claim
                   </Button>
@@ -752,20 +752,20 @@ export default function OverviewPage() {
           {/* Pillar 1: Events */}
           <Link
             to="/events"
-            className="group p-6 rounded-3xl bg-white border border-slate-200/80 shadow-once-card hover:shadow-once-card-hover hover:border-sky-300 transition-all flex flex-col justify-between"
+            className="group p-6 rounded-3xl bg-white border border-slate-200/80 shadow-once-card hover:shadow-once-card-hover hover:border-[#D4BFD2] transition-all flex flex-col justify-between"
           >
             <div className="space-y-3">
-              <div className="w-10 h-10 rounded-2xl bg-sky-50 text-sky-600 flex items-center justify-center font-bold">
+              <div className="w-10 h-10 rounded-2xl bg-[#FAF5F9] text-[#714B67] flex items-center justify-center font-bold">
                 <Calendar className="w-5 h-5" />
               </div>
-              <h3 className="text-base font-bold text-[#0F172A] group-hover:text-sky-600 transition-colors">
+              <h3 className="text-base font-bold text-[#0F172A] group-hover:text-[#714B67] transition-colors">
                 Events & Ticketing
               </h3>
               <p className="text-xs text-[#64748B] leading-relaxed">
                 Live seat availability, member discount pricing, and dynamic QR door check-in.
               </p>
             </div>
-            <div className="pt-4 flex items-center text-xs font-semibold text-sky-600 group-hover:translate-x-0.5 transition-transform">
+            <div className="pt-4 flex items-center text-xs font-semibold text-[#714B67] group-hover:translate-x-0.5 transition-transform">
               <span>Browse Galas</span>
               <ArrowRight className="w-3.5 h-3.5 ml-1" />
             </div>
@@ -796,20 +796,20 @@ export default function OverviewPage() {
           {/* Pillar 3: Members */}
           <Link
             to="/members"
-            className="group p-6 rounded-3xl bg-white border border-slate-200/80 shadow-once-card hover:shadow-once-card-hover hover:border-indigo-300 transition-all flex flex-col justify-between"
+            className="group p-6 rounded-3xl bg-white border border-slate-200/80 shadow-once-card hover:shadow-once-card-hover hover:border-[#D4BFD2] transition-all flex flex-col justify-between"
           >
             <div className="space-y-3">
-              <div className="w-10 h-10 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold">
+              <div className="w-10 h-10 rounded-2xl bg-[#FAF5F9] text-[#714B67] flex items-center justify-center font-bold">
                 <Users className="w-5 h-5" />
               </div>
-              <h3 className="text-base font-bold text-[#0F172A] group-hover:text-indigo-600 transition-colors">
+              <h3 className="text-base font-bold text-[#0F172A] group-hover:text-[#714B67] transition-colors">
                 Membership Passes
               </h3>
               <p className="text-xs text-[#64748B] leading-relaxed">
                 Tiered membership benefits, 15% merch discounts, and cryptographic digital IDs.
               </p>
             </div>
-            <div className="pt-4 flex items-center text-xs font-semibold text-indigo-600 group-hover:translate-x-0.5 transition-transform">
+            <div className="pt-4 flex items-center text-xs font-semibold text-[#714B67] group-hover:translate-x-0.5 transition-transform">
               <span>Join or Verify</span>
               <ArrowRight className="w-3.5 h-3.5 ml-1" />
             </div>
@@ -818,20 +818,20 @@ export default function OverviewPage() {
           {/* Pillar 4: Merch Store */}
           <Link
             to="/store"
-            className="group p-6 rounded-3xl bg-white border border-slate-200/80 shadow-once-card hover:shadow-once-card-hover hover:border-amber-300 transition-all flex flex-col justify-between"
+            className="group p-6 rounded-3xl bg-white border border-slate-200/80 shadow-once-card hover:shadow-once-card-hover hover:border-[#D4BFD2] transition-all flex flex-col justify-between"
           >
             <div className="space-y-3">
-              <div className="w-10 h-10 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center font-bold">
+              <div className="w-10 h-10 rounded-2xl bg-[#FAF5F9] text-[#714B67] flex items-center justify-center font-bold">
                 <ShoppingBag className="w-5 h-5" />
               </div>
-              <h3 className="text-base font-bold text-[#0F172A] group-hover:text-amber-600 transition-colors">
+              <h3 className="text-base font-bold text-[#0F172A] group-hover:text-[#714B67] transition-colors">
                 Merchandise Store
               </h3>
               <p className="text-xs text-[#64748B] leading-relaxed">
                 Official hoodies, shirts and stickers with per-size inventory tracking.
               </p>
             </div>
-            <div className="pt-4 flex items-center text-xs font-semibold text-amber-600 group-hover:translate-x-0.5 transition-transform">
+            <div className="pt-4 flex items-center text-xs font-semibold text-[#714B67] group-hover:translate-x-0.5 transition-transform">
               <span>Explore Merch</span>
               <ArrowRight className="w-3.5 h-3.5 ml-1" />
             </div>
@@ -841,7 +841,7 @@ export default function OverviewPage() {
 
       {/* 4. CALL TO ACTION WELL */}
       <section className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
-        <div className="p-8 sm:p-12 rounded-3xl bg-slate-50 border border-slate-200/80 space-y-4">
+        <div className="p-8 sm:p-12 rounded-3xl bg-white border border-slate-200 shadow-md space-y-4">
           <h2 className="text-2xl sm:text-3xl font-extrabold text-[#0F172A] tracking-tight">
             Ready to participate in campus life?
           </h2>
@@ -850,12 +850,12 @@ export default function OverviewPage() {
           </p>
           <div className="pt-2 flex flex-wrap justify-center gap-3">
             <Link to="/register">
-              <Button variant="primary" size="lg" className="bg-[#0F172A] hover:bg-slate-800 text-white rounded-full font-bold px-7">
+              <Button variant="primary" size="lg" className="rounded-full font-bold px-7 shadow-md">
                 Get Started Today
               </Button>
             </Link>
             <Link to="/events">
-              <Button variant="outline" size="lg" className="border-slate-300 text-[#0F172A] hover:bg-white rounded-full px-7">
+              <Button variant="secondary" size="lg" className="rounded-full px-7">
                 View Upcoming Events
               </Button>
             </Link>

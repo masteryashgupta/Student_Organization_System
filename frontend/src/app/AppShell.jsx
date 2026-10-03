@@ -83,11 +83,11 @@ export default function AppShell() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col text-[#0F172A] selection:bg-[#0EA5E9] selection:text-white overflow-x-hidden max-w-full">
+    <div className="min-h-screen flex flex-col text-[#0F172A] selection:bg-[#714B67] selection:text-white overflow-x-hidden max-w-full">
       {/* Top Floating Bar Header (Once UI Minimalist Style) */}
       <header className="sticky top-0 z-50 w-full pt-3 sm:pt-4 pb-2 px-4 sm:px-6 pointer-events-none">
         <div className="max-w-7xl mx-auto flex items-center justify-between pointer-events-auto gap-2">
-          {/* Top-Left: Location / Campus Status (like "Asia/Jakarta" in reference) */}
+          {/* Top-Left: Location / Campus Status */}
           <div className="flex items-center gap-2 text-xs font-semibold text-[#64748B] shrink-0">
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
             <span className="hidden sm:inline">Skyline Campus • Room 204</span>
@@ -104,7 +104,7 @@ export default function AppShell() {
               to="/"
               className={`w-7 h-7 rounded-full flex items-center justify-center transition-all ${
                 location.pathname === '/'
-                  ? 'bg-sky-600 text-white shadow-sm'
+                  ? 'bg-[#714B67] text-white shadow-sm'
                   : 'bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-900'
               }`}
               title="Overview Home"
@@ -124,8 +124,8 @@ export default function AppShell() {
                     to={item.path}
                     className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold transition-all ${
                       isActive
-                        ? 'bg-sky-600 dark:bg-sky-500 text-white shadow-sm'
-                        : 'text-[#64748B] dark:text-slate-300 hover:text-[#0F172A] dark:hover:text-white hover:bg-slate-100/70 dark:hover:bg-slate-800'
+                        ? 'bg-[#714B67] text-white shadow-sm'
+                        : 'text-[#64748B] hover:text-[#0F172A] hover:bg-[#FAF5F9]'
                     }`}
                   >
                     <IconComponent className="w-3.5 h-3.5 opacity-80" />
@@ -135,13 +135,13 @@ export default function AppShell() {
               })}
 
             {/* Vertical Divider */}
-            <div className="h-4 w-[1px] bg-slate-200/80 dark:bg-slate-700 mx-1"></div>
+            <div className="h-4 w-[1px] bg-slate-200/80 mx-1"></div>
 
             {/* Dark / Light Theme Toggle Button */}
             <button
               type="button"
               onClick={toggleTheme}
-              className="w-7 h-7 rounded-full flex items-center justify-center text-slate-500 hover:text-[#0F172A] dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+              className="w-7 h-7 rounded-full flex items-center justify-center text-slate-500 hover:text-[#0F172A] hover:bg-slate-100 transition-colors"
               title={isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
             >
               {isDark ? (
@@ -158,12 +158,12 @@ export default function AppShell() {
               <div className="flex items-center gap-2">
                 <Link
                   to="/members/me"
-                  className="flex items-center gap-2 pl-2 pr-3 py-1 rounded-full bg-white/90 dark:bg-slate-800/90 border border-slate-200/80 dark:border-slate-700 shadow-sm hover:border-slate-300 dark:hover:border-slate-600 transition-all text-xs font-medium"
+                  className="flex items-center gap-2 pl-2 pr-3 py-1 rounded-full bg-white/90 border border-slate-200/80 shadow-sm hover:border-[#D4BFD2] transition-all text-xs font-medium"
                 >
-                  <div className="w-6 h-6 rounded-full bg-gradient-to-tr from-sky-500 to-indigo-600 text-white flex items-center justify-center font-bold text-[10px]">
+                  <div className="w-6 h-6 rounded-full bg-gradient-to-tr from-[#714B67] to-[#5B3B52] text-white flex items-center justify-center font-bold text-[10px]">
                     {user?.name ? user.name.charAt(0).toUpperCase() : 'U'}
                   </div>
-                  <span className="hidden sm:inline font-semibold text-[#0F172A] dark:text-white max-w-[100px] truncate">
+                  <span className="hidden sm:inline font-semibold text-[#0F172A] max-w-[100px] truncate">
                     {user?.name || user?.username}
                   </span>
                 </Link>
@@ -183,13 +183,13 @@ export default function AppShell() {
               <div className="flex items-center gap-2">
                 <Link
                   to="/login"
-                  className="text-xs font-semibold text-[#64748B] hover:text-[#0F172A] px-3 py-1.5"
+                  className="text-xs font-semibold text-[#64748B] hover:text-[#0F172A] px-3 py-1.5 transition-colors"
                 >
                   Sign In
                 </Link>
                 <Link
                   to="/register"
-                  className="text-xs font-bold text-white bg-sky-600 hover:bg-sky-700 px-4 py-1.5 rounded-full shadow-sm transition-all"
+                  className="text-xs font-bold text-white bg-[#714B67] hover:bg-[#5B3B52] px-4 py-1.5 rounded-full shadow-sm hover:shadow transition-all"
                 >
                   Join Club
                 </Link>
@@ -200,7 +200,7 @@ export default function AppShell() {
             <button
               type="button"
               onClick={toggleTheme}
-              className="md:hidden p-1.5 rounded-full bg-white/90 dark:bg-slate-800/90 border border-slate-200/80 dark:border-slate-700 text-slate-600 dark:text-slate-200 shadow-sm"
+              className="md:hidden p-1.5 rounded-full bg-white/90 border border-slate-200/80 text-slate-600 shadow-sm"
               title={isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
             >
               {isDark ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4" />}
@@ -209,7 +209,7 @@ export default function AppShell() {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-1.5 rounded-full bg-white/90 dark:bg-slate-800/90 border border-slate-200/80 dark:border-slate-700 text-slate-600 dark:text-slate-200"
+              className="md:hidden p-1.5 rounded-full bg-white/90 border border-slate-200/80 text-slate-600"
               aria-label="Toggle Menu"
             >
               {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
@@ -231,7 +231,7 @@ export default function AppShell() {
                     onClick={() => setMobileMenuOpen(false)}
                     className={`flex items-center gap-2 px-3 py-2 rounded-2xl text-xs font-semibold ${
                       isActive
-                        ? 'bg-sky-600 text-white'
+                        ? 'bg-[#714B67] text-white'
                         : 'text-[#64748B] hover:bg-slate-100'
                     }`}
                   >
@@ -251,25 +251,25 @@ export default function AppShell() {
       </main>
 
       {/* Minimalist Once UI Footer */}
-      <footer className="w-full border-t border-slate-200/70 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm mt-auto py-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#64748B] dark:text-slate-400">
+      <footer className="w-full border-t border-slate-200/70 bg-white/50 backdrop-blur-sm mt-auto py-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#64748B]">
           <div className="flex items-center gap-2">
-            <div className="w-5 h-5 rounded-md bg-[#0F172A] dark:bg-slate-700 text-white flex items-center justify-center font-bold text-[10px]">
+            <div className="w-5 h-5 rounded-md bg-[#0F172A] text-white flex items-center justify-center font-bold text-[10px]">
               S
             </div>
-            <span className="font-semibold text-[#0F172A] dark:text-white">Skyline Student Association</span>
+            <span className="font-semibold text-[#0F172A]">Skyline Student Association</span>
             <span>•</span>
             <span>Est. 2024</span>
           </div>
 
           <div className="flex items-center gap-4 font-medium">
-            <Link to="/events" className="hover:text-[#0F172A] dark:hover:text-white">Events</Link>
-            <Link to="/store" className="hover:text-[#0F172A] dark:hover:text-white">Merch</Link>
-            <Link to="/members" className="hover:text-[#0F172A] dark:hover:text-white">Join Us</Link>
-            <Link to="/announcements" className="hover:text-[#0F172A] dark:hover:text-white">News</Link>
+            <Link to="/events" className="hover:text-[#0F172A]">Events</Link>
+            <Link to="/store" className="hover:text-[#0F172A]">Merch</Link>
+            <Link to="/members" className="hover:text-[#0F172A]">Join Us</Link>
+            <Link to="/announcements" className="hover:text-[#0F172A]">News</Link>
           </div>
 
-          <p className="text-[11px] text-slate-400 dark:text-slate-500">
+          <p className="text-[11px] text-slate-400">
             Powered by Once UI Design System
           </p>
         </div>

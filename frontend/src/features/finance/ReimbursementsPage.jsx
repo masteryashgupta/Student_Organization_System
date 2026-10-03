@@ -418,9 +418,9 @@ export default function ReimbursementsPage() {
               </CardContent>
             </Card>
 
-            <Card className="border-sky-200 bg-sky-50/70 shadow-sm">
+            <Card className="border-[#D4BFD2] bg-[#FAF5F9] shadow-sm">
               <CardHeader className="pb-2">
-                <CardDescription className="text-sky-800 text-xs font-semibold uppercase">
+                <CardDescription className="text-[#714B67] text-xs font-semibold uppercase">
                   Approved & Ledger Logged
                 </CardDescription>
                 <CardTitle className="text-2xl text-[#222222]">

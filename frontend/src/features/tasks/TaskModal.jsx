@@ -92,7 +92,7 @@ export default function TaskModal({
           <select
             value={formData.project}
             onChange={(e) => setFormData({ ...formData, project: e.target.value })}
-            className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2 text-sm text-[#0F172A] focus:outline-none focus:ring-2 focus:ring-sky-500 transition-all"
+            className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2 text-sm text-[#0F172A] focus:outline-none focus:ring-2 focus:ring-[#714B67]/20 focus:border-[#714B67] transition-all"
           >
             <option value="" disabled>Select a project...</option>
             {projects.map((p) => (
@@ -132,7 +132,7 @@ export default function TaskModal({
             placeholder="Detailed recipe, schedule, shift location, or specific materials needed..."
             value={formData.description}
             onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-            className="w-full bg-white border border-slate-200 rounded-xl p-3 text-xs text-[#0F172A] placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-500 transition-all resize-none"
+            className="w-full bg-white border border-slate-200 rounded-xl p-3 text-xs text-[#0F172A] placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#714B67]/20 focus:border-[#714B67] transition-all resize-none"
           />
         </div>
 
@@ -146,7 +146,7 @@ export default function TaskModal({
             <select
               value={formData.assignee}
               onChange={(e) => setFormData({ ...formData, assignee: e.target.value })}
-              className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-[#0F172A] focus:outline-none focus:ring-2 focus:ring-sky-500 transition-all"
+              className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-[#0F172A] focus:outline-none focus:ring-2 focus:ring-[#714B67]/20 focus:border-[#714B67] transition-all"
             >
               <option value="">-- Open Slot (Unassigned) --</option>
               {assignees.map((u) => (
@@ -168,7 +168,7 @@ export default function TaskModal({
             <select
               value={formData.priority}
               onChange={(e) => setFormData({ ...formData, priority: e.target.value })}
-              className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-[#0F172A] focus:outline-none focus:ring-2 focus:ring-sky-500 transition-all"
+              className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-[#0F172A] focus:outline-none focus:ring-2 focus:ring-[#714B67]/20 focus:border-[#714B67] transition-all"
             >
               <option value="low">Low Priority</option>
               <option value="medium">Medium Priority</option>
@@ -200,7 +200,7 @@ export default function TaskModal({
             <select
               value={formData.status}
               onChange={(e) => setFormData({ ...formData, status: e.target.value })}
-              className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-[#0F172A] focus:outline-none focus:ring-2 focus:ring-sky-500 transition-all"
+              className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-[#0F172A] focus:outline-none focus:ring-2 focus:ring-[#714B67]/20 focus:border-[#714B67] transition-all"
             >
               <option value="todo">To Do</option>
               <option value="doing">In Progress (Doing)</option>

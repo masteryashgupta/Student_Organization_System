@@ -87,7 +87,7 @@ export default function ProjectModal({
             placeholder="Objectives, logistics, target date, and volunteer expectations..."
             value={formData.description}
             onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-            className="w-full bg-white border border-slate-200 rounded-xl p-3 text-xs text-[#0F172A] placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-500 transition-all resize-none"
+            className="w-full bg-white border border-slate-200 rounded-xl p-3 text-xs text-[#0F172A] placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#714B67]/20 focus:border-[#714B67] transition-all resize-none"
           />
         </div>
 

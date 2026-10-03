@@ -11,16 +11,16 @@ export function Button({
   onClick,
   ...props
 }) {
-  const baseStyles = 'inline-flex items-center justify-center font-semibold transition-all duration-150 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap shrink-0 active:scale-[0.99]';
+  const baseStyles = 'inline-flex items-center justify-center font-semibold transition-all duration-150 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#714B67] disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap shrink-0 active:scale-[0.99]';
 
   const variants = {
-    primary: 'bg-sky-600 hover:bg-sky-700 text-white shadow-sm hover:shadow border border-sky-600',
+    primary: 'bg-[#714B67] hover:bg-[#5B3B52] text-white shadow-sm hover:shadow border border-[#714B67]',
     brand: 'bg-[#714B67] hover:bg-[#5B3B52] text-white shadow-sm hover:shadow border border-[#714B67]',
-    secondary: 'bg-white hover:bg-slate-50 text-slate-800 border border-slate-200 shadow-sm hover:border-slate-300 dark:bg-slate-800 dark:text-white dark:border-slate-700 dark:hover:bg-slate-700',
-    outline: 'bg-transparent hover:bg-slate-100/80 text-slate-700 border border-slate-300 hover:border-slate-400 dark:text-slate-200 dark:border-slate-700 dark:hover:bg-slate-800',
-    accent: 'bg-sky-500 hover:bg-sky-600 text-white shadow-sm border border-sky-500',
+    secondary: 'bg-white hover:bg-[#FAF5F9] text-[#714B67] border border-[#D4BFD2] shadow-sm hover:border-[#714B67]',
+    outline: 'bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 hover:border-slate-300 shadow-sm',
+    accent: 'bg-[#714B67] hover:bg-[#5B3B52] text-white shadow-sm border border-[#714B67]',
     danger: 'bg-rose-600 hover:bg-rose-700 text-white shadow-sm border border-rose-600',
-    ghost: 'bg-transparent hover:bg-slate-100 text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white',
+    ghost: 'bg-transparent hover:bg-slate-100 text-slate-600 hover:text-slate-900',
   };
 
   const sizes = {

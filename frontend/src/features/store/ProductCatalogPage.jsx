@@ -23,12 +23,12 @@ function ProductCardImage({ src, name, type }) {
 
   if (!src || imgError) {
     return (
-      <div className="w-full h-full bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-900 flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 p-4 text-center select-none">
-        <div className="w-14 h-14 rounded-2xl bg-white/80 dark:bg-slate-700/80 shadow-sm flex items-center justify-center mb-2">
-          <ShoppingBag className="w-7 h-7 text-[#714B67] dark:text-purple-400" />
+      <div className="w-full h-full bg-gradient-to-br from-slate-100 to-slate-200 flex flex-col items-center justify-center text-slate-500 p-4 text-center select-none">
+        <div className="w-14 h-14 rounded-2xl bg-white/80 shadow-sm flex items-center justify-center mb-2">
+          <ShoppingBag className="w-7 h-7 text-[#714B67]" />
         </div>
-        <span className="text-xs font-extrabold uppercase tracking-wider text-slate-700 dark:text-slate-200 line-clamp-1">{name}</span>
-        <span className="text-[10px] font-semibold text-slate-400 dark:text-slate-400 uppercase mt-0.5">{type}</span>
+        <span className="text-xs font-extrabold uppercase tracking-wider text-slate-700 line-clamp-1">{name}</span>
+        <span className="text-[10px] font-semibold text-slate-400 uppercase mt-0.5">{type}</span>
       </div>
     );
   }
@@ -87,16 +87,16 @@ export default function ProductCatalogPage() {
   return (
     <div className="space-y-8 pb-16">
       {/* Header Banner */}
-      <div className="relative overflow-hidden rounded-3xl bg-white dark:bg-slate-900 border border-border dark:border-slate-800 p-6 sm:p-8 shadow-odoo-card">
+      <div className="relative overflow-hidden rounded-3xl bg-white border border-border p-6 sm:p-8 shadow-odoo-card">
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="max-w-xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-50 dark:bg-purple-950/40 border border-purple-200 dark:border-purple-800 text-[#714B67] dark:text-purple-300 text-xs font-semibold uppercase tracking-wider mb-3">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-50 border border-purple-200 text-[#714B67] text-xs font-semibold uppercase tracking-wider mb-3">
               <Sparkles className="w-3.5 h-3.5" /> Official Skyline Club Apparel
             </div>
-            <h1 className="text-2xl sm:text-4xl font-extrabold text-[#222222] dark:text-white tracking-tight leading-tight">
+            <h1 className="text-2xl sm:text-4xl font-extrabold text-[#222222] tracking-tight leading-tight">
               Campus Merch & Gear Store
             </h1>
-            <p className="text-sm sm:text-base text-[#66636A] dark:text-slate-400 mt-2 leading-relaxed">
+            <p className="text-sm sm:text-base text-[#66636A] mt-2 leading-relaxed">
               High-quality custom club hoodies, t-shirts, and accessories. Active club members receive exclusive tier discounts at checkout.
             </p>
           </div>
@@ -128,23 +128,23 @@ export default function ProductCatalogPage() {
 
       {/* Officer Store Controls (Only visible when relevant to officers/managers) */}
       {isOfficer && (
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 p-4 bg-purple-50/70 dark:bg-slate-900/80 border border-purple-200/80 dark:border-slate-800 rounded-2xl shadow-sm">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 p-4 bg-purple-50/70 border border-purple-200/80 rounded-2xl shadow-sm">
           <div className="flex items-center gap-2">
-            <span className="w-2.5 h-2.5 rounded-full bg-[#714B67] dark:bg-purple-400 animate-pulse" />
-            <span className="text-xs font-bold text-[#714B67] dark:text-purple-300 uppercase tracking-wider">
+            <span className="w-2.5 h-2.5 rounded-full bg-[#714B67] animate-pulse" />
+            <span className="text-xs font-bold text-[#714B67] uppercase tracking-wider">
               Store Operations
             </span>
           </div>
           <div className="flex flex-wrap items-center gap-2.5">
             <Link to="/store/manage/orders">
-              <Button variant="outline" size="sm" className="bg-white dark:bg-slate-800 text-[#222222] dark:text-slate-100 border-border dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700">
-                <Package className="w-4 h-4 mr-1.5 text-amber-600 dark:text-amber-400" />
+              <Button variant="outline" size="sm" className="bg-white text-[#222222] border-border hover:bg-slate-50">
+                <Package className="w-4 h-4 mr-1.5 text-amber-600" />
                 <span>Store Orders Desk</span>
               </Button>
             </Link>
             <Link to="/store/manage/inventory">
-              <Button variant="outline" size="sm" className="bg-white dark:bg-slate-800 text-[#222222] dark:text-slate-100 border-border dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700">
-                <AlertTriangle className="w-4 h-4 mr-1.5 text-rose-600 dark:text-rose-400" />
+              <Button variant="outline" size="sm" className="bg-white text-[#222222] border-border hover:bg-slate-50">
+                <AlertTriangle className="w-4 h-4 mr-1.5 text-rose-600" />
                 <span>Low Stock &amp; Inventory</span>
               </Button>
             </Link>
@@ -165,7 +165,7 @@ export default function ProductCatalogPage() {
                 className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition-all duration-150 ${
                   isSelected
                     ? 'bg-[#714B67] text-white shadow-sm scale-[1.02]'
-                    : 'bg-white dark:bg-slate-900 hover:bg-gray-50 dark:hover:bg-slate-800 text-[#66636A] dark:text-slate-300 border border-border dark:border-slate-800'
+                    : 'bg-white hover:bg-gray-50 text-[#66636A] border border-border'
                 }`}
               >
                 {cat.label}
@@ -175,20 +175,20 @@ export default function ProductCatalogPage() {
         </div>
 
         {/* Search, In-Stock Toggle, & Sorting Controls */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-3 bg-slate-100/70 dark:bg-slate-900/70 p-3 rounded-2xl border border-border dark:border-slate-800">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-3 bg-slate-100/70 p-3 rounded-2xl border border-border">
           <div className="relative w-full sm:w-80">
-            <Search className="w-4 h-4 text-[#66636A] dark:text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+            <Search className="w-4 h-4 text-[#66636A] absolute left-3.5 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               placeholder="Search products, hoodies, sizes..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-white dark:bg-slate-800 border border-border dark:border-slate-700 rounded-xl pl-9 pr-4 py-2 text-xs sm:text-sm text-[#222222] dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#714B67]"
+              className="w-full bg-white border border-border rounded-xl pl-9 pr-4 py-2 text-xs sm:text-sm text-[#222222] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#714B67]"
             />
           </div>
 
           <div className="flex items-center gap-3 w-full sm:w-auto justify-end">
-            <label className="flex items-center gap-2 text-xs font-medium text-[#222222] dark:text-slate-200 cursor-pointer select-none">
+            <label className="flex items-center gap-2 text-xs font-medium text-[#222222] cursor-pointer select-none">
               <input
                 type="checkbox"
                 checked={inStockOnly}
@@ -201,7 +201,7 @@ export default function ProductCatalogPage() {
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
-              className="bg-white dark:bg-slate-800 border border-border dark:border-slate-700 rounded-xl px-3 py-2 text-xs sm:text-sm text-[#222222] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#714B67]"
+              className="bg-white border border-border rounded-xl px-3 py-2 text-xs sm:text-sm text-[#222222] focus:outline-none focus:ring-2 focus:ring-[#714B67]"
             >
               <option value="newest">Newest Arrivals</option>
               <option value="price-low">Price: Low to High</option>
@@ -215,24 +215,24 @@ export default function ProductCatalogPage() {
       {isLoading ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {[1, 2, 3, 4, 5, 6, 7, 8].map((n) => (
-            <div key={n} className="rounded-2xl bg-white dark:bg-slate-900 border border-border dark:border-slate-800 p-4 space-y-3 animate-pulse shadow-sm">
-              <div className="w-full h-52 bg-gray-100 dark:bg-slate-800 rounded-xl" />
-              <div className="h-4 bg-gray-100 dark:bg-slate-800 rounded w-3/4" />
-              <div className="h-4 bg-gray-100 dark:bg-slate-800 rounded w-1/2" />
+            <div key={n} className="rounded-2xl bg-white border border-border p-4 space-y-3 animate-pulse shadow-sm">
+              <div className="w-full h-52 bg-gray-100 rounded-xl" />
+              <div className="h-4 bg-gray-100 rounded w-3/4" />
+              <div className="h-4 bg-gray-100 rounded w-1/2" />
             </div>
           ))}
         </div>
       ) : error ? (
-        <div className="text-center py-16 bg-white dark:bg-slate-900 rounded-3xl border border-danger-200 dark:border-rose-900 p-6 shadow-sm">
+        <div className="text-center py-16 bg-white rounded-3xl border border-danger-200 p-6 shadow-sm">
           <AlertTriangle className="w-10 h-10 text-danger-500 mx-auto mb-3" />
-          <h3 className="text-lg font-bold text-[#222222] dark:text-white">Unable to Load Catalog</h3>
-          <p className="text-sm text-[#66636A] dark:text-slate-400 mt-1">Please ensure the backend server is running on localhost:8000.</p>
+          <h3 className="text-lg font-bold text-[#222222]">Unable to Load Catalog</h3>
+          <p className="text-sm text-[#66636A] mt-1">Please ensure the backend server is running on localhost:8000.</p>
         </div>
       ) : products.length === 0 ? (
-        <div className="text-center py-20 bg-white dark:bg-slate-900 rounded-3xl border border-border dark:border-slate-800 p-8 shadow-sm">
-          <Package className="w-12 h-12 text-[#66636A] dark:text-slate-400 mx-auto mb-3" />
-          <h3 className="text-lg font-bold text-[#222222] dark:text-white">No Products Found</h3>
-          <p className="text-sm text-[#66636A] dark:text-slate-400 mt-1 max-w-sm mx-auto">
+        <div className="text-center py-20 bg-white rounded-3xl border border-border p-8 shadow-sm">
+          <Package className="w-12 h-12 text-[#66636A] mx-auto mb-3" />
+          <h3 className="text-lg font-bold text-[#222222]">No Products Found</h3>
+          <p className="text-sm text-[#66636A] mt-1 max-w-sm mx-auto">
             {searchQuery ? `No merchandise matching "${searchQuery}".` : 'No store merchandise items are currently listed in this category.'}
           </p>
           {(searchQuery || selectedCategory !== 'all') && (
@@ -259,10 +259,10 @@ export default function ProductCatalogPage() {
             return (
               <div
                 key={product.id}
-                className="group relative rounded-2xl bg-white dark:bg-slate-900 border border-border dark:border-slate-800 hover:border-[#714B67]/40 dark:hover:border-purple-500/40 hover:shadow-lg transition-all duration-200 flex flex-col justify-between overflow-hidden shadow-odoo-card"
+                className="group relative rounded-2xl bg-white border border-border hover:border-[#714B67]/40 hover:shadow-lg transition-all duration-200 flex flex-col justify-between overflow-hidden shadow-odoo-card"
               >
                 {/* Product Image Showcase */}
-                <div className="relative h-60 w-full bg-slate-100/70 dark:bg-slate-800/80 overflow-hidden flex items-center justify-center border-b border-border dark:border-slate-800">
+                <div className="relative h-60 w-full bg-slate-100/70 overflow-hidden flex items-center justify-center border-b border-border">
                   <ProductCardImage src={product.image} name={product.name} type={product.type} />
 
                   {/* Badges on Image */}
@@ -275,15 +275,15 @@ export default function ProductCatalogPage() {
                   {/* Stock Availability Pill */}
                   <div className="absolute top-3 right-3 z-10">
                     {!hasStock ? (
-                      <span className="px-2.5 py-1 rounded-full text-[11px] font-bold bg-rose-50 dark:bg-rose-950/80 text-rose-800 dark:text-rose-200 border border-rose-200 dark:border-rose-800 shadow-sm">
+                      <span className="px-2.5 py-1 rounded-full text-[11px] font-bold bg-rose-50 text-rose-800 border border-rose-200 shadow-sm">
                         Sold Out
                       </span>
                     ) : isLowStock ? (
-                      <span className="px-2.5 py-1 rounded-full text-[11px] font-bold bg-amber-50 dark:bg-amber-950/80 text-amber-800 dark:text-amber-200 border border-amber-200 dark:border-amber-800 shadow-sm animate-pulse">
+                      <span className="px-2.5 py-1 rounded-full text-[11px] font-bold bg-amber-50 text-amber-800 border border-amber-200 shadow-sm animate-pulse">
                         Only {product.total_stock} left!
                       </span>
                     ) : (
-                      <span className="px-2.5 py-1 rounded-full text-[11px] font-bold bg-emerald-50 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-200 border border-emerald-200 dark:border-emerald-800 shadow-sm">
+                      <span className="px-2.5 py-1 rounded-full text-[11px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200 shadow-sm">
                         {product.total_stock} in stock
                       </span>
                     )}
@@ -293,17 +293,17 @@ export default function ProductCatalogPage() {
                 {/* Product Content & Size Pills */}
                 <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
                   <div>
-                    <h3 className="text-base font-bold text-[#222222] dark:text-white group-hover:text-[#714B67] dark:group-hover:text-purple-400 transition-colors line-clamp-1">
+                    <h3 className="text-base font-bold text-[#222222] group-hover:text-[#714B67] transition-colors line-clamp-1">
                       {product.name}
                     </h3>
-                    <p className="text-xs text-[#66636A] dark:text-slate-400 mt-1 line-clamp-2 leading-relaxed">
+                    <p className="text-xs text-[#66636A] mt-1 line-clamp-2 leading-relaxed">
                       {product.description || 'Premium official Skyline Club student merchandise.'}
                     </p>
                   </div>
 
                   {/* Available Sizes Preview */}
                   <div>
-                    <span className="text-[11px] font-semibold text-[#66636A] dark:text-slate-400 block mb-1.5 uppercase tracking-wider">
+                    <span className="text-[11px] font-semibold text-[#66636A] block mb-1.5 uppercase tracking-wider">
                       Sizes & Stock:
                     </span>
                     <div className="flex flex-wrap gap-1.5">
@@ -315,11 +315,11 @@ export default function ProductCatalogPage() {
                             title={`Size ${v.size}: ${v.stock_qty} available`}
                             className={`px-2.5 py-1 rounded-md text-[11px] font-bold transition-all ${
                               inStock
-                                ? 'bg-slate-100 dark:bg-slate-800 text-[#222222] dark:text-slate-200 border border-border dark:border-slate-700'
-                                : 'bg-gray-100 dark:bg-slate-900 text-gray-400 dark:text-slate-600 border border-gray-200 dark:border-slate-800 line-through opacity-60'
+                                ? 'bg-slate-100 text-[#222222] border border-border'
+                                : 'bg-gray-100 text-gray-400 border border-gray-200 line-through opacity-60'
                             }`}
                           >
-                            {v.size} {inStock && <span className="text-[9px] text-[#66636A] dark:text-slate-400 font-normal">({v.stock_qty})</span>}
+                            {v.size} {inStock && <span className="text-[9px] text-[#66636A] font-normal">({v.stock_qty})</span>}
                           </span>
                         );
                       })}
@@ -327,10 +327,10 @@ export default function ProductCatalogPage() {
                   </div>
 
                   {/* Price & Action */}
-                  <div className="pt-3 border-t border-border dark:border-slate-800 flex items-center justify-between">
+                  <div className="pt-3 border-t border-border flex items-center justify-between">
                     <div>
-                      <span className="text-xs text-[#66636A] dark:text-slate-400 block">Retail Price</span>
-                      <span className="text-lg font-black text-[#222222] dark:text-white">${Number(product.price).toFixed(2)}</span>
+                      <span className="text-xs text-[#66636A] block">Retail Price</span>
+                      <span className="text-lg font-black text-[#222222]">${Number(product.price).toFixed(2)}</span>
                     </div>
 
                     <Link to={`/store/${product.id}`}>
