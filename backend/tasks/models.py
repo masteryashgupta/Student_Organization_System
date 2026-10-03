@@ -78,6 +78,54 @@ class Project(models.Model):
             return 0
         return int(round((self.completed_tasks / total) * 100))
 
+    @property
+    def raised_amount(self) -> Decimal:
+        """
+        Dynamically calculates funds raised for this project from the central financial ledger (core.Transaction).
+        Filters by type='income', category='fundraiser', and matches either source or description with project ID / name.
+        Uses ledger as the single source of truth without duplicating transaction amounts.
+        """
+        try:
+            from core.models import Transaction
+            from django.db.models import Sum, Q
+
+            total = Transaction.objects.filter(
+                type=Transaction.TYPE_INCOME,
+                category=Transaction.CATEGORY_FUNDRAISER
+            ).filter(
+                Q(source__icontains=f"Project #{self.id}") |
+                Q(source__icontains=f"Project {self.id}") |
+                Q(source__iexact=self.name) |
+                Q(description__icontains=f"Project #{self.id}") |
+                Q(description__icontains=self.name)
+            ).aggregate(total=Sum('amount'))['total']
+
+            return total or Decimal('0.00')
+        except Exception:
+            return Decimal('0.00')
+
+    @property
+    def financial_progress_percentage(self) -> int:
+        """
+        Calculates percentage of goal amount raised so far.
+        """
+        if self.goal_amount is None or self.goal_amount <= Decimal('0.00'):
+            return 100 if self.raised_amount > Decimal('0.00') else 0
+        ratio = (self.raised_amount / self.goal_amount) * Decimal('100.00')
+        return int(round(ratio))
+
+    @property
+    def is_on_track(self) -> bool:
+        """
+        Determines if project is on track based on completion rate and financial targets.
+        """
+        if self.status == self.STATUS_COMPLETED:
+            return True
+        if self.status == self.STATUS_CANCELLED:
+            return False
+        # If goal amount is set, check if at least partially funded or tasks are moving
+        return self.financial_progress_percentage >= 50 or self.progress_percentage >= 50 or self.total_tasks == 0
+
     def clean(self):
         super().clean()
         if self.goal_amount is not None and self.goal_amount < Decimal('0.00'):

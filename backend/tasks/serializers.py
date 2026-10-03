@@ -77,6 +77,9 @@ class ProjectSerializer(serializers.ModelSerializer):
     total_tasks = serializers.IntegerField(read_only=True)
     completed_tasks = serializers.IntegerField(read_only=True)
     progress_percentage = serializers.IntegerField(read_only=True)
+    raised_amount = serializers.DecimalField(max_digits=12, decimal_places=2, read_only=True)
+    financial_progress_percentage = serializers.IntegerField(read_only=True)
+    is_on_track = serializers.BooleanField(read_only=True)
     created_by_name = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
@@ -86,6 +89,9 @@ class ProjectSerializer(serializers.ModelSerializer):
             'name',
             'description',
             'goal_amount',
+            'raised_amount',
+            'financial_progress_percentage',
+            'is_on_track',
             'status',
             'created_by',
             'created_by_name',
@@ -103,6 +109,9 @@ class ProjectSerializer(serializers.ModelSerializer):
             'total_tasks',
             'completed_tasks',
             'progress_percentage',
+            'raised_amount',
+            'financial_progress_percentage',
+            'is_on_track',
             'created_by_name',
             'tasks',
         ]

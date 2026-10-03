@@ -10,12 +10,17 @@ import {
   ListTodo,
   Sparkles,
   Target,
-  Users,
+  DollarSign,
+  TrendingUp,
+  ShieldCheck,
   RefreshCw,
   FolderPlus,
   Layers,
   ArrowUpDown,
   UserCheck,
+  Zap,
+  Award,
+  AlertCircle,
 } from 'lucide-react';
 import { useAuth } from '../../lib/AuthContext';
 import { useToast } from '../../components/ui/Toast';
@@ -110,12 +115,53 @@ export default function TaskBoardPage() {
   const doingTasks = useMemo(() => filteredTasks.filter((t) => t.status === 'doing'), [filteredTasks]);
   const doneTasks = useMemo(() => filteredTasks.filter((t) => t.status === 'done'), [filteredTasks]);
 
-  // Overall Completion Rate
-  const overallProgress = useMemo(() => {
-    const total = filteredTasks.length;
-    if (total === 0) return 0;
-    return Math.round((doneTasks.length / total) * 100);
-  }, [filteredTasks.length, doneTasks.length]);
+  // Dual Metric Calculations: Ledger Raised Amount vs Goal + Task Execution Progress
+  const metrics = useMemo(() => {
+    if (activeProject) {
+      const goal = Number(activeProject.goal_amount || 0);
+      const raised = Number(activeProject.raised_amount || 0);
+      const financialPct = goal > 0 ? Math.min(100, Math.round((raised / goal) * 100)) : 0;
+      const totalTasks = activeProject.total_tasks ?? filteredTasks.length;
+      const completedTasks = activeProject.completed_tasks ?? doneTasks.length;
+      const taskPct = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
+      const isFunded = goal > 0 && raised >= goal;
+      const isOnTrack = isFunded || financialPct >= 50 || taskPct >= 50 || totalTasks === 0;
+
+      return {
+        goal,
+        raised,
+        financialPct,
+        totalTasks,
+        completedTasks,
+        taskPct,
+        isFunded,
+        isOnTrack,
+        isSpecific: true,
+      };
+    } else {
+      // Aggregate across all fundraisers
+      const goal = projects.reduce((sum, p) => sum + Number(p.goal_amount || 0), 0);
+      const raised = projects.reduce((sum, p) => sum + Number(p.raised_amount || 0), 0);
+      const financialPct = goal > 0 ? Math.min(100, Math.round((raised / goal) * 100)) : 0;
+      const totalTasks = filteredTasks.length;
+      const completedTasks = doneTasks.length;
+      const taskPct = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
+      const isFunded = goal > 0 && raised >= goal;
+      const isOnTrack = isFunded || financialPct >= 50 || taskPct >= 50 || totalTasks === 0;
+
+      return {
+        goal,
+        raised,
+        financialPct,
+        totalTasks,
+        completedTasks,
+        taskPct,
+        isFunded,
+        isOnTrack,
+        isSpecific: false,
+      };
+    }
+  }, [activeProject, projects, filteredTasks.length, doneTasks.length]);
 
   // --- MUTATIONS WITH OPTIMISTIC UPDATES ---
 
@@ -226,7 +272,7 @@ export default function TaskBoardPage() {
       setSelectedProjectId(data.id);
       setIsProjectModalOpen(false);
     },
-    onError: (err) => {
+    onError: () => {
       toast.error('Failed to create project.');
     },
   });
@@ -282,7 +328,7 @@ export default function TaskBoardPage() {
             Fundraiser Tasks & Volunteer Board
           </h1>
           <p className="text-sm text-slate-400 mt-1">
-            Coordinate who&apos;s baking, buying supplies, or running event tables with real-time Kanban sync.
+            Coordinate who&apos;s baking, buying supplies, or running event tables with real-time financial tracking.
           </p>
         </div>
 
@@ -321,21 +367,21 @@ export default function TaskBoardPage() {
         </div>
       </div>
 
-      {/* Project "At A Glance" Executive Banner */}
-      <div className="bg-gradient-to-r from-surface-900 via-surface-900 to-surface-950 border border-slate-800 rounded-3xl p-6 relative overflow-hidden shadow-xl">
-        <div className="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 bg-brand-500/10 rounded-full blur-3xl pointer-events-none" />
+      {/* --- EXECUTIVE "AT A GLANCE" PROGRESS BANNER --- */}
+      <div className="bg-gradient-to-br from-surface-900 via-surface-900 to-surface-950 border border-slate-800 rounded-3xl p-6 sm:p-7 relative overflow-hidden shadow-2xl">
+        <div className="absolute top-0 right-0 -mr-16 -mt-16 w-72 h-72 bg-brand-500/10 rounded-full blur-3xl pointer-events-none" />
 
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative z-10">
-          {/* Project Info & Selector */}
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8 relative z-10">
+          {/* Left: Project Selector & Mission Description */}
           <div className="space-y-3 max-w-xl">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2.5 flex-wrap">
               <span className="text-xs font-bold uppercase tracking-wider text-slate-400">
-                Active Fundraiser:
+                Fundraiser Scope:
               </span>
               <select
                 value={selectedProjectId}
                 onChange={(e) => setSelectedProjectId(e.target.value)}
-                className="bg-surface-800 border border-slate-700 text-white font-bold text-xs rounded-xl px-3 py-1.5 focus:outline-none focus:border-brand-500 transition-colors"
+                className="bg-surface-800 border border-slate-700 text-white font-bold text-xs rounded-xl px-3 py-1.5 focus:outline-none focus:border-brand-500 transition-colors shadow-inner"
               >
                 <option value="all">🌟 All Projects & Fundraisers</option>
                 {projects.map((p) => (
@@ -344,47 +390,114 @@ export default function TaskBoardPage() {
                   </option>
                 ))}
               </select>
+
+              {/* Status "On Track" / "Goal Reached" Badge */}
+              {metrics.isFunded ? (
+                <Badge variant="success" className="flex items-center gap-1 text-[11px] font-bold px-2.5 py-1">
+                  <Award className="w-3.5 h-3.5" /> Goal Reached ($)
+                </Badge>
+              ) : metrics.isOnTrack ? (
+                <Badge variant="accent" className="flex items-center gap-1 text-[11px] font-bold px-2.5 py-1">
+                  <TrendingUp className="w-3.5 h-3.5 text-brand-400" /> On Track
+                </Badge>
+              ) : (
+                <Badge variant="warning" className="flex items-center gap-1 text-[11px] font-bold px-2.5 py-1">
+                  <AlertCircle className="w-3.5 h-3.5" /> Needs Attention
+                </Badge>
+              )}
             </div>
 
-            <h2 className="text-xl sm:text-2xl font-black text-white">
+            <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
               {activeProject ? activeProject.name : 'All Skyline Club Action Items'}
             </h2>
-            <p className="text-xs text-slate-300 leading-relaxed">
+            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
               {activeProject?.description ||
-                'Track team progress across active fundraisers, volunteer shifts, and supplies checklists.'}
+                'Coordinating bake sales, charity drives, volunteer shifts, and supplies checklists across all active fundraisers.'}
             </p>
-          </div>
 
-          {/* Metrics & Completion Bar */}
-          <div className="bg-surface-950/70 border border-slate-800/80 rounded-2xl p-4 sm:p-5 flex-shrink-0 min-w-[280px] sm:min-w-[320px] space-y-3">
-            <div className="flex items-center justify-between text-xs">
-              <span className="text-slate-400 font-semibold">Completion Rate</span>
-              <span className="font-mono font-black text-brand-300 text-sm">
-                {overallProgress}% ({doneTasks.length}/{filteredTasks.length} done)
+            {/* Treasury Ledger Verification Stamp */}
+            <div className="flex items-center gap-1.5 text-[11px] text-slate-400 pt-1">
+              <Zap className="w-3.5 h-3.5 text-brand-400" />
+              <span>
+                Raised total queried live from central financial ledger (
+                <code className="text-brand-300 font-mono">core.Transaction</code>
+                ).
               </span>
             </div>
+          </div>
 
-            {/* Progress Bar */}
-            <div className="w-full h-3 bg-surface-800 rounded-full overflow-hidden p-0.5 border border-slate-700/60">
-              <div
-                className="h-full bg-gradient-to-r from-brand-500 to-emerald-400 rounded-full transition-all duration-500 shadow-sm shadow-emerald-500/50"
-                style={{ width: `${Math.max(0, Math.min(100, overallProgress))}%` }}
-              />
+          {/* Right: Dual Progress Gauges (Financial Goal + Task Execution) */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4 min-w-[280px] sm:min-w-[340px] flex-shrink-0">
+            {/* 1. FINANCIAL PROGRESS (Raised vs Goal) */}
+            <div className="bg-surface-950/80 border border-slate-800/90 rounded-2xl p-4 space-y-2.5 shadow-md">
+              <div className="flex items-center justify-between text-xs">
+                <span className="text-slate-400 font-bold flex items-center gap-1.5">
+                  <DollarSign className="w-4 h-4 text-emerald-400" /> Funds Raised So Far
+                </span>
+                <span className="font-mono font-black text-emerald-400 text-sm">
+                  ${metrics.raised.toFixed(2)}
+                  <span className="text-slate-500 text-xs font-normal">
+                    {' '}/ ${metrics.goal.toFixed(2)}
+                  </span>
+                </span>
+              </div>
+
+              {/* Financial Progress Bar */}
+              <div className="w-full h-3 bg-surface-900 rounded-full overflow-hidden p-0.5 border border-slate-800">
+                <div
+                  className={`h-full rounded-full transition-all duration-700 shadow-sm ${
+                    metrics.isFunded
+                      ? 'bg-gradient-to-r from-emerald-500 to-teal-300 shadow-emerald-500/50'
+                      : 'bg-gradient-to-r from-emerald-600 to-emerald-400 shadow-emerald-500/30'
+                  }`}
+                  style={{ width: `${Math.max(0, Math.min(100, metrics.financialPct))}%` }}
+                />
+              </div>
+
+              <div className="flex justify-between items-center text-[11px] text-slate-400">
+                <span>{metrics.financialPct}% of fundraising target</span>
+                <span className="text-emerald-400/90 font-semibold">
+                  {metrics.goal > metrics.raised
+                    ? `$${(metrics.goal - metrics.raised).toFixed(2)} remaining`
+                    : 'Target Met! 🎉'}
+                </span>
+              </div>
             </div>
 
-            {/* Sub-KPIs */}
-            <div className="grid grid-cols-3 gap-2 pt-1 text-center">
-              <div className="bg-surface-900/80 p-1.5 rounded-lg border border-slate-800">
-                <span className="text-[10px] text-slate-400 block">To Do</span>
-                <span className="text-xs font-bold text-slate-300 font-mono">{todoTasks.length}</span>
+            {/* 2. TASK EXECUTION PROGRESS (Done vs Total) */}
+            <div className="bg-surface-950/80 border border-slate-800/90 rounded-2xl p-4 space-y-2.5 shadow-md">
+              <div className="flex items-center justify-between text-xs">
+                <span className="text-slate-400 font-bold flex items-center gap-1.5">
+                  <CheckCircle2 className="w-4 h-4 text-brand-400" /> Action Items Done
+                </span>
+                <span className="font-mono font-black text-brand-300 text-sm">
+                  {metrics.completedTasks} / {metrics.totalTasks}
+                  <span className="text-slate-500 text-xs font-normal"> tasks</span>
+                </span>
               </div>
-              <div className="bg-surface-900/80 p-1.5 rounded-lg border border-slate-800">
-                <span className="text-[10px] text-amber-400 block">Doing</span>
-                <span className="text-xs font-bold text-amber-300 font-mono">{doingTasks.length}</span>
+
+              {/* Task Progress Bar */}
+              <div className="w-full h-3 bg-surface-900 rounded-full overflow-hidden p-0.5 border border-slate-800">
+                <div
+                  className="h-full bg-gradient-to-r from-brand-600 to-indigo-400 rounded-full transition-all duration-700 shadow-sm shadow-brand-500/30"
+                  style={{ width: `${Math.max(0, Math.min(100, metrics.taskPct))}%` }}
+                />
               </div>
-              <div className="bg-surface-900/80 p-1.5 rounded-lg border border-slate-800">
-                <span className="text-[10px] text-emerald-400 block">Done</span>
-                <span className="text-xs font-bold text-emerald-300 font-mono">{doneTasks.length}</span>
+
+              {/* Mini Column Counters */}
+              <div className="grid grid-cols-3 gap-2 pt-0.5 text-center">
+                <div className="bg-surface-900/90 p-1 rounded-lg border border-slate-800/80">
+                  <span className="text-[10px] text-slate-400 block">To Do</span>
+                  <span className="text-xs font-bold text-slate-300 font-mono">{todoTasks.length}</span>
+                </div>
+                <div className="bg-surface-900/90 p-1 rounded-lg border border-slate-800/80">
+                  <span className="text-[10px] text-amber-400 block">Doing</span>
+                  <span className="text-xs font-bold text-amber-300 font-mono">{doingTasks.length}</span>
+                </div>
+                <div className="bg-surface-900/90 p-1 rounded-lg border border-slate-800/80">
+                  <span className="text-[10px] text-emerald-400 block">Done</span>
+                  <span className="text-xs font-bold text-emerald-300 font-mono">{doneTasks.length}</span>
+                </div>
               </div>
             </div>
           </div>

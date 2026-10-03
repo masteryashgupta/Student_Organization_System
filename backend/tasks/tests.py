@@ -50,6 +50,24 @@ class TaskModelTests(TestCase):
         with self.assertRaises(ValidationError):
             project.full_clean()
 
+    def test_project_raised_amount_from_ledger(self):
+        from core.models import Transaction
+        self.assertEqual(self.project.raised_amount, Decimal('0.00'))
+        self.assertEqual(self.project.financial_progress_percentage, 0)
+
+        # Record income transaction in the ledger for this project
+        Transaction.objects.create(
+            type=Transaction.TYPE_INCOME,
+            category=Transaction.CATEGORY_FUNDRAISER,
+            amount=Decimal('250.00'),
+            source=f"Project #{self.project.id}",
+            description="Bake sale cash donations"
+        )
+
+        self.assertEqual(self.project.raised_amount, Decimal('250.00'))
+        self.assertEqual(self.project.financial_progress_percentage, 50)
+        self.assertTrue(self.project.is_on_track)
+
     def test_task_creation_and_completion_progress(self):
         task1 = Task.objects.create(
             project=self.project,
