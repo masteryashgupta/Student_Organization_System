@@ -125,3 +125,48 @@ class TicketPurchaseSerializer(serializers.Serializer):
                 attrs['holder_email'] = user.email
 
         return attrs
+
+
+class CheckInFeedItemSerializer(serializers.Serializer):
+    token = serializers.UUIDField(read_only=True)
+    holder_name = serializers.CharField(read_only=True)
+    holder_email = serializers.CharField(read_only=True)
+    type = serializers.CharField(read_only=True)
+    checked_in_at = serializers.DateTimeField(read_only=True)
+
+
+class CheckInFeedSerializer(serializers.Serializer):
+    event_id = serializers.IntegerField(read_only=True)
+    event_title = serializers.CharField(read_only=True)
+    capacity = serializers.IntegerField(read_only=True)
+    total_sold = serializers.IntegerField(read_only=True)
+    checked_in_count = serializers.IntegerField(read_only=True)
+    attendance_pct = serializers.FloatField(read_only=True)
+    recent_checkins = CheckInFeedItemSerializer(many=True, read_only=True)
+
+
+class RevenueBreakdownSerializer(serializers.Serializer):
+    total = serializers.DecimalField(max_digits=12, decimal_places=2, read_only=True)
+    member = serializers.DecimalField(max_digits=12, decimal_places=2, read_only=True)
+    nonmember = serializers.DecimalField(max_digits=12, decimal_places=2, read_only=True)
+
+
+class TicketsSoldBreakdownSerializer(serializers.Serializer):
+    member = serializers.IntegerField(read_only=True)
+    nonmember = serializers.IntegerField(read_only=True)
+
+
+class EventStatsSerializer(serializers.Serializer):
+    event_id = serializers.IntegerField(read_only=True)
+    event_title = serializers.CharField(read_only=True)
+    capacity = serializers.IntegerField(read_only=True)
+    tickets_sold = serializers.IntegerField(read_only=True)
+    tickets_sold_breakdown = TicketsSoldBreakdownSerializer(read_only=True)
+    attendance = serializers.IntegerField(read_only=True)
+    attendance_rate = serializers.FloatField(read_only=True)
+    revenue = RevenueBreakdownSerializer(read_only=True)
+    total_revenue = serializers.DecimalField(max_digits=12, decimal_places=2, read_only=True)
+    member_revenue = serializers.DecimalField(max_digits=12, decimal_places=2, read_only=True)
+    nonmember_revenue = serializers.DecimalField(max_digits=12, decimal_places=2, read_only=True)
+    checked_in_count = serializers.IntegerField(read_only=True)
+

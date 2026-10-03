@@ -3,16 +3,23 @@ from rest_framework import viewsets, permissions, status
 from rest_framework.views import APIView
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from rest_framework.exceptions import ValidationError
+from accounts.permissions import IsOfficer
 from .models import Event, Ticket
 from .serializers import (
     EventSerializer,
     EventAvailabilitySerializer,
     TicketSerializer,
     TicketPurchaseSerializer,
+    CheckInFeedSerializer,
+    EventStatsSerializer,
 )
 from .services import (
     get_event_availability,
     purchase_ticket,
+    check_in_ticket,
+    get_event_checkin_feed,
+    get_event_stats,
     generate_ticket_qr_bytes,
     generate_ticket_qr_data_url,
 )
@@ -30,6 +37,7 @@ class EventViewSet(viewsets.ModelViewSet):
     - GET /api/events/{id}/availability : Real-time availability { capacity, sold, remaining }
     - POST /api/events/{id}/tickets : Purchase a ticket with concurrency protection & ledger record
     - GET /api/events/{id}/tickets : List tickets for this event
+    - GET /api/events/{id}/checkin-feed : Live checked-in count and recent check-ins feed (Officers only)
     """
     queryset = Event.objects.all().order_by('datetime')
     serializer_class = EventSerializer
@@ -79,6 +87,32 @@ class EventViewSet(viewsets.ModelViewSet):
 
         return Response(TicketSerializer(ticket).data, status=status.HTTP_201_CREATED)
 
+    @action(detail=True, methods=['get'], permission_classes=[IsOfficer], url_path='checkin-feed')
+    def checkin_feed(self, request, pk=None):
+        """
+        GET /api/events/{id}/checkin-feed
+        Returns live attendance metrics (checked-in count, total sold, attendance %)
+        and recent check-in events feed.
+        Restricted to Officers (Club Leaders & Admins).
+        """
+        event = self.get_object()
+        data = get_event_checkin_feed(event)
+        serializer = CheckInFeedSerializer(data)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    @action(detail=True, methods=['get'], permission_classes=[IsOfficer], url_path='stats')
+    def stats(self, request, pk=None):
+        """
+        GET /api/events/{id}/stats
+        Returns post-event/live stats: tickets sold, attendance (checked-in count),
+        attendance rate, and revenue (sum of price_paid, split by member/non-member).
+        Restricted to Officers.
+        """
+        event = self.get_object()
+        data = get_event_stats(event)
+        serializer = EventStatsSerializer(data)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
 
 class TicketQRView(APIView):
     """
@@ -104,3 +138,31 @@ class TicketQRView(APIView):
         # Default: return raw PNG image
         image_bytes = generate_ticket_qr_bytes(str(ticket.token))
         return HttpResponse(image_bytes, content_type="image/png")
+
+
+class TicketCheckInView(APIView):
+    """
+    POST /api/tickets/{token}/check-in
+    Validates token and marks ticket as checked in.
+    Rejects double check-ins and invalid/cancelled tokens with clear error messages.
+    Restricted to Officers (Club Leaders and Admins).
+    """
+    permission_classes = [IsOfficer]
+
+    def post(self, request, token):
+        try:
+            ticket = check_in_ticket(token)
+        except ValidationError as exc:
+            detail = exc.detail.get('detail') if isinstance(exc.detail, dict) else str(exc.detail)
+            if "Ticket not found" in str(detail):
+                return Response({"detail": detail}, status=status.HTTP_404_NOT_FOUND)
+            return Response({"detail": detail}, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response(
+            {
+                "status": "success",
+                "message": f"Check-in successful. Welcome, {ticket.holder_name or 'attendee'}!",
+                "ticket": TicketSerializer(ticket).data,
+            },
+            status=status.HTTP_200_OK,
+        )

@@ -431,3 +431,246 @@ class TicketQRTests(APITestCase):
         self.assertEqual(res.status_code, status.HTTP_404_NOT_FOUND)
 
 
+class TicketCheckInAndFeedTests(APITestCase):
+    def setUp(self):
+        self.officer = User.objects.create_user(
+            username='lead_officer',
+            email='leader@skyline.edu',
+            password='password123',
+            name='President Sarah',
+            role=User.ROLE_LEADER
+        )
+        self.member = User.objects.create_user(
+            username='regular_member',
+            email='member@skyline.edu',
+            password='password123',
+            name='Mark Regular',
+            role=User.ROLE_MEMBER
+        )
+        self.event = Event.objects.create(
+            title='Spring Gala 2026',
+            description='Gala event check-in test.',
+            datetime=timezone.now() + timedelta(days=14),
+            venue='Skyline Grand Ballroom',
+            capacity=100,
+            member_price=Decimal('15.00'),
+            nonmember_price=Decimal('25.00'),
+            status=Event.STATUS_PUBLISHED
+        )
+        self.ticket = Ticket.objects.create(
+            event=self.event,
+            holder=self.member,
+            holder_name='Mark Regular',
+            holder_email='member@skyline.edu',
+            type=Ticket.TYPE_MEMBER,
+            price_paid=Decimal('15.00'),
+            status=Ticket.STATUS_VALID
+        )
+
+    def test_officer_check_in_success(self):
+        self.client.force_authenticate(user=self.officer)
+        res = self.client.post(f'/api/tickets/{self.ticket.token}/check-in/')
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertEqual(res.data['status'], 'success')
+        self.assertIn('Check-in successful', res.data['message'])
+
+        # Verify ticket state in DB
+        self.ticket.refresh_from_db()
+        self.assertEqual(self.ticket.status, Ticket.STATUS_CHECKED_IN)
+        self.assertIsNotNone(self.ticket.checked_in_at)
+
+    def test_double_check_in_rejected_with_timestamp(self):
+        self.client.force_authenticate(user=self.officer)
+        # First check-in
+        res1 = self.client.post(f'/api/tickets/{self.ticket.token}/check-in/')
+        self.assertEqual(res1.status_code, status.HTTP_200_OK)
+
+        # Second check-in attempt (double check-in)
+        res2 = self.client.post(f'/api/tickets/{self.ticket.token}/check-in/')
+        self.assertEqual(res2.status_code, status.HTTP_400_BAD_REQUEST)
+        error_detail = str(res2.data.get('detail', res2.data))
+        self.assertIn('Double check-in rejected', error_detail)
+
+    def test_unknown_ticket_token_returns_404(self):
+        self.client.force_authenticate(user=self.officer)
+        res = self.client.post('/api/tickets/ffffffff-ffff-ffff-ffff-ffffffffffff/check-in/')
+        self.assertEqual(res.status_code, status.HTTP_404_NOT_FOUND)
+        error_detail = str(res.data.get('detail', res.data))
+        self.assertIn('Ticket not found', error_detail)
+
+    def test_cancelled_ticket_check_in_rejected(self):
+        self.ticket.status = Ticket.STATUS_CANCELLED
+        self.ticket.save()
+
+        self.client.force_authenticate(user=self.officer)
+        res = self.client.post(f'/api/tickets/{self.ticket.token}/check-in/')
+        self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
+        error_detail = str(res.data.get('detail', res.data))
+        self.assertIn('cancelled', error_detail)
+
+    def test_check_in_permission_denied_for_regular_member(self):
+        self.client.force_authenticate(user=self.member)
+        res = self.client.post(f'/api/tickets/{self.ticket.token}/check-in/')
+        self.assertEqual(res.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_check_in_permission_denied_for_unauthenticated(self):
+        res = self.client.post(f'/api/tickets/{self.ticket.token}/check-in/')
+        self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_checkin_feed_endpoint(self):
+        # 1. Unauthenticated -> 401
+        res_unauth = self.client.get(f'/api/events/{self.event.id}/checkin-feed/')
+        self.assertEqual(res_unauth.status_code, status.HTTP_401_UNAUTHORIZED)
+
+        # 2. Member -> 403
+        self.client.force_authenticate(user=self.member)
+        res_member = self.client.get(f'/api/events/{self.event.id}/checkin-feed/')
+        self.assertEqual(res_member.status_code, status.HTTP_403_FORBIDDEN)
+
+        # 3. Officer -> 200 with stats and feed
+        self.client.force_authenticate(user=self.officer)
+        # Check-in ticket first
+        self.client.post(f'/api/tickets/{self.ticket.token}/check-in/')
+
+        res = self.client.get(f'/api/events/{self.event.id}/checkin-feed/')
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertEqual(res.data['event_id'], self.event.id)
+        self.assertEqual(res.data['total_sold'], 1)
+        self.assertEqual(res.data['checked_in_count'], 1)
+        self.assertEqual(res.data['attendance_pct'], 100.0)
+        self.assertEqual(len(res.data['recent_checkins']), 1)
+        self.assertEqual(res.data['recent_checkins'][0]['token'], str(self.ticket.token))
+        self.assertEqual(res.data['recent_checkins'][0]['holder_name'], 'Mark Regular')
+
+
+class EventStatsTests(APITestCase):
+    def setUp(self):
+        self.officer = User.objects.create_user(
+            username='event_director',
+            email='director@skyline.edu',
+            password='password123',
+            name='Director Taylor',
+            role=User.ROLE_ADMIN
+        )
+        self.member = User.objects.create_user(
+            username='student_guest',
+            email='guest@skyline.edu',
+            password='password123',
+            name='Sam Student',
+            role=User.ROLE_MEMBER
+        )
+        self.event = Event.objects.create(
+            title='Spring Gala 2026',
+            description='Gala event for attendance and revenue stats calculation.',
+            datetime=timezone.now() + timedelta(days=21),
+            venue='Skyline Grand Ballroom',
+            capacity=100,
+            member_price=Decimal('15.00'),
+            nonmember_price=Decimal('25.00'),
+            status=Event.STATUS_PUBLISHED
+        )
+
+    def test_stats_metrics_and_revenue_breakdown(self):
+        # 1. Create 2 member tickets ($15 each = $30)
+        t_m1 = Ticket.objects.create(
+            event=self.event,
+            holder=self.member,
+            holder_name='Member One',
+            holder_email='m1@skyline.edu',
+            type=Ticket.TYPE_MEMBER,
+            price_paid=Decimal('15.00'),
+            status=Ticket.STATUS_CHECKED_IN,
+            checked_in_at=timezone.now()
+        )
+        t_m2 = Ticket.objects.create(
+            event=self.event,
+            holder=self.member,
+            holder_name='Member Two',
+            holder_email='m2@skyline.edu',
+            type=Ticket.TYPE_MEMBER,
+            price_paid=Decimal('15.00'),
+            status=Ticket.STATUS_VALID
+        )
+
+        # 2. Create 3 non-member tickets ($25 each = $75)
+        t_nm1 = Ticket.objects.create(
+            event=self.event,
+            holder_name='Guest One',
+            holder_email='g1@external.org',
+            type=Ticket.TYPE_NONMEMBER,
+            price_paid=Decimal('25.00'),
+            status=Ticket.STATUS_CHECKED_IN,
+            checked_in_at=timezone.now()
+        )
+        t_nm2 = Ticket.objects.create(
+            event=self.event,
+            holder_name='Guest Two',
+            holder_email='g2@external.org',
+            type=Ticket.TYPE_NONMEMBER,
+            price_paid=Decimal('25.00'),
+            status=Ticket.STATUS_CHECKED_IN,
+            checked_in_at=timezone.now()
+        )
+        t_nm3 = Ticket.objects.create(
+            event=self.event,
+            holder_name='Guest Three',
+            holder_email='g3@external.org',
+            type=Ticket.TYPE_NONMEMBER,
+            price_paid=Decimal('25.00'),
+            status=Ticket.STATUS_VALID
+        )
+
+        # 3. Create 1 cancelled ticket (must be excluded from sold, attendance, and revenue)
+        Ticket.objects.create(
+            event=self.event,
+            holder_name='Cancelled Guest',
+            holder_email='cg@external.org',
+            type=Ticket.TYPE_NONMEMBER,
+            price_paid=Decimal('25.00'),
+            status=Ticket.STATUS_CANCELLED
+        )
+
+        # Authenticate as Officer
+        self.client.force_authenticate(user=self.officer)
+        res = self.client.get(f'/api/events/{self.event.id}/stats/')
+
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        # Tickets sold = 2 member + 3 nonmember = 5
+        self.assertEqual(res.data['tickets_sold'], 5)
+        self.assertEqual(res.data['tickets_sold_breakdown']['member'], 2)
+        self.assertEqual(res.data['tickets_sold_breakdown']['nonmember'], 3)
+
+        # Attendance = 1 member + 2 nonmember checked in = 3
+        self.assertEqual(res.data['attendance'], 3)
+        # Attendance rate = 3 / 5 * 100 = 60.0%
+        self.assertEqual(res.data['attendance_rate'], 60.0)
+
+        # Revenue = 2 * 15.00 + 3 * 25.00 = 30.00 + 75.00 = 105.00
+        self.assertEqual(Decimal(str(res.data['revenue']['total'])), Decimal('105.00'))
+        self.assertEqual(Decimal(str(res.data['revenue']['member'])), Decimal('30.00'))
+        self.assertEqual(Decimal(str(res.data['revenue']['nonmember'])), Decimal('75.00'))
+
+    def test_stats_zero_tickets_sold(self):
+        self.client.force_authenticate(user=self.officer)
+        res = self.client.get(f'/api/events/{self.event.id}/stats/')
+
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertEqual(res.data['tickets_sold'], 0)
+        self.assertEqual(res.data['attendance'], 0)
+        self.assertEqual(res.data['attendance_rate'], 0.0)
+        self.assertEqual(Decimal(str(res.data['revenue']['total'])), Decimal('0.00'))
+        self.assertEqual(Decimal(str(res.data['revenue']['member'])), Decimal('0.00'))
+        self.assertEqual(Decimal(str(res.data['revenue']['nonmember'])), Decimal('0.00'))
+
+    def test_stats_permissions_enforced(self):
+        # 1. Unauthenticated -> 401
+        res_unauth = self.client.get(f'/api/events/{self.event.id}/stats/')
+        self.assertEqual(res_unauth.status_code, status.HTTP_401_UNAUTHORIZED)
+
+        # 2. Regular Member -> 403
+        self.client.force_authenticate(user=self.member)
+        res_member = self.client.get(f'/api/events/{self.event.id}/stats/')
+        self.assertEqual(res_member.status_code, status.HTTP_403_FORBIDDEN)
+
+
+
