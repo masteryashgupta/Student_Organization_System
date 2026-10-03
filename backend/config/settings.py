@@ -36,8 +36,8 @@ INSTALLED_APPS = [
     'events',
     'store',
     'tasks',
-    # 'finance',
-    # 'announcements',
+    'finance',
+    'announcements',
 ]
 
 AUTH_USER_MODEL = 'accounts.User'
