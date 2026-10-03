@@ -8,6 +8,7 @@ import { getRegisteredRoutes } from './routeRegistry';
 import '../features/auth/authRoutes';
 import '../features/members/memberRoutes';
 import '../features/store/storeRoutes';
+import '../features/tasks/taskRoutes';
 import '../features/announcements/announcementsRoutes';
 
 export default function AppRoutes() {
