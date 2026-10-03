@@ -15,17 +15,22 @@ def generate_ticket_qr_bytes(token: str) -> bytes:
     Generates a PNG image of a QR code encoding the ticket UUID token.
     """
     qr = qrcode.QRCode(
-        version=1,
+        version=None,
         error_correction=qrcode.constants.ERROR_CORRECT_M,
         box_size=10,
         border=4,
     )
-    qr.add_data(str(token))
+    qr.add_data(str(token).strip())
     qr.make(fit=True)
     img = qr.make_image(fill_color="black", back_color="white")
+    
     buffer = io.BytesIO()
-    img.save(buffer, format="PNG")
-    return buffer.getvalue()
+    try:
+        img.save(buffer, format="PNG")
+        buffer.seek(0)
+        return buffer.getvalue()
+    finally:
+        buffer.close()
 
 
 def generate_ticket_qr_data_url(token: str) -> str:
