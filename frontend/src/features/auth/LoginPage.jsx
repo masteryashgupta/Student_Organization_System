@@ -39,20 +39,20 @@ export default function LoginPage() {
 
   return (
     <div className="flex items-center justify-center min-h-[75vh] py-8 px-4">
-      <Card className="max-w-md w-full border-slate-700/80">
+      <Card className="max-w-md w-full bg-white border-border shadow-odoo-card">
         <CardHeader className="text-center pb-2">
-          <div className="mx-auto w-12 h-12 rounded-2xl bg-gradient-to-tr from-brand-600 to-accent-500 flex items-center justify-center font-bold text-white text-xl shadow-lg shadow-brand-600/30 mb-3">
+          <div className="mx-auto w-12 h-12 rounded-2xl bg-brand flex items-center justify-center font-bold text-white text-xl shadow-sm mb-3">
             S
           </div>
-          <CardTitle className="text-2xl">Welcome Back</CardTitle>
-          <CardDescription>
+          <CardTitle className="text-2xl text-ink">Welcome Back</CardTitle>
+          <CardDescription className="text-ink-muted">
             Sign in to access your Skyline Club member account
           </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             {error && (
-              <div className="p-3 rounded-lg bg-danger-950/80 border border-danger-700 text-danger-200 text-sm">
+              <div className="p-3 rounded-xl bg-danger-50 border border-danger-200 text-danger-700 text-sm">
                 {error}
               </div>
             )}
@@ -82,9 +82,9 @@ export default function LoginPage() {
             </Button>
           </form>
         </CardContent>
-        <CardFooter className="justify-center text-sm text-slate-400">
+        <CardFooter className="justify-center text-sm text-ink-muted">
           Don't have an account?{' '}
-          <Link to="/register" className="ml-1 text-brand-400 font-semibold hover:underline">
+          <Link to="/register" className="ml-1 text-accent font-semibold hover:underline">
             Register here
           </Link>
         </CardFooter>

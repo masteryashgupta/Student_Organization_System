@@ -104,10 +104,10 @@ export default function MemberListPage() {
   if (!isOfficer) {
     return (
       <div className="max-w-2xl mx-auto py-12">
-        <Card className="border-rose-900/40 bg-surface-900/80">
+        <Card className="border-rose-200 bg-rose-50 shadow-sm">
           <CardContent className="p-8 text-center space-y-4">
-            <h2 className="text-xl font-bold text-white">Officer Access Required</h2>
-            <p className="text-slate-400 text-sm">
+            <h2 className="text-xl font-bold text-[#222222]">Officer Access Required</h2>
+            <p className="text-[#66636A] text-sm">
               The full member directory and roster management is reserved for club officers and administrators.
             </p>
           </CardContent>
@@ -119,28 +119,33 @@ export default function MemberListPage() {
   return (
     <div className="space-y-6 max-w-7xl mx-auto pb-12 animate-fadeIn">
       {/* Page Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800/80 pb-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-border pb-6">
         <div>
-          <h1 className="text-2xl font-bold text-white tracking-tight">Membership Directory & Roster</h1>
-          <p className="text-sm text-slate-400">
+          <h1 className="text-2xl font-extrabold text-[#222222] tracking-tight">Membership Directory & Roster</h1>
+          <p className="text-sm text-[#66636A]">
             View, search, and manage all student association memberships and dues payments.
           </p>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-2.5">
+          <Link to="/members/profile">
+            <Button variant="outline" size="sm" className="gap-2">
+              My Membership
+            </Button>
+          </Link>
           <Link to="/members/verify">
             <Button variant="outline" size="sm" className="gap-2">
-              <svg className="w-4 h-4 text-brand-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 text-[#714B67]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
               </svg>
               Door Scanner
             </Button>
           </Link>
           <Link to="/join">
-            <Button variant="primary" size="sm" className="gap-2">
+            <Button variant="primary" size="sm" className="gap-2 bg-[#714B67] hover:bg-[#5B3B52] text-white">
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
               </svg>
-              Add Member
+              + New Member
             </Button>
           </Link>
         </div>
@@ -148,30 +153,30 @@ export default function MemberListPage() {
 
       {/* Summary KPI Cards */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div className="p-4 rounded-xl bg-surface-900 border border-slate-800">
-          <p className="text-xs text-slate-400 font-medium">Total Roster</p>
-          <p className="text-2xl font-extrabold text-white mt-1">{totalCount}</p>
+        <div className="p-4 rounded-2xl bg-white border border-border shadow-sm">
+          <p className="text-xs text-[#66636A] font-medium">Total Roster</p>
+          <p className="text-2xl font-extrabold text-[#222222] mt-1">{totalCount}</p>
         </div>
-        <div className="p-4 rounded-xl bg-surface-900 border border-emerald-900/40">
-          <p className="text-xs text-emerald-400 font-medium">Active Members</p>
-          <p className="text-2xl font-extrabold text-emerald-300 mt-1">{activeCount}</p>
+        <div className="p-4 rounded-2xl bg-emerald-50/70 border border-emerald-200 shadow-sm">
+          <p className="text-xs text-emerald-800 font-medium">Active Members</p>
+          <p className="text-2xl font-extrabold text-emerald-900 mt-1">{activeCount}</p>
         </div>
-        <div className="p-4 rounded-xl bg-surface-900 border border-amber-900/40">
-          <p className="text-xs text-amber-400 font-medium">Pending Dues</p>
-          <p className="text-2xl font-extrabold text-amber-300 mt-1">{pendingCount}</p>
+        <div className="p-4 rounded-2xl bg-amber-50/70 border border-amber-200 shadow-sm">
+          <p className="text-xs text-amber-800 font-medium">Pending Dues</p>
+          <p className="text-2xl font-extrabold text-amber-900 mt-1">{pendingCount}</p>
         </div>
-        <div className="p-4 rounded-xl bg-surface-900 border border-rose-900/40">
-          <p className="text-xs text-rose-400 font-medium">Expired Passes</p>
-          <p className="text-2xl font-extrabold text-rose-300 mt-1">{expiredCount}</p>
+        <div className="p-4 rounded-2xl bg-rose-50/70 border border-rose-200 shadow-sm">
+          <p className="text-xs text-rose-800 font-medium">Expired Passes</p>
+          <p className="text-2xl font-extrabold text-rose-900 mt-1">{expiredCount}</p>
         </div>
       </div>
 
       {/* Search & Filter Controls */}
-      <Card className="bg-surface-900/80 border-slate-800">
+      <Card className="bg-white border-border shadow-sm">
         <CardContent className="p-4">
           <div className="flex flex-col md:flex-row gap-4 justify-between items-center">
             {/* Status Filter Tabs */}
-            <div className="flex items-center gap-1.5 p-1 bg-surface-950 rounded-xl border border-slate-800 w-full md:w-auto overflow-x-auto">
+            <div className="flex items-center gap-1.5 p-1 bg-[#F4F6F8] rounded-xl border border-border w-full md:w-auto overflow-x-auto">
               {[
                 { label: 'All Members', value: 'all' },
                 { label: 'Active', value: 'active' },
@@ -183,8 +188,8 @@ export default function MemberListPage() {
                   onClick={() => setStatusFilter(tab.value)}
                   className={`px-3.5 py-1.5 text-xs font-semibold rounded-lg transition-all whitespace-nowrap ${
                     statusFilter === tab.value
-                      ? 'bg-brand-600 text-white shadow-md'
-                      : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
+                      ? 'bg-[#714B67] text-white shadow-sm'
+                      : 'text-[#66636A] hover:text-[#222222] hover:bg-white'
                   }`}
                 >
                   {tab.label}
@@ -198,7 +203,7 @@ export default function MemberListPage() {
                 placeholder="Search by name, email, or tier..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="py-1.5 text-xs bg-surface-950"
+                className="py-1.5 text-xs bg-white border-border text-[#222222]"
               />
               <Button type="submit" variant="outline" size="sm">
                 Search
@@ -209,19 +214,19 @@ export default function MemberListPage() {
       </Card>
 
       {/* Main Members Table */}
-      <Card className="bg-surface-900/90 border-slate-800 overflow-hidden shadow-2xl">
+      <Card className="bg-white border-border shadow-odoo-card overflow-hidden">
         <CardContent className="p-0">
           {loading ? (
-            <div className="p-12 text-center text-slate-400 text-sm space-y-3">
-              <svg className="animate-spin h-6 w-6 text-brand-500 mx-auto" fill="none" viewBox="0 0 24 24">
+            <div className="p-12 text-center text-[#66636A] text-sm space-y-3">
+              <svg className="animate-spin h-6 w-6 text-[#714B67] mx-auto" fill="none" viewBox="0 0 24 24">
                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
               </svg>
               <p>Fetching member database records...</p>
             </div>
           ) : members.length === 0 ? (
-            <div className="p-12 text-center text-slate-400 text-sm space-y-2">
-              <p className="font-semibold text-slate-200">No members found.</p>
+            <div className="p-12 text-center text-[#66636A] text-sm space-y-2">
+              <p className="font-semibold text-[#222222]">No members found.</p>
               <p className="text-xs">Try adjusting your search query or status filter.</p>
             </div>
           ) : (
@@ -243,30 +248,30 @@ export default function MemberListPage() {
                   const isExpiring = m.is_expiring_soon;
 
                   return (
-                    <TableRow key={m.id}>
+                    <TableRow key={m.id} className="hover:bg-[#FAF9F7]">
                       <TableCell>
                         <div className="flex items-center gap-3">
-                          <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-brand-600/30 to-accent-600/30 border border-brand-500/30 flex items-center justify-center font-bold text-brand-300 text-sm">
+                          <div className="w-9 h-9 rounded-xl bg-[#714B67]/10 border border-[#714B67]/20 flex items-center justify-center font-bold text-[#714B67] text-sm">
                             {(u.name || u.email || 'M').charAt(0).toUpperCase()}
                           </div>
                           <div>
-                            <p className="font-semibold text-white">{u.name || u.username}</p>
-                            <p className="text-xs text-slate-400">{u.email}</p>
+                            <p className="font-semibold text-[#222222]">{u.name || u.username}</p>
+                            <p className="text-xs text-[#66636A]">{u.email}</p>
                           </div>
                         </div>
                       </TableCell>
 
                       <TableCell>
                         <div>
-                          <p className="font-medium text-slate-200">{t.name || 'Standard Tier'}</p>
-                          <p className="text-xs text-brand-400 font-mono">${t.price || '0.00'}</p>
+                          <p className="font-medium text-[#222222]">{t.name || 'Standard Tier'}</p>
+                          <p className="text-xs text-[#714B67] font-mono font-bold">${t.price || '0.00'}</p>
                         </div>
                       </TableCell>
 
                       <TableCell>
                         {getStatusBadge(m.status, m.computed_status)}
                         {isExpiring && (
-                          <span className="block text-[11px] text-amber-400 font-medium mt-1">
+                          <span className="block text-[11px] text-amber-700 font-medium mt-1">
                             Expiring in {m.days_until_expiry}d
                           </span>
                         )}
@@ -274,22 +279,22 @@ export default function MemberListPage() {
 
                       <TableCell>
                         <div className="space-y-0.5">
-                          <span className={`text-xs font-semibold flex items-center gap-1.5 ${m.dues_paid ? 'text-emerald-400' : 'text-rose-400'}`}>
-                            <span className={`w-1.5 h-1.5 rounded-full ${m.dues_paid ? 'bg-emerald-400' : 'bg-rose-400'}`} />
+                          <span className={`text-xs font-semibold flex items-center gap-1.5 ${m.dues_paid ? 'text-emerald-700' : 'text-rose-700'}`}>
+                            <span className={`w-1.5 h-1.5 rounded-full ${m.dues_paid ? 'bg-emerald-600' : 'bg-rose-600'}`} />
                             {m.dues_paid ? 'Paid' : 'Unpaid'}
                           </span>
                           {m.dues_paid && (
-                            <span className="text-[11px] text-slate-400 block">${m.dues_amount_paid} recorded</span>
+                            <span className="text-[11px] text-[#66636A] block">${m.dues_amount_paid} recorded</span>
                           )}
                         </div>
                       </TableCell>
 
                       <TableCell>
                         <div>
-                          <p className="text-xs text-slate-200">
+                          <p className="text-xs text-[#222222]">
                             {m.end_date ? new Date(m.end_date).toLocaleDateString() : '—'}
                           </p>
-                          <p className="text-[11px] text-slate-400">
+                          <p className="text-[11px] text-[#66636A]">
                             {m.days_until_expiry > 0 ? `${m.days_until_expiry} days left` : 'Expired / None'}
                           </p>
                         </div>
@@ -303,7 +308,7 @@ export default function MemberListPage() {
                               size="sm"
                               title="Show Member QR"
                               onClick={() => setSelectedMemberQR(m)}
-                              className="p-1.5 text-slate-400 hover:text-white"
+                              className="p-1.5 text-[#66636A] hover:text-[#222222]"
                             >
                               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
@@ -315,7 +320,7 @@ export default function MemberListPage() {
                             <Button
                               variant="outline"
                               size="sm"
-                              className="text-xs text-emerald-400 border-emerald-800/60 hover:bg-emerald-950/40"
+                              className="text-xs text-emerald-700 border-emerald-600/40 hover:bg-emerald-50"
                               onClick={() => setPayDuesMember(m)}
                             >
                               Record Dues
@@ -340,7 +345,7 @@ export default function MemberListPage() {
           title={`Digital Pass — ${selectedMemberQR.user_details?.name || selectedMemberQR.user_details?.email}`}
         >
           <div className="text-center space-y-4">
-            <div className="p-4 bg-white rounded-2xl inline-block shadow-2xl border-4 border-slate-700">
+            <div className="p-4 bg-white rounded-2xl inline-block shadow-md border-2 border-border">
               <img
                 src={selectedMemberQR.qr_code}
                 alt="Member QR Code"
@@ -348,8 +353,8 @@ export default function MemberListPage() {
               />
             </div>
             <div>
-              <p className="text-sm font-bold text-white">{selectedMemberQR.tier_details?.name}</p>
-              <p className="text-xs text-slate-400 font-mono mt-1">
+              <p className="text-sm font-bold text-[#222222]">{selectedMemberQR.tier_details?.name}</p>
+              <p className="text-xs text-[#66636A] font-mono mt-1">
                 Token: {selectedMemberQR.verification_token}
               </p>
             </div>
@@ -373,26 +378,26 @@ export default function MemberListPage() {
           title="Record Membership Dues Payment"
         >
           <div className="space-y-4">
-            <p className="text-sm text-slate-300">
-              Confirm recording dues payment for <strong className="text-white">{payDuesMember.user_details?.name}</strong> ({payDuesMember.user_details?.email}).
+            <p className="text-sm text-[#66636A]">
+              Confirm recording dues payment for <strong className="text-[#222222]">{payDuesMember.user_details?.name}</strong> ({payDuesMember.user_details?.email}).
             </p>
 
-            <div className="p-4 rounded-xl bg-surface-900 border border-slate-700/80 space-y-2">
-              <div className="flex justify-between text-xs text-slate-400">
+            <div className="p-4 rounded-xl bg-[#F4F6F8] border border-border space-y-2">
+              <div className="flex justify-between text-xs text-[#66636A]">
                 <span>Selected Plan</span>
-                <span className="font-semibold text-white">{payDuesMember.tier_details?.name}</span>
+                <span className="font-semibold text-[#222222]">{payDuesMember.tier_details?.name}</span>
               </div>
-              <div className="flex justify-between text-xs text-slate-400">
+              <div className="flex justify-between text-xs text-[#66636A]">
                 <span>Amount Due</span>
-                <span className="font-bold text-emerald-400 text-sm">${payDuesMember.tier_details?.price}</span>
+                <span className="font-bold text-emerald-700 text-sm">${payDuesMember.tier_details?.price}</span>
               </div>
-              <div className="flex justify-between text-xs text-slate-400">
+              <div className="flex justify-between text-xs text-[#66636A]">
                 <span>New Validity</span>
-                <span className="font-semibold text-white">{payDuesMember.tier_details?.duration_days} days</span>
+                <span className="font-semibold text-[#222222]">{payDuesMember.tier_details?.duration_days} days</span>
               </div>
             </div>
 
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-[#66636A]">
               This action will mark the membership as active, set the start/end dates, and record an income transaction in the central ledger.
             </p>
 
@@ -409,7 +414,7 @@ export default function MemberListPage() {
               <Button
                 variant="primary"
                 size="md"
-                className="w-1/2 font-bold"
+                className="w-1/2 font-bold bg-[#714B67] hover:bg-[#5B3B52] text-white"
                 onClick={handleRecordDues}
                 disabled={processingPayment}
               >

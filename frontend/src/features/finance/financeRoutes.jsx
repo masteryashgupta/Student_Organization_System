@@ -7,8 +7,7 @@ registerFeature({
   id: 'finance',
   name: 'Finance',
   navItems: [
-    { path: '/finance', label: 'Treasurer Dashboard', officerOnly: true },
-    { path: '/reimbursements', label: 'Reimbursements' },
+    { path: '/finance', label: 'Finances', officerOnly: true },
   ],
   routes: [
     { path: '/finance', element: <TreasurerDashboardPage /> },

@@ -38,8 +38,8 @@ export default function AnnouncementsArchivePage() {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white">Announcements Archive</h1>
-          <p className="text-sm text-slate-400 mt-1">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-[#222222]">Announcements Archive</h1>
+          <p className="text-sm text-[#66636A] mt-1">
             Complete historical record of all club notices and broadcast dispatches with timestamps.
           </p>
         </div>
@@ -51,7 +51,7 @@ export default function AnnouncementsArchivePage() {
           </Link>
           {isOfficer && (
             <Link to="/announcements/compose">
-              <Button variant="primary" size="sm">
+              <Button variant="primary" size="sm" className="bg-[#714B67] hover:bg-[#5B3B52] text-white shadow-sm">
                 + Compose Notice
               </Button>
             </Link>
@@ -59,11 +59,11 @@ export default function AnnouncementsArchivePage() {
         </div>
       </div>
 
-      <Card className="border-slate-800">
+      <Card className="border-border bg-white shadow-odoo-card">
         <CardHeader className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4">
           <div>
-            <CardTitle className="text-base text-white">Broadcast Timeline</CardTitle>
-            <CardDescription className="text-xs">
+            <CardTitle className="text-base text-[#222222]">Broadcast Timeline</CardTitle>
+            <CardDescription className="text-xs text-[#66636A]">
               Showing {filteredArchive.length} historical record(s) ordered by creation timestamp.
             </CardDescription>
           </div>
@@ -73,19 +73,19 @@ export default function AnnouncementsArchivePage() {
               placeholder="Search archive..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="text-xs py-1.5"
+              className="text-xs py-1.5 bg-white border-border text-[#222222]"
             />
           </div>
         </CardHeader>
         <CardContent className="p-0">
           {isLoading ? (
-            <div className="p-8 text-center text-slate-400 text-sm">Loading archive records...</div>
+            <div className="p-8 text-center text-[#66636A] text-sm">Loading archive records...</div>
           ) : isError ? (
-            <div className="p-6 text-center text-danger-300 text-sm">
+            <div className="p-6 text-center text-danger-500 text-sm">
               Failed to load archive. <Button size="sm" variant="ghost" onClick={() => refetch()}>Retry</Button>
             </div>
           ) : filteredArchive.length === 0 ? (
-            <div className="p-8 text-center text-slate-400 text-sm">No archive records found.</div>
+            <div className="p-8 text-center text-[#66636A] text-sm">No archive records found.</div>
           ) : (
             <Table>
               <TableHeader>
@@ -101,12 +101,12 @@ export default function AnnouncementsArchivePage() {
               <TableBody>
                 {filteredArchive.map((item) => (
                   <React.Fragment key={item.id}>
-                    <TableRow className="hover:bg-slate-800/40">
-                      <TableCell className="text-xs font-mono text-slate-300 whitespace-nowrap">
+                    <TableRow className="hover:bg-[#FAF9F7]">
+                      <TableCell className="text-xs font-mono text-[#66636A] whitespace-nowrap">
                         {new Date(item.created_at).toLocaleDateString()}{' '}
-                        <span className="text-slate-500">{new Date(item.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                        <span className="text-slate-400">{new Date(item.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
                       </TableCell>
-                      <TableCell className="font-medium text-white">
+                      <TableCell className="font-semibold text-[#222222]">
                         {item.title}
                       </TableCell>
                       <TableCell>
@@ -114,21 +114,21 @@ export default function AnnouncementsArchivePage() {
                           {item.audience_display || item.audience}
                         </Badge>
                       </TableCell>
-                      <TableCell className="text-xs text-slate-300">
+                      <TableCell className="text-xs text-[#66636A]">
                         {item.author_name}
                       </TableCell>
                       <TableCell>
                         {item.is_sent ? (
-                          <span className="text-xs text-emerald-400 font-medium">✓ Sent</span>
+                          <span className="text-xs text-emerald-700 font-medium">✓ Sent</span>
                         ) : (
-                          <span className="text-xs text-amber-400">Draft</span>
+                          <span className="text-xs text-amber-700">Draft</span>
                         )}
                       </TableCell>
                       <TableCell className="text-right">
                         <Button
                           variant="ghost"
                           size="sm"
-                          className="text-xs text-brand-400 py-1 px-2"
+                          className="text-xs text-[#714B67] hover:text-[#5B3B52] py-1 px-2 font-semibold"
                           onClick={() => toggleExpand(item.id)}
                         >
                           {expandedId === item.id ? 'Hide' : 'Read'}
@@ -136,15 +136,15 @@ export default function AnnouncementsArchivePage() {
                       </TableCell>
                     </TableRow>
                     {expandedId === item.id && (
-                      <TableRow className="bg-surface-950/80 border-t border-slate-800">
+                      <TableRow className="bg-[#FAF9F7] border-t border-border">
                         <TableCell colSpan={6} className="p-4">
-                          <div className="bg-surface-900 p-4 rounded-xl border border-slate-800 space-y-2">
-                            <h4 className="text-sm font-semibold text-brand-300">Full Message Body</h4>
-                            <p className="text-xs text-slate-300 whitespace-pre-line leading-relaxed">
+                          <div className="bg-white p-4 rounded-xl border border-border space-y-2 shadow-sm">
+                            <h4 className="text-sm font-semibold text-[#714B67]">Full Message Body</h4>
+                            <p className="text-xs text-[#222222] whitespace-pre-line leading-relaxed">
                               {item.body}
                             </p>
                             {item.sent_at && (
-                              <p className="text-[11px] text-slate-500 pt-2 border-t border-slate-800">
+                              <p className="text-[11px] text-[#66636A] pt-2 border-t border-border">
                                 Email dispatch timestamp: {new Date(item.sent_at).toLocaleString()}
                               </p>
                             )}

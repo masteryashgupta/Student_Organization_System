@@ -1,25 +1,149 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Inter:wght@400;500;600;700&family=Kalam:wght@700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --canvas-bg: #FAF9F7;
+    --text-main: #222222;
+    --text-muted: #66636A;
+    --border-subtle: #E9E7E5;
+    --section-muted: #F6F5F4;
+    --accent: #F15A4A;
+    --accent-hover: #D94535;
+    --brand-plum: #714B67;
+  }
+
   body {
-    @apply bg-surface-950 text-slate-100 font-sans antialiased min-h-screen selection:bg-brand-500 selection:text-white;
+    background-color: var(--canvas-bg);
+    color: var(--text-main);
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    min-height: 100vh;
+  }
+
+  body::selection {
+    background-color: var(--accent);
+    color: #ffffff;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    color: var(--text-main);
+    letter-spacing: -0.025em;
+    font-weight: 600;
   }
 }
 
-/* Custom sleek scrollbar */
+@font-face {
+  font-family: 'Caveat';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/caveat-700-3.woff2') format('woff2'),
+       url('https://fonts.gstatic.com/s/caveat/v23/WnznHAc5bAfYB2QRah7pcpNvOx-pjRV6eIWpYQ.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Kalam';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/kalam-700-2.woff2') format('woff2'),
+       url('https://fonts.gstatic.com/s/kalam/v16/YA9dr0WUnJr5-5kmpDrjQ-A.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+.font-odoo-script,
+.font-display,
+.font-script {
+  font-family: 'Caveat', cursive !important;
+  font-weight: 700 !important;
+  letter-spacing: normal !important;
+}
+
+/* Exact Odoo-style SVG marker highlights */
+.odoo-yellow-highlight,
+.x_wd_yellow_highlight_bold_05 {
+  background-image: url("/img/yellow_highlight.svg");
+  background-position: center 60%;
+  background-repeat: no-repeat;
+  background-size: 100% 90%;
+  white-space: nowrap;
+  display: inline-block;
+  padding: 0 12px;
+  color: #222222;
+}
+
+.odoo-blue-underline,
+.x_wd_blue_highlight_01 {
+  background-image: url("/img/blue_underline.svg");
+  background-position: center bottom;
+  background-repeat: no-repeat;
+  background-size: 100% 28%;
+  white-space: nowrap;
+  display: inline-block;
+  padding-bottom: 8px;
+}
+
+/* Backward-compatible highlights */
+.marker-highlight {
+  position: relative;
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.marker-highlight::after {
+  content: "";
+  position: absolute;
+  left: -8px;
+  right: -8px;
+  bottom: 8%;
+  height: 40%;
+  background-color: rgba(241, 90, 74, 0.22);
+  border-radius: 6px;
+  z-index: -1;
+  transform: rotate(-1.2deg);
+}
+
+.marker-highlight-yellow {
+  position: relative;
+  display: inline-block;
+  white-space: nowrap;
+  color: #222222;
+  z-index: 1;
+  padding: 0 6px;
+}
+
+.marker-highlight-yellow::before {
+  content: "";
+  position: absolute;
+  top: 8%;
+  left: -8px;
+  right: -10px;
+  bottom: 8%;
+  background-color: #F8B500;
+  border-radius: 14px 18px 12px 20px;
+  transform: rotate(-0.9deg);
+  z-index: -1;
+}
+
+/* Clean, modern scrollbar matching warm canvas */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 8px;
+  height: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: rgba(15, 23, 42, 0.6);
+  background: #F6F5F4;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(51, 65, 85, 0.8);
+  background: #D1CECA;
   border-radius: 9999px;
+  border: 2px solid #F6F5F4;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(71, 85, 105, 1);
+  background: #B4B0AA;
 }

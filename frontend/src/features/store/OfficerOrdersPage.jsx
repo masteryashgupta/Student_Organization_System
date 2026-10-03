@@ -103,83 +103,83 @@ export default function OfficerOrdersPage() {
   const getStatusBadge = (status) => {
     switch (status?.toLowerCase()) {
       case 'paid':
-        return <Badge variant="success">Paid / Ready for Pickup</Badge>;
+        return <Badge variant="success" className="bg-emerald-50 text-emerald-800 border-emerald-200">Paid / Ready for Pickup</Badge>;
       case 'fulfilled':
-        return <Badge variant="accent">Fulfilled</Badge>;
+        return <Badge variant="accent" className="bg-[#017E84]/10 text-[#017E84] border-[#017E84]/20">Fulfilled</Badge>;
       case 'pending':
-        return <Badge variant="warning">Pending Payment</Badge>;
+        return <Badge variant="warning" className="bg-amber-50 text-amber-800 border-amber-200">Pending Payment</Badge>;
       case 'cancelled':
-        return <Badge variant="danger">Cancelled</Badge>;
+        return <Badge variant="danger" className="bg-rose-50 text-rose-800 border-rose-200">Cancelled</Badge>;
       default:
-        return <Badge variant="neutral">{status}</Badge>;
+        return <Badge variant="neutral" className="bg-[#FAF9F7] text-[#222222] border-border">{status}</Badge>;
     }
   };
 
   return (
     <div className="max-w-7xl mx-auto pb-20 space-y-8">
       {/* Officer Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-5">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-border pb-5">
         <div>
-          <div className="flex items-center gap-2 mb-1">
-            <Badge variant="accent" size="sm">
+          <div className="flex items-center gap-2 mb-1.5">
+            <Badge variant="accent" size="sm" className="bg-[#714B67]/10 text-[#714B67] border-[#714B67]/20 font-semibold">
               <ShieldCheck className="w-3.5 h-3.5 mr-1" /> Officer Control Desk
             </Badge>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-white">Store Order Management & Fulfillment</h1>
-          <p className="text-sm text-slate-400 mt-0.5">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-[#222222]">Store Order Management & Fulfillment</h1>
+          <p className="text-sm text-[#66636A] mt-0.5">
             Manage student merchandise orders, verify payments, and mark customer pickups as fulfilled.
           </p>
         </div>
 
         <div className="flex items-center gap-3">
           <Link to="/store/manage/inventory">
-            <Button variant="outline" size="sm">
-              <Package className="w-4 h-4 mr-1.5 text-brand-400" /> Live Inventory Desk
+            <Button variant="outline" size="sm" className="border-border text-[#222222] hover:bg-white font-medium">
+              <Package className="w-4 h-4 mr-1.5 text-[#714B67]" /> Live Inventory Desk
             </Button>
           </Link>
-          <Button variant="secondary" size="sm" onClick={() => refetch()}>
-            <RefreshCw className="w-4 h-4 mr-1.5" /> Refresh
+          <Button variant="secondary" size="sm" onClick={() => refetch()} className="border-border bg-white text-[#222222] hover:bg-[#FAF9F7]">
+            <RefreshCw className="w-4 h-4 mr-1.5 text-[#66636A]" /> Refresh
           </Button>
         </div>
       </div>
 
       {/* KPI Overview Metrics */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="p-5 rounded-2xl bg-surface-900 border border-slate-800 shadow-md">
-          <span className="text-xs font-semibold uppercase tracking-wider text-slate-400">Total Merch Revenue</span>
+        <div className="p-5 rounded-2xl bg-white border border-border shadow-odoo-card">
+          <span className="text-xs font-semibold uppercase tracking-wider text-[#66636A]">Total Merch Revenue</span>
           <div className="flex items-center justify-between mt-2">
-            <span className="text-2xl font-black text-white">${metrics.totalRevenue.toFixed(2)}</span>
-            <div className="p-2 rounded-xl bg-emerald-500/10 text-emerald-400">
+            <span className="text-2xl font-black text-[#222222]">${metrics.totalRevenue.toFixed(2)}</span>
+            <div className="p-2 rounded-xl bg-emerald-50 text-emerald-600">
               <DollarSign className="w-5 h-5" />
             </div>
           </div>
         </div>
 
-        <div className="p-5 rounded-2xl bg-surface-900 border border-slate-800 shadow-md">
-          <span className="text-xs font-semibold uppercase tracking-wider text-slate-400">Awaiting Pickup (Paid)</span>
+        <div className="p-5 rounded-2xl bg-white border border-border shadow-odoo-card">
+          <span className="text-xs font-semibold uppercase tracking-wider text-[#66636A]">Awaiting Pickup (Paid)</span>
           <div className="flex items-center justify-between mt-2">
-            <span className="text-2xl font-black text-amber-400">{metrics.paidOrders}</span>
-            <div className="p-2 rounded-xl bg-amber-500/10 text-amber-400">
+            <span className="text-2xl font-black text-amber-600">{metrics.paidOrders}</span>
+            <div className="p-2 rounded-xl bg-amber-50 text-amber-600">
               <Clock className="w-5 h-5" />
             </div>
           </div>
         </div>
 
-        <div className="p-5 rounded-2xl bg-surface-900 border border-slate-800 shadow-md">
-          <span className="text-xs font-semibold uppercase tracking-wider text-slate-400">Fulfilled Orders</span>
+        <div className="p-5 rounded-2xl bg-white border border-border shadow-odoo-card">
+          <span className="text-xs font-semibold uppercase tracking-wider text-[#66636A]">Fulfilled Orders</span>
           <div className="flex items-center justify-between mt-2">
-            <span className="text-2xl font-black text-brand-400">{metrics.fulfilledOrders}</span>
-            <div className="p-2 rounded-xl bg-brand-500/10 text-brand-400">
+            <span className="text-2xl font-black text-[#714B67]">{metrics.fulfilledOrders}</span>
+            <div className="p-2 rounded-xl bg-[#714B67]/10 text-[#714B67]">
               <CheckCircle className="w-5 h-5" />
             </div>
           </div>
         </div>
 
-        <div className="p-5 rounded-2xl bg-surface-900 border border-slate-800 shadow-md">
-          <span className="text-xs font-semibold uppercase tracking-wider text-slate-400">Pending Payment</span>
+        <div className="p-5 rounded-2xl bg-white border border-border shadow-odoo-card">
+          <span className="text-xs font-semibold uppercase tracking-wider text-[#66636A]">Pending Payment</span>
           <div className="flex items-center justify-between mt-2">
-            <span className="text-2xl font-black text-slate-300">{metrics.pendingOrders}</span>
-            <div className="p-2 rounded-xl bg-slate-800 text-slate-400">
+            <span className="text-2xl font-black text-[#222222]">{metrics.pendingOrders}</span>
+            <div className="p-2 rounded-xl bg-[#FAF9F7] text-[#66636A] border border-border">
               <ShoppingBag className="w-5 h-5" />
             </div>
           </div>
@@ -187,16 +187,17 @@ export default function OfficerOrdersPage() {
       </div>
 
       {/* Filter and Search Controls */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-surface-900/60 p-4 rounded-2xl border border-slate-800">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-white p-4 rounded-2xl border border-border shadow-sm">
         <div className="flex items-center gap-2 overflow-x-auto w-full sm:w-auto pb-1 sm:pb-0 scrollbar-none">
           {['all', 'paid', 'fulfilled', 'pending', 'cancelled'].map((st) => (
             <button
               key={st}
+              type="button"
               onClick={() => setSelectedStatus(st)}
               className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold capitalize transition-all whitespace-nowrap ${
                 selectedStatus === st
-                  ? 'bg-brand-600 text-white shadow-md'
-                  : 'bg-surface-950 text-slate-400 hover:text-white border border-slate-800'
+                  ? 'bg-[#714B67] text-white shadow-sm'
+                  : 'bg-[#FAF9F7] text-[#66636A] hover:text-[#222222] border border-border'
               }`}
             >
               {st === 'all' ? 'All Orders' : st === 'paid' ? 'Paid (Ready)' : st}
@@ -205,32 +206,32 @@ export default function OfficerOrdersPage() {
         </div>
 
         <div className="relative w-full sm:w-72">
-          <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+          <Search className="w-4 h-4 text-[#66636A] absolute left-3.5 top-1/2 -translate-y-1/2" />
           <input
             type="text"
             placeholder="Search buyer, email, or order #..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full bg-surface-950 border border-slate-700/80 rounded-xl pl-9 pr-4 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-brand-500"
+            className="w-full bg-[#FAF9F7] border border-border rounded-xl pl-9 pr-4 py-2 text-xs text-[#222222] placeholder-[#66636A] focus:outline-none focus:ring-2 focus:ring-[#714B67]"
           />
         </div>
       </div>
 
       {/* Orders Management Table */}
       {isLoading ? (
-        <div className="p-12 text-center text-slate-400 animate-pulse">Loading orders...</div>
+        <div className="p-12 text-center text-[#66636A] animate-pulse">Loading orders...</div>
       ) : orders.length === 0 ? (
-        <div className="text-center py-20 bg-surface-900 rounded-3xl border border-slate-800 p-8 space-y-3">
-          <Package className="w-12 h-12 text-slate-500 mx-auto" />
-          <h3 className="text-lg font-bold text-white">No Orders Found</h3>
-          <p className="text-xs text-slate-400">There are no customer orders matching your selected filters.</p>
+        <div className="text-center py-20 bg-white rounded-3xl border border-border shadow-odoo-card p-8 space-y-3">
+          <Package className="w-12 h-12 text-[#66636A] mx-auto" />
+          <h3 className="text-lg font-bold text-[#222222]">No Orders Found</h3>
+          <p className="text-xs text-[#66636A]">There are no customer orders matching your selected filters.</p>
         </div>
       ) : (
-        <div className="bg-surface-900 rounded-3xl border border-slate-800 shadow-xl overflow-hidden">
+        <div className="bg-white rounded-3xl border border-border shadow-odoo-card overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs border-collapse">
               <thead>
-                <tr className="border-b border-slate-800 bg-surface-950/60 text-slate-400 font-semibold uppercase tracking-wider">
+                <tr className="border-b border-border bg-[#FAF9F7] text-[#66636A] font-semibold uppercase tracking-wider">
                   <th className="py-3.5 px-4">Order #</th>
                   <th className="py-3.5 px-4">Buyer Details</th>
                   <th className="py-3.5 px-4">Items Summary</th>
@@ -240,23 +241,23 @@ export default function OfficerOrdersPage() {
                   <th className="py-3.5 px-4 text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800/60 text-slate-300">
+              <tbody className="divide-y divide-border text-[#66636A]">
                 {orders.map((order) => (
-                  <tr key={order.id} className="hover:bg-slate-800/30 transition-colors">
+                  <tr key={order.id} className="hover:bg-[#FAF9F7]/70 transition-colors">
                     {/* Order ID & Date */}
-                    <td className="py-4 px-4 font-mono font-bold text-white whitespace-nowrap">
+                    <td className="py-4 px-4 font-mono font-bold text-[#222222] whitespace-nowrap">
                       #{order.id}
-                      <span className="block text-[10px] text-slate-500 font-normal">
+                      <span className="block text-[10px] text-[#66636A] font-normal">
                         {new Date(order.created_at).toLocaleDateString()}
                       </span>
                     </td>
 
                     {/* Buyer Details */}
                     <td className="py-4 px-4">
-                      <strong className="text-white block truncate max-w-[150px]">
+                      <strong className="text-[#222222] block truncate max-w-[150px]">
                         {order.buyer_name || order.buyer_username || 'Guest'}
                       </strong>
-                      <span className="text-[11px] text-slate-400 block truncate max-w-[150px]">
+                      <span className="text-[11px] text-[#66636A] block truncate max-w-[150px]">
                         {order.buyer_email || 'N/A'}
                       </span>
                     </td>
@@ -265,12 +266,12 @@ export default function OfficerOrdersPage() {
                     <td className="py-4 px-4 max-w-xs">
                       <div className="space-y-1">
                         {order.items?.slice(0, 2).map((item) => (
-                          <div key={item.id} className="text-slate-300 truncate">
-                            <span className="font-semibold text-white">{item.qty}x</span> {item.product_name} ({item.size})
+                          <div key={item.id} className="text-[#222222] truncate">
+                            <span className="font-semibold text-[#714B67]">{item.qty}x</span> {item.product_name} ({item.size})
                           </div>
                         ))}
                         {order.items?.length > 2 && (
-                          <span className="text-[10px] text-brand-400 font-semibold">
+                          <span className="text-[10px] text-[#714B67] font-semibold">
                             +{order.items.length - 2} more item(s)
                           </span>
                         )}
@@ -278,10 +279,10 @@ export default function OfficerOrdersPage() {
                     </td>
 
                     {/* Total Amount */}
-                    <td className="py-4 px-4 font-bold text-white whitespace-nowrap">
+                    <td className="py-4 px-4 font-bold text-[#222222] whitespace-nowrap">
                       ${Number(order.total).toFixed(2)}
                       {Number(order.discount_amount) > 0 && (
-                        <span className="block text-[10px] text-emerald-400">
+                        <span className="block text-[10px] text-emerald-600">
                           -${Number(order.discount_amount).toFixed(2)} member disc.
                         </span>
                       )}
@@ -289,7 +290,7 @@ export default function OfficerOrdersPage() {
 
                     {/* Payment Provider */}
                     <td className="py-4 px-4 whitespace-nowrap">
-                      <Badge variant="neutral" size="sm">
+                      <Badge variant="neutral" size="sm" className="bg-[#FAF9F7] text-[#66636A] border-border text-[10px]">
                         {order.payment_provider === 'stripe' ? 'Stripe Card' : 'Mock / Offline'}
                       </Badge>
                     </td>
@@ -306,6 +307,7 @@ export default function OfficerOrdersPage() {
                           <Button
                             variant="primary"
                             size="sm"
+                            className="bg-[#714B67] hover:bg-[#5B3B52] text-white"
                             isLoading={fulfillMutation.isPending}
                             onClick={() => fulfillMutation.mutate(order.id)}
                             title="Mark as handed over to student"
@@ -328,6 +330,7 @@ export default function OfficerOrdersPage() {
                         <Button
                           variant="ghost"
                           size="sm"
+                          className="text-[#66636A] hover:text-[#222222]"
                           onClick={() => setSelectedOrder(order)}
                           title="View order receipt"
                         >
@@ -352,65 +355,66 @@ export default function OfficerOrdersPage() {
       >
         {selectedOrder && (
           <div className="space-y-4 text-xs">
-            <div className="p-3 rounded-xl bg-surface-950 border border-slate-800 flex justify-between items-center">
+            <div className="p-3.5 rounded-xl bg-[#FAF9F7] border border-border flex justify-between items-center">
               <div>
-                <p className="font-bold text-white text-sm">{selectedOrder.buyer_name || 'Guest'}</p>
-                <p className="text-slate-400">{selectedOrder.buyer_email || 'No email'}</p>
+                <p className="font-bold text-[#222222] text-sm">{selectedOrder.buyer_name || 'Guest'}</p>
+                <p className="text-[#66636A]">{selectedOrder.buyer_email || 'No email'}</p>
               </div>
-              <Badge variant={selectedOrder.status === 'fulfilled' ? 'accent' : 'success'}>
+              <Badge variant={selectedOrder.status === 'fulfilled' ? 'accent' : 'success'} className={selectedOrder.status === 'fulfilled' ? 'bg-[#017E84]/10 text-[#017E84] border-[#017E84]/20' : 'bg-emerald-50 text-emerald-800 border-emerald-200'}>
                 {selectedOrder.status_display || selectedOrder.status}
               </Badge>
             </div>
 
             <div className="space-y-2">
-              <h4 className="font-semibold text-slate-400 uppercase tracking-wider">Ordered Items</h4>
-              <div className="divide-y divide-slate-800 border-y border-slate-800">
+              <h4 className="font-semibold text-[#66636A] uppercase tracking-wider">Ordered Items</h4>
+              <div className="divide-y divide-border border-y border-border">
                 {selectedOrder.items?.map((item) => (
-                  <div key={item.id} className="py-2 flex justify-between items-center">
+                  <div key={item.id} className="py-2.5 flex justify-between items-center">
                     <div>
-                      <strong className="text-white">{item.product_name}</strong>
-                      <span className="block text-slate-400">Size: {item.size} × {item.qty} units</span>
+                      <strong className="text-[#222222]">{item.product_name}</strong>
+                      <span className="block text-[#66636A]">Size: {item.size} × {item.qty} units</span>
                     </div>
-                    <span className="font-bold text-white">${Number(item.total_price || item.unit_price * item.qty).toFixed(2)}</span>
+                    <span className="font-bold text-[#222222]">${Number(item.total_price || item.unit_price * item.qty).toFixed(2)}</span>
                   </div>
                 ))}
               </div>
             </div>
 
-            <div className="space-y-1 pt-2 border-t border-slate-800">
-              <div className="flex justify-between text-slate-400">
+            <div className="space-y-1.5 pt-2 border-t border-border">
+              <div className="flex justify-between text-[#66636A]">
                 <span>Subtotal</span>
                 <span>${Number(selectedOrder.subtotal).toFixed(2)}</span>
               </div>
               {Number(selectedOrder.discount_amount) > 0 && (
-                <div className="flex justify-between text-emerald-400">
+                <div className="flex justify-between text-emerald-600 font-medium">
                   <span>Member Savings ({Number(selectedOrder.discount_pct)}%)</span>
                   <span>-${Number(selectedOrder.discount_amount).toFixed(2)}</span>
                 </div>
               )}
-              <div className="flex justify-between text-sm font-bold text-white pt-2 border-t border-slate-800">
+              <div className="flex justify-between text-sm font-bold text-[#222222] pt-2 border-t border-border">
                 <span>Total Paid</span>
-                <span className="text-brand-300">${Number(selectedOrder.total).toFixed(2)}</span>
+                <span className="text-[#714B67] text-base font-extrabold">${Number(selectedOrder.total).toFixed(2)}</span>
               </div>
             </div>
 
             {selectedOrder.notes && (
-              <div className="p-2.5 rounded-lg bg-surface-950 border border-slate-800 text-[11px] text-slate-300">
-                <strong>Notes:</strong> {selectedOrder.notes}
+              <div className="p-3 rounded-xl bg-[#FAF9F7] border border-border text-[11px] text-[#66636A]">
+                <strong className="text-[#222222]">Notes:</strong> {selectedOrder.notes}
               </div>
             )}
 
-            <div className="flex justify-end gap-2 pt-3">
+            <div className="flex justify-end gap-2 pt-3 border-t border-border">
               {selectedOrder.status === 'paid' && (
                 <Button
                   variant="primary"
                   size="sm"
+                  className="bg-[#714B67] hover:bg-[#5B3B52] text-white"
                   onClick={() => fulfillMutation.mutate(selectedOrder.id)}
                 >
                   <CheckCircle className="w-4 h-4 mr-1.5" /> Fulfill Order
                 </Button>
               )}
-              <Button variant="secondary" size="sm" onClick={() => setSelectedOrder(null)}>
+              <Button variant="secondary" size="sm" onClick={() => setSelectedOrder(null)} className="border-border">
                 Close
               </Button>
             </div>
@@ -427,7 +431,7 @@ export default function OfficerOrdersPage() {
       >
         {cancelModalOrder && (
           <div className="space-y-4 text-xs">
-            <div className="p-3 rounded-xl bg-danger-950/40 border border-danger-800/60 text-danger-300">
+            <div className="p-3.5 rounded-xl bg-rose-50 border border-rose-200 text-rose-800">
               <p className="font-bold">Warning: Cancelling will restore items to live inventory.</p>
               <p className="mt-1">Order #{cancelModalOrder.id} for {cancelModalOrder.buyer_name} will be marked as Cancelled.</p>
             </div>
@@ -439,8 +443,8 @@ export default function OfficerOrdersPage() {
               onChange={(e) => setCancelReason(e.target.value)}
             />
 
-            <div className="flex justify-end gap-2 pt-3 border-t border-slate-800">
-              <Button variant="secondary" size="sm" onClick={() => setCancelModalOrder(null)}>
+            <div className="flex justify-end gap-2 pt-3 border-t border-border">
+              <Button variant="secondary" size="sm" onClick={() => setCancelModalOrder(null)} className="border-border">
                 Keep Order
               </Button>
               <Button

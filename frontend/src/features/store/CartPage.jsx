@@ -24,7 +24,6 @@ export default function CartPage() {
   const [isProcessing, setIsProcessing] = useState(false);
 
   // Fetch Member Discount Contract
-  // // MOCK /api/members/me: swap at integration
   const { data: memberDiscountData } = useQuery({
     queryKey: ['memberDiscount'],
     queryFn: async () => {
@@ -86,17 +85,17 @@ export default function CartPage() {
 
   if (items.length === 0) {
     return (
-      <div className="max-w-xl mx-auto py-20 text-center bg-surface-900 rounded-3xl border border-slate-800 p-8 space-y-4">
-        <div className="w-16 h-16 rounded-full bg-slate-800 flex items-center justify-center mx-auto text-slate-500">
+      <div className="max-w-xl mx-auto py-16 text-center bg-white rounded-3xl border border-border shadow-odoo-card p-10 space-y-4">
+        <div className="w-16 h-16 rounded-2xl bg-[#714B67]/10 flex items-center justify-center mx-auto text-[#714B67]">
           <ShoppingBag className="w-8 h-8" />
         </div>
-        <h2 className="text-xl font-bold text-white">Your Shopping Cart is Empty</h2>
-        <p className="text-sm text-slate-400 max-w-sm mx-auto">
-          You have no items in your cart. Check out the latest club hoodies and gear!
+        <h2 className="text-2xl font-bold text-[#222222]">Your Shopping Cart is Empty</h2>
+        <p className="text-sm text-[#66636A] max-w-sm mx-auto">
+          You have no items in your cart. Explore our official club hoodies, shirts, caps, and gear!
         </p>
         <Link to="/store">
-          <Button variant="primary" className="mt-4">
-            Explore Store
+          <Button variant="primary" className="mt-4 bg-[#714B67] hover:bg-[#5B3B52] text-white">
+            Explore Store Catalog
           </Button>
         </Link>
       </div>
@@ -105,13 +104,14 @@ export default function CartPage() {
 
   return (
     <div className="max-w-6xl mx-auto pb-20 space-y-8">
-      <div className="flex items-center justify-between border-b border-slate-800 pb-4">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-border pb-5">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-white">Shopping Cart & Checkout</h1>
-          <p className="text-sm text-slate-400 mt-1">{totalItems} items ready for checkout</p>
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-[#222222]">Shopping Cart & Checkout</h1>
+          <p className="text-sm text-[#66636A] mt-1">{totalItems} {totalItems === 1 ? 'item' : 'items'} ready for checkout</p>
         </div>
-        <Link to="/store" className="text-xs font-semibold text-brand-400 hover:underline flex items-center gap-1">
-          <ArrowLeft className="w-3.5 h-3.5" /> Continue Shopping
+        <Link to="/store" className="text-xs font-semibold text-[#714B67] hover:text-[#5B3B52] flex items-center gap-1.5 transition-colors">
+          <ArrowLeft className="w-4 h-4" /> Continue Shopping
         </Link>
       </div>
 
@@ -121,46 +121,53 @@ export default function CartPage() {
           {items.map((item) => (
             <div
               key={item.variantId}
-              className="p-4 rounded-2xl bg-surface-900 border border-slate-800 flex items-center justify-between gap-4"
+              className="p-4 sm:p-5 rounded-2xl bg-white border border-border shadow-odoo-card flex items-center justify-between gap-4 transition-all hover:border-[#714B67]/30"
             >
-              <div className="w-20 h-20 rounded-xl bg-slate-950 overflow-hidden flex-shrink-0 border border-slate-800">
+              <div className="w-20 h-20 rounded-xl bg-canvas overflow-hidden flex-shrink-0 border border-border flex items-center justify-center">
                 {item.image ? (
                   <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
                 ) : (
-                  <div className="w-full h-full flex items-center justify-center text-xs font-bold text-slate-600">
+                  <div className="w-full h-full flex items-center justify-center text-xs font-bold text-[#66636A]">
                     {item.type?.toUpperCase()}
                   </div>
                 )}
               </div>
 
               <div className="flex-1 min-w-0">
-                <h3 className="text-sm sm:text-base font-bold text-white truncate">{item.name}</h3>
+                <h3 className="text-sm sm:text-base font-bold text-[#222222] truncate">{item.name}</h3>
                 <div className="flex items-center gap-2 mt-1">
-                  <Badge variant="neutral" size="sm">Size {item.size}</Badge>
-                  <span className="text-xs text-slate-400">${item.price.toFixed(2)} each</span>
+                  <Badge variant="neutral" size="sm" className="bg-[#FAF9F7] text-[#222222] border-border">
+                    Size {item.size}
+                  </Badge>
+                  <span className="text-xs text-[#66636A]">${item.price.toFixed(2)} each</span>
                 </div>
 
                 <div className="flex items-center gap-3 mt-3">
-                  <div className="flex items-center border border-slate-700 rounded-lg bg-surface-950">
+                  <div className="flex items-center border border-border rounded-xl bg-[#FAF9F7]">
                     <button
+                      type="button"
                       onClick={() => updateQty(item.variantId, item.qty - 1)}
-                      className="p-1 text-slate-400 hover:text-white"
+                      className="p-1.5 text-[#66636A] hover:text-[#222222] transition-colors"
+                      title="Decrease quantity"
                     >
                       <Minus className="w-3.5 h-3.5" />
                     </button>
-                    <span className="px-2.5 text-xs font-bold text-white">{item.qty}</span>
+                    <span className="px-2.5 text-xs font-bold text-[#222222]">{item.qty}</span>
                     <button
+                      type="button"
                       onClick={() => updateQty(item.variantId, item.qty + 1)}
                       disabled={item.qty >= item.stock_qty}
-                      className="p-1 text-slate-400 hover:text-white disabled:opacity-30"
+                      className="p-1.5 text-[#66636A] hover:text-[#222222] disabled:opacity-30 transition-colors"
+                      title="Increase quantity"
                     >
                       <Plus className="w-3.5 h-3.5" />
                     </button>
                   </div>
 
                   <button
+                    type="button"
                     onClick={() => removeFromCart(item.variantId)}
-                    className="text-xs text-danger-400 hover:underline inline-flex items-center gap-1"
+                    className="text-xs text-rose-600 hover:text-rose-700 hover:underline inline-flex items-center gap-1 font-medium transition-colors"
                   >
                     <Trash2 className="w-3.5 h-3.5" /> Remove
                   </button>
@@ -168,7 +175,7 @@ export default function CartPage() {
               </div>
 
               <div className="text-right">
-                <span className="text-base sm:text-lg font-bold text-brand-300">
+                <span className="text-base sm:text-lg font-extrabold text-[#714B67]">
                   ${(item.price * item.qty).toFixed(2)}
                 </span>
               </div>
@@ -180,33 +187,36 @@ export default function CartPage() {
         <div className="lg:col-span-5">
           <form
             onSubmit={handleCheckout}
-            className="p-6 rounded-3xl bg-surface-900 border border-slate-800 space-y-6 shadow-xl sticky top-6"
+            className="p-6 rounded-3xl bg-white border border-border space-y-6 shadow-odoo-card sticky top-6"
           >
-            <h2 className="text-lg font-bold text-white border-b border-slate-800 pb-3">Order Summary</h2>
+            <h2 className="text-lg font-bold text-[#222222] border-b border-border pb-3">Order Summary</h2>
 
             {/* Member Discount Notice */}
             {discountPct > 0 ? (
-              <div className="p-3 rounded-xl bg-emerald-950/50 border border-emerald-800/60 flex items-center justify-between text-xs text-emerald-300">
-                <span className="font-semibold">Member Discount ({discountPct}%)</span>
-                <span className="font-bold text-emerald-400">-${discountAmount.toFixed(2)}</span>
+              <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-200 flex items-center justify-between text-xs text-emerald-800">
+                <span className="font-semibold flex items-center gap-1.5">
+                  <ShieldCheck className="w-4 h-4 text-emerald-600" />
+                  Member Discount ({discountPct}%)
+                </span>
+                <span className="font-bold text-emerald-700">-${discountAmount.toFixed(2)}</span>
               </div>
             ) : null}
 
             {/* Price Calculations */}
-            <div className="space-y-2 text-sm text-slate-300">
+            <div className="space-y-2 text-sm text-[#66636A]">
               <div className="flex justify-between">
                 <span>Subtotal</span>
-                <span>${subtotal.toFixed(2)}</span>
+                <span className="text-[#222222] font-semibold">${subtotal.toFixed(2)}</span>
               </div>
               {discountAmount > 0 && (
-                <div className="flex justify-between text-emerald-400">
+                <div className="flex justify-between text-emerald-600 font-medium">
                   <span>Savings</span>
                   <span>-${discountAmount.toFixed(2)}</span>
                 </div>
               )}
-              <div className="flex justify-between text-lg font-bold text-white border-t border-slate-800 pt-3">
+              <div className="flex justify-between text-lg font-bold text-[#222222] border-t border-border pt-3">
                 <span>Total Due</span>
-                <span className="text-brand-300">${totalPayable.toFixed(2)}</span>
+                <span className="text-[#714B67] text-xl font-extrabold">${totalPayable.toFixed(2)}</span>
               </div>
             </div>
 
@@ -235,18 +245,18 @@ export default function CartPage() {
 
             {/* Payment Method Selector */}
             <div className="space-y-2">
-              <label className="text-xs font-semibold text-slate-300 block">Payment Method</label>
-              <div className="grid grid-cols-2 gap-2">
+              <label className="text-xs font-semibold text-[#222222] block">Payment Method</label>
+              <div className="grid grid-cols-2 gap-2.5">
                 <button
                   type="button"
                   onClick={() => setPaymentProvider('mock')}
                   className={`p-3 rounded-xl border text-xs font-medium flex flex-col items-center gap-1.5 transition-all ${
                     paymentProvider === 'mock'
-                      ? 'bg-brand-600/20 border-brand-500 text-white'
-                      : 'bg-surface-800 border-slate-700 text-slate-400 hover:text-white'
+                      ? 'bg-[#714B67]/10 border-[#714B67] text-[#714B67] font-semibold ring-1 ring-[#714B67]'
+                      : 'bg-[#F8F9FA] border-border text-[#66636A] hover:border-gray-300 hover:text-[#222222]'
                   }`}
                 >
-                  <CheckCircle2 className="w-5 h-5 text-brand-400" />
+                  <CheckCircle2 className="w-5 h-5 text-[#714B67]" />
                   <span>Instant / Cash</span>
                 </button>
 
@@ -255,11 +265,11 @@ export default function CartPage() {
                   onClick={() => setPaymentProvider('stripe')}
                   className={`p-3 rounded-xl border text-xs font-medium flex flex-col items-center gap-1.5 transition-all ${
                     paymentProvider === 'stripe'
-                      ? 'bg-brand-600/20 border-brand-500 text-white'
-                      : 'bg-surface-800 border-slate-700 text-slate-400 hover:text-white'
+                      ? 'bg-[#714B67]/10 border-[#714B67] text-[#714B67] font-semibold ring-1 ring-[#714B67]'
+                      : 'bg-[#F8F9FA] border-border text-[#66636A] hover:border-gray-300 hover:text-[#222222]'
                   }`}
                 >
-                  <CreditCard className="w-5 h-5 text-accent-400" />
+                  <CreditCard className="w-5 h-5 text-[#017E84]" />
                   <span>Stripe Test Mode</span>
                 </button>
               </div>
@@ -270,7 +280,7 @@ export default function CartPage() {
               type="submit"
               variant="primary"
               size="lg"
-              className="w-full shadow-lg shadow-brand-600/30"
+              className="w-full bg-[#714B67] hover:bg-[#5B3B52] text-white shadow-sm font-bold"
               isLoading={isProcessing}
             >
               <span>Pay & Place Order (${totalPayable.toFixed(2)})</span>

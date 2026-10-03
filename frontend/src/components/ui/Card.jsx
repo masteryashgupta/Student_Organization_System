@@ -1,9 +1,11 @@
 import React from 'react';
 
-export function Card({ children, className = '', ...props }) {
+export function Card({ children, className = '', hover = true, ...props }) {
   return (
     <div
-      className={`bg-surface-800/80 backdrop-blur-md border border-slate-700/60 rounded-xl shadow-xl overflow-hidden transition-all duration-200 ${className}`}
+      className={`bg-white border border-border rounded-2xl shadow-odoo-card ${
+        hover ? 'hover:shadow-odoo-card-hover hover:border-[#D1CECA] transition-all duration-200' : ''
+      } overflow-hidden ${className}`}
       {...props}
     >
       {children}
@@ -13,7 +15,7 @@ export function Card({ children, className = '', ...props }) {
 
 export function CardHeader({ children, className = '', ...props }) {
   return (
-    <div className={`p-5 pb-3 border-b border-slate-700/40 ${className}`} {...props}>
+    <div className={`p-6 pb-4 border-b border-border/70 ${className}`} {...props}>
       {children}
     </div>
   );
@@ -21,7 +23,7 @@ export function CardHeader({ children, className = '', ...props }) {
 
 export function CardTitle({ children, className = '', ...props }) {
   return (
-    <h3 className={`text-lg font-semibold text-slate-100 ${className}`} {...props}>
+    <h3 className={`text-lg sm:text-xl font-semibold text-ink tracking-tight ${className}`} {...props}>
       {children}
     </h3>
   );
@@ -29,7 +31,7 @@ export function CardTitle({ children, className = '', ...props }) {
 
 export function CardDescription({ children, className = '', ...props }) {
   return (
-    <p className={`text-sm text-slate-400 mt-1 ${className}`} {...props}>
+    <p className={`text-sm text-ink-muted mt-1 leading-relaxed ${className}`} {...props}>
       {children}
     </p>
   );
@@ -37,7 +39,7 @@ export function CardDescription({ children, className = '', ...props }) {
 
 export function CardContent({ children, className = '', ...props }) {
   return (
-    <div className={`p-5 ${className}`} {...props}>
+    <div className={`p-6 ${className}`} {...props}>
       {children}
     </div>
   );
@@ -45,7 +47,7 @@ export function CardContent({ children, className = '', ...props }) {
 
 export function CardFooter({ children, className = '', ...props }) {
   return (
-    <div className={`p-5 pt-3 border-t border-slate-700/40 flex items-center justify-between ${className}`} {...props}>
+    <div className={`p-6 pt-4 border-t border-border/70 flex items-center justify-between ${className}`} {...props}>
       {children}
     </div>
   );

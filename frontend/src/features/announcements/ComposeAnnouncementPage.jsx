@@ -84,9 +84,9 @@ export default function ComposeAnnouncementPage() {
 
   if (!isOfficer) {
     return (
-      <Card className="max-w-lg mx-auto my-12 text-center p-8 border-slate-800">
-        <h2 className="text-xl font-bold text-white mb-2">Officer Access Required</h2>
-        <p className="text-sm text-slate-400 mb-4">
+      <Card className="max-w-lg mx-auto my-12 text-center p-8 border-rose-200 bg-rose-50 shadow-sm">
+        <h2 className="text-xl font-bold text-[#222222] mb-2">Officer Access Required</h2>
+        <p className="text-sm text-[#66636A] mb-4">
           Only club officers and leaders are authorized to compose and dispatch announcements.
         </p>
         <Link to="/announcements">
@@ -103,8 +103,8 @@ export default function ComposeAnnouncementPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-white">Compose Announcement</h1>
-          <p className="text-sm text-slate-400">
+          <h1 className="text-2xl font-extrabold text-[#222222]">Compose Announcement</h1>
+          <p className="text-sm text-[#66636A]">
             Publish an official notice to the club board and email target member groups.
           </p>
         </div>
@@ -115,10 +115,10 @@ export default function ComposeAnnouncementPage() {
         </Link>
       </div>
 
-      <Card className="border-slate-800">
+      <Card className="border-border bg-white shadow-odoo-card">
         <CardHeader>
-          <CardTitle className="text-lg">Announcement Details</CardTitle>
-          <CardDescription>
+          <CardTitle className="text-lg text-[#222222]">Announcement Details</CardTitle>
+          <CardDescription className="text-xs text-[#66636A]">
             Fill in the headline, message details, and target recipient audience.
           </CardDescription>
         </CardHeader>
@@ -150,8 +150,8 @@ export default function ComposeAnnouncementPage() {
             />
 
             <div className="space-y-1">
-              <label className="block text-xs font-medium text-slate-300">
-                Message Body <span className="text-danger-400">*</span>
+              <label className="block text-xs font-semibold text-[#222222]">
+                Message Body <span className="text-danger-500">*</span>
               </label>
               <textarea
                 name="body"
@@ -159,10 +159,10 @@ export default function ComposeAnnouncementPage() {
                 placeholder="Write full announcement message details..."
                 value={formData.body}
                 onChange={handleChange}
-                className="w-full px-3.5 py-2.5 rounded-xl bg-surface-950 border border-slate-700/80 text-white text-sm focus:outline-none focus:border-brand-500 transition-colors"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-border text-[#222222] text-sm focus:outline-none focus:border-[#714B67] focus:ring-1 focus:ring-[#714B67] transition-colors"
                 required
               />
-              {errors.body && <p className="text-xs text-danger-400">{errors.body}</p>}
+              {errors.body && <p className="text-xs text-danger-500">{errors.body}</p>}
             </div>
 
             <div className="flex items-center gap-3 pt-2">
@@ -172,20 +172,20 @@ export default function ComposeAnnouncementPage() {
                 name="sendEmailNow"
                 checked={formData.sendEmailNow}
                 onChange={handleChange}
-                className="w-4 h-4 rounded border-slate-700 bg-surface-950 text-brand-600 focus:ring-brand-500"
+                className="w-4 h-4 rounded border-border text-[#714B67] accent-[#714B67] focus:ring-[#714B67]"
               />
-              <label htmlFor="sendEmailNow" className="text-sm text-slate-300">
+              <label htmlFor="sendEmailNow" className="text-sm font-medium text-[#222222]">
                 Dispatch email broadcast to target audience immediately upon publishing
               </label>
             </div>
 
-            <CardFooter className="px-0 pt-4 border-t border-slate-800/80 flex items-center justify-between">
+            <CardFooter className="px-0 pt-4 border-t border-border flex items-center justify-between">
               <Link to="/announcements">
                 <Button type="button" variant="outline" size="sm">
                   Cancel
                 </Button>
               </Link>
-              <Button type="submit" variant="primary" size="sm" isLoading={loading}>
+              <Button type="submit" variant="primary" size="sm" className="bg-[#714B67] hover:bg-[#5B3B52] text-white shadow-sm font-semibold" isLoading={loading}>
                 {formData.sendEmailNow ? 'Publish & Send Email' : 'Save as Announcement'}
               </Button>
             </CardFooter>

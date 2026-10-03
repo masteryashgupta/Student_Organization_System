@@ -196,27 +196,27 @@ export default function ReimbursementsPage() {
   return (
     <div className="space-y-6">
       {/* Header Banner */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-gradient-to-r from-surface-900 via-surface-850 to-brand-950/60 p-6 rounded-2xl border border-slate-800 shadow-xl">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-6 sm:p-8 rounded-2xl border border-border shadow-odoo-card">
         <div>
-          <div className="flex items-center gap-2 mb-1">
-            <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-brand-500/20 text-brand-300 border border-brand-500/30">
+          <div className="flex items-center gap-2 mb-1.5">
+            <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#714B67]/10 text-[#714B67] border border-[#714B67]/20">
               Treasury Management
             </span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">Member Reimbursements</h1>
-          <p className="text-sm text-slate-400 mt-1">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-[#222222] tracking-tight">Member Reimbursements</h1>
+          <p className="text-sm text-[#66636A] mt-1">
             Submit out-of-pocket expense claims or review pending officer approvals.
           </p>
         </div>
 
         {/* View Switcher Tabs */}
-        <div className="flex items-center gap-2 bg-surface-950 p-1.5 rounded-xl border border-slate-800">
+        <div className="flex items-center gap-2 bg-[#F4F6F8] p-1.5 rounded-xl border border-border">
           <button
             onClick={() => setActiveTab('submit')}
             className={`px-4 py-2 rounded-lg text-xs font-semibold transition-all ${
               activeTab === 'submit'
-                ? 'bg-brand-600 text-white shadow-md'
-                : 'text-slate-400 hover:text-white hover:bg-slate-800/60'
+                ? 'bg-[#714B67] text-white shadow-sm'
+                : 'text-[#66636A] hover:text-[#222222] hover:bg-white'
             }`}
           >
             Submit Request
@@ -226,13 +226,13 @@ export default function ReimbursementsPage() {
               onClick={() => setActiveTab('queue')}
               className={`px-4 py-2 rounded-lg text-xs font-semibold transition-all flex items-center gap-2 ${
                 activeTab === 'queue'
-                  ? 'bg-brand-600 text-white shadow-md'
-                  : 'text-slate-400 hover:text-white hover:bg-slate-800/60'
+                  ? 'bg-[#714B67] text-white shadow-sm'
+                  : 'text-[#66636A] hover:text-[#222222] hover:bg-white'
               }`}
             >
               <span>Officer Queue</span>
               {pendingList.length > 0 && (
-                <span className="w-5 h-5 rounded-full bg-amber-500 text-slate-950 text-[11px] font-bold flex items-center justify-center">
+                <span className="w-5 h-5 rounded-full bg-[#E2B714] text-[#222222] text-[11px] font-bold flex items-center justify-center">
                   {pendingList.length}
                 </span>
               )}
@@ -245,10 +245,10 @@ export default function ReimbursementsPage() {
       {activeTab === 'submit' && (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Submission Form Card */}
-          <Card className="lg:col-span-1 border-slate-800">
+          <Card className="lg:col-span-1 border-border shadow-odoo-card bg-white">
             <CardHeader>
-              <CardTitle className="text-lg text-white">Request Reimbursement</CardTitle>
-              <CardDescription className="text-xs">
+              <CardTitle className="text-lg text-[#222222]">Request Reimbursement</CardTitle>
+              <CardDescription className="text-xs text-[#66636A]">
                 Submit an itemized claim for club expenses paid out of pocket.
               </CardDescription>
             </CardHeader>
@@ -266,41 +266,41 @@ export default function ReimbursementsPage() {
                 />
 
                 <div className="space-y-1">
-                  <label className="block text-xs font-medium text-slate-300">
-                    Itemized Description <span className="text-danger-400">*</span>
+                  <label className="block text-xs font-medium text-[#222222]">
+                    Itemized Description <span className="text-danger-500">*</span>
                   </label>
                   <textarea
                     rows="3"
                     placeholder="e.g. Pizza and drinks for Friday workshop"
                     value={form.description}
                     onChange={(e) => setForm((prev) => ({ ...prev, description: e.target.value }))}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-surface-950 border border-slate-700/80 text-white text-sm focus:outline-none focus:border-brand-500 transition-colors"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-border text-[#222222] text-sm focus:outline-none focus:border-[#714B67] focus:ring-1 focus:ring-[#714B67] transition-colors"
                     required
                   />
-                  {errors.description && <p className="text-xs text-danger-400">{errors.description}</p>}
+                  {errors.description && <p className="text-xs text-danger-500">{errors.description}</p>}
                 </div>
 
                 <div className="space-y-1">
-                  <label className="block text-xs font-medium text-slate-300">
+                  <label className="block text-xs font-medium text-[#222222]">
                     Receipt Image / PDF Proof
                   </label>
                   <input
                     type="file"
                     accept=".pdf,.jpg,.jpeg,.png,.webp"
                     onChange={handleFileChange}
-                    className="w-full text-xs text-slate-300 file:mr-3 file:py-2 file:px-3.5 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-brand-600/20 file:text-brand-300 hover:file:bg-brand-600/30 cursor-pointer"
+                    className="w-full text-xs text-[#66636A] file:mr-3 file:py-2 file:px-3.5 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-[#714B67]/10 file:text-[#714B67] hover:file:bg-[#714B67]/20 cursor-pointer"
                   />
                   {errors.receipt ? (
-                    <p className="text-xs text-danger-400">{errors.receipt}</p>
+                    <p className="text-xs text-danger-500">{errors.receipt}</p>
                   ) : (
-                    <p className="text-[11px] text-slate-500">Allowed formats: PDF, JPG, PNG, WEBP (Max 10MB)</p>
+                    <p className="text-[11px] text-[#66636A]">Allowed formats: PDF, JPG, PNG, WEBP (Max 10MB)</p>
                   )}
                 </div>
 
                 <Button
                   type="submit"
                   variant="primary"
-                  className="w-full mt-2"
+                  className="w-full mt-2 bg-[#714B67] hover:bg-[#5B3B52] text-white"
                   isLoading={submitting}
                 >
                   Submit Reimbursement
@@ -310,11 +310,11 @@ export default function ReimbursementsPage() {
           </Card>
 
           {/* User's Submitted Claims List */}
-          <Card className="lg:col-span-2 border-slate-800">
+          <Card className="lg:col-span-2 border-border shadow-odoo-card bg-white">
             <CardHeader className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4">
               <div>
-                <CardTitle className="text-lg text-white">Recent Requests & History</CardTitle>
-                <CardDescription className="text-xs">
+                <CardTitle className="text-lg text-[#222222]">Recent Requests & History</CardTitle>
+                <CardDescription className="text-xs text-[#66636A]">
                   Track current approval status and review officer feedback.
                 </CardDescription>
               </div>
@@ -333,41 +333,39 @@ export default function ReimbursementsPage() {
             </CardHeader>
             <CardContent className="p-0">
               {isLoading ? (
-                <div className="py-12 text-center text-slate-400 text-sm">Loading reimbursement history...</div>
+                <div className="py-12 text-center text-[#66636A] text-sm">Loading reimbursement history...</div>
               ) : isError ? (
-                <div className="py-8 text-center text-danger-300 text-sm">
+                <div className="py-8 text-center text-danger-500 text-sm">
                   Failed to load reimbursements. <Button size="sm" variant="ghost" onClick={() => refetch()}>Retry</Button>
                 </div>
               ) : reimbursements.length === 0 ? (
-                <div className="py-12 text-center text-slate-400 text-sm">
+                <div className="py-12 text-center text-[#66636A] text-sm">
                   No reimbursement claims found matching your filter.
                 </div>
               ) : (
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableRow>
-                        <TableHead>Submitted</TableHead>
-                        <TableHead>Requester</TableHead>
-                        <TableHead>Description</TableHead>
-                        <TableHead>Status</TableHead>
-                        <TableHead>Receipt</TableHead>
-                        <TableHead className="text-right">Amount</TableHead>
-                      </TableRow>
+                      <TableHead>Submitted</TableHead>
+                      <TableHead>Requester</TableHead>
+                      <TableHead>Description</TableHead>
+                      <TableHead>Status</TableHead>
+                      <TableHead>Receipt</TableHead>
+                      <TableHead className="text-right">Amount</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
                     {reimbursements.map((item) => (
-                      <TableRow key={item.id} className="hover:bg-slate-800/40">
-                        <TableCell className="text-xs font-mono text-slate-300 whitespace-nowrap">
+                      <TableRow key={item.id} className="hover:bg-[#FAF9F7]">
+                        <TableCell className="text-xs font-mono text-[#66636A] whitespace-nowrap">
                           {new Date(item.created_at).toLocaleDateString()}
                         </TableCell>
-                        <TableCell className="text-xs font-medium text-slate-200">
+                        <TableCell className="text-xs font-medium text-[#222222]">
                           {item.requester_name}
                         </TableCell>
-                        <TableCell className="text-xs text-slate-300 max-w-[200px] truncate">
+                        <TableCell className="text-xs text-[#66636A] max-w-[200px] truncate">
                           {item.description}
-                          {item.notes && <p className="text-[11px] text-amber-400 italic">Note: {item.notes}</p>}
+                          {item.notes && <p className="text-[11px] text-amber-700 italic">Note: {item.notes}</p>}
                         </TableCell>
                         <TableCell>
                           <Badge variant={getStatusBadgeVariant(item.status)}>
@@ -380,15 +378,15 @@ export default function ReimbursementsPage() {
                               href={item.receipt_url}
                               target="_blank"
                               rel="noreferrer"
-                              className="text-brand-400 hover:underline font-medium flex items-center gap-1"
+                              className="text-[#714B67] hover:underline font-semibold flex items-center gap-1"
                             >
                               📄 Receipt
                             </a>
                           ) : (
-                            <span className="text-slate-500">None</span>
+                            <span className="text-[#999]">None</span>
                           )}
                         </TableCell>
-                        <TableCell className="text-right font-bold text-sm text-white">
+                        <TableCell className="text-right font-bold text-sm text-[#222222]">
                           ${item.amount}
                         </TableCell>
                       </TableRow>
@@ -406,55 +404,55 @@ export default function ReimbursementsPage() {
         <div className="space-y-6">
           {/* Officer Metrics Bar */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <Card className="border-amber-500/30 bg-amber-950/20">
+            <Card className="border-amber-200 bg-amber-50/70 shadow-sm">
               <CardHeader className="pb-2">
-                <CardDescription className="text-amber-400 text-xs font-semibold uppercase">
+                <CardDescription className="text-amber-800 text-xs font-semibold uppercase">
                   Pending Review Queue
                 </CardDescription>
-                <CardTitle className="text-2xl text-white">
+                <CardTitle className="text-2xl text-[#222222]">
                   {pendingList.length} request(s)
                 </CardTitle>
               </CardHeader>
-              <CardContent className="text-xs text-slate-400">
-                Total Pending Value: <strong className="text-amber-300">${pendingTotal.toFixed(2)}</strong>
+              <CardContent className="text-xs text-[#66636A]">
+                Total Pending Value: <strong className="text-amber-900 font-bold">${pendingTotal.toFixed(2)}</strong>
               </CardContent>
             </Card>
 
-            <Card className="border-info-500/30 bg-info-950/20">
+            <Card className="border-sky-200 bg-sky-50/70 shadow-sm">
               <CardHeader className="pb-2">
-                <CardDescription className="text-info-400 text-xs font-semibold uppercase">
+                <CardDescription className="text-sky-800 text-xs font-semibold uppercase">
                   Approved & Ledger Logged
                 </CardDescription>
-                <CardTitle className="text-2xl text-white">
+                <CardTitle className="text-2xl text-[#222222]">
                   {reimbursements.filter((r) => r.status === 'approved').length} request(s)
                 </CardTitle>
               </CardHeader>
-              <CardContent className="text-xs text-slate-400">
+              <CardContent className="text-xs text-[#66636A]">
                 Posted to central expense ledger
               </CardContent>
             </Card>
 
-            <Card className="border-emerald-500/30 bg-emerald-950/20">
+            <Card className="border-emerald-200 bg-emerald-50/70 shadow-sm">
               <CardHeader className="pb-2">
-                <CardDescription className="text-emerald-400 text-xs font-semibold uppercase">
+                <CardDescription className="text-emerald-800 text-xs font-semibold uppercase">
                   Paid Out & Completed
                 </CardDescription>
-                <CardTitle className="text-2xl text-white">
+                <CardTitle className="text-2xl text-[#222222]">
                   {reimbursements.filter((r) => r.status === 'paid').length} request(s)
                 </CardTitle>
               </CardHeader>
-              <CardContent className="text-xs text-slate-400">
+              <CardContent className="text-xs text-[#66636A]">
                 Disbursements completed
               </CardContent>
             </Card>
           </div>
 
           {/* Queue Table */}
-          <Card className="border-slate-800">
+          <Card className="border-border shadow-odoo-card bg-white">
             <CardHeader className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4">
               <div>
-                <CardTitle className="text-lg text-white">Officer Approval & Disbursement Desk</CardTitle>
-                <CardDescription className="text-xs">
+                <CardTitle className="text-lg text-[#222222]">Officer Approval & Disbursement Desk</CardTitle>
+                <CardDescription className="text-xs text-[#66636A]">
                   Review submitted claims, inspect receipts, approve to record in central ledger, or mark as paid.
                 </CardDescription>
               </div>
@@ -473,9 +471,9 @@ export default function ReimbursementsPage() {
             </CardHeader>
             <CardContent className="p-0">
               {isLoading ? (
-                <div className="py-12 text-center text-slate-400 text-sm">Loading officer queue...</div>
+                <div className="py-12 text-center text-[#66636A] text-sm">Loading officer queue...</div>
               ) : reimbursements.length === 0 ? (
-                <div className="py-12 text-center text-slate-400 text-sm">No reimbursements found.</div>
+                <div className="py-12 text-center text-[#66636A] text-sm">No reimbursements found.</div>
               ) : (
                 <Table>
                   <TableHeader>
@@ -491,15 +489,15 @@ export default function ReimbursementsPage() {
                   </TableHeader>
                   <TableBody>
                     {reimbursements.map((item) => (
-                      <TableRow key={item.id} className="hover:bg-slate-800/40">
-                        <TableCell className="text-xs font-mono text-slate-300 whitespace-nowrap">
+                      <TableRow key={item.id} className="hover:bg-[#FAF9F7]">
+                        <TableCell className="text-xs font-mono text-[#66636A] whitespace-nowrap">
                           {new Date(item.created_at).toLocaleDateString()}
                         </TableCell>
-                        <TableCell className="text-xs font-medium text-white">
+                        <TableCell className="text-xs font-medium text-[#222222]">
                           <div>{item.requester_name}</div>
-                          <div className="text-[11px] text-slate-400">{item.requester_email}</div>
+                          <div className="text-[11px] text-[#66636A]">{item.requester_email}</div>
                         </TableCell>
-                        <TableCell className="text-xs text-slate-300 max-w-[200px] truncate">
+                        <TableCell className="text-xs text-[#66636A] max-w-[200px] truncate">
                           {item.description}
                         </TableCell>
                         <TableCell className="text-xs">
@@ -508,12 +506,12 @@ export default function ReimbursementsPage() {
                               href={item.receipt_url}
                               target="_blank"
                               rel="noreferrer"
-                              className="text-brand-400 hover:underline font-semibold"
+                              className="text-[#714B67] hover:underline font-semibold"
                             >
                               View Proof
                             </a>
                           ) : (
-                            <span className="text-slate-500">No Receipt</span>
+                            <span className="text-[#999]">No Receipt</span>
                           )}
                         </TableCell>
                         <TableCell>
@@ -521,7 +519,7 @@ export default function ReimbursementsPage() {
                             {item.status_display || item.status}
                           </Badge>
                         </TableCell>
-                        <TableCell className="font-bold text-sm text-white whitespace-nowrap">
+                        <TableCell className="font-bold text-sm text-[#222222] whitespace-nowrap">
                           ${item.amount}
                         </TableCell>
                         <TableCell className="text-right whitespace-nowrap">
@@ -530,7 +528,7 @@ export default function ReimbursementsPage() {
                               <Button
                                 variant="primary"
                                 size="sm"
-                                className="text-xs py-1 px-2.5 bg-emerald-600 hover:bg-emerald-500"
+                                className="text-xs py-1 px-2.5 bg-emerald-600 hover:bg-emerald-700 text-white"
                                 onClick={() => setActionModal({ isOpen: true, type: 'approve', item, notes: '' })}
                               >
                                 Approve & Record
@@ -550,7 +548,7 @@ export default function ReimbursementsPage() {
                             <Button
                               variant="secondary"
                               size="sm"
-                              className="text-xs py-1 px-2.5 border-emerald-500/40 text-emerald-300 hover:bg-emerald-950/60"
+                              className="text-xs py-1 px-2.5 border-emerald-600/40 text-emerald-700 hover:bg-emerald-50"
                               onClick={() => setActionModal({ isOpen: true, type: 'markPaid', item, notes: '' })}
                             >
                               Mark as Paid
@@ -558,7 +556,7 @@ export default function ReimbursementsPage() {
                           )}
 
                           {(item.status === 'paid' || item.status === 'rejected') && (
-                            <span className="text-xs text-slate-500 font-mono">
+                            <span className="text-xs text-[#66636A] font-mono">
                               {item.status === 'paid' ? 'Completed' : 'Closed'}
                             </span>
                           )}
@@ -587,21 +585,21 @@ export default function ReimbursementsPage() {
       >
         {actionModal.item && (
           <div className="space-y-4">
-            <div className="p-3.5 rounded-xl bg-surface-950 border border-slate-800 text-xs space-y-1">
+            <div className="p-3.5 rounded-xl bg-[#F4F6F8] border border-border text-xs space-y-1 text-[#222222]">
               <p><strong>Claim ID:</strong> #{actionModal.item.id}</p>
               <p><strong>Requester:</strong> {actionModal.item.requester_name} ({actionModal.item.requester_email})</p>
-              <p><strong>Amount:</strong> <span className="text-emerald-400 font-bold">${actionModal.item.amount}</span></p>
+              <p><strong>Amount:</strong> <span className="text-emerald-700 font-bold">${actionModal.item.amount}</span></p>
               <p><strong>Description:</strong> {actionModal.item.description}</p>
             </div>
 
             {actionModal.type === 'approve' && (
-              <p className="text-xs text-emerald-400 bg-emerald-950/40 p-2.5 rounded-lg border border-emerald-800/40">
+              <p className="text-xs text-emerald-800 bg-emerald-50 p-2.5 rounded-lg border border-emerald-200">
                 Approving this claim will automatically post a <strong>${actionModal.item.amount} expense transaction</strong> into the central shared ledger.
               </p>
             )}
 
             <div className="space-y-1">
-              <label className="block text-xs font-medium text-slate-300">
+              <label className="block text-xs font-medium text-[#222222]">
                 Officer Notes / Reason (Optional)
               </label>
               <textarea
@@ -609,17 +607,18 @@ export default function ReimbursementsPage() {
                 placeholder={actionModal.type === 'reject' ? 'State reason for rejection...' : 'Add payment transfer reference or notes...'}
                 value={actionModal.notes}
                 onChange={(e) => setActionModal((prev) => ({ ...prev, notes: e.target.value }))}
-                className="w-full px-3 py-2 rounded-xl bg-surface-950 border border-slate-700 text-white text-xs focus:outline-none focus:border-brand-500"
+                className="w-full px-3 py-2 rounded-xl bg-white border border-border text-[#222222] text-xs focus:outline-none focus:border-[#714B67] focus:ring-1 focus:ring-[#714B67]"
               />
             </div>
 
-            <div className="flex justify-end gap-3 pt-3 border-t border-slate-800">
+            <div className="flex justify-end gap-3 pt-3 border-t border-border">
               <Button variant="outline" size="sm" onClick={closeActionModal}>
                 Cancel
               </Button>
               <Button
                 variant={actionModal.type === 'reject' ? 'danger' : 'primary'}
                 size="sm"
+                className={actionModal.type !== 'reject' ? 'bg-[#714B67] hover:bg-[#5B3B52] text-white' : ''}
                 onClick={handleExecuteAction}
                 isLoading={approveMut.isPending || rejectMut.isPending || markPaidMut.isPending}
               >

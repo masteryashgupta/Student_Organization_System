@@ -50,21 +50,6 @@ registerFeature({
       path: '/events',
       label: 'Events',
     },
-    {
-      path: '/events/new',
-      label: 'Create Event',
-      officerOnly: true,
-    },
-    {
-      path: '/events/checkin',
-      label: 'Ticket Check-In',
-      officerOnly: true,
-    },
-    {
-      path: '/events/stats',
-      label: 'Event Analytics',
-      officerOnly: true,
-    },
   ],
 });
 
