@@ -377,6 +377,62 @@ class TicketPurchaseTests(APITestCase):
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
         self.assertEqual(Decimal(str(res.data['price_paid'])), Decimal('0.00'))
 
+    def test_capacity_100_boundary_and_concurrency_protection(self):
+        # 1. Create event with capacity = 100
+        event_100 = Event.objects.create(
+            title='Mega Concert',
+            datetime=timezone.now() + timedelta(days=10),
+            venue='Campus Arena',
+            capacity=100,
+            member_price=Decimal('10.00'),
+            nonmember_price=Decimal('20.00'),
+            status=Event.STATUS_PUBLISHED
+        )
+
+        # 2. Pre-fill 99 tickets
+        tickets = [
+            Ticket(
+                event=event_100,
+                holder_name=f'Attendee {i}',
+                holder_email=f'attendee{i}@skyline.edu',
+                type=Ticket.TYPE_NONMEMBER,
+                price_paid=Decimal('20.00'),
+                status=Ticket.STATUS_VALID
+            )
+            for i in range(1, 100)
+        ]
+        Ticket.objects.bulk_create(tickets)
+
+        self.assertEqual(event_100.tickets.count(), 99)
+        availability = event_100.get_availability()
+        self.assertEqual(availability['capacity'], 100)
+        self.assertEqual(availability['sold'], 99)
+        self.assertEqual(availability['remaining'], 1)
+
+        # 3. User 1 attempts purchase for the 100th (final) ticket -> Allowed
+        res_user1 = self.client.post(
+            f'/api/events/{event_100.id}/tickets/',
+            {'holder_name': 'Final Attendee', 'holder_email': 'final@skyline.edu'}
+        )
+        self.assertEqual(res_user1.status_code, status.HTTP_201_CREATED)
+
+        # Capacity is now exactly 100 / 100 (remaining = 0)
+        self.assertEqual(event_100.tickets.count(), 100)
+        availability_full = event_100.get_availability()
+        self.assertEqual(availability_full['remaining'], 0)
+
+        # 4. User 2 attempts purchase when sold = 100 -> Rejected (Sold out)
+        res_user2 = self.client.post(
+            f'/api/events/{event_100.id}/tickets/',
+            {'holder_name': 'Oversell Attendee', 'holder_email': 'oversell@skyline.edu'}
+        )
+        self.assertEqual(res_user2.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertIn('sold out', str(res_user2.data))
+
+        # 5. Verify total tickets in database never exceeds 100
+        total_sold = event_100.tickets.exclude(status=Ticket.STATUS_CANCELLED).count()
+        self.assertEqual(total_sold, 100)
+
 
 class TicketQRTests(APITestCase):
     def setUp(self):
