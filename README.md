@@ -42,27 +42,33 @@ skyline-club/
 
 ---
 
+## Database
+
+The project's **single shared database is Supabase** (session pooler, port 5432).
+
+- **Everyone** points `backend/.env` → `DATABASE_URL` at the same Supabase connection string (get it from the team lead).
+- **Running migrations** happens from `main` after each wave is merged — this keeps the shared schema in sync with the main branch.
+- `docker-compose.yml` is kept as an **explicitly opt-in offline fallback only** — do not use it unless you are working without internet access. The team never points `DATABASE_URL` at localhost for shared work.
+
+---
+
 ## Local Setup Instructions
 
 ### Prerequisites
-- [Docker & Docker Compose](https://www.docker.com/) installed
 - [Python 3.11+](https://www.python.org/) installed
 - [Node.js 18+](https://nodejs.org/) and `npm` installed
 
 ---
 
-### Step 1: Start Local PostgreSQL Database
+### Step 1: Configure Environment Variables
 
-From the project root directory (`skyline-club/`), start PostgreSQL in detached mode:
-
+Copy `.env.example` to `.env`:
 ```bash
-docker-compose up -d
+cp .env.example .env   # macOS/Linux
+copy .env.example .env  # Windows
 ```
-
-To verify PostgreSQL is running:
-```bash
-docker-compose ps
-```
+Fill in the `DATABASE_URL` with the Supabase session-pooler string (get it from the team lead).  
+**The app will refuse to start if `DATABASE_URL` is missing** — there is no local fallback.
 
 ---
 
@@ -87,7 +93,7 @@ docker-compose ps
    ```bash
    pip install -r requirements.txt
    ```
-4. Run database migrations:
+4. (First time / after a wave merge) Run migrations against Supabase:
    ```bash
    python manage.py migrate
    ```
@@ -117,10 +123,10 @@ Frontend app will be accessible at: `http://localhost:5173/`
 
 ---
 
-## Environment Variables
+### (Optional) Offline / local fallback with Docker
 
-Copy `.env.example` to `.env` if not already created:
 ```bash
-cp .env.example .env
+docker-compose up -d   # starts local PostgreSQL on port 5432
 ```
-Ensure database credentials match your docker-compose setting.
+Then temporarily set `DATABASE_URL=postgresql://skyline_user:skyline_password@localhost:5432/skyline_db` in your `.env`.  
+**Do not push this override; revert to the Supabase URL before committing.**

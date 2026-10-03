@@ -1,6 +1,8 @@
 import os
 from pathlib import Path
+from urllib.parse import urlparse
 from dotenv import load_dotenv
+from django.core.exceptions import ImproperlyConfigured
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -73,21 +75,31 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
-# Database
-DB_NAME = os.getenv('DB_NAME', 'skyline_db')
-DB_USER = os.getenv('DB_USER', 'skyline_user')
-DB_PASSWORD = os.getenv('DB_PASSWORD', 'skyline_password')
-DB_HOST = os.getenv('DB_HOST', 'localhost')
-DB_PORT = os.getenv('DB_PORT', '5432')
+# ── Database ──────────────────────────────────────────────────────────────────
+# DATABASE_URL is REQUIRED. If it is missing the app fails immediately so no
+# teammate accidentally runs against SQLite or a stray localhost Postgres.
+_DATABASE_URL = os.getenv('DATABASE_URL')
+if not _DATABASE_URL:
+    raise ImproperlyConfigured(
+        "DATABASE_URL environment variable is not set. "
+        "Copy .env.example to .env and fill in the Supabase session-pooler URL."
+    )
+
+_db = urlparse(_DATABASE_URL)
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': DB_NAME,
-        'USER': DB_USER,
-        'PASSWORD': DB_PASSWORD,
-        'HOST': DB_HOST,
-        'PORT': DB_PORT,
+        'NAME': _db.path.lstrip('/'),
+        'USER': _db.username,
+        'PASSWORD': _db.password,
+        'HOST': _db.hostname,
+        'PORT': _db.port or 5432,
+        # Supabase session pooler (port 5432) requires SSL.
+        # Server-side cursors are intentionally left ENABLED (session pooler supports them).
+        'OPTIONS': {
+            'sslmode': 'require',
+        },
     }
 }
 
