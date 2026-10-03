@@ -11,14 +11,14 @@ export function Button({
   onClick,
   ...props
 }) {
-  const baseStyles = 'inline-flex items-center justify-center font-semibold transition-all duration-200 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#714B67] dark:focus:ring-offset-slate-900 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap shrink-0 active:scale-[0.98] select-none';
+  const baseStyles = 'inline-flex items-center justify-center font-semibold transition-all duration-200 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500 dark:focus:ring-offset-slate-900 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap shrink-0 active:scale-[0.98] select-none';
 
   const variants = {
-    primary: 'bg-[#714B67] hover:bg-[#5B3B52] dark:bg-[#87567D] dark:hover:bg-[#714B67] text-white shadow-md shadow-[#714B67]/20 hover:shadow-lg hover:shadow-[#714B67]/30 border border-[#714B67]/80',
-    brand: 'bg-[#714B67] hover:bg-[#5B3B52] dark:bg-[#87567D] dark:hover:bg-[#714B67] text-white shadow-md shadow-[#714B67]/20 hover:shadow-lg hover:shadow-[#714B67]/30 border border-[#714B67]/80',
-    secondary: 'bg-white/80 dark:bg-slate-900/80 backdrop-blur-md hover:bg-[#FAF5F9] dark:hover:bg-slate-800 text-[#714B67] dark:text-[#F3EAF2] border border-[#D4BFD2] dark:border-white/10 shadow-sm hover:border-[#714B67]',
+    primary: 'bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-700 hover:to-indigo-700 text-white shadow-md shadow-brand-500/25 hover:shadow-lg hover:shadow-brand-500/35 border border-brand-500/60',
+    brand: 'bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-700 hover:to-indigo-700 text-white shadow-md shadow-brand-500/25 hover:shadow-lg hover:shadow-brand-500/35 border border-brand-500/60',
+    secondary: 'bg-white/80 dark:bg-slate-900/80 backdrop-blur-md hover:bg-brand-50 dark:hover:bg-slate-800 text-brand-700 dark:text-brand-300 border border-brand-200 dark:border-white/10 shadow-sm hover:border-brand-400',
     outline: 'bg-white/70 dark:bg-slate-900/60 backdrop-blur-md hover:bg-white dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-white/10 hover:border-slate-300 dark:hover:border-white/20 shadow-xs',
-    accent: 'bg-sky-500 hover:bg-sky-600 text-white shadow-md shadow-sky-500/20 hover:shadow-lg border border-sky-500',
+    accent: 'bg-cyan-500 hover:bg-cyan-600 text-white shadow-md shadow-cyan-500/20 hover:shadow-lg border border-cyan-500',
     danger: 'bg-rose-600 hover:bg-rose-700 text-white shadow-md shadow-rose-600/20 hover:shadow-lg border border-rose-600',
     ghost: 'bg-transparent hover:bg-slate-100/80 dark:hover:bg-white/10 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white',
     glass: 'bg-white/60 dark:bg-white/10 backdrop-blur-lg hover:bg-white/80 dark:hover:bg-white/15 text-slate-800 dark:text-white border border-white/60 dark:border-white/10 shadow-sm',

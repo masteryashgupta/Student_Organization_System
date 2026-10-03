@@ -33,7 +33,7 @@ export default function OrderConfirmationPage() {
         <h2 className="text-xl font-bold text-slate-900 dark:text-white">Order Not Found</h2>
         <p className="text-sm text-slate-500 dark:text-slate-400">We could not retrieve order details for #{id}.</p>
         <Link to="/store">
-          <Button variant="primary" className="rounded-full px-6 bg-gradient-to-r from-[#714B67] to-[#8C5D80] hover:from-[#5B3B52] hover:to-[#714B67] text-white">
+          <Button variant="primary" className="rounded-full px-6 bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-500 hover:to-indigo-500 text-white">
             Return to Store
           </Button>
         </Link>
@@ -57,13 +57,13 @@ export default function OrderConfirmationPage() {
           </span>
           <h1 className="text-3xl sm:text-5xl font-black text-slate-900 dark:text-white">Thank You for Your Order!</h1>
           <p className="text-sm text-slate-500 dark:text-slate-400 max-w-md mx-auto leading-relaxed">
-            Order <strong className="text-[#714B67] dark:text-purple-300 font-mono">#{order.id}</strong> has been received and verified. Your items are reserved in club inventory.
+            Order <strong className="text-brand-600 dark:text-brand-300 font-mono">#{order.id}</strong> has been received and verified. Your items are reserved in club inventory.
           </p>
         </div>
 
         <div className="pt-3 flex flex-wrap items-center justify-center gap-3">
           <Link to="/store/orders">
-            <Button variant="primary" size="md" className="rounded-full px-6 bg-gradient-to-r from-[#714B67] to-[#8C5D80] hover:from-[#5B3B52] hover:to-[#714B67] text-white font-bold shadow-md shadow-purple-500/20">
+            <Button variant="primary" size="md" className="rounded-full px-6 bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-500 hover:to-indigo-500 text-white font-bold shadow-md shadow-brand-500/20">
               <span>View in My Orders</span>
               <ArrowRight className="w-4 h-4 ml-1.5" />
             </Button>
@@ -81,8 +81,8 @@ export default function OrderConfirmationPage() {
       </div>
 
       {/* Pickup Instructions Card */}
-      <div className="p-6 rounded-3xl glass-card bg-purple-500/5 dark:bg-purple-500/10 border border-purple-500/20 flex items-start gap-4 shadow-md">
-        <div className="p-3 rounded-2xl bg-purple-500/20 text-[#714B67] dark:text-purple-300 flex-shrink-0 shadow-sm">
+      <div className="p-6 rounded-3xl glass-card bg-brand-500/5 dark:bg-brand-500/10 border border-brand-500/20 flex items-start gap-4 shadow-md">
+        <div className="p-3 rounded-2xl bg-brand-500/20 text-brand-600 dark:text-brand-300 flex-shrink-0 shadow-sm">
           <MapPin className="w-6 h-6" />
         </div>
         <div className="space-y-1">
@@ -171,13 +171,13 @@ export default function OrderConfirmationPage() {
           )}
           <div className="flex justify-between text-base font-extrabold text-slate-900 dark:text-white border-t border-slate-200/60 dark:border-slate-800/60 pt-3">
             <span>Amount Paid</span>
-            <span className="text-[#714B67] dark:text-purple-300 text-2xl font-black">${Number(order.total).toFixed(2)}</span>
+            <span className="text-brand-600 dark:text-brand-300 text-2xl font-black">${Number(order.total).toFixed(2)}</span>
           </div>
         </div>
 
         {/* Back Link */}
         <div className="pt-4 border-t border-slate-200/60 dark:border-slate-800/60 flex justify-between items-center text-xs text-slate-400">
-          <Link to="/store" className="text-[#714B67] dark:text-purple-400 hover:underline font-bold flex items-center gap-1">
+          <Link to="/store" className="text-brand-600 dark:text-brand-400 hover:underline font-bold flex items-center gap-1">
             <ShoppingBag className="w-3.5 h-3.5" /> Continue Shopping Store
           </Link>
           <span>Skyline Student Association</span>

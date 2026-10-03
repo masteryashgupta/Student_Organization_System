@@ -249,7 +249,7 @@ export default function EventDetailPage() {
           {/* Realistic Perforated Digital Ticket Pass */}
           <div className="max-w-2xl mx-auto bg-white/85 dark:bg-slate-900/80 backdrop-blur-2xl border border-slate-200/80 dark:border-white/10 rounded-3xl overflow-hidden shadow-2xl relative">
             {/* Header Accent */}
-            <div className="bg-gradient-to-r from-[#714B67] to-[#87567D] p-6 sm:p-8 text-white">
+            <div className="bg-gradient-to-r from-brand-600 to-indigo-600 p-6 sm:p-8 text-white">
               <div className="flex items-center justify-between text-xs font-semibold tracking-wider uppercase opacity-90 mb-2">
                 <span>Skyline Student Association</span>
                 <span className="bg-white/20 px-2.5 py-0.5 rounded-full backdrop-blur-sm">
@@ -257,7 +257,7 @@ export default function EventDetailPage() {
                 </span>
               </div>
               <h2 className="text-2xl sm:text-3xl font-extrabold">{event.title}</h2>
-              <p className="text-purple-100 text-xs sm:text-sm mt-1">{formatDateTime(event.datetime || event.event_date)}</p>
+              <p className="text-brand-100 text-xs sm:text-sm mt-1">{formatDateTime(event.datetime || event.event_date)}</p>
             </div>
 
             {/* Ticket Body Content */}
@@ -275,7 +275,7 @@ export default function EventDetailPage() {
                 <div>
                   <span className="text-xs text-slate-400 dark:text-slate-500 uppercase tracking-wider block">Venue</span>
                   <span className="font-medium text-slate-600 dark:text-slate-300 flex items-center gap-1.5 mt-0.5">
-                    <MapPin className="w-3.5 h-3.5 text-[#714B67] dark:text-[#A97B9F]" />
+                    <MapPin className="w-3.5 h-3.5 text-brand-600 dark:text-brand-400" />
                     {event.venue}
                   </span>
                 </div>
@@ -352,13 +352,13 @@ export default function EventDetailPage() {
                         </Button>
                       </Link>
                       <Link to={`/events/${event.id}/stats`}>
-                        <Button variant="secondary" size="sm" className="h-8 text-xs">
-                          <BarChart3 className="w-3.5 h-3.5 mr-1 text-[#714B67] dark:text-[#A97B9F]" />
+                        <Button variant="secondary" size="sm" className="h-8 text-xs rounded-full">
+                          <BarChart3 className="w-3.5 h-3.5 mr-1 text-brand-600 dark:text-brand-400" />
                           Analytics
                         </Button>
                       </Link>
                       <Link to={`/events/${event.id}/edit`}>
-                        <Button variant="secondary" size="sm" className="h-8 text-xs">
+                        <Button variant="secondary" size="sm" className="h-8 text-xs rounded-full">
                           <Edit3 className="w-3.5 h-3.5 mr-1" />
                           Edit
                         </Button>
@@ -377,9 +377,9 @@ export default function EventDetailPage() {
               </h1>
 
               {/* Event Metadata Strip */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 rounded-3xl bg-slate-50/80 dark:bg-white/5 border border-slate-200/80 dark:border-white/5 text-sm">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 rounded-3xl bg-slate-50/80 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700/80 text-sm">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200/80 dark:border-white/10 flex items-center justify-center text-[#714B67] dark:text-[#A97B9F] shadow-xs">
+                  <div className="w-10 h-10 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200/80 dark:border-slate-700 flex items-center justify-center text-brand-600 dark:text-brand-400 shadow-xs">
                     <Calendar className="w-5 h-5" />
                   </div>
                   <div>
@@ -429,7 +429,7 @@ export default function EventDetailPage() {
                 <span className="text-slate-900 dark:text-white font-medium">Live Seat Inventory</span>
               </div>
               <span className="text-[11px] text-slate-400 dark:text-slate-500 flex items-center gap-1">
-                <RefreshCw className={`w-3 h-3 ${isAvailFetching ? 'animate-spin text-[#714B67] dark:text-[#A97B9F]' : ''}`} />
+                <RefreshCw className={`w-3 h-3 ${isAvailFetching ? 'animate-spin text-brand-600 dark:text-brand-400' : ''}`} />
                 Auto-syncs
               </span>
             </div>
@@ -454,7 +454,7 @@ export default function EventDetailPage() {
                 </div>
 
                 {/* Progress Bar */}
-                <div className="w-full h-2 bg-slate-100 dark:bg-white/10 rounded-full overflow-hidden border border-slate-200/80 dark:border-white/5">
+                <div className="w-full h-2 bg-slate-100 dark:bg-slate-800/80 rounded-full overflow-hidden border border-slate-200/80 dark:border-slate-700">
                   <div
                     className={`h-full transition-all duration-500 ${
                       isSoldOut ? 'bg-rose-500' : occupancyPercent > 80 ? 'bg-amber-500' : 'bg-emerald-500'
@@ -469,7 +469,7 @@ export default function EventDetailPage() {
               </div>
 
               {/* Dynamic Member vs Non-Member Pricing Callout */}
-              <div className="p-4 rounded-3xl bg-slate-50/80 dark:bg-white/5 border border-slate-200/80 dark:border-white/5 space-y-3">
+              <div className="p-4 rounded-3xl bg-slate-50/80 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700/80 space-y-3">
                 <div className="flex items-center justify-between">
                   <span className="text-xs text-slate-500 dark:text-slate-400">Your Ticket Price:</span>
                   <div className="text-right">
@@ -485,10 +485,10 @@ export default function EventDetailPage() {
                 </div>
 
                 {/* Pricing Tier Notice */}
-                <div className="pt-2 border-t border-slate-200/80 dark:border-white/5 text-xs">
+                <div className="pt-2 border-t border-slate-200/80 dark:border-slate-700/80 text-xs">
                   {isMember ? (
                     <div className="flex items-center gap-1.5 text-emerald-700 dark:text-emerald-300 font-medium">
-                      <Sparkles className="w-3.5 h-3.5 shrink-0 text-[#714B67] dark:text-[#A97B9F]" />
+                      <Sparkles className="w-3.5 h-3.5 shrink-0 text-brand-600 dark:text-brand-400" />
                       <span>Active Member Pricing applied ({user?.name || user?.username})</span>
                     </div>
                   ) : (
@@ -497,13 +497,13 @@ export default function EventDetailPage() {
                         <span>Standard General Admission:</span>
                         <span className="font-semibold text-slate-900 dark:text-white">${nonmemberPrice.toFixed(2)}</span>
                       </div>
-                      <div className="flex justify-between text-[#714B67] dark:text-[#A97B9F] font-semibold text-xs">
+                      <div className="flex justify-between text-brand-600 dark:text-brand-400 font-semibold text-xs">
                         <span>Club Member Rate:</span>
                         <span className="text-emerald-600 dark:text-emerald-400 font-bold">${memberPrice.toFixed(2)}</span>
                       </div>
                       {!isAuthenticated && (
                         <p className="text-[11px] text-slate-400 dark:text-slate-500 pt-1">
-                          <Link to="/login" className="text-[#714B67] dark:text-[#A97B9F] hover:underline font-bold">
+                          <Link to="/login" className="text-brand-600 dark:text-brand-400 hover:underline font-bold">
                             Log in as member
                           </Link>{' '}
                           to unlock member rates.

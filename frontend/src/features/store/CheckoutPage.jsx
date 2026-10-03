@@ -127,13 +127,13 @@ export default function CheckoutPage() {
   if (items.length === 0) {
     return (
       <div className="max-w-md mx-auto py-16 text-center glass-panel rounded-3xl border border-white/40 dark:border-slate-800/80 shadow-2xl p-10 space-y-4 animate-fadeIn">
-        <div className="w-16 h-16 rounded-3xl bg-purple-500/10 dark:bg-purple-500/20 flex items-center justify-center mx-auto text-[#714B67] dark:text-purple-300 shadow-inner">
+        <div className="w-16 h-16 rounded-3xl bg-brand-500/10 dark:bg-brand-500/20 flex items-center justify-center mx-auto text-brand-600 dark:text-brand-300 shadow-inner">
           <ShoppingBag className="w-8 h-8" />
         </div>
         <h2 className="text-2xl font-extrabold text-slate-900 dark:text-white">Your Cart is Empty</h2>
         <p className="text-sm text-slate-500 dark:text-slate-400">Add products to your cart before proceeding to checkout.</p>
         <Link to="/store">
-          <Button variant="primary" className="rounded-full px-8 bg-gradient-to-r from-[#714B67] to-[#8C5D80] hover:from-[#5B3B52] hover:to-[#714B67] text-white shadow-lg shadow-purple-500/20 font-bold">
+          <Button variant="primary" className="rounded-full px-8 bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-700 hover:to-indigo-700 text-white shadow-lg shadow-brand-500/25 font-bold">
             Browse Store Catalog
           </Button>
         </Link>
@@ -146,7 +146,7 @@ export default function CheckoutPage() {
       {/* Header */}
       <div className="flex items-center justify-between border-b border-slate-200/60 dark:border-slate-800/60 pb-5">
         <div>
-          <Link to="/store" className="text-xs font-bold text-[#714B67] dark:text-purple-400 hover:underline flex items-center gap-1.5 mb-1.5 transition-colors">
+          <Link to="/store" className="text-xs font-bold text-brand-600 dark:text-brand-400 hover:underline flex items-center gap-1.5 mb-1.5 transition-colors">
             <ArrowLeft className="w-4 h-4" /> Back to Store
           </Link>
           <h1 className="text-2xl sm:text-4xl font-extrabold text-slate-900 dark:text-white">Order Checkout & Payment</h1>
@@ -222,7 +222,7 @@ export default function CheckoutPage() {
                 <select
                   value={formData.pickupLocation}
                   onChange={(e) => handleInputChange('pickupLocation', e.target.value)}
-                  className="w-full bg-white/80 dark:bg-slate-800/80 border border-slate-200/80 dark:border-slate-700/80 rounded-2xl px-4 py-3 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#714B67] dark:focus:ring-purple-400 transition-all font-medium"
+                  className="w-full bg-white/80 dark:bg-slate-800/80 border border-slate-200/80 dark:border-slate-700/80 rounded-2xl px-4 py-3 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-500 dark:focus:ring-brand-400 transition-all font-medium"
                 >
                   <option value="Club Headquarters (Student Center Rm 204)">Club Headquarters (Student Center Rm 204)</option>
                   <option value="Skyline Club Merch Table (Plaza Booth #3)">Skyline Club Merch Table (Plaza Booth #3)</option>
@@ -251,12 +251,12 @@ export default function CheckoutPage() {
                 onClick={() => setPaymentProvider('mock')}
                 className={`p-5 rounded-3xl border-2 text-left transition-all flex flex-col justify-between ${
                   paymentProvider === 'mock'
-                    ? 'bg-purple-500/10 dark:bg-purple-500/20 border-[#714B67] dark:border-purple-400 ring-1 ring-[#714B67] text-slate-900 dark:text-white shadow-lg shadow-purple-500/10'
-                    : 'glass-card bg-slate-50/50 dark:bg-slate-800/40 border-slate-200/80 dark:border-slate-700/80 text-slate-500 dark:text-slate-400 hover:border-purple-300'
+                    ? 'bg-brand-500/10 dark:bg-brand-500/20 border-brand-500 dark:border-brand-400 ring-1 ring-brand-500 text-slate-900 dark:text-white shadow-lg shadow-brand-500/10'
+                    : 'glass-card bg-slate-50/50 dark:bg-slate-800/40 border-slate-200/80 dark:border-slate-700/80 text-slate-500 dark:text-slate-400 hover:border-brand-300'
                 }`}
               >
                 <div className="flex items-center justify-between mb-3">
-                  <div className="p-2.5 rounded-2xl bg-purple-500/20 text-[#714B67] dark:text-purple-300 shadow-sm">
+                  <div className="p-2.5 rounded-2xl bg-brand-500/20 text-brand-600 dark:text-brand-300 shadow-sm">
                     <CheckCircle2 className="w-5 h-5" />
                   </div>
                   <Badge variant="success" size="sm" className="rounded-full px-3">
@@ -274,12 +274,12 @@ export default function CheckoutPage() {
                 onClick={() => setPaymentProvider('stripe')}
                 className={`p-5 rounded-3xl border-2 text-left transition-all flex flex-col justify-between ${
                   paymentProvider === 'stripe'
-                    ? 'bg-purple-500/10 dark:bg-purple-500/20 border-[#714B67] dark:border-purple-400 ring-1 ring-[#714B67] text-slate-900 dark:text-white shadow-lg shadow-purple-500/10'
-                    : 'glass-card bg-slate-50/50 dark:bg-slate-800/40 border-slate-200/80 dark:border-slate-700/80 text-slate-500 dark:text-slate-400 hover:border-purple-300'
+                    ? 'bg-brand-500/10 dark:bg-brand-500/20 border-brand-500 dark:border-brand-400 ring-1 ring-brand-500 text-slate-900 dark:text-white shadow-lg shadow-brand-500/10'
+                    : 'glass-card bg-slate-50/50 dark:bg-slate-800/40 border-slate-200/80 dark:border-slate-700/80 text-slate-500 dark:text-slate-400 hover:border-brand-300'
                 }`}
               >
                 <div className="flex items-center justify-between mb-3">
-                  <div className="p-2.5 rounded-2xl bg-teal-500/20 text-teal-600 dark:text-teal-400 shadow-sm">
+                  <div className="p-2.5 rounded-2xl bg-cyan-500/20 text-cyan-600 dark:text-cyan-400 shadow-sm">
                     <CreditCard className="w-5 h-5" />
                   </div>
                   <Badge variant="accent" size="sm" className="rounded-full px-3">
@@ -352,7 +352,7 @@ export default function CheckoutPage() {
               )}
               <div className="flex justify-between text-base font-extrabold text-slate-900 dark:text-white border-t border-slate-200/60 dark:border-slate-800/60 pt-3">
                 <span>Final Total Due</span>
-                <span className="text-[#714B67] dark:text-purple-300 text-xl font-black">${totalPayable.toFixed(2)}</span>
+                <span className="text-brand-600 dark:text-brand-300 text-xl font-black">${totalPayable.toFixed(2)}</span>
               </div>
             </div>
 
@@ -361,7 +361,7 @@ export default function CheckoutPage() {
               type="submit"
               variant="primary"
               size="lg"
-              className="w-full rounded-full bg-gradient-to-r from-[#714B67] to-[#8C5D80] hover:from-[#5B3B52] hover:to-[#714B67] text-white shadow-lg shadow-purple-500/20 font-bold active:scale-95 transition-transform"
+              className="w-full rounded-full bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-700 hover:to-indigo-700 text-white shadow-lg shadow-brand-500/25 font-bold active:scale-95 transition-transform"
               isLoading={isProcessing}
             >
               <Lock className="w-4 h-4 mr-2" />

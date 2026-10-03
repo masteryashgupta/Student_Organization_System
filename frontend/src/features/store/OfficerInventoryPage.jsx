@@ -169,7 +169,7 @@ export default function OfficerInventoryPage() {
               <ShieldCheck className="w-3.5 h-3.5" /> Officer Control Desk
             </Badge>
             <span className="text-slate-400">/</span>
-            <Link to="/store" className="text-xs font-bold text-slate-500 hover:text-[#714B67] dark:text-slate-400 dark:hover:text-purple-300 flex items-center gap-1 transition-colors">
+            <Link to="/store" className="text-xs font-bold text-slate-500 hover:text-brand-600 dark:text-slate-400 dark:hover:text-brand-300 flex items-center gap-1 transition-colors">
               <ArrowLeft className="w-3 h-3" /> Live Store
             </Link>
           </div>
@@ -184,7 +184,7 @@ export default function OfficerInventoryPage() {
         <div className="flex items-center gap-3">
           <Link to="/store/manage/orders">
             <Button variant="outline" size="sm" className="font-bold rounded-full border-slate-200/80 dark:border-slate-700/80 hover:bg-slate-100 dark:hover:bg-slate-800">
-              <Boxes className="w-4 h-4 mr-1.5 text-[#714B67] dark:text-purple-400" /> Order Fulfillment Desk
+              <Boxes className="w-4 h-4 mr-1.5 text-brand-600 dark:text-brand-400" /> Order Fulfillment Desk
             </Button>
           </Link>
           <Button
@@ -194,7 +194,7 @@ export default function OfficerInventoryPage() {
             disabled={isFetching}
             className="rounded-full text-slate-500 hover:text-slate-900 dark:hover:text-white"
           >
-            <RefreshCw className={`w-4 h-4 ${isFetching ? 'animate-spin text-[#714B67] dark:text-purple-400' : ''}`} />
+            <RefreshCw className={`w-4 h-4 ${isFetching ? 'animate-spin text-brand-600 dark:text-brand-400' : ''}`} />
           </Button>
         </div>
       </div>
@@ -205,7 +205,7 @@ export default function OfficerInventoryPage() {
         <div className="glass-panel border-white/40 dark:border-slate-800/80 p-6 rounded-3xl shadow-lg">
           <div className="flex items-center justify-between text-slate-500 dark:text-slate-400 mb-2">
             <span className="text-xs font-bold uppercase tracking-wider">Active SKUs</span>
-            <Layers className="w-4 h-4 text-[#714B67] dark:text-purple-400" />
+            <Layers className="w-4 h-4 text-brand-600 dark:text-brand-400" />
           </div>
           <div className="text-3xl font-black text-slate-900 dark:text-white">{stats.totalSKUs}</div>
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Across {products.length} catalog products</p>
@@ -275,7 +275,7 @@ export default function OfficerInventoryPage() {
             onClick={() => setStockFilter('all')}
             className={`px-4 py-2 rounded-full text-xs font-bold transition-all whitespace-nowrap ${
               stockFilter === 'all'
-                ? 'bg-gradient-to-r from-[#714B67] to-[#8C5D80] text-white shadow-md shadow-purple-500/20'
+                ? 'bg-gradient-to-r from-brand-600 to-indigo-600 text-white shadow-md shadow-brand-500/20'
                 : 'glass-card bg-white/70 dark:bg-slate-900/70 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white border border-slate-200/80 dark:border-slate-800/80'
             }`}
           >
@@ -326,7 +326,7 @@ export default function OfficerInventoryPage() {
             placeholder="Search SKU, Product, or Size..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-9 pr-4 py-2 text-xs bg-white/80 dark:bg-slate-800/80 border border-slate-200/80 dark:border-slate-700/80 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#714B67] dark:focus:ring-purple-400 transition-all font-medium"
+            className="w-full pl-9 pr-4 py-2 text-xs bg-white/80 dark:bg-slate-800/80 border border-slate-200/80 dark:border-slate-700/80 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-500 dark:focus:ring-brand-400 transition-all font-medium"
           />
         </div>
       </div>
@@ -335,7 +335,7 @@ export default function OfficerInventoryPage() {
       <div className="glass-panel border-white/40 dark:border-slate-800/80 rounded-3xl overflow-hidden shadow-2xl">
         {isLoading ? (
           <div className="p-12 text-center space-y-3">
-            <div className="w-8 h-8 border-2 border-[#714B67] border-t-transparent rounded-full animate-spin mx-auto" />
+            <div className="w-8 h-8 border-2 border-brand-600 border-t-transparent rounded-full animate-spin mx-auto" />
             <p className="text-xs text-slate-400">Loading live stock levels from inventory database...</p>
           </div>
         ) : filteredInventory.length === 0 ? (
@@ -385,7 +385,7 @@ export default function OfficerInventoryPage() {
                   return (
                     <tr
                       key={`${item.productId}-${item.variantId}-${item.size}`}
-                      className={`hover:bg-purple-500/5 dark:hover:bg-purple-500/10 transition-colors ${
+                      className={`hover:bg-brand-500/5 dark:hover:bg-brand-500/10 transition-colors ${
                         isZero
                           ? 'bg-rose-500/5'
                           : isLow
@@ -406,7 +406,7 @@ export default function OfficerInventoryPage() {
                           <div>
                             <Link
                               to={`/store/${item.productId}`}
-                              className="font-bold text-slate-900 dark:text-white hover:text-[#714B67] dark:hover:text-purple-300 transition-colors line-clamp-1"
+                              className="font-bold text-slate-900 dark:text-white hover:text-brand-600 dark:hover:text-brand-300 transition-colors line-clamp-1"
                             >
                               {item.productName}
                             </Link>
@@ -540,7 +540,7 @@ export default function OfficerInventoryPage() {
                     onClick={() => setRestockQty(quickAmount)}
                     className={`text-xs px-3 py-1.5 rounded-xl border font-bold transition-all ${
                       restockQty === quickAmount
-                        ? 'bg-[#714B67] border-[#714B67] text-white shadow-sm'
+                        ? 'bg-brand-600 border-brand-600 text-white shadow-sm'
                         : 'glass-card bg-slate-100/70 dark:bg-slate-800/60 border-slate-200/80 dark:border-slate-700/80 text-slate-600 dark:text-slate-300 hover:text-slate-900'
                     }`}
                   >
@@ -551,8 +551,8 @@ export default function OfficerInventoryPage() {
             </div>
 
             {/* Restock Summary */}
-            <div className="p-3.5 bg-purple-500/10 border border-purple-500/20 rounded-2xl text-xs text-[#714B67] dark:text-purple-300 flex items-center gap-2.5">
-              <Zap className="w-4 h-4 text-[#714B67] dark:text-purple-300 flex-shrink-0" />
+            <div className="p-3.5 bg-brand-500/10 border border-brand-500/20 rounded-2xl text-xs text-brand-600 dark:text-brand-300 flex items-center gap-2.5">
+              <Zap className="w-4 h-4 text-brand-600 dark:text-brand-300 flex-shrink-0" />
               <span>
                 New resulting stock after replenishment will be{' '}
                 <strong className="text-slate-900 dark:text-white font-mono">
@@ -576,7 +576,7 @@ export default function OfficerInventoryPage() {
                 variant="primary"
                 onClick={handleConfirmRestock}
                 disabled={restockMutation.isPending}
-                className="rounded-full bg-gradient-to-r from-[#714B67] to-[#8C5D80] hover:from-[#5B3B52] hover:to-[#714B67] text-white font-bold"
+                className="rounded-full bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-500 hover:to-indigo-500 text-white font-bold"
               >
                 {restockMutation.isPending ? 'Restocking...' : `Confirm +${restockQty} Units`}
               </Button>

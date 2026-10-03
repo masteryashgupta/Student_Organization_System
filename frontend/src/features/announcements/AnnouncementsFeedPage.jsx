@@ -84,7 +84,7 @@ export default function AnnouncementsFeedPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 glass-panel p-6 sm:p-8 rounded-3xl border border-white/40 dark:border-slate-800/80 shadow-xl">
         <div>
           <div className="flex items-center gap-2 mb-1.5">
-            <span className="px-3.5 py-1 rounded-full text-xs font-bold bg-purple-500/10 dark:bg-purple-500/20 text-[#714B67] dark:text-purple-300 border border-purple-500/30 shadow-sm">
+            <span className="px-3.5 py-1 rounded-full text-xs font-bold bg-brand-500/10 dark:bg-brand-500/20 text-brand-700 dark:text-brand-300 border border-brand-500/30 shadow-sm">
               Club Broadcast Center
             </span>
           </div>
@@ -102,7 +102,7 @@ export default function AnnouncementsFeedPage() {
           </Link>
           {isOfficer && (
             <Link to="/announcements/compose">
-              <Button variant="primary" size="sm" className="rounded-full bg-gradient-to-r from-[#714B67] to-[#8C5D80] hover:from-[#5B3B52] hover:to-[#714B67] text-white shadow-lg shadow-purple-500/20 font-bold">
+              <Button variant="primary" size="sm" className="rounded-full bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-500 hover:to-indigo-500 text-white shadow-lg shadow-brand-500/25 font-bold">
                 + Compose Notice
               </Button>
             </Link>
@@ -122,7 +122,7 @@ export default function AnnouncementsFeedPage() {
                 onClick={() => setSelectedAudience('')}
                 className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all whitespace-nowrap ${
                   selectedAudience === ''
-                    ? 'bg-gradient-to-r from-[#714B67] to-[#8C5D80] text-white shadow-sm'
+                    ? 'bg-gradient-to-r from-brand-600 to-indigo-600 text-white shadow-md shadow-brand-500/20'
                     : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
                 }`}
               >
@@ -132,7 +132,7 @@ export default function AnnouncementsFeedPage() {
                 onClick={() => setSelectedAudience('all')}
                 className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all whitespace-nowrap ${
                   selectedAudience === 'all'
-                    ? 'bg-gradient-to-r from-[#714B67] to-[#8C5D80] text-white shadow-sm'
+                    ? 'bg-gradient-to-r from-brand-600 to-indigo-600 text-white shadow-md shadow-brand-500/20'
                     : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
                 }`}
               >
@@ -142,7 +142,7 @@ export default function AnnouncementsFeedPage() {
                 onClick={() => setSelectedAudience('members')}
                 className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all whitespace-nowrap ${
                   selectedAudience === 'members'
-                    ? 'bg-gradient-to-r from-[#714B67] to-[#8C5D80] text-white shadow-sm'
+                    ? 'bg-gradient-to-r from-brand-600 to-indigo-600 text-white shadow-md shadow-brand-500/20'
                     : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
                 }`}
               >
@@ -152,7 +152,7 @@ export default function AnnouncementsFeedPage() {
                 onClick={() => setSelectedAudience('volunteers')}
                 className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all whitespace-nowrap ${
                   selectedAudience === 'volunteers'
-                    ? 'bg-gradient-to-r from-[#714B67] to-[#8C5D80] text-white shadow-sm'
+                    ? 'bg-gradient-to-r from-brand-600 to-indigo-600 text-white shadow-md shadow-brand-500/20'
                     : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
                 }`}
               >
@@ -230,7 +230,7 @@ export default function AnnouncementsFeedPage() {
                     <Button
                       variant={item.is_sent ? 'secondary' : 'primary'}
                       size="sm"
-                      className={`rounded-full text-xs py-1.5 px-4 font-bold ${!item.is_sent ? 'bg-gradient-to-r from-[#714B67] to-[#8C5D80] text-white shadow-md' : ''}`}
+                      className={`rounded-full text-xs py-1.5 px-4 font-bold ${!item.is_sent ? 'bg-gradient-to-r from-brand-600 to-indigo-600 text-white shadow-md shadow-brand-500/20' : ''}`}
                       isLoading={sendMutation.isPending && sendMutation.variables === item.id}
                       onClick={() => sendMutation.mutate(item.id)}
                     >
@@ -245,7 +245,7 @@ export default function AnnouncementsFeedPage() {
 
         {/* Sidebar Column: Email Mailing List Subscription */}
         <div className="space-y-5">
-          <Card className="glass-panel border-purple-300/40 dark:border-purple-800/50 bg-purple-500/5 shadow-xl rounded-3xl">
+          <Card className="glass-panel border-brand-500/30 dark:border-brand-500/30 bg-brand-500/5 shadow-xl rounded-3xl">
             <CardHeader>
               <CardTitle className="text-lg font-extrabold text-slate-900 dark:text-white">Join Club Mailing List</CardTitle>
               <CardDescription className="text-xs text-slate-500 dark:text-slate-400">
@@ -265,7 +265,7 @@ export default function AnnouncementsFeedPage() {
                 <Button
                   type="submit"
                   variant="primary"
-                  className="w-full rounded-full bg-gradient-to-r from-[#714B67] to-[#8C5D80] hover:from-[#5B3B52] hover:to-[#714B67] text-white font-bold shadow-md shadow-purple-500/20 active:scale-95 transition-transform"
+                  className="w-full rounded-full bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-500 hover:to-indigo-500 text-white font-bold shadow-md shadow-brand-500/25 active:scale-95 transition-transform"
                   isLoading={submittingSub}
                 >
                   Subscribe to Updates

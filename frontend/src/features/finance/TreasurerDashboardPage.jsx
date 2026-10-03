@@ -180,7 +180,7 @@ export default function TreasurerDashboardPage() {
           <Button variant="outline" size="sm" onClick={handleExportCSV} className="rounded-full border-slate-200/80 dark:border-slate-700/80 hover:bg-slate-100 dark:hover:bg-slate-800 font-bold">
             📥 Download CSV
           </Button>
-          <Button variant="primary" size="sm" onClick={() => setIsModalOpen(true)} className="rounded-full bg-gradient-to-r from-[#714B67] to-[#8C5D80] hover:from-[#5B3B52] hover:to-[#714B67] text-white shadow-md shadow-purple-500/20 font-bold">
+          <Button variant="primary" size="sm" onClick={() => setIsModalOpen(true)} className="rounded-full bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-500 hover:to-indigo-500 text-white shadow-md shadow-brand-500/25 font-bold">
             + Manual Transaction
           </Button>
         </div>
@@ -254,12 +254,12 @@ export default function TreasurerDashboardPage() {
         </Card>
 
         {/* Card 3: Net Cash Balance */}
-        <Card className="glass-panel border-purple-300/40 dark:border-purple-800/50 rounded-3xl shadow-xl bg-purple-500/5">
+        <Card className="glass-panel border-brand-500/30 dark:border-brand-500/30 rounded-3xl shadow-xl bg-brand-500/5">
           <CardHeader className="pb-2">
-            <CardDescription className="text-[#714B67] dark:text-purple-300 font-bold text-xs tracking-wider uppercase">
+            <CardDescription className="text-brand-600 dark:text-brand-300 font-bold text-xs tracking-wider uppercase">
               Net Treasury Balance
             </CardDescription>
-            <CardTitle className="text-3xl sm:text-4xl font-black text-[#714B67] dark:text-purple-300 mt-2">
+            <CardTitle className="text-3xl sm:text-4xl font-black text-brand-600 dark:text-brand-300 mt-2">
               ${isSummaryLoading ? '...' : summary?.current_balance || '0.00'}
             </CardTitle>
           </CardHeader>
@@ -419,7 +419,7 @@ export default function TreasurerDashboardPage() {
                     <TableCell className="text-xs font-bold text-slate-900 dark:text-white">
                       {tx.category_display || tx.category}
                     </TableCell>
-                    <TableCell className="text-xs text-[#714B67] dark:text-purple-300 font-bold max-w-[140px] truncate">
+                    <TableCell className="text-xs text-brand-600 dark:text-brand-300 font-bold max-w-[140px] truncate">
                       {tx.source}
                     </TableCell>
                     <TableCell className="text-xs text-slate-500 dark:text-slate-400 max-w-[220px] truncate">
@@ -499,7 +499,7 @@ export default function TreasurerDashboardPage() {
               placeholder="Additional details regarding this entry..."
               value={manualForm.description}
               onChange={(e) => setManualForm((prev) => ({ ...prev, description: e.target.value }))}
-              className="w-full px-3.5 py-2.5 rounded-2xl bg-white/80 dark:bg-slate-800/80 border border-slate-200/80 dark:border-slate-700/80 text-slate-900 dark:text-white text-xs focus:outline-none focus:ring-2 focus:ring-[#714B67] dark:focus:ring-purple-400"
+              className="w-full px-3.5 py-2.5 rounded-2xl bg-white/80 dark:bg-slate-800/80 border border-slate-200/80 dark:border-slate-700/80 text-slate-900 dark:text-white text-xs focus:outline-none focus:ring-2 focus:ring-brand-500 dark:focus:ring-brand-400"
             />
           </div>
 
@@ -507,7 +507,7 @@ export default function TreasurerDashboardPage() {
             <Button type="button" variant="outline" size="sm" onClick={() => setIsModalOpen(false)} className="rounded-full">
               Cancel
             </Button>
-            <Button type="submit" variant="primary" size="sm" isLoading={manualMutation.isPending} className="rounded-full bg-gradient-to-r from-[#714B67] to-[#8C5D80] text-white font-bold">
+            <Button type="submit" variant="primary" size="sm" isLoading={manualMutation.isPending} className="rounded-full bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-500 hover:to-indigo-500 text-white font-bold shadow-md shadow-brand-500/20">
               Record Entry
             </Button>
           </div>

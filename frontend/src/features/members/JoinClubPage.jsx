@@ -204,8 +204,8 @@ export default function JoinClubPage() {
     <div className="max-w-4xl mx-auto space-y-8 py-4 pb-16 animate-fadeIn">
       {/* Hero Header */}
       <div className="text-center space-y-3 max-w-2xl mx-auto">
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-purple-500/10 to-pink-500/10 border border-purple-500/20 text-[#714B67] dark:text-purple-300 text-xs font-bold uppercase tracking-wider shadow-sm">
-          <span className="w-2 h-2 rounded-full bg-[#714B67] dark:bg-purple-400 animate-pulse"></span>
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-brand-500/10 to-indigo-500/10 border border-brand-500/20 text-brand-600 dark:text-brand-300 text-xs font-bold uppercase tracking-wider shadow-sm">
+          <span className="w-2 h-2 rounded-full bg-brand-600 dark:bg-brand-400 animate-pulse"></span>
           2026–2027 Academic Season
         </div>
         <h1 className="text-3xl sm:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight">
@@ -221,7 +221,7 @@ export default function JoinClubPage() {
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <h2 className="text-xl font-extrabold text-slate-900 dark:text-white flex items-center gap-2.5">
-              <span className="w-7 h-7 rounded-full bg-gradient-to-tr from-[#714B67] to-[#8C5D80] text-white text-xs flex items-center justify-center font-bold shadow-md shadow-purple-500/20">1</span>
+              <span className="w-7 h-7 rounded-full bg-gradient-to-tr from-brand-600 to-indigo-600 text-white text-xs flex items-center justify-center font-bold shadow-md shadow-brand-500/20">1</span>
               Choose Your Membership Plan
             </h2>
             {errors.tier_id && <p className="text-xs text-rose-500 font-semibold">{errors.tier_id}</p>}
@@ -246,12 +246,12 @@ export default function JoinClubPage() {
                     }}
                     className={`relative rounded-3xl p-6 cursor-pointer border-2 transition-all duration-300 flex flex-col justify-between backdrop-blur-xl ${
                       isSelected
-                        ? 'bg-purple-500/10 dark:bg-purple-500/20 border-[#714B67] dark:border-purple-400 shadow-xl shadow-purple-500/10 -translate-y-1.5'
-                        : 'glass-card bg-white/70 dark:bg-slate-900/60 border-slate-200/80 dark:border-slate-800/80 hover:border-purple-300 dark:hover:border-purple-700 hover:shadow-lg'
+                        ? 'bg-brand-500/10 dark:bg-brand-500/20 border-brand-500 dark:border-brand-400 shadow-xl shadow-brand-500/10 -translate-y-1.5'
+                        : 'glass-card bg-white/70 dark:bg-slate-900/60 border-slate-200/80 dark:border-slate-800/80 hover:border-brand-300 dark:hover:border-brand-700 hover:shadow-lg'
                     }`}
                   >
                     {isSelected && (
-                      <div className="absolute top-4 right-4 text-[#714B67] dark:text-purple-300">
+                      <div className="absolute top-4 right-4 text-brand-600 dark:text-brand-300">
                         <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
                           <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                         </svg>
@@ -282,7 +282,7 @@ export default function JoinClubPage() {
                           <span className="font-medium">{tier.ticket_discount_pct}% Event Ticket Discount</span>
                         </div>
                         <div className="flex items-center gap-2">
-                          <span className="p-1 rounded-full bg-purple-500/20 text-purple-600 dark:text-purple-400 shrink-0">
+                          <span className="p-1 rounded-full bg-brand-500/20 text-brand-600 dark:text-brand-400 shrink-0">
                             <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7" />
                             </svg>
@@ -302,7 +302,7 @@ export default function JoinClubPage() {
         <Card className="glass-panel border-white/40 dark:border-slate-800/80 rounded-3xl shadow-xl overflow-hidden">
           <CardHeader className="p-6 sm:p-8 pb-4">
             <CardTitle className="text-xl font-extrabold text-slate-900 dark:text-white flex items-center gap-2.5">
-              <span className="w-7 h-7 rounded-full bg-gradient-to-tr from-[#714B67] to-[#8C5D80] text-white text-xs flex items-center justify-center font-bold shadow-md shadow-purple-500/20">2</span>
+              <span className="w-7 h-7 rounded-full bg-gradient-to-tr from-brand-600 to-indigo-600 text-white text-xs flex items-center justify-center font-bold shadow-md shadow-brand-500/20">2</span>
               Student & Contact Information
             </CardTitle>
             <CardDescription className="text-xs text-slate-500 dark:text-slate-400">
@@ -445,7 +445,7 @@ export default function JoinClubPage() {
               variant="primary"
               size="lg"
               disabled={submitting}
-              className="w-full sm:w-auto px-10 py-3.5 font-bold rounded-full bg-gradient-to-r from-[#714B67] to-[#8C5D80] hover:from-[#5B3B52] hover:to-[#714B67] text-white shadow-lg shadow-purple-500/20 active:scale-95 transition-transform"
+              className="w-full sm:w-auto px-10 py-3.5 font-bold rounded-full bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-500 hover:to-indigo-500 text-white shadow-lg shadow-brand-500/20 active:scale-95 transition-transform"
             >
               {submitting ? (
                 'Processing Registration...'
@@ -462,7 +462,7 @@ export default function JoinClubPage() {
       {!user && (
         <div className="text-center text-sm text-slate-500 dark:text-slate-400">
           Already have an account?{' '}
-          <Link to="/login" className="text-[#714B67] dark:text-purple-400 hover:underline font-bold">
+          <Link to="/login" className="text-brand-600 dark:text-brand-400 hover:underline font-bold">
             Sign in here
           </Link>
         </div>

@@ -7,42 +7,42 @@
 @layer base {
   :root {
     --canvas-bg: #F8FAFC;
-    --canvas-gradient: radial-gradient(at 0% 0%, rgba(243, 234, 242, 0.7) 0px, transparent 50%),
-                        radial-gradient(at 100% 0%, rgba(224, 242, 254, 0.6) 0px, transparent 50%),
-                        radial-gradient(at 50% 100%, rgba(241, 245, 249, 0.8) 0px, transparent 50%),
+    --canvas-gradient: radial-gradient(at 0% 0%, rgba(224, 231, 255, 0.75) 0px, transparent 50%),
+                        radial-gradient(at 100% 0%, rgba(224, 242, 254, 0.7) 0px, transparent 50%),
+                        radial-gradient(at 50% 100%, rgba(241, 245, 249, 0.85) 0px, transparent 50%),
                         #F8FAFC;
     --text-main: #0F172A;
     --text-muted: #64748B;
     --border-subtle: #E2E8F0;
-    --accent: #714B67;
-    --accent-hover: #5B3B52;
-    --brand-primary: #714B67;
-    --brand-hover: #5B3B52;
-    --brand-light: #F8F2F7;
-    --brand-border: #D4BFD2;
-    --glass-bg: rgba(255, 255, 255, 0.72);
+    --accent: #6366F1;
+    --accent-hover: #4F46E5;
+    --brand-primary: #6366F1;
+    --brand-hover: #4F46E5;
+    --brand-light: #EEF2FF;
+    --brand-border: #C7D2FE;
+    --glass-bg: rgba(255, 255, 255, 0.75);
     --glass-border: rgba(255, 255, 255, 0.85);
-    --glass-shadow: 0 12px 32px -4px rgba(113, 75, 103, 0.06), 0 4px 16px -2px rgba(15, 23, 42, 0.04);
+    --glass-shadow: 0 12px 32px -4px rgba(99, 102, 241, 0.08), 0 4px 16px -2px rgba(15, 23, 42, 0.04);
   }
 
   .dark {
     --canvas-bg: #090D16;
-    --canvas-gradient: radial-gradient(at 0% 0%, rgba(113, 75, 103, 0.18) 0px, transparent 55%),
-                        radial-gradient(at 100% 10%, rgba(14, 165, 233, 0.12) 0px, transparent 55%),
-                        radial-gradient(at 50% 100%, rgba(30, 41, 59, 0.3) 0px, transparent 50%),
+    --canvas-gradient: radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.16) 0px, transparent 55%),
+                        radial-gradient(at 100% 10%, rgba(14, 165, 233, 0.14) 0px, transparent 55%),
+                        radial-gradient(at 50% 100%, rgba(30, 41, 59, 0.35) 0px, transparent 50%),
                         #090D16;
     --text-main: #F8FAFC;
     --text-muted: #94A3B8;
     --border-subtle: rgba(255, 255, 255, 0.08);
-    --accent: #A97B9F;
-    --accent-hover: #D4BFD2;
-    --brand-primary: #A97B9F;
-    --brand-hover: #D4BFD2;
-    --brand-light: rgba(113, 75, 103, 0.15);
-    --brand-border: rgba(212, 191, 210, 0.2);
-    --glass-bg: rgba(15, 23, 42, 0.7);
+    --accent: #818CF8;
+    --accent-hover: #A5B4FC;
+    --brand-primary: #818CF8;
+    --brand-hover: #A5B4FC;
+    --brand-light: rgba(99, 102, 241, 0.18);
+    --brand-border: rgba(199, 210, 254, 0.25);
+    --glass-bg: rgba(15, 23, 42, 0.72);
     --glass-border: rgba(255, 255, 255, 0.09);
-    --glass-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5), 0 0 1px 1px rgba(255, 255, 255, 0.05);
+    --glass-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.55), 0 0 1px 1px rgba(255, 255, 255, 0.06);
   }
 
   html, body {
@@ -70,7 +70,7 @@
   }
 
   body::selection {
-    background-color: #714B67;
+    background-color: #6366F1;
     color: #ffffff;
   }
 
@@ -110,13 +110,13 @@
 
 .glass-card-interactive:hover {
   transform: translateY(-2px);
-  box-shadow: 0 16px 36px -6px rgba(113, 75, 103, 0.12), 0 6px 16px -3px rgba(0, 0, 0, 0.04);
-  border-color: rgba(212, 191, 210, 0.9);
+  box-shadow: 0 16px 36px -6px rgba(99, 102, 241, 0.15), 0 6px 16px -3px rgba(0, 0, 0, 0.04);
+  border-color: rgba(199, 210, 254, 0.9);
 }
 
 .dark .glass-card-interactive:hover {
-  box-shadow: 0 20px 40px -8px rgba(0, 0, 0, 0.6), 0 0 20px rgba(169, 123, 159, 0.15);
-  border-color: rgba(212, 191, 210, 0.25);
+  box-shadow: 0 20px 40px -8px rgba(0, 0, 0, 0.6), 0 0 20px rgba(99, 102, 241, 0.2);
+  border-color: rgba(199, 210, 254, 0.3);
 }
 
 /* Floating Pill Navigation */
@@ -140,10 +140,10 @@
   align-items: center;
   gap: 8px;
   border-radius: 9999px;
-  background-color: rgba(250, 245, 249, 0.85);
+  background-color: rgba(238, 242, 255, 0.85);
   backdrop-filter: blur(8px);
-  border: 1px solid #D4BFD2;
-  color: #714B67;
+  border: 1px solid #C7D2FE;
+  color: #4F46E5;
   font-size: 0.8125rem;
   font-weight: 600;
   padding: 5px 14px;
@@ -152,29 +152,29 @@
 }
 
 .dark .dual-badge-pill {
-  background-color: rgba(113, 75, 103, 0.2);
-  border-color: rgba(212, 191, 210, 0.3);
-  color: #F3EAF2;
+  background-color: rgba(99, 102, 241, 0.2);
+  border-color: rgba(199, 210, 254, 0.35);
+  color: #E0E7FF;
 }
 
 .dual-badge-pill:hover {
-  background-color: #F3EAF2;
-  border-color: #A97B9F;
+  background-color: #E0E7FF;
+  border-color: #818CF8;
 }
 
 .dark .dual-badge-pill:hover {
-  background-color: rgba(113, 75, 103, 0.3);
-  border-color: #D4BFD2;
+  background-color: rgba(99, 102, 241, 0.35);
+  border-color: #C7D2FE;
 }
 
 .dual-badge-divider {
   width: 1px;
   height: 12px;
-  background-color: rgba(113, 75, 103, 0.35);
+  background-color: rgba(99, 102, 241, 0.35);
 }
 
 .dark .dual-badge-divider {
-  background-color: rgba(212, 191, 210, 0.4);
+  background-color: rgba(199, 210, 254, 0.4);
 }
 
 /* Entity / Avatar Link Pill */

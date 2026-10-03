@@ -43,17 +43,17 @@ export default function OverviewPage() {
           <div className="dual-badge-pill">
             <span className="font-bold">Skyline UI</span>
             <span className="dual-badge-divider"></span>
-            <span className="font-medium text-[#714B67]">Campus Organization OS</span>
+            <span className="font-medium text-brand-600 dark:text-brand-300">Campus Organization OS</span>
           </div>
         </div>
 
         {/* Hero Headline */}
-        <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold text-[#0F172A] tracking-[-0.035em] leading-[1.08] max-w-3xl mx-auto">
+        <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold text-slate-900 dark:text-white tracking-[-0.035em] leading-[1.08] max-w-3xl mx-auto">
           Building bridges between students, campus, and community
         </h1>
 
         {/* Hero Subtitle */}
-        <p className="text-base sm:text-lg md:text-xl text-[#475569] font-normal max-w-2xl mx-auto leading-relaxed">
+        <p className="text-base sm:text-lg md:text-xl text-slate-600 dark:text-slate-300 font-normal max-w-2xl mx-auto leading-relaxed">
           The unified student organization portal for Skyline College. Coordinate campus galas, join active project teams, track live ledger finances, and order club gear.
         </p>
 
@@ -63,10 +63,10 @@ export default function OverviewPage() {
             to="/members"
             className="avatar-link-pill group"
           >
-            <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-[#714B67] to-[#5B3B52] text-white flex items-center justify-center font-bold text-xs shadow-sm">
+            <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-brand-600 to-indigo-600 text-white flex items-center justify-center font-bold text-xs shadow-sm">
               S
             </div>
-            <span className="text-sm font-semibold text-[#0F172A] group-hover:text-[#714B67] transition-colors">
+            <span className="text-sm font-semibold text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors">
               About – Skyline Student Association
             </span>
             <ChevronRight className="w-4 h-4 text-slate-400 group-hover:translate-x-0.5 transition-transform" />
@@ -556,7 +556,7 @@ export default function OverviewPage() {
                 {/* Open Full Kanban Board Button */}
                 <Link
                   to="/tasks"
-                  className="block text-center py-2.5 rounded-xl text-xs font-bold transition-all shadow-sm bg-[#714B67] hover:bg-[#5B3B52] text-white"
+                  className="block text-center py-2.5 rounded-full text-xs font-bold transition-all shadow-md shadow-brand-500/20 bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-500 hover:to-indigo-500 text-white"
                 >
                   Open Full Kanban Board &rarr;
                 </Link>
@@ -620,7 +620,7 @@ export default function OverviewPage() {
                   <span className={frameTheme === 'light' ? 'text-slate-500' : 'text-slate-400'}>
                     Registration:
                   </span>
-                  <span className="font-bold text-[#714B67]">Free for Members</span>
+                  <span className="font-bold text-brand-600 dark:text-brand-400">Free for Members</span>
                 </div>
                 <Link to="/events" className="block pt-2">
                   <Button
@@ -699,7 +699,7 @@ export default function OverviewPage() {
                 <span className={`text-xs uppercase font-semibold ${frameTheme === 'light' ? 'text-slate-500' : 'text-slate-400'}`}>
                   Active Fundraisers
                 </span>
-                <div className="text-3xl font-black text-[#714B67] mt-2 font-mono">
+                <div className="text-3xl font-black text-brand-600 dark:text-brand-400 mt-2 font-mono">
                   $3,200.00
                 </div>
                 <p className={`text-xs mt-1 ${frameTheme === 'light' ? 'text-slate-500' : 'text-slate-400'}`}>
@@ -752,20 +752,20 @@ export default function OverviewPage() {
           {/* Pillar 1: Events */}
           <Link
             to="/events"
-            className="group p-6 rounded-3xl bg-white border border-slate-200/80 shadow-once-card hover:shadow-once-card-hover hover:border-[#D4BFD2] transition-all flex flex-col justify-between"
+            className="group p-6 rounded-3xl glass-panel border-white/40 dark:border-slate-800/80 shadow-lg hover:shadow-2xl hover:border-brand-500/30 transition-all flex flex-col justify-between"
           >
             <div className="space-y-3">
-              <div className="w-10 h-10 rounded-2xl bg-[#FAF5F9] text-[#714B67] flex items-center justify-center font-bold">
+              <div className="w-10 h-10 rounded-2xl bg-brand-50 dark:bg-brand-950/50 text-brand-600 dark:text-brand-400 flex items-center justify-center font-bold">
                 <Calendar className="w-5 h-5" />
               </div>
-              <h3 className="text-base font-bold text-[#0F172A] group-hover:text-[#714B67] transition-colors">
+              <h3 className="text-base font-bold text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors">
                 Events & Ticketing
               </h3>
-              <p className="text-xs text-[#64748B] leading-relaxed">
+              <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
                 Live seat availability, member discount pricing, and dynamic QR door check-in.
               </p>
             </div>
-            <div className="pt-4 flex items-center text-xs font-semibold text-[#714B67] group-hover:translate-x-0.5 transition-transform">
+            <div className="pt-4 flex items-center text-xs font-semibold text-brand-600 dark:text-brand-400 group-hover:translate-x-0.5 transition-transform">
               <span>Browse Galas</span>
               <ArrowRight className="w-3.5 h-3.5 ml-1" />
             </div>
@@ -774,20 +774,20 @@ export default function OverviewPage() {
           {/* Pillar 2: Finance */}
           <Link
             to="/finance"
-            className="group p-6 rounded-3xl bg-white border border-slate-200/80 shadow-once-card hover:shadow-once-card-hover hover:border-emerald-300 transition-all flex flex-col justify-between"
+            className="group p-6 rounded-3xl glass-panel border-white/40 dark:border-slate-800/80 shadow-lg hover:shadow-2xl hover:border-emerald-500/30 transition-all flex flex-col justify-between"
           >
             <div className="space-y-3">
-              <div className="w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold">
+              <div className="w-10 h-10 rounded-2xl bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-bold">
                 <DollarSign className="w-5 h-5" />
               </div>
-              <h3 className="text-base font-bold text-[#0F172A] group-hover:text-emerald-600 transition-colors">
+              <h3 className="text-base font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
                 Treasury Ledger
               </h3>
-              <p className="text-xs text-[#64748B] leading-relaxed">
+              <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
                 Immutable double-entry book-keeping with officer receipt approvals.
               </p>
             </div>
-            <div className="pt-4 flex items-center text-xs font-semibold text-emerald-600 group-hover:translate-x-0.5 transition-transform">
+            <div className="pt-4 flex items-center text-xs font-semibold text-emerald-600 dark:text-emerald-400 group-hover:translate-x-0.5 transition-transform">
               <span>View Financials</span>
               <ArrowRight className="w-3.5 h-3.5 ml-1" />
             </div>
@@ -796,20 +796,20 @@ export default function OverviewPage() {
           {/* Pillar 3: Members */}
           <Link
             to="/members"
-            className="group p-6 rounded-3xl bg-white border border-slate-200/80 shadow-once-card hover:shadow-once-card-hover hover:border-[#D4BFD2] transition-all flex flex-col justify-between"
+            className="group p-6 rounded-3xl glass-panel border-white/40 dark:border-slate-800/80 shadow-lg hover:shadow-2xl hover:border-brand-500/30 transition-all flex flex-col justify-between"
           >
             <div className="space-y-3">
-              <div className="w-10 h-10 rounded-2xl bg-[#FAF5F9] text-[#714B67] flex items-center justify-center font-bold">
+              <div className="w-10 h-10 rounded-2xl bg-brand-50 dark:bg-brand-950/50 text-brand-600 dark:text-brand-400 flex items-center justify-center font-bold">
                 <Users className="w-5 h-5" />
               </div>
-              <h3 className="text-base font-bold text-[#0F172A] group-hover:text-[#714B67] transition-colors">
+              <h3 className="text-base font-bold text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors">
                 Membership Passes
               </h3>
-              <p className="text-xs text-[#64748B] leading-relaxed">
+              <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
                 Tiered membership benefits, 15% merch discounts, and cryptographic digital IDs.
               </p>
             </div>
-            <div className="pt-4 flex items-center text-xs font-semibold text-[#714B67] group-hover:translate-x-0.5 transition-transform">
+            <div className="pt-4 flex items-center text-xs font-semibold text-brand-600 dark:text-brand-400 group-hover:translate-x-0.5 transition-transform">
               <span>Join or Verify</span>
               <ArrowRight className="w-3.5 h-3.5 ml-1" />
             </div>
@@ -818,20 +818,20 @@ export default function OverviewPage() {
           {/* Pillar 4: Merch Store */}
           <Link
             to="/store"
-            className="group p-6 rounded-3xl bg-white border border-slate-200/80 shadow-once-card hover:shadow-once-card-hover hover:border-[#D4BFD2] transition-all flex flex-col justify-between"
+            className="group p-6 rounded-3xl glass-panel border-white/40 dark:border-slate-800/80 shadow-lg hover:shadow-2xl hover:border-brand-500/30 transition-all flex flex-col justify-between"
           >
             <div className="space-y-3">
-              <div className="w-10 h-10 rounded-2xl bg-[#FAF5F9] text-[#714B67] flex items-center justify-center font-bold">
+              <div className="w-10 h-10 rounded-2xl bg-brand-50 dark:bg-brand-950/50 text-brand-600 dark:text-brand-400 flex items-center justify-center font-bold">
                 <ShoppingBag className="w-5 h-5" />
               </div>
-              <h3 className="text-base font-bold text-[#0F172A] group-hover:text-[#714B67] transition-colors">
+              <h3 className="text-base font-bold text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors">
                 Merchandise Store
               </h3>
-              <p className="text-xs text-[#64748B] leading-relaxed">
+              <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
                 Official hoodies, shirts and stickers with per-size inventory tracking.
               </p>
             </div>
-            <div className="pt-4 flex items-center text-xs font-semibold text-[#714B67] group-hover:translate-x-0.5 transition-transform">
+            <div className="pt-4 flex items-center text-xs font-semibold text-brand-600 dark:text-brand-400 group-hover:translate-x-0.5 transition-transform">
               <span>Explore Merch</span>
               <ArrowRight className="w-3.5 h-3.5 ml-1" />
             </div>

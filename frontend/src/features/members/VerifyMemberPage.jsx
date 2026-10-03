@@ -113,7 +113,7 @@ export default function VerifyMemberPage() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200/60 dark:border-slate-800/80 pb-6">
         <div>
           <div className="flex items-center gap-3">
-            <span className="p-3 rounded-2xl bg-gradient-to-tr from-purple-500/20 to-pink-500/20 text-[#714B67] dark:text-purple-300 border border-purple-500/30 shadow-sm">
+            <span className="p-3 rounded-2xl bg-gradient-to-tr from-brand-500/20 to-indigo-500/20 text-brand-600 dark:text-brand-300 border border-brand-500/30 shadow-sm">
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
               </svg>
@@ -149,7 +149,7 @@ export default function VerifyMemberPage() {
                     if (errorMsg) setErrorMsg(null);
                   }}
                   autoFocus
-                  className="w-full text-base py-3.5 pl-4 pr-10 bg-white/70 dark:bg-slate-900/70 border-slate-200/80 dark:border-slate-700/80 text-slate-900 dark:text-white placeholder-slate-400 rounded-2xl focus:ring-2 focus:ring-[#714B67] dark:focus:ring-purple-400 transition-all shadow-inner"
+                  className="w-full text-base py-3.5 pl-4 pr-10 bg-white/70 dark:bg-slate-900/70 border-slate-200/80 dark:border-slate-700/80 text-slate-900 dark:text-white placeholder-slate-400 rounded-2xl focus:ring-2 focus:ring-brand-500 dark:focus:ring-brand-400 transition-all shadow-inner"
                 />
                 {query && (
                   <button
@@ -169,7 +169,7 @@ export default function VerifyMemberPage() {
                 variant="primary"
                 size="lg"
                 disabled={loading || !query.trim()}
-                className="px-8 py-3.5 font-bold shadow-lg shadow-purple-500/20 bg-gradient-to-r from-[#714B67] to-[#8C5D80] hover:from-[#5B3B52] hover:to-[#714B67] text-white rounded-2xl flex items-center justify-center gap-2 transition-transform active:scale-95"
+                className="px-8 py-3.5 font-bold shadow-lg shadow-brand-500/20 bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-500 hover:to-indigo-500 text-white rounded-2xl flex items-center justify-center gap-2 transition-transform active:scale-95"
               >
                 {loading ? (
                   <>
@@ -200,7 +200,7 @@ export default function VerifyMemberPage() {
                 <button
                   type="button"
                   onClick={handleClear}
-                  className="text-[#714B67] dark:text-purple-400 hover:underline font-bold"
+                  className="text-brand-600 dark:text-brand-400 hover:underline font-bold"
                 >
                   Verify Another Student
                 </button>
@@ -221,7 +221,7 @@ export default function VerifyMemberPage() {
           <div className="flex-1">
             <h4 className="font-bold text-rose-950 dark:text-rose-200 text-sm">Verification Not Found</h4>
             <p className="text-xs text-rose-800 dark:text-rose-300 mt-1">{errorMsg}</p>
-            <p className="text-xs text-rose-700 dark:text-rose-400 mt-2 font-medium">
+            <p className="text-rose-700 dark:text-rose-400 mt-2 font-medium">
               Tip: Confirm the student's registered university email, member ID, or have them open their digital QR pass.
             </p>
           </div>
@@ -291,7 +291,7 @@ export default function VerifyMemberPage() {
                       : 'NO ACTIVE MEMBERSHIP'}
                   </span>
                   {result.tier && (
-                    <span className="text-xs font-semibold px-3 py-1 rounded-full bg-purple-500/10 dark:bg-purple-500/20 text-[#714B67] dark:text-purple-300 border border-purple-500/30">
+                    <span className="text-xs font-semibold px-3 py-1 rounded-full bg-brand-500/10 dark:bg-brand-500/20 text-brand-600 dark:text-brand-300 border border-brand-500/30">
                       {result.tier}
                     </span>
                   )}
@@ -339,7 +339,7 @@ export default function VerifyMemberPage() {
                     </div>
                     <div className="p-4 rounded-2xl glass-card bg-slate-50/60 dark:bg-slate-800/50 border border-slate-200/60 dark:border-slate-700/60">
                       <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">Membership Tier</p>
-                      <p className="text-sm font-bold text-[#714B67] dark:text-purple-300 mt-1">{result.tier || 'None'}</p>
+                      <p className="text-sm font-bold text-brand-600 dark:text-brand-300 mt-1">{result.tier || 'None'}</p>
                     </div>
                     <div className="p-4 rounded-2xl glass-card bg-slate-50/60 dark:bg-slate-800/50 border border-slate-200/60 dark:border-slate-700/60">
                       <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">Dues Payment</p>
@@ -373,12 +373,12 @@ export default function VerifyMemberPage() {
                       Applicable Club Perks & Discounts
                     </h4>
                     <div className="grid grid-cols-2 gap-3.5">
-                      <div className="p-4 rounded-2xl glass-card bg-purple-500/10 border border-purple-500/20 dark:border-purple-500/30 flex items-center justify-between">
+                      <div className="p-4 rounded-2xl glass-card bg-brand-500/10 border border-brand-500/20 dark:border-brand-500/30 flex items-center justify-between">
                         <div>
-                          <p className="text-xs text-purple-700 dark:text-purple-300 font-medium">Ticket Discount</p>
+                          <p className="text-xs text-brand-700 dark:text-brand-300 font-medium">Ticket Discount</p>
                           <p className="text-xl font-extrabold text-slate-900 dark:text-white">{result.ticket_discount_pct}% OFF</p>
                         </div>
-                        <span className="p-2.5 rounded-xl bg-purple-500/20 text-[#714B67] dark:text-purple-300 shadow-sm">
+                        <span className="p-2.5 rounded-xl bg-brand-500/20 text-brand-600 dark:text-brand-300 shadow-sm">
                           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z" />
                           </svg>

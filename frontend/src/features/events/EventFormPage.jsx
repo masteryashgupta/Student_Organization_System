@@ -258,7 +258,7 @@ export default function EventFormPage() {
       <div className="flex items-center justify-between">
         <Link
           to={isEditMode ? `/events/${id}` : '/events'}
-          className="inline-flex items-center gap-2 text-sm text-ink-muted hover:text-ink dark:text-slate-400 dark:hover:text-slate-100 transition-colors font-medium px-4 py-2 rounded-full glass-card hover:border-[#714B67]/40"
+          className="inline-flex items-center gap-2 text-sm text-ink-muted hover:text-ink dark:text-slate-400 dark:hover:text-slate-100 transition-colors font-medium px-4 py-2 rounded-full glass-card hover:border-brand-500/40"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>{isEditMode ? 'Back to Event Details' : 'Back to Events'}</span>
@@ -281,8 +281,8 @@ export default function EventFormPage() {
       {/* Main Form Container */}
       <Card className="glass-panel overflow-hidden border-border dark:border-slate-800/80 shadow-glass">
         <div className="p-6 sm:p-8 border-b border-border dark:border-slate-800/80 bg-white/40 dark:bg-slate-800/40 backdrop-blur-md">
-          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#714B67] dark:text-purple-400 mb-1.5">
-            <span className="p-1.5 rounded-lg bg-purple-50 dark:bg-purple-950/50 border border-purple-200/60 dark:border-purple-800/50">
+          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-brand-600 dark:text-brand-400 mb-1.5">
+            <span className="p-1.5 rounded-lg bg-brand-50 dark:bg-brand-950/50 border border-brand-200/60 dark:border-brand-800/50">
               <Calendar className="w-3.5 h-3.5" />
             </span>
             <span>{isEditMode ? 'Event Management' : 'New Club Gathering'}</span>
@@ -314,10 +314,10 @@ export default function EventFormPage() {
                 value={formData.title}
                 onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                 placeholder="e.g. Annual Skyline Leadership Gala 2026"
-                className={`w-full bg-white/70 dark:bg-slate-900/70 backdrop-blur-sm border rounded-2xl px-4 py-3 text-sm text-ink dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-[#714B67]/20 dark:focus:ring-purple-500/20 transition-all ${
+                className={`w-full bg-white/70 dark:bg-slate-900/70 backdrop-blur-sm border rounded-2xl px-4 py-3 text-sm text-ink dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-brand-500/20 dark:focus:ring-brand-500/20 transition-all ${
                   formErrors.title
                     ? 'border-rose-500 focus:ring-rose-500'
-                    : 'border-border dark:border-slate-800 focus:border-[#714B67] dark:focus:border-purple-500'
+                    : 'border-border dark:border-slate-800 focus:border-brand-500 dark:focus:border-brand-400'
                 }`}
               />
               {formErrors.title && (
@@ -338,10 +338,10 @@ export default function EventFormPage() {
                 value={formData.description}
                 onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                 placeholder="Describe the event, guest speakers, dress code, and what attendees will experience..."
-                className={`w-full bg-white/70 dark:bg-slate-900/70 backdrop-blur-sm border rounded-2xl p-4 text-sm text-ink dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-[#714B67]/20 dark:focus:ring-purple-500/20 transition-all ${
+                className={`w-full bg-white/70 dark:bg-slate-900/70 backdrop-blur-sm border rounded-2xl p-4 text-sm text-ink dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-brand-500/20 dark:focus:ring-brand-500/20 transition-all ${
                   formErrors.description
                     ? 'border-rose-500 focus:ring-rose-500'
-                    : 'border-border dark:border-slate-800 focus:border-[#714B67] dark:focus:border-purple-500'
+                    : 'border-border dark:border-slate-800 focus:border-brand-500 dark:focus:border-brand-400'
                 }`}
               />
               {formErrors.description && (
@@ -364,10 +364,10 @@ export default function EventFormPage() {
                     type="datetime-local"
                     value={formData.datetime}
                     onChange={(e) => setFormData({ ...formData, datetime: e.target.value })}
-                    className={`w-full bg-white/70 dark:bg-slate-900/70 backdrop-blur-sm border rounded-2xl px-4 py-3 text-sm text-ink dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-[#714B67]/20 dark:focus:ring-purple-500/20 transition-all ${
+                    className={`w-full bg-white/70 dark:bg-slate-900/70 backdrop-blur-sm border rounded-2xl px-4 py-3 text-sm text-ink dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-brand-500/20 dark:focus:ring-brand-500/20 transition-all ${
                       formErrors.datetime
                         ? 'border-rose-500 focus:ring-rose-500'
-                        : 'border-border dark:border-slate-800 focus:border-[#714B67] dark:focus:border-purple-500'
+                        : 'border-border dark:border-slate-800 focus:border-brand-500 dark:focus:border-brand-400'
                     }`}
                   />
                 </div>
@@ -389,10 +389,10 @@ export default function EventFormPage() {
                   value={formData.venue}
                   onChange={(e) => setFormData({ ...formData, venue: e.target.value })}
                   placeholder="e.g. Skyline Student Center Grand Ballroom"
-                  className={`w-full bg-white/70 dark:bg-slate-900/70 backdrop-blur-sm border rounded-2xl px-4 py-3 text-sm text-ink dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-[#714B67]/20 dark:focus:ring-purple-500/20 transition-all ${
+                  className={`w-full bg-white/70 dark:bg-slate-900/70 backdrop-blur-sm border rounded-2xl px-4 py-3 text-sm text-ink dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-brand-500/20 dark:focus:ring-brand-500/20 transition-all ${
                     formErrors.venue
                       ? 'border-rose-500 focus:ring-rose-500'
-                      : 'border-border dark:border-slate-800 focus:border-[#714B67] dark:focus:border-purple-500'
+                      : 'border-border dark:border-slate-800 focus:border-brand-500 dark:focus:border-brand-400'
                   }`}
                 />
                 {formErrors.venue && (
@@ -417,10 +417,10 @@ export default function EventFormPage() {
                   step="1"
                   value={formData.capacity}
                   onChange={(e) => setFormData({ ...formData, capacity: e.target.value })}
-                  className={`w-full bg-white/70 dark:bg-slate-900/70 backdrop-blur-sm border rounded-2xl px-4 py-3 text-sm text-ink dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-[#714B67]/20 dark:focus:ring-purple-500/20 transition-all ${
+                  className={`w-full bg-white/70 dark:bg-slate-900/70 backdrop-blur-sm border rounded-2xl px-4 py-3 text-sm text-ink dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-brand-500/20 dark:focus:ring-brand-500/20 transition-all ${
                     formErrors.capacity
                       ? 'border-rose-500 focus:ring-rose-500'
-                      : 'border-border dark:border-slate-800 focus:border-[#714B67] dark:focus:border-purple-500'
+                      : 'border-border dark:border-slate-800 focus:border-brand-500 dark:focus:border-brand-400'
                   }`}
                 />
                 {formErrors.capacity && (
@@ -442,7 +442,7 @@ export default function EventFormPage() {
                 <select
                   value={formData.status}
                   onChange={(e) => setFormData({ ...formData, status: e.target.value })}
-                  className="w-full bg-white/70 dark:bg-slate-900/70 backdrop-blur-sm border border-border dark:border-slate-800 rounded-2xl px-4 py-3 text-sm text-ink dark:text-slate-100 focus:outline-none focus:border-[#714B67] dark:focus:border-purple-500 font-medium"
+                  className="w-full bg-white/70 dark:bg-slate-900/70 backdrop-blur-sm border border-border dark:border-slate-800 rounded-2xl px-4 py-3 text-sm text-ink dark:text-slate-100 focus:outline-none focus:border-brand-500 dark:focus:border-brand-400 font-medium"
                 >
                   <option value="draft">Draft (Visible to officers only)</option>
                   <option value="published">Published (Open for ticket purchases)</option>
@@ -516,10 +516,10 @@ export default function EventFormPage() {
                         setFormData({ ...formData, nonmember_price: e.target.value })
                       }
                       placeholder="10.00"
-                      className={`w-full bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm border rounded-2xl pl-8 pr-4 py-3 text-sm text-ink dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-[#714B67]/20 dark:focus:ring-purple-500/20 transition-all ${
+                      className={`w-full bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm border rounded-2xl pl-8 pr-4 py-3 text-sm text-ink dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-brand-500/20 dark:focus:ring-brand-500/20 transition-all ${
                         formErrors.nonmember_price
                           ? 'border-rose-500 focus:ring-rose-500'
-                          : 'border-border dark:border-slate-800 focus:border-[#714B67] dark:focus:border-purple-500'
+                          : 'border-border dark:border-slate-800 focus:border-brand-500 dark:focus:border-brand-400'
                       }`}
                     />
                   </div>

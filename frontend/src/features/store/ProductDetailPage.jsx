@@ -17,7 +17,7 @@ function ProductDetailImage({ src, name, type }) {
     return (
       <div className="w-full h-full bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-900 flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 p-8 text-center select-none">
         <div className="w-20 h-20 rounded-3xl bg-white/80 dark:bg-slate-800/80 shadow-md flex items-center justify-center mb-4">
-          <ShoppingBag className="w-10 h-10 text-[#714B67] dark:text-purple-400" />
+          <ShoppingBag className="w-10 h-10 text-brand-600 dark:text-brand-400" />
         </div>
         <span className="text-base font-extrabold uppercase tracking-wider text-slate-800 dark:text-slate-200 line-clamp-2">{name}</span>
         <span className="text-xs font-semibold text-slate-400 uppercase mt-1">{type}</span>
@@ -128,7 +128,7 @@ export default function ProductDetailPage() {
         <h2 className="text-xl font-bold text-slate-900 dark:text-white">Product Not Found</h2>
         <p className="text-sm text-slate-500 dark:text-slate-400">The requested merchandise item does not exist or has been retired.</p>
         <Link to="/store">
-          <Button variant="primary" className="rounded-full bg-gradient-to-r from-[#714B67] to-[#8C5D80] text-white">Return to Store</Button>
+          <Button variant="primary" className="rounded-full bg-gradient-to-r from-brand-600 to-indigo-600 text-white">Return to Store</Button>
         </Link>
       </div>
     );
@@ -154,7 +154,7 @@ export default function ProductDetailPage() {
         </Link>
 
         <Button variant="ghost" size="sm" onClick={openDrawer} className="rounded-full text-slate-600 dark:text-slate-300">
-          <ShoppingBag className="w-4 h-4 mr-2 text-[#714B67] dark:text-purple-400" /> View Cart
+          <ShoppingBag className="w-4 h-4 mr-2 text-brand-600 dark:text-brand-400" /> View Cart
         </Button>
       </div>
 
@@ -177,7 +177,7 @@ export default function ProductDetailPage() {
         <div className="lg:col-span-6 flex flex-col justify-between space-y-6">
           <div className="space-y-4">
             <div>
-              <span className="text-xs font-bold text-[#714B67] dark:text-purple-300 uppercase tracking-widest">
+              <span className="text-xs font-bold text-brand-600 dark:text-brand-300 uppercase tracking-widest">
                 Official Club Merchandise
               </span>
               <h1 className="text-2xl sm:text-4xl font-extrabold text-slate-900 dark:text-white mt-1 leading-tight">
@@ -209,7 +209,7 @@ export default function ProductDetailPage() {
                   <Sparkles className="w-4 h-4 text-amber-500" />
                   <span>Join Gold Membership for an extra 15% off all store merchandise.</span>
                 </div>
-                <Link to="/join" className="text-[#714B67] dark:text-purple-400 font-bold hover:underline ml-2 shrink-0">
+                <Link to="/join" className="text-brand-600 dark:text-brand-400 font-bold hover:underline ml-2 shrink-0">
                   Upgrade
                 </Link>
               </div>
@@ -258,9 +258,9 @@ export default function ProductDetailPage() {
                     onClick={() => handleSelectSize(variant)}
                     className={`relative p-3.5 rounded-2xl border-2 text-center transition-all duration-200 flex flex-col items-center justify-center ${
                       isSelected
-                        ? 'bg-purple-500/10 dark:bg-purple-500/20 border-[#714B67] dark:border-purple-400 text-[#714B67] dark:text-purple-300 shadow-md shadow-purple-500/10'
+                        ? 'bg-brand-500/10 dark:bg-brand-500/20 border-brand-500 dark:border-brand-400 text-brand-600 dark:text-brand-300 shadow-md shadow-brand-500/10'
                         : inStock
-                        ? 'glass-card bg-white/70 dark:bg-slate-900/60 border-slate-200/80 dark:border-slate-800/80 text-slate-900 dark:text-white hover:border-purple-300 dark:hover:border-purple-700'
+                        ? 'glass-card bg-white/70 dark:bg-slate-900/60 border-slate-200/80 dark:border-slate-800/80 text-slate-900 dark:text-white hover:border-brand-300 dark:hover:border-brand-700'
                         : 'bg-slate-100/50 dark:bg-slate-800/30 border-slate-200/50 dark:border-slate-800/50 text-slate-400 cursor-not-allowed opacity-50'
                     }`}
                   >
@@ -272,7 +272,7 @@ export default function ProductDetailPage() {
                     </span>
 
                     {isSelected && (
-                      <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-[#714B67] dark:bg-purple-400 shadow-sm" />
+                      <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-brand-600 dark:bg-brand-400 shadow-sm" />
                     )}
                   </button>
                 );
@@ -308,7 +308,7 @@ export default function ProductDetailPage() {
               <Button
                 variant="primary"
                 size="lg"
-                className="flex-1 rounded-full shadow-lg shadow-purple-500/20 bg-gradient-to-r from-[#714B67] to-[#8C5D80] hover:from-[#5B3B52] hover:to-[#714B67] text-white font-bold transition-transform active:scale-95"
+                className="flex-1 rounded-full shadow-lg shadow-brand-500/20 bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-500 hover:to-indigo-500 text-white font-bold transition-transform active:scale-95"
                 disabled={!hasAnyStock || !isSelectedInStock}
                 isLoading={isAdding}
                 onClick={handleAddToCart}

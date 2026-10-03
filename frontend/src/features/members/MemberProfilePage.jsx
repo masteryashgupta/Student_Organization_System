@@ -75,7 +75,7 @@ export default function MemberProfilePage() {
   if (loading) {
     return (
       <div className="max-w-4xl mx-auto py-16 text-center text-slate-500 dark:text-slate-400 space-y-4">
-        <svg className="animate-spin h-8 w-8 text-[#714B67] dark:text-[#A97B9F] mx-auto" fill="none" viewBox="0 0 24 24">
+        <svg className="animate-spin h-8 w-8 text-brand-600 dark:text-brand-400 mx-auto" fill="none" viewBox="0 0 24 24">
           <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
           <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
         </svg>
@@ -96,7 +96,7 @@ export default function MemberProfilePage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200/80 dark:border-white/10 pb-6">
         <div>
           <div className="flex items-center gap-3.5">
-            <div className="w-13 h-13 rounded-3xl bg-gradient-to-tr from-[#714B67] to-[#87567D] flex items-center justify-center font-extrabold text-white text-xl shadow-md p-3">
+            <div className="w-13 h-13 rounded-3xl bg-gradient-to-tr from-brand-600 to-indigo-600 flex items-center justify-center font-extrabold text-white text-xl shadow-md p-3">
               {(user?.name || user?.username || 'U').charAt(0).toUpperCase()}
             </div>
             <div>
@@ -156,7 +156,7 @@ export default function MemberProfilePage() {
                 <Badge variant={isActive ? 'success' : membership.status === 'expired' ? 'danger' : 'warning'}>
                   {isActive ? 'Active Member' : membership.status === 'expired' ? 'Expired' : 'Pending Payment'}
                 </Badge>
-                <span className="text-xs font-bold text-[#714B67] dark:text-[#F3EAF2]">{tierDetails?.name}</span>
+                <span className="text-xs font-bold text-brand-600 dark:text-brand-300">{tierDetails?.name}</span>
               </div>
               <h3 className="text-xl font-extrabold text-slate-900 dark:text-white mt-1">
                 {isActive ? 'Your Membership is Active' : membership.status === 'expired' ? 'Membership Expired' : 'Dues Unpaid'}
@@ -181,7 +181,7 @@ export default function MemberProfilePage() {
           </div>
         </div>
       ) : (
-        <Card className="bg-gradient-to-br from-amber-50/70 via-white/80 to-[#FAF5F9]/80 dark:from-slate-900 dark:via-slate-900/90 dark:to-[#714B67]/20 backdrop-blur-xl border border-amber-200/80 dark:border-white/10 p-8 text-center space-y-4 rounded-3xl shadow-xl">
+        <Card className="bg-gradient-to-br from-amber-50/70 via-white/80 to-brand-50/30 dark:from-slate-900 dark:via-slate-900/90 dark:to-brand-950/20 backdrop-blur-xl border border-amber-200/80 dark:border-white/10 p-8 text-center space-y-4 rounded-3xl shadow-xl">
           <div className="w-14 h-14 rounded-2xl bg-amber-100 dark:bg-amber-900/50 text-amber-800 dark:text-amber-300 mx-auto flex items-center justify-center shadow-xs">
             <Sparkles className="w-7 h-7 text-amber-600 dark:text-amber-400" />
           </div>
@@ -211,7 +211,7 @@ export default function MemberProfilePage() {
           <Card className="bg-white/80 dark:bg-slate-900/70 backdrop-blur-xl border-slate-200/80 dark:border-white/10 shadow-xl rounded-3xl">
             <CardHeader className="border-b border-slate-100/80 dark:border-white/5">
               <CardTitle className="text-base sm:text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                <ShieldCheck className="w-5 h-5 text-[#714B67] dark:text-[#A97B9F]" />
+                <ShieldCheck className="w-5 h-5 text-brand-600 dark:text-brand-400" />
                 Active Club Benefits &amp; Discounts
               </CardTitle>
               <CardDescription className="text-xs text-slate-500 dark:text-slate-400">
@@ -221,15 +221,15 @@ export default function MemberProfilePage() {
             <CardContent className="space-y-5 p-6">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {/* Event Ticket Discount */}
-                <div className="p-4 rounded-3xl bg-[#FAF5F9]/90 dark:bg-[#714B67]/20 border border-[#D4BFD2]/80 dark:border-[#714B67]/40 flex items-center justify-between">
+                <div className="p-4 rounded-3xl bg-brand-50/50 dark:bg-brand-950/20 border border-brand-200/80 dark:border-brand-900/40 flex items-center justify-between">
                   <div>
-                    <p className="text-xs text-[#714B67] dark:text-[#F3EAF2] font-bold uppercase tracking-wider">Event Ticket Discount</p>
+                    <p className="text-xs text-brand-600 dark:text-brand-300 font-bold uppercase tracking-wider">Event Ticket Discount</p>
                     <p className="text-3xl font-black text-slate-900 dark:text-white mt-1 font-mono">
                       {isActive ? `${tierDetails?.ticket_discount_pct || 0}%` : '0%'}
                     </p>
                     <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">Applied on all campus events</p>
                   </div>
-                  <span className="p-3 rounded-2xl bg-[#F3EAF2] dark:bg-[#714B67]/40 text-[#714B67] dark:text-[#F3EAF2]">
+                  <span className="p-3 rounded-2xl bg-brand-100 dark:bg-brand-900/40 text-brand-600 dark:text-brand-300">
                     <Award className="w-6 h-6" />
                   </span>
                 </div>
@@ -283,7 +283,7 @@ export default function MemberProfilePage() {
         {/* Right 1 Col: Digital Membership Pass */}
         <div className="space-y-6">
           <Card className="bg-white/80 dark:bg-slate-900/70 backdrop-blur-xl border-slate-200/80 dark:border-white/10 shadow-xl rounded-3xl text-center overflow-hidden">
-            <div className="py-3 px-4 bg-gradient-to-r from-[#714B67] to-[#87567D] text-white font-bold text-xs tracking-wider uppercase">
+            <div className="py-3 px-4 bg-gradient-to-r from-brand-600 to-indigo-600 text-white font-bold text-xs tracking-wider uppercase">
               Official Membership Pass
             </div>
             <CardContent className="p-6 space-y-4">
@@ -304,9 +304,9 @@ export default function MemberProfilePage() {
 
               <div className="space-y-1">
                 <p className="text-base font-extrabold text-slate-900 dark:text-white">{user?.name || user?.username}</p>
-                <p className="text-xs font-bold text-[#714B67] dark:text-[#A97B9F]">{tierDetails?.name || 'Public Member'}</p>
+                <p className="text-xs font-bold text-brand-600 dark:text-brand-400">{tierDetails?.name || 'Public Member'}</p>
                 {membership?.verification_token && (
-                  <p className="text-[10px] text-slate-500 dark:text-slate-400 font-mono mt-2 truncate bg-slate-50 dark:bg-white/5 p-2 rounded-xl border border-slate-200/80 dark:border-white/10">
+                  <p className="text-[10px] text-slate-500 dark:text-slate-400 font-mono mt-2 truncate bg-slate-50 dark:bg-white/5 p-2 rounded-xl border border-slate-200/80 dark:border-slate-700/80">
                     Token: {membership.verification_token}
                   </p>
                 )}
@@ -337,7 +337,7 @@ export default function MemberProfilePage() {
                     onClick={() => setSelectedTierId(t.id)}
                     className={`p-4 rounded-2xl border cursor-pointer flex items-center justify-between transition-all ${
                       isSelected
-                        ? 'bg-[#FAF5F9] dark:bg-[#714B67]/20 border-[#714B67] dark:border-[#A97B9F] shadow-sm ring-2 ring-[#714B67]/30'
+                        ? 'bg-brand-500/10 dark:bg-brand-500/20 border-brand-500 dark:border-brand-400 shadow-sm ring-2 ring-brand-500/30'
                         : 'bg-white/80 dark:bg-slate-900/60 border-slate-200/80 dark:border-white/10 hover:border-slate-300 dark:hover:border-white/20'
                     }`}
                   >

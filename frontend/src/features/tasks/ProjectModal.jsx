@@ -87,7 +87,7 @@ export default function ProjectModal({
             placeholder="Objectives, logistics, target date, and volunteer expectations..."
             value={formData.description}
             onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-            className="w-full bg-white/80 dark:bg-slate-800/80 border border-slate-200/80 dark:border-slate-700/80 rounded-2xl p-3.5 text-xs text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#714B67] dark:focus:ring-purple-400 transition-all resize-none font-medium"
+            className="w-full bg-white/80 dark:bg-slate-800/80 border border-slate-200/80 dark:border-slate-700/80 rounded-2xl p-3.5 text-xs text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-500 dark:focus:ring-brand-400 transition-all resize-none font-medium"
           />
         </div>
 
@@ -95,7 +95,7 @@ export default function ProjectModal({
           <Button variant="ghost" type="button" onClick={onClose} disabled={isPending} className="rounded-full">
             Cancel
           </Button>
-          <Button variant="primary" type="submit" disabled={isPending} className="rounded-full bg-gradient-to-r from-[#714B67] to-[#8C5D80] text-white font-bold">
+          <Button variant="primary" type="submit" disabled={isPending} className="rounded-full bg-gradient-to-r from-brand-600 to-indigo-600 text-white font-bold">
             {isPending ? 'Creating...' : 'Create Project'}
           </Button>
         </div>

@@ -105,7 +105,7 @@ export default function CartDrawer() {
           {/* Header */}
           <div className="p-5 border-b border-slate-200/60 dark:border-slate-800/60 flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="p-2.5 rounded-2xl bg-purple-500/10 dark:bg-purple-500/20 text-[#714B67] dark:text-purple-300 border border-purple-500/20 shadow-sm">
+              <div className="p-2.5 rounded-2xl bg-brand-500/10 dark:bg-brand-500/20 text-brand-600 dark:text-brand-400 border border-brand-500/20 shadow-sm">
                 <ShoppingBag className="w-5 h-5" />
               </div>
               <div>
@@ -126,7 +126,7 @@ export default function CartDrawer() {
           <div className="flex-1 overflow-y-auto p-5 space-y-3.5 bg-slate-50/50 dark:bg-slate-950/40">
             {items.length === 0 ? (
               <div className="text-center py-16">
-                <div className="w-16 h-16 rounded-3xl bg-purple-500/10 dark:bg-purple-500/20 flex items-center justify-center mx-auto mb-4 text-[#714B67] dark:text-purple-300 shadow-inner">
+                <div className="w-16 h-16 rounded-3xl bg-brand-500/10 dark:bg-brand-500/20 flex items-center justify-center mx-auto mb-4 text-brand-600 dark:text-brand-400 shadow-inner">
                   <ShoppingBag className="w-8 h-8" />
                 </div>
                 <h4 className="text-base font-bold text-slate-900 dark:text-white">Your cart is empty</h4>
@@ -201,7 +201,7 @@ export default function CartDrawer() {
                         </button>
                       </div>
 
-                      <span className="text-sm font-black text-[#714B67] dark:text-purple-300">
+                      <span className="text-sm font-black text-brand-600 dark:text-brand-400">
                         ${(item.price * item.qty).toFixed(2)}
                       </span>
                     </div>
@@ -226,7 +226,7 @@ export default function CartDrawer() {
               ) : isAuthenticated ? (
                 <div className="p-2.5 rounded-2xl glass-card bg-slate-100/70 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700/80 text-[11px] text-slate-500 dark:text-slate-400 flex items-center justify-between">
                   <span>Standard Member Pricing</span>
-                  <Link to="/members" className="text-[#714B67] dark:text-purple-400 font-bold hover:underline">
+                  <Link to="/members" className="text-brand-600 dark:text-brand-400 font-bold hover:underline">
                     Upgrade for 15% off
                   </Link>
                 </div>
@@ -246,7 +246,7 @@ export default function CartDrawer() {
                 )}
                 <div className="flex justify-between text-sm font-bold text-slate-900 dark:text-white pt-1">
                   <span>Total Payable</span>
-                  <span className="text-[#714B67] dark:text-purple-300 text-lg font-black">${totalPayable.toFixed(2)}</span>
+                  <span className="text-brand-600 dark:text-brand-400 text-lg font-black">${totalPayable.toFixed(2)}</span>
                 </div>
               </div>
 
@@ -259,11 +259,11 @@ export default function CartDrawer() {
                     onClick={() => setPaymentProvider('mock')}
                     className={`p-3 rounded-2xl border text-xs font-bold flex flex-col items-center gap-1.5 transition-all ${
                       paymentProvider === 'mock'
-                        ? 'bg-purple-500/10 dark:bg-purple-500/20 border-[#714B67] dark:border-purple-400 text-[#714B67] dark:text-purple-300 ring-1 ring-[#714B67]'
-                        : 'glass-card bg-white/70 dark:bg-slate-900/60 border-slate-200/80 dark:border-slate-800/80 text-slate-500 dark:text-slate-400 hover:border-purple-300'
+                        ? 'bg-brand-500/10 dark:bg-brand-500/20 border-brand-500 text-brand-600 dark:text-brand-400 ring-1 ring-brand-500'
+                        : 'glass-card bg-white/70 dark:bg-slate-900/60 border-slate-200/80 dark:border-slate-800/80 text-slate-500 dark:text-slate-400 hover:border-brand-300'
                     }`}
                   >
-                    <CheckCircle2 className="w-4 h-4 text-[#714B67] dark:text-purple-400" />
+                    <CheckCircle2 className="w-4 h-4 text-brand-600 dark:text-brand-400" />
                     <span>Instant / Cash</span>
                   </button>
 
@@ -272,8 +272,8 @@ export default function CartDrawer() {
                     onClick={() => setPaymentProvider('stripe')}
                     className={`p-3 rounded-2xl border text-xs font-bold flex flex-col items-center gap-1.5 transition-all ${
                       paymentProvider === 'stripe'
-                        ? 'bg-purple-500/10 dark:bg-purple-500/20 border-[#714B67] dark:border-purple-400 text-[#714B67] dark:text-purple-300 ring-1 ring-[#714B67]'
-                        : 'glass-card bg-white/70 dark:bg-slate-900/60 border-slate-200/80 dark:border-slate-800/80 text-slate-500 dark:text-slate-400 hover:border-purple-300'
+                        ? 'bg-brand-500/10 dark:bg-brand-500/20 border-brand-500 text-brand-600 dark:text-brand-400 ring-1 ring-brand-500'
+                        : 'glass-card bg-white/70 dark:bg-slate-900/60 border-slate-200/80 dark:border-slate-800/80 text-slate-500 dark:text-slate-400 hover:border-brand-300'
                     }`}
                   >
                     <CreditCard className="w-4 h-4 text-teal-600 dark:text-teal-400" />
@@ -286,7 +286,7 @@ export default function CartDrawer() {
               <Button
                 variant="primary"
                 size="lg"
-                className="w-full rounded-full bg-gradient-to-r from-[#714B67] to-[#8C5D80] hover:from-[#5B3B52] hover:to-[#714B67] text-white shadow-lg shadow-purple-500/20 font-bold active:scale-95 transition-transform"
+                className="w-full rounded-full bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-500 hover:to-indigo-500 text-white shadow-lg shadow-brand-500/20 font-bold active:scale-95 transition-transform"
                 isLoading={isProcessing}
                 onClick={handleCheckout}
               >

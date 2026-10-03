@@ -60,13 +60,13 @@ export default function TaskCard({
           ? 'border-rose-400/80 dark:border-rose-800/80 shadow-rose-500/5'
           : task.status === 'done'
           ? 'border-emerald-300/60 dark:border-emerald-700/50 bg-emerald-500/5'
-          : 'border-slate-200/80 dark:border-slate-800/80 hover:border-purple-300 dark:hover:border-purple-700'
+          : 'border-slate-200/80 dark:border-slate-800/80 hover:border-brand-300 dark:hover:border-brand-700'
       }`}
     >
       {/* Top Meta: Project & Priority */}
       <div className="flex items-center justify-between gap-2 mb-2">
-        <span className="text-[11px] font-bold text-[#714B67] dark:text-purple-300 bg-purple-500/10 dark:bg-purple-500/20 px-2.5 py-0.5 rounded-full border border-purple-500/20 truncate max-w-[170px] flex items-center gap-1 shadow-xs">
-          <Tag className="w-3 h-3 text-[#714B67] dark:text-purple-400 flex-shrink-0" />
+        <span className="text-[11px] font-bold text-brand-700 dark:text-brand-300 bg-brand-500/10 dark:bg-brand-500/20 px-2.5 py-0.5 rounded-full border border-brand-500/20 truncate max-w-[170px] flex items-center gap-1 shadow-xs">
+          <Tag className="w-3 h-3 text-brand-600 dark:text-brand-400 flex-shrink-0" />
           {task.project_name || 'Fundraiser Project'}
         </span>
         <div className="flex items-center gap-1.5 flex-shrink-0">
@@ -75,7 +75,7 @@ export default function TaskCard({
       </div>
 
       {/* Title */}
-      <h4 className="text-sm font-extrabold text-slate-900 dark:text-white group-hover:text-[#714B67] dark:group-hover:text-purple-300 transition-colors line-clamp-2 leading-snug">
+      <h4 className="text-sm font-extrabold text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-300 transition-colors line-clamp-2 leading-snug">
         {task.title}
       </h4>
 
@@ -94,7 +94,7 @@ export default function TaskCard({
             className={`w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold flex-shrink-0 shadow-sm ${
               task.assignee
                 ? isAssignedToMe
-                  ? 'bg-gradient-to-tr from-[#714B67] to-[#8C5D80] text-white'
+                  ? 'bg-gradient-to-tr from-brand-600 to-indigo-600 text-white'
                   : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300'
                 : 'bg-amber-100 dark:bg-amber-900/50 text-amber-800 dark:text-amber-200 border border-amber-300 dark:border-amber-700'
             }`}
@@ -109,7 +109,7 @@ export default function TaskCard({
             className={`truncate max-w-[110px] text-[11px] font-medium ${
               task.assignee
                 ? isAssignedToMe
-                  ? 'text-[#714B67] dark:text-purple-300 font-bold'
+                  ? 'text-brand-700 dark:text-brand-300 font-bold'
                   : 'text-slate-700 dark:text-slate-300'
                 : 'text-amber-700 dark:text-amber-300 italic font-semibold'
             }`}
@@ -182,7 +182,7 @@ export default function TaskCard({
           {(isOfficer || isAssignedToMe) && (
             <button
               onClick={() => onEdit(task)}
-              className="p-1.5 text-slate-400 hover:text-sky-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors"
+              className="p-1.5 text-slate-400 hover:text-brand-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors"
               title="Edit Task"
             >
               <Edit2 className="w-3.5 h-3.5" />
@@ -208,7 +208,7 @@ export default function TaskCard({
             className={`px-3.5 py-1 rounded-full transition-all text-[11px] font-bold flex items-center gap-1 shadow-sm active:scale-95 ${
               task.status === 'doing'
                 ? 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white'
-                : 'bg-gradient-to-r from-[#714B67] to-[#8C5D80] text-white'
+                : 'bg-gradient-to-r from-brand-600 to-indigo-600 text-white'
             }`}
             title={`Advance to ${task.status === 'todo' ? 'Doing' : 'Done'}`}
           >

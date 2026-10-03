@@ -6,7 +6,7 @@ export function Card({ children, className = '', hover = true, glass = true, ...
     : 'bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm';
 
   const hoverClasses = hover
-    ? 'hover:shadow-xl hover:shadow-[#714B67]/5 dark:hover:shadow-black/60 hover:border-[#D4BFD2] dark:hover:border-white/20 hover:-translate-y-0.5 transition-all duration-300'
+    ? 'hover:shadow-xl hover:shadow-brand-500/10 dark:hover:shadow-brand-500/15 hover:border-brand-500/30 dark:hover:border-brand-500/40 hover:-translate-y-0.5 transition-all duration-300'
     : '';
 
   return (

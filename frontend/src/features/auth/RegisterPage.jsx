@@ -97,13 +97,13 @@ export default function RegisterPage() {
         {/* LEFT: Brand & Value Proposition */}
         <div className="lg:col-span-5 space-y-6 text-left">
           <div className="dual-badge-pill">
-            <Sparkles className="w-3.5 h-3.5 text-[#714B67] dark:text-[#F3EAF2]" />
+            <Sparkles className="w-3.5 h-3.5 text-brand-600 dark:text-brand-300" />
             <span>Join the Community</span>
           </div>
 
           <div className="space-y-3">
             <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-[1.15]">
-              Unlock full access to <span className="text-[#714B67] dark:text-[#A97B9F]">Skyline Club</span>.
+              Unlock full access to <span className="text-brand-600 dark:text-brand-400">Skyline Club</span>.
             </h1>
             <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
               Create your account in seconds to RSVP for club events, unlock member merchandise discounts, participate in volunteer action items, and access member perks.
@@ -111,8 +111,8 @@ export default function RegisterPage() {
           </div>
 
           <div className="space-y-3 pt-2">
-            <div className="flex items-start gap-3 p-4 rounded-3xl bg-white/70 dark:bg-slate-900/60 backdrop-blur-xl border border-slate-200/80 dark:border-white/10 shadow-xs hover:border-[#D4BFD2] dark:hover:border-white/20 transition-all">
-              <div className="w-9 h-9 rounded-2xl bg-[#F3EAF2] dark:bg-[#714B67]/30 text-[#714B67] dark:text-[#F3EAF2] flex items-center justify-center shrink-0 shadow-xs">
+            <div className="flex items-start gap-3 p-4 rounded-3xl bg-white/70 dark:bg-slate-900/60 backdrop-blur-xl border border-slate-200/80 dark:border-white/10 shadow-xs hover:border-brand-300 dark:hover:border-white/20 transition-all">
+              <div className="w-9 h-9 rounded-2xl bg-brand-50 dark:bg-brand-950/40 text-brand-600 dark:text-brand-300 flex items-center justify-center shrink-0 shadow-xs">
                 <Users className="w-4 h-4" />
               </div>
               <div>
@@ -121,8 +121,8 @@ export default function RegisterPage() {
               </div>
             </div>
 
-            <div className="flex items-start gap-3 p-4 rounded-3xl bg-white/70 dark:bg-slate-900/60 backdrop-blur-xl border border-slate-200/80 dark:border-white/10 shadow-xs hover:border-[#D4BFD2] dark:hover:border-white/20 transition-all">
-              <div className="w-9 h-9 rounded-2xl bg-[#F3EAF2] dark:bg-[#714B67]/30 text-[#714B67] dark:text-[#F3EAF2] flex items-center justify-center shrink-0 shadow-xs">
+            <div className="flex items-start gap-3 p-4 rounded-3xl bg-white/70 dark:bg-slate-900/60 backdrop-blur-xl border border-slate-200/80 dark:border-white/10 shadow-xs hover:border-brand-300 dark:hover:border-white/20 transition-all">
+              <div className="w-9 h-9 rounded-2xl bg-brand-50 dark:bg-brand-950/40 text-brand-600 dark:text-brand-300 flex items-center justify-center shrink-0 shadow-xs">
                 <Award className="w-4 h-4" />
               </div>
               <div>
@@ -131,8 +131,8 @@ export default function RegisterPage() {
               </div>
             </div>
 
-            <div className="flex items-start gap-3 p-4 rounded-3xl bg-white/70 dark:bg-slate-900/60 backdrop-blur-xl border border-slate-200/80 dark:border-white/10 shadow-xs hover:border-[#D4BFD2] dark:hover:border-white/20 transition-all">
-              <div className="w-9 h-9 rounded-2xl bg-[#F3EAF2] dark:bg-[#714B67]/30 text-[#714B67] dark:text-[#F3EAF2] flex items-center justify-center shrink-0 shadow-xs">
+            <div className="flex items-start gap-3 p-4 rounded-3xl bg-white/70 dark:bg-slate-900/60 backdrop-blur-xl border border-slate-200/80 dark:border-white/10 shadow-xs hover:border-brand-300 dark:hover:border-white/20 transition-all">
+              <div className="w-9 h-9 rounded-2xl bg-brand-50 dark:bg-brand-950/40 text-brand-600 dark:text-brand-300 flex items-center justify-center shrink-0 shadow-xs">
                 <ShieldCheck className="w-4 h-4" />
               </div>
               <div>
@@ -152,7 +152,7 @@ export default function RegisterPage() {
         <div className="lg:col-span-7 flex justify-center lg:justify-end">
           <div className="w-full max-w-[500px] bg-white/85 dark:bg-slate-900/80 backdrop-blur-2xl rounded-3xl border border-slate-200/80 dark:border-white/10 shadow-2xl p-7 sm:p-9">
             <div className="text-center pb-5">
-              <div className="mx-auto w-12 h-12 rounded-2xl bg-gradient-to-tr from-[#714B67] to-[#87567D] flex items-center justify-center font-extrabold text-white text-xl shadow-md mb-2">
+              <div className="mx-auto w-12 h-12 rounded-2xl bg-gradient-to-tr from-brand-600 to-indigo-600 flex items-center justify-center font-extrabold text-white text-xl shadow-md mb-2">
                 S
               </div>
               <h2 className="text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">Create Account</h2>
@@ -173,7 +173,7 @@ export default function RegisterPage() {
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  className="block w-full rounded-2xl bg-white/80 dark:bg-slate-900/70 backdrop-blur-md border border-slate-200/80 dark:border-white/10 px-4 py-2.5 text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-[#714B67] dark:focus:border-[#A97B9F] focus:ring-4 focus:ring-[#714B67]/20 dark:focus:ring-[#A97B9F]/20 transition-all shadow-xs"
+                  className="block w-full rounded-2xl bg-white/80 dark:bg-slate-900/70 backdrop-blur-md border border-slate-200/80 dark:border-white/10 px-4 py-2.5 text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-brand-500 dark:focus:border-brand-400 focus:ring-4 focus:ring-brand-500/20 dark:focus:ring-brand-400/20 transition-all shadow-xs"
                 />
                 {errors.name && (
                   <p className="text-xs text-rose-600 dark:text-rose-400 font-medium">{errors.name}</p>
@@ -192,7 +192,7 @@ export default function RegisterPage() {
                     value={formData.email}
                     onChange={handleChange}
                     required
-                    className="block w-full rounded-2xl bg-white/80 dark:bg-slate-900/70 backdrop-blur-md border border-slate-200/80 dark:border-white/10 px-4 py-2.5 text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-[#714B67] dark:focus:border-[#A97B9F] focus:ring-4 focus:ring-[#714B67]/20 dark:focus:ring-[#A97B9F]/20 transition-all shadow-xs"
+                    className="block w-full rounded-2xl bg-white/80 dark:bg-slate-900/70 backdrop-blur-md border border-slate-200/80 dark:border-white/10 px-4 py-2.5 text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-brand-500 dark:focus:border-brand-400 focus:ring-4 focus:ring-brand-500/20 dark:focus:ring-brand-400/20 transition-all shadow-xs"
                   />
                   {errors.email && (
                     <p className="text-xs text-rose-600 dark:text-rose-400 font-medium">{errors.email}</p>
@@ -209,7 +209,7 @@ export default function RegisterPage() {
                     placeholder="(555) 000-1234"
                     value={formData.phone}
                     onChange={handleChange}
-                    className="block w-full rounded-2xl bg-white/80 dark:bg-slate-900/70 backdrop-blur-md border border-slate-200/80 dark:border-white/10 px-4 py-2.5 text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-[#714B67] dark:focus:border-[#A97B9F] focus:ring-4 focus:ring-[#714B67]/20 dark:focus:ring-[#A97B9F]/20 transition-all shadow-xs"
+                    className="block w-full rounded-2xl bg-white/80 dark:bg-slate-900/70 backdrop-blur-md border border-slate-200/80 dark:border-white/10 px-4 py-2.5 text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-brand-500 dark:focus:border-brand-400 focus:ring-4 focus:ring-brand-500/20 dark:focus:ring-brand-400/20 transition-all shadow-xs"
                   />
                 </div>
               </div>
@@ -243,7 +243,7 @@ export default function RegisterPage() {
                       value={formData.password}
                       onChange={handleChange}
                       required
-                      className="block w-full rounded-2xl bg-white/80 dark:bg-slate-900/70 backdrop-blur-md border border-slate-200/80 dark:border-white/10 pl-4 pr-10 py-2.5 text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-[#714B67] dark:focus:border-[#A97B9F] focus:ring-4 focus:ring-[#714B67]/20 dark:focus:ring-[#A97B9F]/20 transition-all shadow-xs"
+                      className="block w-full rounded-2xl bg-white/80 dark:bg-slate-900/70 backdrop-blur-md border border-slate-200/80 dark:border-white/10 pl-4 pr-10 py-2.5 text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-brand-500 dark:focus:border-brand-400 focus:ring-4 focus:ring-brand-500/20 dark:focus:ring-brand-400/20 transition-all shadow-xs"
                     />
                     <button
                       type="button"
@@ -270,7 +270,7 @@ export default function RegisterPage() {
                       value={formData.password_confirm}
                       onChange={handleChange}
                       required
-                      className="block w-full rounded-2xl bg-white/80 dark:bg-slate-900/70 backdrop-blur-md border border-slate-200/80 dark:border-white/10 pl-4 pr-10 py-2.5 text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-[#714B67] dark:focus:border-[#A97B9F] focus:ring-4 focus:ring-[#714B67]/20 dark:focus:ring-[#A97B9F]/20 transition-all shadow-xs"
+                      className="block w-full rounded-2xl bg-white/80 dark:bg-slate-900/70 backdrop-blur-md border border-slate-200/80 dark:border-white/10 pl-4 pr-10 py-2.5 text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-brand-500 dark:focus:border-brand-400 focus:ring-4 focus:ring-brand-500/20 dark:focus:ring-brand-400/20 transition-all shadow-xs"
                     />
                     <button
                       type="button"
@@ -291,7 +291,7 @@ export default function RegisterPage() {
                 variant="primary"
                 size="lg"
                 isLoading={loading}
-                className="w-full mt-3 font-bold shadow-lg"
+                className="w-full mt-3 font-bold shadow-lg shadow-brand-500/25"
               >
                 <span>Create Account</span>
                 {!loading && <ArrowRight className="w-4 h-4 ml-1.5" />}
@@ -302,7 +302,7 @@ export default function RegisterPage() {
               Already have an account?{' '}
               <Link
                 to="/login"
-                className="text-[#714B67] dark:text-[#A97B9F] font-bold hover:underline transition-colors ml-1"
+                className="text-brand-600 dark:text-brand-400 font-bold hover:underline transition-colors ml-1"
               >
                 Sign in here
               </Link>

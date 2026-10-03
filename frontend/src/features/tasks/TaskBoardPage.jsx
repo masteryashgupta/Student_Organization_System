@@ -309,10 +309,10 @@ export default function TaskBoardPage() {
           <div className="flex items-center gap-2 mb-2">
             <div className="dual-badge-pill">
               <span className="font-bold flex items-center gap-1.5">
-                <Kanban className="w-3.5 h-3.5 text-[#714B67] dark:text-purple-400" /> Action Board
+                <Kanban className="w-3.5 h-3.5 text-brand-600 dark:text-brand-400" /> Action Board
               </span>
               <span className="dual-badge-divider"></span>
-              <span className="font-mono text-[11px] text-[#714B67] dark:text-purple-300">
+              <span className="font-mono text-[11px] text-brand-600 dark:text-brand-300">
                 Live Sync {isTasksFetching && '• Syncing...'}
               </span>
             </div>
@@ -334,7 +334,7 @@ export default function TaskBoardPage() {
             className="w-10 h-10 rounded-full glass-card bg-white/80 dark:bg-slate-800/80 border border-slate-200/80 dark:border-slate-700/80 flex items-center justify-center text-slate-500 hover:text-slate-900 dark:hover:text-white shadow-sm transition-all"
             title="Force Refresh Board"
           >
-            <RefreshCw className={`w-4 h-4 ${isTasksFetching ? 'animate-spin text-[#714B67] dark:text-purple-400' : ''}`} />
+            <RefreshCw className={`w-4 h-4 ${isTasksFetching ? 'animate-spin text-brand-600 dark:text-brand-400' : ''}`} />
           </button>
 
           {isOfficer && (
@@ -344,7 +344,7 @@ export default function TaskBoardPage() {
               onClick={() => setIsProjectModalOpen(true)}
               className="rounded-full font-bold border-slate-200/80 dark:border-slate-700/80 hover:bg-slate-100 dark:hover:bg-slate-800"
             >
-              <FolderPlus className="w-4 h-4 mr-1.5 text-[#714B67] dark:text-purple-400" /> New Project
+              <FolderPlus className="w-4 h-4 mr-1.5 text-brand-600 dark:text-brand-400" /> New Project
             </Button>
           )}
 
@@ -352,7 +352,7 @@ export default function TaskBoardPage() {
             variant="primary"
             size="sm"
             onClick={() => handleOpenNewTask('todo')}
-            className="rounded-full font-bold shadow-lg shadow-purple-500/20 bg-gradient-to-r from-[#714B67] to-[#8C5D80] text-white"
+            className="rounded-full font-bold shadow-lg shadow-brand-500/25 bg-gradient-to-r from-brand-600 to-indigo-600 text-white"
           >
             <Plus className="w-4 h-4 mr-1.5" /> Add Task
           </Button>
@@ -361,7 +361,7 @@ export default function TaskBoardPage() {
 
       {/* --- EXECUTIVE "AT A GLANCE" PROGRESS BANNER --- */}
       <div className="p-6 sm:p-8 relative overflow-hidden rounded-3xl glass-panel border-white/40 dark:border-slate-800/80 shadow-2xl backdrop-blur-2xl">
-        <div className="absolute top-0 right-0 -mr-16 -mt-16 w-72 h-72 bg-purple-500/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-0 right-0 -mr-16 -mt-16 w-72 h-72 bg-brand-500/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8 relative z-10">
           {/* Left: Project Selector & Mission Description */}
@@ -373,7 +373,7 @@ export default function TaskBoardPage() {
               <select
                 value={selectedProjectId}
                 onChange={(e) => setSelectedProjectId(e.target.value)}
-                className="bg-white/80 dark:bg-slate-800/80 border border-slate-200/80 dark:border-slate-700/80 text-slate-900 dark:text-white font-bold text-xs rounded-xl px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-[#714B67] dark:focus:ring-purple-400 transition-colors shadow-sm"
+                className="bg-white/80 dark:bg-slate-800/80 border border-slate-200/80 dark:border-slate-700/80 text-slate-900 dark:text-white font-bold text-xs rounded-xl px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-brand-500 dark:focus:ring-brand-400 transition-colors shadow-sm"
               >
                 <option value="all">🌟 All Projects &amp; Fundraisers</option>
                 {projects.map((p) => (
@@ -389,7 +389,7 @@ export default function TaskBoardPage() {
                   <Award className="w-3.5 h-3.5" /> Goal Reached ($)
                 </span>
               ) : metrics.isOnTrack ? (
-                <span className="inline-flex items-center gap-1 text-[11px] font-bold px-3 py-1 rounded-full bg-purple-500/20 text-[#714B67] dark:text-purple-300 border border-purple-500/30 shadow-sm">
+                <span className="inline-flex items-center gap-1 text-[11px] font-bold px-3 py-1 rounded-full bg-brand-500/20 text-brand-700 dark:text-brand-300 border border-brand-500/30 shadow-sm">
                   <TrendingUp className="w-3.5 h-3.5" /> On Track
                 </span>
               ) : (
@@ -408,11 +408,11 @@ export default function TaskBoardPage() {
             </p>
 
             {/* Treasury Ledger Verification Stamp */}
-            <div className="flex items-center gap-1.5 text-[11px] text-[#714B67] dark:text-purple-300 pt-1 font-medium">
-              <Zap className="w-3.5 h-3.5 text-[#714B67] dark:text-purple-400" />
+            <div className="flex items-center gap-1.5 text-[11px] text-brand-700 dark:text-brand-300 pt-1 font-medium">
+              <Zap className="w-3.5 h-3.5 text-brand-600 dark:text-brand-400" />
               <span>
                 Raised total queried live from central financial ledger (
-                <code className="text-[#714B67] dark:text-purple-300 font-mono">core.Transaction</code>
+                <code className="text-brand-700 dark:text-brand-300 font-mono">core.Transaction</code>
                 ).
               </span>
             </div>
@@ -460,9 +460,9 @@ export default function TaskBoardPage() {
             <div className="glass-card bg-slate-50/70 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700/80 rounded-2xl p-4 space-y-2.5 shadow-sm">
               <div className="flex items-center justify-between text-xs">
                 <span className="text-slate-900 dark:text-white font-bold flex items-center gap-1.5">
-                  <CheckCircle2 className="w-4 h-4 text-[#714B67] dark:text-purple-400" /> Action Items Done
+                  <CheckCircle2 className="w-4 h-4 text-brand-600 dark:text-brand-400" /> Action Items Done
                 </span>
-                <span className="font-mono font-black text-[#714B67] dark:text-purple-300 text-sm">
+                <span className="font-mono font-black text-brand-700 dark:text-brand-300 text-sm">
                   {metrics.completedTasks} / {metrics.totalTasks}
                   <span className="text-slate-400 text-xs font-normal"> tasks</span>
                 </span>
@@ -471,7 +471,7 @@ export default function TaskBoardPage() {
               {/* Task Progress Bar */}
               <div className="w-full h-2.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden p-0.5 border border-slate-200/60 dark:border-slate-700/60">
                 <div
-                  className="h-full bg-gradient-to-r from-[#714B67] to-[#8C5D80] rounded-full transition-all duration-700 shadow-sm"
+                  className="h-full bg-gradient-to-r from-brand-600 to-indigo-600 rounded-full transition-all duration-700 shadow-sm"
                   style={{ width: `${Math.max(0, Math.min(100, metrics.taskPct))}%` }}
                 />
               </div>
@@ -506,7 +506,7 @@ export default function TaskBoardPage() {
             placeholder="Search tasks, volunteers, or keywords..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#714B67] dark:focus:ring-purple-400 transition-all font-medium"
+            className="w-full pl-10 pr-4 py-2 text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-500 dark:focus:ring-brand-400 transition-all font-medium"
           />
         </div>
 
@@ -516,7 +516,7 @@ export default function TaskBoardPage() {
           <select
             value={priorityFilter}
             onChange={(e) => setPriorityFilter(e.target.value)}
-            className="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white text-xs font-bold rounded-xl px-3.5 py-2 focus:outline-none focus:ring-2 focus:ring-[#714B67] dark:focus:ring-purple-400"
+            className="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white text-xs font-bold rounded-xl px-3.5 py-2 focus:outline-none focus:ring-2 focus:ring-brand-500 dark:focus:ring-brand-400"
           >
             <option value="all">All Priorities</option>
             <option value="urgent">🚨 Urgent</option>
@@ -531,7 +531,7 @@ export default function TaskBoardPage() {
               onClick={() => setOnlyMyTasks(!onlyMyTasks)}
               className={`px-4 py-2 rounded-full text-xs font-bold transition-all flex items-center gap-1.5 ${
                 onlyMyTasks
-                  ? 'bg-gradient-to-r from-[#714B67] to-[#8C5D80] text-white shadow-md shadow-purple-500/20'
+                  ? 'bg-gradient-to-r from-brand-600 to-indigo-600 text-white shadow-md shadow-brand-500/25'
                   : 'glass-card bg-slate-50/70 dark:bg-slate-800/60 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white border border-slate-200/80 dark:border-slate-700/80'
               }`}
             >

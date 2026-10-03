@@ -28,7 +28,7 @@ export function TableBody({ children, className = '', ...props }) {
 
 export function TableRow({ children, className = '', ...props }) {
   return (
-    <tr className={`hover:bg-[#FAF5F9]/50 dark:hover:bg-white/[0.04] transition-colors ${className}`} {...props}>
+    <tr className={`hover:bg-brand-500/[0.04] dark:hover:bg-brand-500/[0.08] transition-colors ${className}`} {...props}>
       {children}
     </tr>
   );

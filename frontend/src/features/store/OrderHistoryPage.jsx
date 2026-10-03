@@ -75,7 +75,7 @@ export default function OrderHistoryPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200/60 dark:border-slate-800/60 pb-5">
         <div>
           <div className="flex items-center gap-2 mb-1.5">
-            <Link to="/store" className="text-xs font-bold text-[#714B67] dark:text-purple-400 hover:underline flex items-center gap-1.5 transition-colors">
+            <Link to="/store" className="text-xs font-bold text-brand-600 dark:text-brand-400 hover:underline flex items-center gap-1.5 transition-colors">
               <ArrowLeft className="w-3.5 h-3.5" /> Back to Store
             </Link>
           </div>
@@ -103,7 +103,7 @@ export default function OrderHistoryPage() {
             onClick={() => setSelectedStatus(st)}
             className={`px-4 py-2 rounded-full text-xs font-bold capitalize transition-all whitespace-nowrap ${
               selectedStatus === st
-                ? 'bg-gradient-to-r from-[#714B67] to-[#8C5D80] text-white shadow-md shadow-purple-500/20'
+                ? 'bg-gradient-to-r from-brand-600 to-indigo-600 text-white shadow-md shadow-brand-500/20'
                 : 'glass-card bg-white/70 dark:bg-slate-900/70 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white border border-slate-200/80 dark:border-slate-800/80 shadow-sm'
             }`}
           >
@@ -128,7 +128,7 @@ export default function OrderHistoryPage() {
         </div>
       ) : orders.length === 0 ? (
         <div className="text-center py-16 glass-panel rounded-3xl border border-white/40 dark:border-slate-800/80 shadow-2xl p-8 space-y-3">
-          <div className="w-16 h-16 rounded-3xl bg-purple-500/10 dark:bg-purple-500/20 flex items-center justify-center mx-auto text-[#714B67] dark:text-purple-300 shadow-inner">
+          <div className="w-16 h-16 rounded-3xl bg-brand-500/10 dark:bg-brand-500/20 flex items-center justify-center mx-auto text-brand-600 dark:text-brand-400 shadow-inner">
             <Package className="w-8 h-8" />
           </div>
           <h3 className="text-xl font-bold text-slate-900 dark:text-white">No Orders Found</h3>
@@ -143,7 +143,7 @@ export default function OrderHistoryPage() {
           {orders.map((order) => (
             <div
               key={order.id}
-              className="p-6 sm:p-8 rounded-3xl glass-panel border-white/40 dark:border-slate-800/80 shadow-xl space-y-5 transition-all hover:border-purple-300 dark:hover:border-purple-700"
+              className="p-6 sm:p-8 rounded-3xl glass-panel border-white/40 dark:border-slate-800/80 shadow-xl space-y-5 transition-all hover:border-brand-300 dark:hover:border-brand-700"
             >
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-200/60 dark:border-slate-800/60 pb-4">
                 <div>
@@ -162,14 +162,14 @@ export default function OrderHistoryPage() {
                 <div className="flex items-center gap-4">
                   <div className="text-right">
                     <span className="text-xs text-slate-400 font-medium block">Total Amount</span>
-                    <span className="text-2xl font-black text-[#714B67] dark:text-purple-300">${Number(order.total).toFixed(2)}</span>
+                    <span className="text-2xl font-black text-brand-600 dark:text-brand-400">${Number(order.total).toFixed(2)}</span>
                   </div>
 
                   {isOfficer && order.status === 'paid' && (
                     <Button
                       variant="primary"
                       size="sm"
-                      className="rounded-full bg-gradient-to-r from-[#714B67] to-[#8C5D80] text-white font-bold"
+                      className="rounded-full bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-500 hover:to-indigo-500 text-white font-bold"
                       isLoading={fulfillMutation.isPending}
                       onClick={() => fulfillMutation.mutate(order.id)}
                     >

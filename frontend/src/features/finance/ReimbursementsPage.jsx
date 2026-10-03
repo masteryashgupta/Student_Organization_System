@@ -199,7 +199,7 @@ export default function ReimbursementsPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 glass-panel p-6 sm:p-8 rounded-3xl border border-white/40 dark:border-slate-800/80 shadow-xl">
         <div>
           <div className="flex items-center gap-2 mb-1.5">
-            <span className="px-3.5 py-1 rounded-full text-xs font-bold bg-purple-500/10 dark:bg-purple-500/20 text-[#714B67] dark:text-purple-300 border border-purple-500/30 shadow-sm">
+            <span className="px-3.5 py-1 rounded-full text-xs font-bold bg-brand-500/10 dark:bg-brand-500/20 text-brand-700 dark:text-brand-300 border border-brand-500/30 shadow-sm">
               Treasury Management
             </span>
           </div>
@@ -215,7 +215,7 @@ export default function ReimbursementsPage() {
             onClick={() => setActiveTab('submit')}
             className={`px-5 py-2.5 rounded-xl text-xs font-bold transition-all ${
               activeTab === 'submit'
-                ? 'bg-gradient-to-r from-[#714B67] to-[#8C5D80] text-white shadow-md shadow-purple-500/20'
+                ? 'bg-gradient-to-r from-brand-600 to-indigo-600 text-white shadow-md shadow-brand-500/25'
                 : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
@@ -226,7 +226,7 @@ export default function ReimbursementsPage() {
               onClick={() => setActiveTab('queue')}
               className={`px-5 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-2 ${
                 activeTab === 'queue'
-                  ? 'bg-gradient-to-r from-[#714B67] to-[#8C5D80] text-white shadow-md shadow-purple-500/20'
+                  ? 'bg-gradient-to-r from-brand-600 to-indigo-600 text-white shadow-md shadow-brand-500/25'
                   : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
               }`}
             >
@@ -274,7 +274,7 @@ export default function ReimbursementsPage() {
                     placeholder="e.g. Pizza and drinks for Friday workshop"
                     value={form.description}
                     onChange={(e) => setForm((prev) => ({ ...prev, description: e.target.value }))}
-                    className="w-full px-4 py-3 rounded-2xl bg-white/80 dark:bg-slate-800/80 border border-slate-200/80 dark:border-slate-700/80 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#714B67] dark:focus:ring-purple-400 transition-all font-medium"
+                    className="w-full px-4 py-3 rounded-2xl bg-white/80 dark:bg-slate-800/80 border border-slate-200/80 dark:border-slate-700/80 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 dark:focus:ring-brand-400 transition-all font-medium"
                     required
                   />
                   {errors.description && <p className="text-xs text-rose-500 font-semibold">{errors.description}</p>}
@@ -288,7 +288,7 @@ export default function ReimbursementsPage() {
                     type="file"
                     accept=".pdf,.jpg,.jpeg,.png,.webp"
                     onChange={handleFileChange}
-                    className="w-full text-xs text-slate-500 dark:text-slate-400 file:mr-3 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-bold file:bg-purple-500/10 file:text-[#714B67] dark:file:text-purple-300 hover:file:bg-purple-500/20 cursor-pointer"
+                    className="w-full text-xs text-slate-500 dark:text-slate-400 file:mr-3 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-bold file:bg-brand-500/10 file:text-brand-600 dark:file:text-brand-300 hover:file:bg-brand-500/20 cursor-pointer"
                   />
                   {errors.receipt ? (
                     <p className="text-xs text-rose-500 font-semibold">{errors.receipt}</p>
@@ -300,7 +300,7 @@ export default function ReimbursementsPage() {
                 <Button
                   type="submit"
                   variant="primary"
-                  className="w-full mt-2 rounded-full bg-gradient-to-r from-[#714B67] to-[#8C5D80] hover:from-[#5B3B52] hover:to-[#714B67] text-white font-bold shadow-lg shadow-purple-500/20 active:scale-95 transition-transform"
+                  className="w-full mt-2 rounded-full bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-500 hover:to-indigo-500 text-white font-bold shadow-lg shadow-brand-500/25 active:scale-95 transition-transform"
                   isLoading={submitting}
                 >
                   Submit Reimbursement
@@ -378,7 +378,7 @@ export default function ReimbursementsPage() {
                               href={item.receipt_url}
                               target="_blank"
                               rel="noreferrer"
-                              className="text-[#714B67] dark:text-purple-400 hover:underline font-bold flex items-center gap-1"
+                              className="text-brand-600 dark:text-brand-400 hover:underline font-bold flex items-center gap-1"
                             >
                               📄 Receipt
                             </a>
@@ -418,9 +418,9 @@ export default function ReimbursementsPage() {
               </CardContent>
             </Card>
 
-            <Card className="glass-panel border-purple-300/40 dark:border-purple-700/50 bg-purple-500/5 shadow-lg rounded-3xl">
+            <Card className="glass-panel border-brand-500/30 dark:border-brand-500/30 bg-brand-500/5 shadow-lg rounded-3xl">
               <CardHeader className="pb-2">
-                <CardDescription className="text-[#714B67] dark:text-purple-300 text-xs font-bold uppercase tracking-wider">
+                <CardDescription className="text-brand-600 dark:text-brand-300 text-xs font-bold uppercase tracking-wider">
                   Approved & Ledger Logged
                 </CardDescription>
                 <CardTitle className="text-3xl font-black text-slate-900 dark:text-white mt-1">
@@ -506,7 +506,7 @@ export default function ReimbursementsPage() {
                               href={item.receipt_url}
                               target="_blank"
                               rel="noreferrer"
-                              className="text-[#714B67] dark:text-purple-400 hover:underline font-bold"
+                              className="text-brand-600 dark:text-brand-400 hover:underline font-bold"
                             >
                               View Proof
                             </a>
@@ -607,7 +607,7 @@ export default function ReimbursementsPage() {
                 placeholder={actionModal.type === 'reject' ? 'State reason for rejection...' : 'Add payment transfer reference or notes...'}
                 value={actionModal.notes}
                 onChange={(e) => setActionModal((prev) => ({ ...prev, notes: e.target.value }))}
-                className="w-full px-3.5 py-2.5 rounded-2xl bg-white/80 dark:bg-slate-800/80 border border-slate-200/80 dark:border-slate-700/80 text-slate-900 dark:text-white text-xs focus:outline-none focus:ring-2 focus:ring-[#714B67] dark:focus:ring-purple-400"
+                className="w-full px-3.5 py-2.5 rounded-2xl bg-white/80 dark:bg-slate-800/80 border border-slate-200/80 dark:border-slate-700/80 text-slate-900 dark:text-white text-xs focus:outline-none focus:ring-2 focus:ring-brand-500 dark:focus:ring-brand-400"
               />
             </div>
 
@@ -618,7 +618,7 @@ export default function ReimbursementsPage() {
               <Button
                 variant={actionModal.type === 'reject' ? 'danger' : 'primary'}
                 size="sm"
-                className={actionModal.type !== 'reject' ? 'rounded-full bg-gradient-to-r from-[#714B67] to-[#8C5D80] text-white font-bold' : 'rounded-full font-bold'}
+                className={actionModal.type !== 'reject' ? 'rounded-full bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-500 hover:to-indigo-500 text-white font-bold shadow-md shadow-brand-500/20' : 'rounded-full font-bold'}
                 onClick={handleExecuteAction}
                 isLoading={approveMut.isPending || rejectMut.isPending || markPaidMut.isPending}
               >

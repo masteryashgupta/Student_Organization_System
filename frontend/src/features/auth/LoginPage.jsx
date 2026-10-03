@@ -56,13 +56,13 @@ export default function LoginPage() {
         {/* LEFT: Brand & Feature Highlights Panel */}
         <div className="lg:col-span-6 space-y-6 text-left">
           <div className="dual-badge-pill">
-            <Sparkles className="w-3.5 h-3.5 text-[#714B67] dark:text-[#F3EAF2]" />
+            <Sparkles className="w-3.5 h-3.5 text-brand-600 dark:text-brand-300" />
             <span>Campus Organization OS</span>
           </div>
 
           <div className="space-y-3">
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-[1.15]">
-              One platform for your <span className="text-[#714B67] dark:text-[#A97B9F]">campus community</span>.
+              One platform for your <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-600 to-indigo-500 dark:from-brand-400 dark:to-indigo-300">campus community</span>.
             </h1>
             <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 max-w-lg leading-relaxed">
               Discover events, connect with members, volunteer for real projects, and manage organization activities with ease.
@@ -71,8 +71,8 @@ export default function LoginPage() {
 
           {/* Feature Highlights with Glass Styling */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-2">
-            <div className="flex items-start gap-3 p-4 rounded-3xl bg-white/70 dark:bg-slate-900/60 backdrop-blur-xl border border-slate-200/80 dark:border-white/10 shadow-xs hover:border-[#D4BFD2] dark:hover:border-white/20 transition-all">
-              <div className="w-9 h-9 rounded-2xl bg-[#F3EAF2] dark:bg-[#714B67]/30 text-[#714B67] dark:text-[#F3EAF2] flex items-center justify-center shrink-0 shadow-xs">
+            <div className="flex items-start gap-3 p-4 rounded-3xl bg-white/70 dark:bg-slate-900/60 backdrop-blur-xl border border-slate-200/80 dark:border-white/10 shadow-xs hover:border-brand-500/30 dark:hover:border-brand-500/40 transition-all">
+              <div className="w-9 h-9 rounded-2xl bg-brand-50 dark:bg-brand-950/40 text-brand-600 dark:text-brand-300 flex items-center justify-center shrink-0 shadow-xs">
                 <Calendar className="w-4 h-4" />
               </div>
               <div>
@@ -81,8 +81,8 @@ export default function LoginPage() {
               </div>
             </div>
 
-            <div className="flex items-start gap-3 p-4 rounded-3xl bg-white/70 dark:bg-slate-900/60 backdrop-blur-xl border border-slate-200/80 dark:border-white/10 shadow-xs hover:border-[#D4BFD2] dark:hover:border-white/20 transition-all">
-              <div className="w-9 h-9 rounded-2xl bg-[#F3EAF2] dark:bg-[#714B67]/30 text-[#714B67] dark:text-[#F3EAF2] flex items-center justify-center shrink-0 shadow-xs">
+            <div className="flex items-start gap-3 p-4 rounded-3xl bg-white/70 dark:bg-slate-900/60 backdrop-blur-xl border border-slate-200/80 dark:border-white/10 shadow-xs hover:border-brand-300 dark:hover:border-white/20 transition-all">
+              <div className="w-9 h-9 rounded-2xl bg-brand-50 dark:bg-brand-950/40 text-brand-600 dark:text-brand-300 flex items-center justify-center shrink-0 shadow-xs">
                 <Users className="w-4 h-4" />
               </div>
               <div>
@@ -91,8 +91,8 @@ export default function LoginPage() {
               </div>
             </div>
 
-            <div className="flex items-start gap-3 p-4 rounded-3xl bg-white/70 dark:bg-slate-900/60 backdrop-blur-xl border border-slate-200/80 dark:border-white/10 shadow-xs hover:border-[#D4BFD2] dark:hover:border-white/20 transition-all">
-              <div className="w-9 h-9 rounded-2xl bg-[#F3EAF2] dark:bg-[#714B67]/30 text-[#714B67] dark:text-[#F3EAF2] flex items-center justify-center shrink-0 shadow-xs">
+            <div className="flex items-start gap-3 p-4 rounded-3xl bg-white/70 dark:bg-slate-900/60 backdrop-blur-xl border border-slate-200/80 dark:border-white/10 shadow-xs hover:border-brand-300 dark:hover:border-white/20 transition-all">
+              <div className="w-9 h-9 rounded-2xl bg-brand-50 dark:bg-brand-950/40 text-brand-600 dark:text-brand-300 flex items-center justify-center shrink-0 shadow-xs">
                 <ShoppingBag className="w-4 h-4" />
               </div>
               <div>
@@ -101,8 +101,8 @@ export default function LoginPage() {
               </div>
             </div>
 
-            <div className="flex items-start gap-3 p-4 rounded-3xl bg-white/70 dark:bg-slate-900/60 backdrop-blur-xl border border-slate-200/80 dark:border-white/10 shadow-xs hover:border-[#D4BFD2] dark:hover:border-white/20 transition-all">
-              <div className="w-9 h-9 rounded-2xl bg-[#F3EAF2] dark:bg-[#714B67]/30 text-[#714B67] dark:text-[#F3EAF2] flex items-center justify-center shrink-0 shadow-xs">
+            <div className="flex items-start gap-3 p-4 rounded-3xl bg-white/70 dark:bg-slate-900/60 backdrop-blur-xl border border-slate-200/80 dark:border-white/10 shadow-xs hover:border-brand-300 dark:hover:border-white/20 transition-all">
+              <div className="w-9 h-9 rounded-2xl bg-brand-50 dark:bg-brand-950/40 text-brand-600 dark:text-brand-300 flex items-center justify-center shrink-0 shadow-xs">
                 <ShieldCheck className="w-4 h-4" />
               </div>
               <div>
@@ -122,7 +122,7 @@ export default function LoginPage() {
         <div className="lg:col-span-6 flex justify-center lg:justify-end">
           <div className="w-full max-w-[450px] bg-white/85 dark:bg-slate-900/80 backdrop-blur-2xl rounded-3xl border border-slate-200/80 dark:border-white/10 shadow-2xl p-7 sm:p-9">
             <div className="text-center pb-6">
-              <div className="mx-auto w-12 h-12 rounded-2xl bg-gradient-to-tr from-[#714B67] to-[#87567D] flex items-center justify-center font-extrabold text-white text-xl shadow-md mb-3.5">
+              <div className="mx-auto w-12 h-12 rounded-2xl bg-gradient-to-tr from-brand-600 to-indigo-600 flex items-center justify-center font-extrabold text-white text-xl shadow-md mb-3.5">
                 S
               </div>
               <h2 className="text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">Welcome Back</h2>
@@ -148,7 +148,7 @@ export default function LoginPage() {
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   required
-                  className="block w-full rounded-2xl bg-white/80 dark:bg-slate-900/70 backdrop-blur-md border border-slate-200/80 dark:border-white/10 px-4 py-2.5 text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-[#714B67] dark:focus:border-[#A97B9F] focus:ring-4 focus:ring-[#714B67]/20 dark:focus:ring-[#A97B9F]/20 transition-all shadow-xs"
+                  className="block w-full rounded-2xl bg-white/80 dark:bg-slate-900/70 backdrop-blur-md border border-slate-200/80 dark:border-white/10 px-4 py-2.5 text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-brand-500 dark:focus:border-brand-400 focus:ring-4 focus:ring-brand-500/20 dark:focus:ring-brand-400/20 transition-all shadow-xs"
                 />
               </div>
 
@@ -165,7 +165,7 @@ export default function LoginPage() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
-                    className="block w-full rounded-2xl bg-white/80 dark:bg-slate-900/70 backdrop-blur-md border border-slate-200/80 dark:border-white/10 pl-4 pr-11 py-2.5 text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-[#714B67] dark:focus:border-[#A97B9F] focus:ring-4 focus:ring-[#714B67]/20 dark:focus:ring-[#A97B9F]/20 transition-all shadow-xs"
+                    className="block w-full rounded-2xl bg-white/80 dark:bg-slate-900/70 backdrop-blur-md border border-slate-200/80 dark:border-white/10 pl-4 pr-11 py-2.5 text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-brand-500 dark:focus:border-brand-400 focus:ring-4 focus:ring-brand-500/20 dark:focus:ring-brand-400/20 transition-all shadow-xs"
                   />
                   <button
                     type="button"
@@ -187,7 +187,7 @@ export default function LoginPage() {
                 variant="primary"
                 size="lg"
                 isLoading={loading}
-                className="w-full mt-2 font-bold shadow-lg"
+                className="w-full mt-2 font-bold shadow-lg shadow-brand-500/25"
               >
                 <span>Sign In</span>
                 {!loading && <ArrowRight className="w-4 h-4 ml-1.5" />}
@@ -198,7 +198,7 @@ export default function LoginPage() {
               Don't have an account?{' '}
               <Link
                 to="/register"
-                className="text-[#714B67] dark:text-[#A97B9F] font-bold hover:underline transition-colors ml-1"
+                className="text-brand-600 dark:text-brand-400 font-bold hover:underline transition-colors ml-1"
               >
                 Register here
               </Link>

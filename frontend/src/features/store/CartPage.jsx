@@ -86,7 +86,7 @@ export default function CartPage() {
   if (items.length === 0) {
     return (
       <div className="max-w-xl mx-auto py-16 text-center glass-panel rounded-3xl border border-white/40 dark:border-slate-800/80 shadow-2xl p-10 space-y-4 animate-fadeIn">
-        <div className="w-16 h-16 rounded-3xl bg-purple-500/10 dark:bg-purple-500/20 flex items-center justify-center mx-auto text-[#714B67] dark:text-purple-300 shadow-inner">
+        <div className="w-16 h-16 rounded-3xl bg-brand-500/10 dark:bg-brand-500/20 flex items-center justify-center mx-auto text-brand-600 dark:text-brand-400 shadow-inner">
           <ShoppingBag className="w-8 h-8" />
         </div>
         <h2 className="text-2xl font-extrabold text-slate-900 dark:text-white">Your Shopping Cart is Empty</h2>
@@ -94,7 +94,7 @@ export default function CartPage() {
           You have no items in your cart. Explore our official club hoodies, shirts, caps, and gear!
         </p>
         <Link to="/store">
-          <Button variant="primary" className="mt-4 rounded-full px-8 bg-gradient-to-r from-[#714B67] to-[#8C5D80] hover:from-[#5B3B52] hover:to-[#714B67] text-white font-bold shadow-lg shadow-purple-500/20">
+          <Button variant="primary" className="mt-4 rounded-full px-8 bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-500 hover:to-indigo-500 text-white font-bold shadow-lg shadow-brand-500/20">
             Explore Store Catalog
           </Button>
         </Link>
@@ -110,7 +110,7 @@ export default function CartPage() {
           <h1 className="text-2xl sm:text-4xl font-extrabold text-slate-900 dark:text-white">Shopping Cart & Checkout</h1>
           <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">{totalItems} {totalItems === 1 ? 'item' : 'items'} ready for checkout</p>
         </div>
-        <Link to="/store" className="text-xs font-bold text-[#714B67] dark:text-purple-400 hover:underline flex items-center gap-1.5 transition-colors">
+        <Link to="/store" className="text-xs font-bold text-brand-600 dark:text-brand-400 hover:underline flex items-center gap-1.5 transition-colors">
           <ArrowLeft className="w-4 h-4" /> Continue Shopping
         </Link>
       </div>
@@ -121,7 +121,7 @@ export default function CartPage() {
           {items.map((item) => (
             <div
               key={item.variantId}
-              className="p-5 rounded-3xl glass-card bg-white/80 dark:bg-slate-900/80 border border-slate-200/80 dark:border-slate-800/80 shadow-lg flex items-center justify-between gap-4 transition-all hover:border-purple-300 dark:hover:border-purple-700"
+              className="p-5 rounded-3xl glass-card bg-white/80 dark:bg-slate-900/80 border border-slate-200/80 dark:border-slate-800/80 shadow-lg flex items-center justify-between gap-4 transition-all hover:border-brand-300 dark:hover:border-brand-700"
             >
               <div className="w-20 h-20 rounded-2xl bg-slate-100 dark:bg-slate-800 overflow-hidden flex-shrink-0 border border-slate-200/60 dark:border-slate-700/60 flex items-center justify-center shadow-inner">
                 {item.image ? (
@@ -175,7 +175,7 @@ export default function CartPage() {
               </div>
 
               <div className="text-right">
-                <span className="text-lg font-black text-[#714B67] dark:text-purple-300">
+                <span className="text-lg font-black text-brand-600 dark:text-brand-400">
                   ${(item.price * item.qty).toFixed(2)}
                 </span>
               </div>
@@ -216,7 +216,7 @@ export default function CartPage() {
               )}
               <div className="flex justify-between text-lg font-bold text-slate-900 dark:text-white border-t border-slate-200/60 dark:border-slate-800/60 pt-3">
                 <span>Total Due</span>
-                <span className="text-[#714B67] dark:text-purple-300 text-2xl font-black">${totalPayable.toFixed(2)}</span>
+                <span className="text-brand-600 dark:text-brand-400 text-2xl font-black">${totalPayable.toFixed(2)}</span>
               </div>
             </div>
 
@@ -252,11 +252,11 @@ export default function CartPage() {
                   onClick={() => setPaymentProvider('mock')}
                   className={`p-3.5 rounded-2xl border text-xs font-bold flex flex-col items-center gap-1.5 transition-all ${
                     paymentProvider === 'mock'
-                      ? 'bg-purple-500/10 dark:bg-purple-500/20 border-[#714B67] dark:border-purple-400 text-[#714B67] dark:text-purple-300 ring-1 ring-[#714B67]'
-                      : 'glass-card bg-slate-50/50 dark:bg-slate-800/40 border-slate-200/80 dark:border-slate-700/80 text-slate-500 dark:text-slate-400 hover:border-purple-300'
+                      ? 'bg-brand-500/10 dark:bg-brand-500/20 border-brand-500 dark:border-brand-400 text-brand-600 dark:text-brand-300 ring-1 ring-brand-500'
+                      : 'glass-card bg-slate-50/50 dark:bg-slate-800/40 border-slate-200/80 dark:border-slate-700/80 text-slate-500 dark:text-slate-400 hover:border-brand-300'
                   }`}
                 >
-                  <CheckCircle2 className="w-5 h-5 text-[#714B67] dark:text-purple-400" />
+                  <CheckCircle2 className="w-5 h-5 text-brand-600 dark:text-brand-400" />
                   <span>Instant / Cash</span>
                 </button>
 
@@ -265,8 +265,8 @@ export default function CartPage() {
                   onClick={() => setPaymentProvider('stripe')}
                   className={`p-3.5 rounded-2xl border text-xs font-bold flex flex-col items-center gap-1.5 transition-all ${
                     paymentProvider === 'stripe'
-                      ? 'bg-purple-500/10 dark:bg-purple-500/20 border-[#714B67] dark:border-purple-400 text-[#714B67] dark:text-purple-300 ring-1 ring-[#714B67]'
-                      : 'glass-card bg-slate-50/50 dark:bg-slate-800/40 border-slate-200/80 dark:border-slate-700/80 text-slate-500 dark:text-slate-400 hover:border-purple-300'
+                      ? 'bg-brand-500/10 dark:bg-brand-500/20 border-brand-500 dark:border-brand-400 text-brand-600 dark:text-brand-300 ring-1 ring-brand-500'
+                      : 'glass-card bg-slate-50/50 dark:bg-slate-800/40 border-slate-200/80 dark:border-slate-700/80 text-slate-500 dark:text-slate-400 hover:border-brand-300'
                   }`}
                 >
                   <CreditCard className="w-5 h-5 text-teal-600 dark:text-teal-400" />
@@ -280,7 +280,7 @@ export default function CartPage() {
               type="submit"
               variant="primary"
               size="lg"
-              className="w-full rounded-full bg-gradient-to-r from-[#714B67] to-[#8C5D80] hover:from-[#5B3B52] hover:to-[#714B67] text-white shadow-lg shadow-purple-500/20 font-bold active:scale-95 transition-transform"
+              className="w-full rounded-full bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-500 hover:to-indigo-500 text-white shadow-lg shadow-brand-500/20 font-bold active:scale-95 transition-transform"
               isLoading={isProcessing}
             >
               <span>Pay & Place Order (${totalPayable.toFixed(2)})</span>

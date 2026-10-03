@@ -64,12 +64,12 @@ export default function AppShell() {
   }, [navItems]);
 
   return (
-    <div className="min-h-screen flex flex-col text-slate-900 dark:text-slate-100 selection:bg-[#714B67] selection:text-white overflow-x-hidden max-w-full relative transition-colors duration-300">
+    <div className="min-h-screen flex flex-col text-slate-900 dark:text-slate-100 selection:bg-brand-600 selection:text-white overflow-x-hidden max-w-full relative transition-colors duration-300">
       {/* Background ambient lighting orbs for glassmorphism depth */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden -z-10">
-        <div className="absolute -top-32 left-1/4 w-96 h-96 bg-[#714B67]/10 dark:bg-[#A97B9F]/15 rounded-full blur-3xl filter transform-gpu" />
-        <div className="absolute top-1/3 -right-20 w-80 h-80 bg-sky-400/10 dark:bg-sky-500/10 rounded-full blur-3xl filter transform-gpu" />
-        <div className="absolute -bottom-20 left-1/3 w-96 h-96 bg-purple-400/10 dark:bg-purple-600/10 rounded-full blur-3xl filter transform-gpu" />
+        <div className="absolute -top-32 left-1/4 w-96 h-96 bg-brand-500/15 dark:bg-brand-400/20 rounded-full blur-3xl filter transform-gpu" />
+        <div className="absolute top-1/3 -right-20 w-80 h-80 bg-cyan-400/15 dark:bg-cyan-500/15 rounded-full blur-3xl filter transform-gpu" />
+        <div className="absolute -bottom-20 left-1/3 w-96 h-96 bg-indigo-500/15 dark:bg-violet-600/15 rounded-full blur-3xl filter transform-gpu" />
       </div>
 
       {/* Top Floating Bar Header */}
@@ -92,7 +92,7 @@ export default function AppShell() {
               to="/"
               className={`w-8 h-8 rounded-full flex items-center justify-center transition-all duration-200 ${
                 location.pathname === '/'
-                  ? 'bg-[#714B67] dark:bg-[#87567D] text-white shadow-md shadow-[#714B67]/25'
+                  ? 'bg-gradient-to-r from-brand-600 to-indigo-600 text-white shadow-md shadow-brand-500/25'
                   : 'bg-slate-100/80 dark:bg-white/5 text-slate-600 dark:text-slate-300 hover:bg-slate-200/80 dark:hover:bg-white/10 hover:text-slate-900 dark:hover:text-white'
               }`}
               title="Overview Home"
@@ -112,8 +112,8 @@ export default function AppShell() {
                     to={item.path}
                     className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 ${
                       isActive
-                        ? 'bg-[#714B67] dark:bg-[#87567D] text-white shadow-md shadow-[#714B67]/25'
-                        : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-[#FAF5F9]/80 dark:hover:bg-white/10'
+                        ? 'bg-gradient-to-r from-brand-600 to-indigo-600 text-white shadow-md shadow-brand-500/25'
+                        : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-brand-50/80 dark:hover:bg-white/10'
                     }`}
                   >
                     <IconComponent className="w-3.5 h-3.5 opacity-80" />
@@ -146,9 +146,9 @@ export default function AppShell() {
               <div className="flex items-center gap-2">
                 <Link
                   to="/members/me"
-                  className="flex items-center gap-2 pl-2 pr-3.5 py-1.5 rounded-full bg-white/80 dark:bg-slate-900/70 backdrop-blur-xl border border-slate-200/80 dark:border-white/10 shadow-sm hover:border-[#D4BFD2] dark:hover:border-white/25 transition-all text-xs font-semibold text-slate-800 dark:text-slate-200"
+                  className="flex items-center gap-2 pl-2 pr-3.5 py-1.5 rounded-full bg-white/80 dark:bg-slate-900/70 backdrop-blur-xl border border-slate-200/80 dark:border-white/10 shadow-sm hover:border-brand-300 dark:hover:border-white/25 transition-all text-xs font-semibold text-slate-800 dark:text-slate-200"
                 >
-                  <div className="w-6 h-6 rounded-full bg-gradient-to-tr from-[#714B67] to-[#87567D] text-white flex items-center justify-center font-bold text-[10px] shadow-xs">
+                  <div className="w-6 h-6 rounded-full bg-gradient-to-tr from-brand-600 to-indigo-600 text-white flex items-center justify-center font-bold text-[10px] shadow-xs">
                     {user?.name ? user.name.charAt(0).toUpperCase() : 'U'}
                   </div>
                   <span className="hidden sm:inline max-w-[100px] truncate">
@@ -177,7 +177,7 @@ export default function AppShell() {
                 </Link>
                 <Link
                   to="/register"
-                  className="text-xs font-bold text-white bg-[#714B67] hover:bg-[#5B3B52] dark:bg-[#87567D] dark:hover:bg-[#714B67] px-4 py-2 rounded-full shadow-md shadow-[#714B67]/25 hover:shadow-lg transition-all"
+                  className="text-xs font-bold text-white bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-700 hover:to-indigo-700 px-4 py-2 rounded-full shadow-md shadow-brand-500/25 hover:shadow-lg transition-all"
                 >
                   Join Club
                 </Link>
@@ -219,7 +219,7 @@ export default function AppShell() {
                     onClick={() => setMobileMenuOpen(false)}
                     className={`flex items-center gap-2.5 px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition-all ${
                       isActive
-                        ? 'bg-[#714B67] text-white shadow-sm'
+                        ? 'bg-gradient-to-r from-brand-600 to-indigo-600 text-white shadow-sm'
                         : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/5'
                     }`}
                   >
@@ -242,7 +242,7 @@ export default function AppShell() {
       <footer className="w-full border-t border-slate-200/80 dark:border-white/10 bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl mt-auto py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 dark:text-slate-400">
           <div className="flex items-center gap-2.5">
-            <div className="w-6 h-6 rounded-lg bg-gradient-to-tr from-[#714B67] to-[#87567D] text-white flex items-center justify-center font-bold text-[11px] shadow-xs">
+            <div className="w-6 h-6 rounded-lg bg-gradient-to-tr from-brand-600 to-indigo-600 text-white flex items-center justify-center font-bold text-[11px] shadow-xs">
               S
             </div>
             <span className="font-bold text-slate-900 dark:text-white">Skyline Student Association</span>

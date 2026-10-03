@@ -407,8 +407,8 @@ export default function EventCheckInPage() {
       {/* Header & Event Selector */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-border dark:border-slate-800/80">
         <div>
-          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#714B67] dark:text-purple-400 mb-1.5">
-            <span className="p-1.5 rounded-lg bg-purple-50 dark:bg-purple-950/50 border border-purple-200/60 dark:border-purple-800/50">
+          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-brand-600 dark:text-brand-400 mb-1.5">
+            <span className="p-1.5 rounded-lg bg-brand-50 dark:bg-brand-950/50 border border-brand-200/60 dark:border-brand-800/50">
               <ShieldCheck className="w-3.5 h-3.5" />
             </span>
             <span>Officer Gate Operations</span>
@@ -433,7 +433,7 @@ export default function EventCheckInPage() {
                 setSelectedEventId(e.target.value);
                 navigate(`/events/${e.target.value}/checkin`);
               }}
-              className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm border border-border dark:border-slate-800 text-ink dark:text-slate-100 text-xs rounded-2xl px-3 py-2.5 focus:outline-none focus:border-[#714B67] dark:focus:border-purple-500 font-medium max-w-xs shadow-sm"
+              className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm border border-border dark:border-slate-800 text-ink dark:text-slate-100 text-xs rounded-2xl px-3 py-2.5 focus:outline-none focus:border-brand-500 dark:focus:border-brand-400 font-medium max-w-xs shadow-sm"
             >
               {events.map((evt) => (
                 <option key={evt.id} value={evt.id}>
@@ -448,7 +448,7 @@ export default function EventCheckInPage() {
             onClick={() => setSoundEnabled(!soundEnabled)}
             className={`p-2.5 rounded-2xl border transition-colors ${
               soundEnabled
-                ? 'bg-purple-50 dark:bg-purple-950/50 border-purple-200 dark:border-purple-800 text-[#714B67] dark:text-purple-400'
+                ? 'bg-brand-50 dark:bg-brand-950/50 border-brand-200 dark:border-brand-800 text-brand-600 dark:text-brand-400'
                 : 'bg-white/80 dark:bg-slate-900/80 border-border dark:border-slate-800 text-slate-400'
             }`}
             title={soundEnabled ? 'Audio feedback enabled' : 'Audio feedback muted'}
@@ -488,13 +488,13 @@ export default function EventCheckInPage() {
                 Total Sold
               </span>
               <div className="flex items-baseline gap-2 mt-1">
-                <span className="text-3xl font-extrabold text-[#714B67] dark:text-purple-400">
+                <span className="text-3xl font-extrabold text-brand-600 dark:text-brand-400">
                   {checkinFeed?.total_sold ?? 0}
                 </span>
                 <span className="text-xs text-slate-500 dark:text-slate-400">tickets</span>
               </div>
             </div>
-            <div className="w-12 h-12 rounded-2xl bg-purple-50/80 dark:bg-purple-950/50 border border-purple-200/80 dark:border-purple-800/50 flex items-center justify-center text-[#714B67] dark:text-purple-400">
+            <div className="w-12 h-12 rounded-2xl bg-brand-50/80 dark:bg-brand-950/50 border border-brand-200/80 dark:border-brand-800/50 flex items-center justify-center text-brand-600 dark:text-brand-400">
               <Users className="w-6 h-6" />
             </div>
           </CardContent>
@@ -540,7 +540,7 @@ export default function EventCheckInPage() {
               className="p-2.5 rounded-xl bg-slate-100/80 dark:bg-slate-800 border border-border dark:border-slate-700 text-ink-muted dark:text-slate-400 hover:text-ink dark:hover:text-slate-100 transition-colors"
               title="Force refresh"
             >
-              <RefreshCw className={`w-4 h-4 ${isFeedFetching ? 'animate-spin text-[#714B67] dark:text-purple-400' : ''}`} />
+              <RefreshCw className={`w-4 h-4 ${isFeedFetching ? 'animate-spin text-brand-600 dark:text-brand-400' : ''}`} />
             </button>
           </CardContent>
         </Card>
@@ -554,7 +554,7 @@ export default function EventCheckInPage() {
             {/* Scanner Controls Bar */}
             <div className="px-6 py-4 border-b border-border dark:border-slate-800/80 flex items-center justify-between bg-white/40 dark:bg-slate-800/40 backdrop-blur-md">
               <div className="flex items-center gap-2">
-                <span className="p-1 rounded-md bg-purple-50 dark:bg-purple-950/50 text-[#714B67] dark:text-purple-400">
+                <span className="p-1 rounded-md bg-brand-50 dark:bg-brand-950/50 text-brand-600 dark:text-brand-400">
                   <Camera className="w-4 h-4" />
                 </span>
                 <span className="text-xs font-bold text-ink dark:text-slate-100 uppercase tracking-wider">
@@ -613,7 +613,7 @@ export default function EventCheckInPage() {
                 {/* Inactive Camera State */}
                 {!isScannerActive && !cameraError && (
                   <div className="text-center p-8 space-y-4 max-w-xs">
-                    <div className="w-16 h-16 rounded-3xl bg-purple-50 dark:bg-purple-950/50 border border-purple-200/80 dark:border-purple-800/50 flex items-center justify-center mx-auto text-[#714B67] dark:text-purple-400 shadow-sm">
+                    <div className="w-16 h-16 rounded-3xl bg-brand-50 dark:bg-brand-950/50 border border-brand-200/80 dark:border-brand-800/50 flex items-center justify-center mx-auto text-brand-600 dark:text-brand-400 shadow-sm">
                       <Camera className="w-8 h-8" />
                     </div>
                     <div>
@@ -652,7 +652,7 @@ export default function EventCheckInPage() {
                 {/* Scanner Target Guide Overlay */}
                 {isScannerActive && (
                   <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
-                    <div className="w-64 h-64 border-2 border-[#714B67]/70 dark:border-purple-400/70 rounded-2xl relative shadow-2xl">
+                    <div className="w-64 h-64 border-2 border-brand-500/70 dark:border-brand-400/70 rounded-2xl relative shadow-2xl">
                       {/* Corner Target Accents */}
                       <div className="absolute -top-1 -left-1 w-6 h-6 border-t-4 border-l-4 border-emerald-500 rounded-tl-lg" />
                       <div className="absolute -top-1 -right-1 w-6 h-6 border-t-4 border-r-4 border-emerald-500 rounded-tr-lg" />
@@ -764,7 +764,7 @@ export default function EventCheckInPage() {
                       placeholder="e.g. b5f4c281-9c8e-4a6f-a89b-..."
                       value={manualToken}
                       onChange={(e) => setManualToken(e.target.value)}
-                      className="flex-1 bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm border border-border dark:border-slate-800 rounded-2xl px-4 py-2.5 text-xs font-mono text-ink dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-[#714B67] dark:focus:border-purple-500"
+                      className="flex-1 bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm border border-border dark:border-slate-800 rounded-2xl px-4 py-2.5 text-xs font-mono text-ink dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-brand-500 dark:focus:border-brand-400"
                     />
                     <Button
                       type="submit"
@@ -800,7 +800,7 @@ export default function EventCheckInPage() {
             <CardContent className="p-0">
               {isFeedLoading ? (
                 <div className="p-8 text-center text-xs text-ink-muted dark:text-slate-400">
-                  <RefreshCw className="w-5 h-5 animate-spin mx-auto mb-2 text-[#714B67] dark:text-purple-400" />
+                  <RefreshCw className="w-5 h-5 animate-spin mx-auto mb-2 text-brand-600 dark:text-brand-400" />
                   Loading live check-in feed...
                 </div>
               ) : checkinFeed?.recent_checkins?.length === 0 ? (
@@ -860,7 +860,7 @@ export default function EventCheckInPage() {
           {/* Quick Gate Guide / Mobile Local Network Info */}
           <div className="p-5 rounded-3xl bg-white/50 dark:bg-slate-800/50 backdrop-blur-md border border-border dark:border-slate-800 text-xs space-y-2 text-ink-muted dark:text-slate-400 shadow-glass">
             <h4 className="font-bold text-ink dark:text-slate-100 flex items-center gap-2">
-              <span className="p-1 rounded-md bg-purple-50 dark:bg-purple-950/50 text-[#714B67] dark:text-purple-400">
+              <span className="p-1 rounded-md bg-brand-50 dark:bg-brand-950/50 text-brand-600 dark:text-brand-400">
                 <Smartphone className="w-3.5 h-3.5" />
               </span>
               Officer Field Check-In Notes

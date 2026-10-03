@@ -129,8 +129,8 @@ export default function EventStatsPage() {
       {/* Top Header & Event Selector */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-border dark:border-slate-800/80 print:hidden">
         <div>
-          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#714B67] dark:text-purple-400 mb-1.5">
-            <span className="p-1.5 rounded-lg bg-purple-50 dark:bg-purple-950/50 border border-purple-200/60 dark:border-purple-800/50">
+          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-brand-600 dark:text-brand-400 mb-1.5">
+            <span className="p-1.5 rounded-lg bg-brand-50 dark:bg-brand-950/50 border border-brand-200/60 dark:border-brand-800/50">
               <BarChart3 className="w-3.5 h-3.5" />
             </span>
             <span>Post-Event Audit & Executive Analytics</span>
@@ -152,7 +152,7 @@ export default function EventStatsPage() {
               setSelectedEventId(e.target.value);
               navigate(`/events/${e.target.value}/stats`);
             }}
-            className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm border border-border dark:border-slate-800 text-ink dark:text-slate-100 text-xs rounded-2xl px-4 py-2.5 focus:outline-none focus:border-[#714B67] dark:focus:border-purple-500 font-medium shadow-sm"
+            className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm border border-border dark:border-slate-800 text-ink dark:text-slate-100 text-xs rounded-2xl px-4 py-2.5 focus:outline-none focus:border-brand-500 dark:focus:border-brand-400 font-medium shadow-sm"
           >
             {events.map((evt) => (
               <option key={evt.id} value={evt.id}>
@@ -184,7 +184,7 @@ export default function EventStatsPage() {
 
       {isStatsLoading ? (
         <div className="py-20 text-center space-y-3">
-          <RefreshCw className="w-8 h-8 animate-spin mx-auto text-[#714B67] dark:text-purple-400" />
+          <RefreshCw className="w-8 h-8 animate-spin mx-auto text-brand-600 dark:text-brand-400" />
           <p className="text-sm text-ink-muted dark:text-slate-400">Loading audit statistics from tickets ledger...</p>
         </div>
       ) : isStatsError ? (
@@ -199,7 +199,7 @@ export default function EventStatsPage() {
           {/* Quick Context Strip */}
           <div className="flex flex-wrap items-center justify-between gap-4 p-4 rounded-2xl glass-panel shadow-sm text-xs">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-2xl bg-purple-50 dark:bg-purple-950/50 border border-purple-200/60 dark:border-purple-800/50 flex items-center justify-center text-[#714B67] dark:text-purple-400">
+              <div className="w-10 h-10 rounded-2xl bg-brand-50 dark:bg-brand-950/50 border border-brand-200/60 dark:border-brand-800/50 flex items-center justify-center text-brand-600 dark:text-brand-400">
                 <Ticket className="w-5 h-5" />
               </div>
               <div>
@@ -266,11 +266,11 @@ export default function EventStatsPage() {
                       Turnout Rate
                     </span>
                     <div className="flex items-baseline gap-2 mt-1">
-                      <span className="text-3xl font-extrabold text-[#714B67] dark:text-purple-400">{attendanceRate}%</span>
+                      <span className="text-3xl font-extrabold text-brand-600 dark:text-brand-400">{attendanceRate}%</span>
                       <span className="text-xs text-slate-500">of ticket holders</span>
                     </div>
                   </div>
-                  <div className="w-12 h-12 rounded-2xl bg-purple-50/80 dark:bg-purple-950/50 border border-purple-200/80 dark:border-purple-800/50 flex items-center justify-center text-[#714B67] dark:text-purple-400">
+                  <div className="w-12 h-12 rounded-2xl bg-brand-50/80 dark:bg-brand-950/50 border border-brand-200/80 dark:border-brand-800/50 flex items-center justify-center text-brand-600 dark:text-brand-400">
                     <TrendingUp className="w-6 h-6" />
                   </div>
                 </CardContent>
@@ -357,21 +357,21 @@ export default function EventStatsPage() {
                 </div>
                 <div className="w-full h-3 bg-slate-100 dark:bg-slate-800/80 rounded-full overflow-hidden flex border border-border dark:border-slate-800 shadow-inner">
                   <div
-                    className="bg-[#714B67] dark:bg-purple-600 h-full transition-all duration-700"
+                    className="bg-brand-600 dark:bg-brand-500 h-full transition-all duration-700"
                     style={{ width: `${memberTicketShare}%` }}
                   />
                   <div
-                    className="bg-[#017E84] dark:bg-teal-600 h-full transition-all duration-700"
+                    className="bg-indigo-400 dark:bg-indigo-500 h-full transition-all duration-700"
                     style={{ width: `${nonmemberTicketShare}%` }}
                   />
                 </div>
                 <div className="flex justify-between text-[11px] text-ink-muted dark:text-slate-400">
                   <span className="flex items-center gap-1.5">
-                    <span className="w-2.5 h-2.5 rounded-full bg-[#714B67] dark:bg-purple-600 inline-block" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-brand-600 dark:bg-brand-500 inline-block" />
                     Club Members: {memberTickets} tickets
                   </span>
                   <span className="flex items-center gap-1.5">
-                    <span className="w-2.5 h-2.5 rounded-full bg-[#017E84] dark:bg-teal-600 inline-block" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-indigo-400 dark:bg-indigo-500 inline-block" />
                     General Admission: {nonmemberTickets} tickets
                   </span>
                 </div>
@@ -422,7 +422,7 @@ export default function EventStatsPage() {
                       Member Revenue
                     </span>
                     <div className="flex items-baseline gap-1 mt-1">
-                      <span className="text-3xl font-extrabold text-[#714B67] dark:text-purple-400">
+                      <span className="text-3xl font-extrabold text-brand-600 dark:text-brand-400">
                         ${memberRevenue.toFixed(2)}
                       </span>
                     </div>
@@ -430,7 +430,7 @@ export default function EventStatsPage() {
                       {memberTickets} tickets ({memberRevenueShare}%)
                     </span>
                   </div>
-                  <div className="w-12 h-12 rounded-2xl bg-purple-50/80 dark:bg-purple-950/50 border border-purple-200/80 dark:border-purple-800/50 flex items-center justify-center text-[#714B67] dark:text-purple-400">
+                  <div className="w-12 h-12 rounded-2xl bg-brand-50/80 dark:bg-brand-950/50 border border-brand-200/80 dark:border-brand-800/50 flex items-center justify-center text-brand-600 dark:text-brand-400">
                     <Sparkles className="w-6 h-6" />
                   </div>
                 </CardContent>
@@ -494,7 +494,7 @@ export default function EventStatsPage() {
               <div className="w-full h-6 bg-slate-100 dark:bg-slate-800/80 rounded-2xl overflow-hidden flex border border-border dark:border-slate-800 shadow-inner">
                 {memberRevenue > 0 && (
                   <div
-                    className="bg-[#714B67] dark:bg-purple-600 h-full flex items-center justify-center text-[10px] font-bold text-white transition-all duration-700"
+                    className="bg-brand-600 dark:bg-brand-500 h-full flex items-center justify-center text-[10px] font-bold text-white transition-all duration-700"
                     style={{ width: `${memberRevenueShare}%` }}
                     title={`Member: $${memberRevenue.toFixed(2)} (${memberRevenueShare}%)`}
                   >
@@ -503,7 +503,7 @@ export default function EventStatsPage() {
                 )}
                 {nonmemberRevenue > 0 && (
                   <div
-                    className="bg-[#017E84] dark:bg-teal-600 h-full flex items-center justify-center text-[10px] font-bold text-white transition-all duration-700"
+                    className="bg-indigo-500 dark:bg-indigo-600 h-full flex items-center justify-center text-[10px] font-bold text-white transition-all duration-700"
                     style={{ width: `${nonmemberRevenueShare}%` }}
                     title={`Non-Member: $${nonmemberRevenue.toFixed(2)} (${nonmemberRevenueShare}%)`}
                   >
@@ -514,8 +514,8 @@ export default function EventStatsPage() {
 
               <div className="grid grid-cols-2 gap-4 pt-2 text-xs">
                 <div className="p-4 rounded-2xl bg-white/40 dark:bg-slate-800/40 backdrop-blur-sm border border-border dark:border-slate-800 space-y-1">
-                  <div className="flex items-center gap-1.5 text-[#714B67] dark:text-purple-400 font-bold">
-                    <span className="w-2 h-2 rounded-full bg-[#714B67] dark:bg-purple-400" />
+                  <div className="flex items-center gap-1.5 text-brand-600 dark:text-brand-400 font-bold">
+                    <span className="w-2 h-2 rounded-full bg-brand-600 dark:bg-brand-400" />
                     <span>Member Tier Sales</span>
                   </div>
                   <p className="text-ink dark:text-slate-100 font-extrabold text-lg">${memberRevenue.toFixed(2)}</p>
@@ -525,8 +525,8 @@ export default function EventStatsPage() {
                 </div>
 
                 <div className="p-4 rounded-2xl bg-white/40 dark:bg-slate-800/40 backdrop-blur-sm border border-border dark:border-slate-800 space-y-1">
-                  <div className="flex items-center gap-1.5 text-[#017E84] dark:text-teal-400 font-bold">
-                    <span className="w-2 h-2 rounded-full bg-[#017E84] dark:bg-teal-400" />
+                  <div className="flex items-center gap-1.5 text-indigo-600 dark:text-indigo-400 font-bold">
+                    <span className="w-2 h-2 rounded-full bg-indigo-600 dark:bg-indigo-400" />
                     <span>General Admission Sales</span>
                   </div>
                   <p className="text-ink dark:text-slate-100 font-extrabold text-lg">${nonmemberRevenue.toFixed(2)}</p>
@@ -555,7 +555,7 @@ export default function EventStatsPage() {
               </div>
 
               <div className="p-4 rounded-2xl bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm border border-border dark:border-slate-800 shadow-sm space-y-1.5">
-                <span className="font-extrabold text-[#714B67] dark:text-purple-400 block">2. Core Ledger Income</span>
+                <span className="font-extrabold text-brand-600 dark:text-brand-400 block">2. Core Ledger Income</span>
                 <p className="text-ink-muted dark:text-slate-400 text-[11px] leading-relaxed">
                   All ${totalRevenue.toFixed(2)} was automatically recorded under category <code className="bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded text-ink dark:text-slate-200 font-mono">'ticket'</code> in the central finance ledger.
                 </p>

@@ -25,7 +25,7 @@ function ProductCardImage({ src, name, type }) {
     return (
       <div className="w-full h-full bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-900 flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 p-4 text-center select-none">
         <div className="w-14 h-14 rounded-2xl bg-white/80 dark:bg-slate-800/80 shadow-sm flex items-center justify-center mb-2">
-          <ShoppingBag className="w-7 h-7 text-[#714B67] dark:text-purple-400" />
+          <ShoppingBag className="w-7 h-7 text-brand-600 dark:text-brand-400" />
         </div>
         <span className="text-xs font-extrabold uppercase tracking-wider text-slate-700 dark:text-slate-200 line-clamp-1">{name}</span>
         <span className="text-[10px] font-semibold text-slate-400 uppercase mt-0.5">{type}</span>
@@ -90,7 +90,7 @@ export default function ProductCatalogPage() {
       <div className="relative overflow-hidden rounded-3xl glass-panel border-white/40 dark:border-slate-800/80 p-6 sm:p-10 shadow-xl">
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="max-w-xl">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-purple-500/10 dark:bg-purple-500/20 border border-purple-500/30 text-[#714B67] dark:text-purple-300 text-xs font-bold uppercase tracking-wider mb-3 shadow-sm">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-500/10 dark:bg-brand-500/20 border border-brand-500/30 text-brand-600 dark:text-brand-300 text-xs font-bold uppercase tracking-wider mb-3 shadow-sm">
               <Sparkles className="w-3.5 h-3.5" /> Official Skyline Club Apparel
             </div>
             <h1 className="text-2xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-tight">
@@ -112,7 +112,7 @@ export default function ProductCatalogPage() {
             <button
               type="button"
               onClick={openDrawer}
-              className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full text-sm font-bold bg-gradient-to-r from-[#714B67] to-[#8C5D80] hover:from-[#5B3B52] hover:to-[#714B67] text-white shadow-lg shadow-purple-500/20 transition-all duration-150 active:scale-95 shrink-0"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full text-sm font-bold bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-500 hover:to-indigo-500 text-white shadow-lg shadow-brand-500/20 transition-all duration-150 active:scale-95 shrink-0"
             >
               <ShoppingBag className="w-4 h-4 shrink-0" />
               <span>Cart</span>
@@ -128,10 +128,10 @@ export default function ProductCatalogPage() {
 
       {/* Officer Store Controls (Only visible when relevant to officers/managers) */}
       {isOfficer && (
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 p-4 glass-card bg-purple-500/10 border border-purple-500/20 dark:border-purple-500/30 rounded-2xl shadow-sm">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 p-4 glass-card bg-brand-500/10 border border-brand-500/20 dark:border-brand-500/30 rounded-2xl shadow-sm">
           <div className="flex items-center gap-2.5">
-            <span className="w-2.5 h-2.5 rounded-full bg-[#714B67] dark:bg-purple-400 animate-pulse shadow-sm" />
-            <span className="text-xs font-bold text-[#714B67] dark:text-purple-300 uppercase tracking-wider">
+            <span className="w-2.5 h-2.5 rounded-full bg-brand-600 dark:bg-brand-400 animate-pulse shadow-sm" />
+            <span className="text-xs font-bold text-brand-600 dark:text-brand-300 uppercase tracking-wider">
               Store Operations
             </span>
           </div>
@@ -164,7 +164,7 @@ export default function ProductCatalogPage() {
                 onClick={() => setSelectedCategory(cat.id)}
                 className={`px-4 py-2 rounded-full text-xs sm:text-sm font-bold whitespace-nowrap transition-all duration-200 ${
                   isSelected
-                    ? 'bg-gradient-to-r from-[#714B67] to-[#8C5D80] text-white shadow-md shadow-purple-500/20 scale-[1.02]'
+                    ? 'bg-gradient-to-r from-brand-600 to-indigo-600 text-white shadow-md shadow-brand-500/20 scale-[1.02]'
                     : 'glass-card bg-white/70 dark:bg-slate-900/70 hover:bg-white dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200/80 dark:border-slate-800/80'
                 }`}
               >
@@ -183,7 +183,7 @@ export default function ProductCatalogPage() {
               placeholder="Search products, hoodies, sizes..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-white/80 dark:bg-slate-800/80 border border-slate-200/80 dark:border-slate-700/80 rounded-xl pl-9 pr-4 py-2 text-xs sm:text-sm text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#714B67] dark:focus:ring-purple-400 transition-all"
+              className="w-full bg-white/80 dark:bg-slate-800/80 border border-slate-200/80 dark:border-slate-700/80 rounded-xl pl-9 pr-4 py-2 text-xs sm:text-sm text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-500 dark:focus:ring-brand-400 transition-all"
             />
           </div>
 
@@ -193,7 +193,7 @@ export default function ProductCatalogPage() {
                 type="checkbox"
                 checked={inStockOnly}
                 onChange={(e) => setInStockOnly(e.target.checked)}
-                className="w-4 h-4 rounded border-slate-300 dark:border-slate-700 text-[#714B67] accent-[#714B67] focus:ring-[#714B67]"
+                className="w-4 h-4 rounded border-slate-300 dark:border-slate-700 text-brand-600 accent-brand-600 focus:ring-brand-500"
               />
               <span>In-stock only</span>
             </label>
@@ -201,7 +201,7 @@ export default function ProductCatalogPage() {
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
-              className="bg-white/80 dark:bg-slate-800/80 border border-slate-200/80 dark:border-slate-700/80 rounded-xl px-3 py-2 text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#714B67] dark:focus:ring-purple-400 font-medium"
+              className="bg-white/80 dark:bg-slate-800/80 border border-slate-200/80 dark:border-slate-700/80 rounded-xl px-3 py-2 text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-500 dark:focus:ring-brand-400 font-medium"
             >
               <option value="newest">Newest Arrivals</option>
               <option value="price-low">Price: Low to High</option>
@@ -259,7 +259,7 @@ export default function ProductCatalogPage() {
             return (
               <div
                 key={product.id}
-                className="group relative rounded-3xl glass-card bg-white/70 dark:bg-slate-900/70 border border-slate-200/80 dark:border-slate-800/80 hover:border-purple-300 dark:hover:border-purple-700 hover:shadow-2xl transition-all duration-300 flex flex-col justify-between overflow-hidden shadow-lg backdrop-blur-xl"
+                className="group relative rounded-3xl glass-card bg-white/70 dark:bg-slate-900/70 border border-slate-200/80 dark:border-slate-800/80 hover:border-brand-300 dark:hover:border-brand-700 hover:shadow-2xl transition-all duration-300 flex flex-col justify-between overflow-hidden shadow-lg backdrop-blur-xl"
               >
                 {/* Product Image Showcase */}
                 <div className="relative h-64 w-full bg-slate-100/70 dark:bg-slate-800/60 overflow-hidden flex items-center justify-center border-b border-slate-200/60 dark:border-slate-800/60">
@@ -293,7 +293,7 @@ export default function ProductCatalogPage() {
                 {/* Product Content & Size Pills */}
                 <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
                   <div>
-                    <h3 className="text-lg font-extrabold text-slate-900 dark:text-white group-hover:text-[#714B67] dark:group-hover:text-purple-300 transition-colors line-clamp-1">
+                    <h3 className="text-lg font-extrabold text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-300 transition-colors line-clamp-1">
                       {product.name}
                     </h3>
                     <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 line-clamp-2 leading-relaxed">
@@ -339,7 +339,7 @@ export default function ProductCatalogPage() {
                         size="md"
                         className={`group-hover:translate-x-0.5 transition-transform px-5 py-2.5 rounded-full font-bold ${
                           hasStock
-                            ? 'bg-gradient-to-r from-[#714B67] to-[#8C5D80] hover:from-[#5B3B52] hover:to-[#714B67] text-white shadow-md shadow-purple-500/20'
+                            ? 'bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-500 hover:to-indigo-500 text-white shadow-md shadow-brand-500/20'
                             : 'rounded-full'
                         }`}
                       >
