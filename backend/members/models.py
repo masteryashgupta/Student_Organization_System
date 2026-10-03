@@ -117,6 +117,23 @@ class Membership(models.Model):
     def is_active_member(self) -> bool:
         return self.update_computed_status() == self.STATUS_ACTIVE
 
+    @property
+    def days_until_expiry(self):
+        """
+        Calculates remaining days until membership expires.
+        Returns integer days remaining, or 0 if expired/unpaid/none.
+        """
+        if not self.end_date or not self.dues_paid:
+            return 0
+        today = timezone.now().date()
+        diff = (self.end_date - today).days
+        return max(0, diff)
+
+    @property
+    def is_expiring_soon(self) -> bool:
+        """Returns True if membership expires within 30 days and is active."""
+        return self.is_active_member and (0 <= self.days_until_expiry <= 30)
+
     def clean(self):
         super().clean()
         if self.start_date and self.end_date and self.end_date < self.start_date:
@@ -131,3 +148,22 @@ class Membership(models.Model):
 
     def __str__(self):
         return f"{self.user.name or self.user.email} - {self.tier.name} ({self.get_status_display()})"
+
+
+class RenewalReminder(models.Model):
+    membership = models.ForeignKey(
+        Membership,
+        on_delete=models.CASCADE,
+        related_name='reminders'
+    )
+    sent_at = models.DateTimeField(default=timezone.now)
+    days_before_expiry = models.IntegerField()
+    email_to = models.EmailField()
+    message_body = models.TextField()
+    status = models.CharField(max_length=20, default='sent')
+
+    class Meta:
+        ordering = ['-sent_at']
+
+    def __str__(self):
+        return f"Reminder for {self.email_to} ({self.days_before_expiry} days left)"
