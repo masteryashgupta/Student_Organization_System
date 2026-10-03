@@ -3,6 +3,43 @@ from django.core.exceptions import ValidationError
 from django.db import models
 
 
+class MailingListSubscriber(models.Model):
+    """
+    Subscribers for general club announcement broadcasts.
+    Supports both registered members and external email subscribers.
+    """
+    email = models.EmailField(unique=True, help_text="Subscribed email address")
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        related_name='mailing_subscriptions',
+        help_text="Optional linked User account"
+    )
+    is_active = models.BooleanField(default=True, help_text="Active subscription status")
+    subscribed_at = models.DateTimeField(auto_now_add=True)
+    unsubscribed_at = models.DateTimeField(null=True, blank=True)
+
+    class Meta:
+        ordering = ['-subscribed_at']
+        verbose_name = 'Mailing List Subscriber'
+        verbose_name_plural = 'Mailing List Subscribers'
+
+    def clean(self):
+        super().clean()
+        if self.email:
+            self.email = self.email.lower().strip()
+
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        status_label = "Active" if self.is_active else "Unsubscribed"
+        return f"{self.email} ({status_label})"
+
+
 class Announcement(models.Model):
     AUDIENCE_ALL = 'all'
     AUDIENCE_MEMBERS = 'members'
