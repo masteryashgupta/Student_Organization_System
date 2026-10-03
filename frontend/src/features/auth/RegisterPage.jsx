@@ -57,10 +57,16 @@ export default function RegisterPage() {
       }
     } catch (err) {
       const respData = err.response?.data;
-      if (respData?.details) {
-        setErrors(respData.details);
+      if (respData?.details && typeof respData.details === 'object') {
+        const fieldErrors = {};
+        Object.entries(respData.details).forEach(([key, val]) => {
+          fieldErrors[key] = Array.isArray(val) ? val.join(' ') : String(val);
+        });
+        setErrors(fieldErrors);
+        const firstErrorMsg = Object.values(fieldErrors)[0];
+        toast.error(firstErrorMsg || respData?.message || 'Registration failed.');
       } else {
-        const msg = respData?.message || 'Registration failed. Please try again.';
+        const msg = respData?.message || respData?.detail || (!err.response ? 'Cannot connect to backend server. Please start Django on http://localhost:8000.' : 'Registration failed. Please try again.');
         toast.error(msg);
       }
     } finally {
