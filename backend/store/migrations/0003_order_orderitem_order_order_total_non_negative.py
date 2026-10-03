@@ -58,6 +58,6 @@ class Migration(migrations.Migration):
         ),
         migrations.AddConstraint(
             model_name='order',
-            constraint=models.CheckConstraint(condition=models.Q(('total__gte', Decimal('0.00'))), name='order_total_non_negative'),
+            constraint=models.CheckConstraint(check=models.Q(('total__gte', Decimal('0.00'))), name='order_total_non_negative'),
         ),
     ]
