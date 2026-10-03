@@ -86,13 +86,13 @@ export default function TaskModal({
       <form onSubmit={handleSubmit} className="space-y-4 text-xs">
         {/* Project Selector */}
         <div>
-          <label className="block text-xs font-semibold text-[#0F172A] mb-1.5">
+          <label className="block text-xs font-bold text-slate-900 dark:text-white mb-1.5">
             Parent Project / Fundraiser *
           </label>
           <select
             value={formData.project}
             onChange={(e) => setFormData({ ...formData, project: e.target.value })}
-            className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2 text-sm text-[#0F172A] focus:outline-none focus:ring-2 focus:ring-[#714B67]/20 focus:border-[#714B67] transition-all"
+            className="w-full bg-white/80 dark:bg-slate-800/80 border border-slate-200/80 dark:border-slate-700/80 rounded-2xl px-4 py-2.5 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#714B67] dark:focus:ring-purple-400 transition-all font-medium"
           >
             <option value="" disabled>Select a project...</option>
             {projects.map((p) => (
@@ -102,7 +102,7 @@ export default function TaskModal({
             ))}
           </select>
           {errors.project && (
-            <p className="text-xs text-rose-500 mt-1 flex items-center gap-1 font-medium">
+            <p className="text-xs text-rose-500 mt-1 flex items-center gap-1 font-semibold">
               <AlertCircle className="w-3.5 h-3.5" /> {errors.project}
             </p>
           )}
@@ -110,7 +110,7 @@ export default function TaskModal({
 
         {/* Task Title */}
         <div>
-          <label className="block text-xs font-semibold text-[#0F172A] mb-1.5">
+          <label className="block text-xs font-bold text-slate-900 dark:text-white mb-1.5">
             Task Action Title *
           </label>
           <Input
@@ -124,7 +124,7 @@ export default function TaskModal({
 
         {/* Description */}
         <div>
-          <label className="block text-xs font-semibold text-[#0F172A] mb-1.5">
+          <label className="block text-xs font-bold text-slate-900 dark:text-white mb-1.5">
             Instructions & Details (Optional)
           </label>
           <textarea
@@ -132,7 +132,7 @@ export default function TaskModal({
             placeholder="Detailed recipe, schedule, shift location, or specific materials needed..."
             value={formData.description}
             onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-            className="w-full bg-white border border-slate-200 rounded-xl p-3 text-xs text-[#0F172A] placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#714B67]/20 focus:border-[#714B67] transition-all resize-none"
+            className="w-full bg-white/80 dark:bg-slate-800/80 border border-slate-200/80 dark:border-slate-700/80 rounded-2xl p-3.5 text-xs text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#714B67] dark:focus:ring-purple-400 transition-all resize-none font-medium"
           />
         </div>
 
@@ -140,13 +140,13 @@ export default function TaskModal({
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {/* Assignee */}
           <div>
-            <label className="block text-xs font-semibold text-[#0F172A] mb-1.5">
+            <label className="block text-xs font-bold text-slate-900 dark:text-white mb-1.5">
               Assigned Volunteer
             </label>
             <select
               value={formData.assignee}
               onChange={(e) => setFormData({ ...formData, assignee: e.target.value })}
-              className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-[#0F172A] focus:outline-none focus:ring-2 focus:ring-[#714B67]/20 focus:border-[#714B67] transition-all"
+              className="w-full bg-white/80 dark:bg-slate-800/80 border border-slate-200/80 dark:border-slate-700/80 rounded-2xl px-3.5 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#714B67] dark:focus:ring-purple-400 transition-all font-medium"
             >
               <option value="">-- Open Slot (Unassigned) --</option>
               {assignees.map((u) => (
@@ -155,20 +155,20 @@ export default function TaskModal({
                 </option>
               ))}
             </select>
-            <span className="text-[11px] text-slate-500 mt-1 block">
+            <span className="text-[11px] text-slate-400 mt-1 block">
               Leave unassigned for volunteers to self-claim.
             </span>
           </div>
 
           {/* Priority */}
           <div>
-            <label className="block text-xs font-semibold text-[#0F172A] mb-1.5">
+            <label className="block text-xs font-bold text-slate-900 dark:text-white mb-1.5">
               Priority
             </label>
             <select
               value={formData.priority}
               onChange={(e) => setFormData({ ...formData, priority: e.target.value })}
-              className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-[#0F172A] focus:outline-none focus:ring-2 focus:ring-[#714B67]/20 focus:border-[#714B67] transition-all"
+              className="w-full bg-white/80 dark:bg-slate-800/80 border border-slate-200/80 dark:border-slate-700/80 rounded-2xl px-3.5 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#714B67] dark:focus:ring-purple-400 transition-all font-bold"
             >
               <option value="low">Low Priority</option>
               <option value="medium">Medium Priority</option>
@@ -182,7 +182,7 @@ export default function TaskModal({
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {/* Due Date */}
           <div>
-            <label className="block text-xs font-semibold text-[#0F172A] mb-1.5">
+            <label className="block text-xs font-bold text-slate-900 dark:text-white mb-1.5">
               Target Due Date
             </label>
             <Input
@@ -194,13 +194,13 @@ export default function TaskModal({
 
           {/* Status */}
           <div>
-            <label className="block text-xs font-semibold text-[#0F172A] mb-1.5">
+            <label className="block text-xs font-bold text-slate-900 dark:text-white mb-1.5">
               Initial Column
             </label>
             <select
               value={formData.status}
               onChange={(e) => setFormData({ ...formData, status: e.target.value })}
-              className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-[#0F172A] focus:outline-none focus:ring-2 focus:ring-[#714B67]/20 focus:border-[#714B67] transition-all"
+              className="w-full bg-white/80 dark:bg-slate-800/80 border border-slate-200/80 dark:border-slate-700/80 rounded-2xl px-3.5 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#714B67] dark:focus:ring-purple-400 transition-all font-bold"
             >
               <option value="todo">To Do</option>
               <option value="doing">In Progress (Doing)</option>
@@ -210,11 +210,11 @@ export default function TaskModal({
         </div>
 
         {/* Modal Actions */}
-        <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-100">
-          <Button variant="ghost" type="button" onClick={onClose} disabled={isPending}>
+        <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-200/60 dark:border-slate-800/60">
+          <Button variant="ghost" type="button" onClick={onClose} disabled={isPending} className="rounded-full">
             Cancel
           </Button>
-          <Button variant="primary" type="submit" disabled={isPending}>
+          <Button variant="primary" type="submit" disabled={isPending} className="rounded-full bg-gradient-to-r from-[#714B67] to-[#8C5D80] text-white font-bold">
             {isPending ? 'Saving...' : task ? 'Save Changes' : 'Create Task'}
           </Button>
         </div>

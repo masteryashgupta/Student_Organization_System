@@ -51,7 +51,7 @@ export default function ProjectModal({
     >
       <form onSubmit={handleSubmit} className="space-y-4 text-xs">
         <div>
-          <label className="block text-xs font-semibold text-[#0F172A] mb-1.5">
+          <label className="block text-xs font-bold text-slate-900 dark:text-white mb-1.5">
             Project / Fundraiser Name *
           </label>
           <Input
@@ -64,7 +64,7 @@ export default function ProjectModal({
         </div>
 
         <div>
-          <label className="block text-xs font-semibold text-[#0F172A] mb-1.5">
+          <label className="block text-xs font-bold text-slate-900 dark:text-white mb-1.5">
             Fundraising Goal ($)
           </label>
           <Input
@@ -79,7 +79,7 @@ export default function ProjectModal({
         </div>
 
         <div>
-          <label className="block text-xs font-semibold text-[#0F172A] mb-1.5">
+          <label className="block text-xs font-bold text-slate-900 dark:text-white mb-1.5">
             Project Description & Objectives
           </label>
           <textarea
@@ -87,15 +87,15 @@ export default function ProjectModal({
             placeholder="Objectives, logistics, target date, and volunteer expectations..."
             value={formData.description}
             onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-            className="w-full bg-white border border-slate-200 rounded-xl p-3 text-xs text-[#0F172A] placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#714B67]/20 focus:border-[#714B67] transition-all resize-none"
+            className="w-full bg-white/80 dark:bg-slate-800/80 border border-slate-200/80 dark:border-slate-700/80 rounded-2xl p-3.5 text-xs text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#714B67] dark:focus:ring-purple-400 transition-all resize-none font-medium"
           />
         </div>
 
-        <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-100">
-          <Button variant="ghost" type="button" onClick={onClose} disabled={isPending}>
+        <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-200/60 dark:border-slate-800/60">
+          <Button variant="ghost" type="button" onClick={onClose} disabled={isPending} className="rounded-full">
             Cancel
           </Button>
-          <Button variant="primary" type="submit" disabled={isPending}>
+          <Button variant="primary" type="submit" disabled={isPending} className="rounded-full bg-gradient-to-r from-[#714B67] to-[#8C5D80] text-white font-bold">
             {isPending ? 'Creating...' : 'Create Project'}
           </Button>
         </div>

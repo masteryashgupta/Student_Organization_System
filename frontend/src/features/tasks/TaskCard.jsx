@@ -42,31 +42,31 @@ export default function TaskCard({
   const getPriorityBadge = (priority) => {
     switch (priority?.toLowerCase()) {
       case 'urgent':
-        return <Badge variant="danger" className="text-[10px] px-2 py-0.5 font-bold uppercase tracking-wider">Urgent</Badge>;
+        return <Badge variant="danger" className="text-[10px] px-2.5 py-0.5 font-bold uppercase tracking-wider rounded-full">Urgent</Badge>;
       case 'high':
-        return <Badge variant="warning" className="text-[10px] px-2 py-0.5 font-bold uppercase tracking-wider">High</Badge>;
+        return <Badge variant="warning" className="text-[10px] px-2.5 py-0.5 font-bold uppercase tracking-wider rounded-full">High</Badge>;
       case 'medium':
-        return <Badge variant="primary" className="text-[10px] px-2 py-0.5 font-medium">Medium</Badge>;
+        return <Badge variant="primary" className="text-[10px] px-2.5 py-0.5 font-bold rounded-full">Medium</Badge>;
       case 'low':
       default:
-        return <Badge variant="neutral" className="text-[10px] px-2 py-0.5 text-slate-500">Low</Badge>;
+        return <Badge variant="neutral" className="text-[10px] px-2.5 py-0.5 rounded-full text-slate-400">Low</Badge>;
     }
   };
 
   return (
     <div
-      className={`group relative bg-white border rounded-2xl p-4 transition-all duration-200 shadow-once-card hover:shadow-once-card-hover hover:-translate-y-0.5 ${
+      className={`group relative glass-card bg-white/80 dark:bg-slate-900/80 border rounded-2xl p-4 transition-all duration-300 shadow-md hover:shadow-xl hover:-translate-y-0.5 backdrop-blur-xl ${
         task.is_overdue
-          ? 'border-rose-300'
+          ? 'border-rose-400/80 dark:border-rose-800/80 shadow-rose-500/5'
           : task.status === 'done'
-          ? 'border-emerald-200 bg-emerald-50/20'
-          : 'border-slate-200/90 hover:border-[#D4BFD2]'
+          ? 'border-emerald-300/60 dark:border-emerald-700/50 bg-emerald-500/5'
+          : 'border-slate-200/80 dark:border-slate-800/80 hover:border-purple-300 dark:hover:border-purple-700'
       }`}
     >
       {/* Top Meta: Project & Priority */}
       <div className="flex items-center justify-between gap-2 mb-2">
-        <span className="text-[11px] font-semibold text-[#714B67] bg-[#FAF5F9] px-2 py-0.5 rounded-full border border-[#D4BFD2] truncate max-w-[170px] flex items-center gap-1">
-          <Tag className="w-3 h-3 text-[#714B67] flex-shrink-0" />
+        <span className="text-[11px] font-bold text-[#714B67] dark:text-purple-300 bg-purple-500/10 dark:bg-purple-500/20 px-2.5 py-0.5 rounded-full border border-purple-500/20 truncate max-w-[170px] flex items-center gap-1 shadow-xs">
+          <Tag className="w-3 h-3 text-[#714B67] dark:text-purple-400 flex-shrink-0" />
           {task.project_name || 'Fundraiser Project'}
         </span>
         <div className="flex items-center gap-1.5 flex-shrink-0">
@@ -75,43 +75,43 @@ export default function TaskCard({
       </div>
 
       {/* Title */}
-      <h4 className="text-sm font-bold text-[#0F172A] group-hover:text-[#714B67] transition-colors line-clamp-2 leading-snug">
+      <h4 className="text-sm font-extrabold text-slate-900 dark:text-white group-hover:text-[#714B67] dark:group-hover:text-purple-300 transition-colors line-clamp-2 leading-snug">
         {task.title}
       </h4>
 
       {/* Description Preview (if any) */}
       {task.description && (
-        <p className="text-xs text-[#64748B] mt-1.5 line-clamp-2 leading-relaxed">
+        <p className="text-xs text-slate-500 dark:text-slate-400 mt-1.5 line-clamp-2 leading-relaxed">
           {task.description}
         </p>
       )}
 
       {/* Middle Meta: Assignee & Due Date */}
-      <div className="mt-3.5 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+      <div className="mt-3.5 pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs">
         {/* Assignee Indicator */}
         <div className="flex items-center gap-1.5 min-w-0">
           <div
-            className={`w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold flex-shrink-0 ${
+            className={`w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold flex-shrink-0 shadow-sm ${
               task.assignee
                 ? isAssignedToMe
-                  ? 'bg-[#714B67] text-white shadow-sm'
-                  : 'bg-slate-100 text-slate-700'
-                : 'bg-amber-100 text-amber-800 border border-amber-200'
+                  ? 'bg-gradient-to-tr from-[#714B67] to-[#8C5D80] text-white'
+                  : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300'
+                : 'bg-amber-100 dark:bg-amber-900/50 text-amber-800 dark:text-amber-200 border border-amber-300 dark:border-amber-700'
             }`}
           >
             {task.assignee ? (
               (task.assignee_name || 'U').charAt(0).toUpperCase()
             ) : (
-              <UserIcon className="w-3 h-3 text-amber-600" />
+              <UserIcon className="w-3 h-3 text-amber-600 dark:text-amber-400" />
             )}
           </div>
           <span
             className={`truncate max-w-[110px] text-[11px] font-medium ${
               task.assignee
                 ? isAssignedToMe
-                  ? 'text-[#714B67] font-bold'
-                  : 'text-slate-700'
-                : 'text-amber-700 italic font-semibold'
+                  ? 'text-[#714B67] dark:text-purple-300 font-bold'
+                  : 'text-slate-700 dark:text-slate-300'
+                : 'text-amber-700 dark:text-amber-300 italic font-semibold'
             }`}
           >
             {task.assignee ? (isAssignedToMe ? 'Assigned to You' : task.assignee_name) : 'Open Slot'}
@@ -123,8 +123,8 @@ export default function TaskCard({
           <div
             className={`flex items-center gap-1 text-[11px] font-medium ${
               task.is_overdue
-                ? 'text-rose-600 font-bold animate-pulse'
-                : 'text-slate-500'
+                ? 'text-rose-600 dark:text-rose-400 font-bold animate-pulse'
+                : 'text-slate-500 dark:text-slate-400'
             }`}
             title={task.is_overdue ? 'Task is Overdue!' : `Due: ${task.due_date}`}
           >
@@ -138,12 +138,12 @@ export default function TaskCard({
       </div>
 
       {/* Action Bar / Status Stepper */}
-      <div className="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between gap-1">
+      <div className="mt-3 pt-2.5 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between gap-1">
         {/* Left Move / Backward button */}
         {task.status !== 'todo' && canMove ? (
           <button
             onClick={() => onStatusChange(task, task.status === 'done' ? 'doing' : 'todo')}
-            className="p-1 px-2 text-slate-600 hover:text-[#0F172A] hover:bg-slate-100 rounded-lg transition-colors text-[11px] flex items-center gap-1 font-semibold"
+            className="p-1 px-2.5 text-slate-500 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors text-[11px] flex items-center gap-1 font-bold"
             title={`Move back to ${task.status === 'done' ? 'Doing' : 'To Do'}`}
           >
             <ArrowLeft className="w-3.5 h-3.5" />
@@ -159,10 +159,10 @@ export default function TaskCard({
           {!task.assignee && currentUser && (
             <button
               onClick={() => onClaim(task)}
-              className="px-2.5 py-1 bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200 rounded-full text-[11px] font-bold flex items-center gap-1 transition-colors"
+              className="px-3 py-1 bg-amber-500/15 hover:bg-amber-500/25 text-amber-800 dark:text-amber-200 border border-amber-300 dark:border-amber-700 rounded-full text-[11px] font-bold flex items-center gap-1 transition-colors shadow-xs"
               title="Claim this volunteer role"
             >
-              <UserPlus className="w-3 h-3 text-amber-600" />
+              <UserPlus className="w-3 h-3 text-amber-600 dark:text-amber-400" />
               Claim
             </button>
           )}
@@ -171,7 +171,7 @@ export default function TaskCard({
           {task.assignee && (isOfficer || isAssignedToMe) && (
             <button
               onClick={() => onUnassign(task)}
-              className="p-1 text-slate-400 hover:text-amber-600 hover:bg-slate-100 rounded-lg transition-colors"
+              className="p-1.5 text-slate-400 hover:text-amber-600 dark:hover:text-amber-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors"
               title="Release / Unassign"
             >
               <UserMinus className="w-3.5 h-3.5" />
@@ -182,7 +182,7 @@ export default function TaskCard({
           {(isOfficer || isAssignedToMe) && (
             <button
               onClick={() => onEdit(task)}
-              className="p-1 text-slate-400 hover:text-sky-600 hover:bg-slate-100 rounded-lg transition-colors"
+              className="p-1.5 text-slate-400 hover:text-sky-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors"
               title="Edit Task"
             >
               <Edit2 className="w-3.5 h-3.5" />
@@ -193,7 +193,7 @@ export default function TaskCard({
           {isOfficer && (
             <button
               onClick={() => onDelete(task)}
-              className="p-1 text-slate-400 hover:text-rose-600 hover:bg-slate-100 rounded-lg transition-colors"
+              className="p-1.5 text-slate-400 hover:text-rose-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors"
               title="Delete Task"
             >
               <Trash2 className="w-3.5 h-3.5" />
@@ -205,10 +205,10 @@ export default function TaskCard({
         {task.status !== 'done' && canMove ? (
           <button
             onClick={() => onStatusChange(task, task.status === 'todo' ? 'doing' : 'done')}
-            className={`px-3 py-1 rounded-full transition-all text-[11px] font-bold flex items-center gap-1 ${
+            className={`px-3.5 py-1 rounded-full transition-all text-[11px] font-bold flex items-center gap-1 shadow-sm active:scale-95 ${
               task.status === 'doing'
-                ? 'bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm'
-                : 'bg-[#0F172A] hover:bg-slate-800 text-white shadow-sm'
+                ? 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white'
+                : 'bg-gradient-to-r from-[#714B67] to-[#8C5D80] text-white'
             }`}
             title={`Advance to ${task.status === 'todo' ? 'Doing' : 'Done'}`}
           >
@@ -216,7 +216,7 @@ export default function TaskCard({
             <ArrowRight className="w-3.5 h-3.5" />
           </button>
         ) : task.status === 'done' ? (
-          <span className="text-[11px] font-bold text-emerald-600 flex items-center gap-1">
+          <span className="text-[11px] font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
             <CheckCircle2 className="w-3.5 h-3.5" /> Done
           </span>
         ) : (

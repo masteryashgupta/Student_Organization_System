@@ -163,7 +163,6 @@ export default function TaskBoardPage() {
   }, [activeProject, projects, filteredTasks, doneTasks]);
 
   // --- MUTATIONS ---
-  // 1. Task Status Mutation
   const statusMutation = useMutation({
     mutationFn: async ({ taskId, newStatus }) => {
       const res = await api.post(`/tasks/${taskId}/update_status/`, { status: newStatus });
@@ -191,7 +190,6 @@ export default function TaskBoardPage() {
     },
   });
 
-  // 2. Claim / Assign Mutation
   const claimMutation = useMutation({
     mutationFn: async ({ taskId, userId }) => {
       const payload = userId ? { user_id: userId } : {};
@@ -208,7 +206,6 @@ export default function TaskBoardPage() {
     },
   });
 
-  // 3. Unassign Mutation
   const unassignMutation = useMutation({
     mutationFn: async (taskId) => {
       const res = await api.post(`/tasks/${taskId}/unassign/`);
@@ -220,7 +217,6 @@ export default function TaskBoardPage() {
     },
   });
 
-  // 4. Create / Edit Task Mutation
   const saveTaskMutation = useMutation({
     mutationFn: async (payload) => {
       if (editingTask) {
@@ -245,7 +241,6 @@ export default function TaskBoardPage() {
     },
   });
 
-  // 5. Delete Task Mutation
   const deleteTaskMutation = useMutation({
     mutationFn: async (taskId) => {
       await api.delete(`/tasks/${taskId}/`);
@@ -257,7 +252,6 @@ export default function TaskBoardPage() {
     },
   });
 
-  // 6. Create Project Mutation
   const createProjectMutation = useMutation({
     mutationFn: async (payload) => {
       const res = await api.post('/projects/', payload);
@@ -274,7 +268,6 @@ export default function TaskBoardPage() {
     },
   });
 
-  // Action Handlers
   const handleStatusChange = (task, newStatus) => {
     statusMutation.mutate({ taskId: task.id, newStatus });
   };
@@ -311,23 +304,23 @@ export default function TaskBoardPage() {
   return (
     <div className="max-w-7xl mx-auto pb-24 space-y-8 animate-fadeIn">
       {/* Top Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200/80 pb-6">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200/60 dark:border-slate-800/60 pb-6">
         <div>
           <div className="flex items-center gap-2 mb-2">
             <div className="dual-badge-pill">
               <span className="font-bold flex items-center gap-1.5">
-                <Kanban className="w-3.5 h-3.5 text-[#714B67]" /> Action Board
+                <Kanban className="w-3.5 h-3.5 text-[#714B67] dark:text-purple-400" /> Action Board
               </span>
               <span className="dual-badge-divider"></span>
-              <span className="font-mono text-[11px] text-[#714B67]">
+              <span className="font-mono text-[11px] text-[#714B67] dark:text-purple-300">
                 Live Sync {isTasksFetching && '• Syncing...'}
               </span>
             </div>
           </div>
-          <h1 className="text-2xl sm:text-4xl font-extrabold text-[#0F172A] tracking-[-0.03em]">
+          <h1 className="text-2xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
             Fundraiser Tasks &amp; Volunteer Board
           </h1>
-          <p className="text-sm text-[#475569] mt-1">
+          <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
             Coordinate who&apos;s baking, buying supplies, or running event tables with real-time financial tracking.
           </p>
         </div>
@@ -338,10 +331,10 @@ export default function TaskBoardPage() {
             type="button"
             onClick={() => refetchTasks()}
             disabled={isTasksFetching}
-            className="w-9 h-9 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-500 hover:text-[#0F172A] hover:border-slate-300 shadow-sm transition-all"
+            className="w-10 h-10 rounded-full glass-card bg-white/80 dark:bg-slate-800/80 border border-slate-200/80 dark:border-slate-700/80 flex items-center justify-center text-slate-500 hover:text-slate-900 dark:hover:text-white shadow-sm transition-all"
             title="Force Refresh Board"
           >
-            <RefreshCw className={`w-4 h-4 ${isTasksFetching ? 'animate-spin text-[#714B67]' : ''}`} />
+            <RefreshCw className={`w-4 h-4 ${isTasksFetching ? 'animate-spin text-[#714B67] dark:text-purple-400' : ''}`} />
           </button>
 
           {isOfficer && (
@@ -349,9 +342,9 @@ export default function TaskBoardPage() {
               variant="outline"
               size="sm"
               onClick={() => setIsProjectModalOpen(true)}
-              className="font-semibold"
+              className="rounded-full font-bold border-slate-200/80 dark:border-slate-700/80 hover:bg-slate-100 dark:hover:bg-slate-800"
             >
-              <FolderPlus className="w-4 h-4 mr-1.5 text-[#714B67]" /> New Project
+              <FolderPlus className="w-4 h-4 mr-1.5 text-[#714B67] dark:text-purple-400" /> New Project
             </Button>
           )}
 
@@ -359,7 +352,7 @@ export default function TaskBoardPage() {
             variant="primary"
             size="sm"
             onClick={() => handleOpenNewTask('todo')}
-            className="font-semibold shadow-sm"
+            className="rounded-full font-bold shadow-lg shadow-purple-500/20 bg-gradient-to-r from-[#714B67] to-[#8C5D80] text-white"
           >
             <Plus className="w-4 h-4 mr-1.5" /> Add Task
           </Button>
@@ -367,20 +360,20 @@ export default function TaskBoardPage() {
       </div>
 
       {/* --- EXECUTIVE "AT A GLANCE" PROGRESS BANNER --- */}
-      <div className="p-6 sm:p-8 relative overflow-hidden rounded-3xl bg-white border border-slate-200 shadow-sm">
-        <div className="absolute top-0 right-0 -mr-16 -mt-16 w-72 h-72 bg-[#714B67]/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="p-6 sm:p-8 relative overflow-hidden rounded-3xl glass-panel border-white/40 dark:border-slate-800/80 shadow-2xl backdrop-blur-2xl">
+        <div className="absolute top-0 right-0 -mr-16 -mt-16 w-72 h-72 bg-purple-500/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8 relative z-10">
           {/* Left: Project Selector & Mission Description */}
           <div className="space-y-3 max-w-xl">
             <div className="flex items-center gap-2.5 flex-wrap">
-              <span className="text-xs font-bold uppercase tracking-wider text-slate-700">
+              <span className="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
                 Fundraiser Scope:
               </span>
               <select
                 value={selectedProjectId}
                 onChange={(e) => setSelectedProjectId(e.target.value)}
-                className="bg-white border border-slate-200 text-[#0F172A] font-semibold text-xs rounded-xl px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-[#714B67]/20 focus:border-[#714B67] transition-colors shadow-xs"
+                className="bg-white/80 dark:bg-slate-800/80 border border-slate-200/80 dark:border-slate-700/80 text-slate-900 dark:text-white font-bold text-xs rounded-xl px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-[#714B67] dark:focus:ring-purple-400 transition-colors shadow-sm"
               >
                 <option value="all">🌟 All Projects &amp; Fundraisers</option>
                 {projects.map((p) => (
@@ -392,34 +385,34 @@ export default function TaskBoardPage() {
 
               {/* Status Badge */}
               {metrics.isFunded ? (
-                <span className="inline-flex items-center gap-1 text-[11px] font-bold px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-700 border border-emerald-300">
+                <span className="inline-flex items-center gap-1 text-[11px] font-bold px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-800 dark:text-emerald-200 border border-emerald-300/40 dark:border-emerald-700/50 shadow-sm">
                   <Award className="w-3.5 h-3.5" /> Goal Reached ($)
                 </span>
               ) : metrics.isOnTrack ? (
-                <span className="inline-flex items-center gap-1 text-[11px] font-bold px-2.5 py-1 rounded-full bg-[#FAF5F9] text-[#714B67] border border-[#D4BFD2]">
+                <span className="inline-flex items-center gap-1 text-[11px] font-bold px-3 py-1 rounded-full bg-purple-500/20 text-[#714B67] dark:text-purple-300 border border-purple-500/30 shadow-sm">
                   <TrendingUp className="w-3.5 h-3.5" /> On Track
                 </span>
               ) : (
-                <span className="inline-flex items-center gap-1 text-[11px] font-bold px-2.5 py-1 rounded-full bg-amber-100 text-amber-700 border border-amber-300">
+                <span className="inline-flex items-center gap-1 text-[11px] font-bold px-3 py-1 rounded-full bg-amber-500/20 text-amber-800 dark:text-amber-200 border border-amber-300/40 dark:border-amber-700/50 shadow-sm">
                   <AlertCircle className="w-3.5 h-3.5" /> Needs Attention
                 </span>
               )}
             </div>
 
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#0F172A] tracking-tight">
+            <h2 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">
               {activeProject ? activeProject.name : 'All Skyline Club Action Items'}
             </h2>
-            <p className="text-xs sm:text-sm text-[#64748B] leading-relaxed">
+            <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
               {activeProject?.description ||
                 'Coordinating bake sales, charity drives, volunteer shifts, and supplies checklists across all active fundraisers.'}
             </p>
 
             {/* Treasury Ledger Verification Stamp */}
-            <div className="flex items-center gap-1.5 text-[11px] text-[#714B67] pt-1">
-              <Zap className="w-3.5 h-3.5 text-[#714B67]" />
+            <div className="flex items-center gap-1.5 text-[11px] text-[#714B67] dark:text-purple-300 pt-1 font-medium">
+              <Zap className="w-3.5 h-3.5 text-[#714B67] dark:text-purple-400" />
               <span>
                 Raised total queried live from central financial ledger (
-                <code className="text-[#714B67] font-mono">core.Transaction</code>
+                <code className="text-[#714B67] dark:text-purple-300 font-mono">core.Transaction</code>
                 ).
               </span>
             </div>
@@ -428,34 +421,34 @@ export default function TaskBoardPage() {
           {/* Right: Dual Progress Gauges (Financial Goal + Task Execution) */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4 min-w-[280px] sm:min-w-[340px] flex-shrink-0">
             {/* 1. FINANCIAL PROGRESS (Raised vs Goal) */}
-            <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 space-y-2.5 shadow-xs">
+            <div className="glass-card bg-slate-50/70 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700/80 rounded-2xl p-4 space-y-2.5 shadow-sm">
               <div className="flex items-center justify-between text-xs">
-                <span className="text-[#0F172A] font-bold flex items-center gap-1.5">
+                <span className="text-slate-900 dark:text-white font-bold flex items-center gap-1.5">
                   <DollarSign className="w-4 h-4 text-emerald-500" /> Funds Raised So Far
                 </span>
-                <span className="font-mono font-black text-emerald-600 text-sm">
+                <span className="font-mono font-black text-emerald-600 dark:text-emerald-400 text-sm">
                   ${metrics.raised.toFixed(2)}
-                  <span className="text-[#64748B] text-xs font-normal">
+                  <span className="text-slate-400 text-xs font-normal">
                     {' '}/ ${metrics.goal.toFixed(2)}
                   </span>
                 </span>
               </div>
 
               {/* Financial Progress Bar */}
-              <div className="w-full h-2.5 bg-slate-200/70 rounded-full overflow-hidden p-0.5 border border-slate-200">
+              <div className="w-full h-2.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden p-0.5 border border-slate-200/60 dark:border-slate-700/60">
                 <div
                   className={`h-full rounded-full transition-all duration-700 shadow-sm ${
                     metrics.isFunded
-                      ? 'bg-gradient-to-r from-emerald-500 to-teal-300'
+                      ? 'bg-gradient-to-r from-emerald-500 to-teal-400'
                       : 'bg-gradient-to-r from-emerald-500 to-emerald-400'
                   }`}
                   style={{ width: `${Math.max(0, Math.min(100, metrics.financialPct))}%` }}
                 />
               </div>
 
-              <div className="flex justify-between items-center text-[11px] text-[#64748B]">
+              <div className="flex justify-between items-center text-[11px] text-slate-500 dark:text-slate-400">
                 <span>{metrics.financialPct}% of fundraising target</span>
-                <span className="text-emerald-600 font-semibold">
+                <span className="text-emerald-600 dark:text-emerald-400 font-bold">
                   {metrics.goal > metrics.raised
                     ? `$${(metrics.goal - metrics.raised).toFixed(2)} remaining`
                     : 'Target Met! 🎉'}
@@ -464,38 +457,38 @@ export default function TaskBoardPage() {
             </div>
 
             {/* 2. TASK EXECUTION PROGRESS (Done vs Total) */}
-            <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 space-y-2.5 shadow-xs">
+            <div className="glass-card bg-slate-50/70 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700/80 rounded-2xl p-4 space-y-2.5 shadow-sm">
               <div className="flex items-center justify-between text-xs">
-                <span className="text-[#0F172A] font-bold flex items-center gap-1.5">
-                  <CheckCircle2 className="w-4 h-4 text-[#714B67]" /> Action Items Done
+                <span className="text-slate-900 dark:text-white font-bold flex items-center gap-1.5">
+                  <CheckCircle2 className="w-4 h-4 text-[#714B67] dark:text-purple-400" /> Action Items Done
                 </span>
-                <span className="font-mono font-black text-[#714B67] text-sm">
+                <span className="font-mono font-black text-[#714B67] dark:text-purple-300 text-sm">
                   {metrics.completedTasks} / {metrics.totalTasks}
-                  <span className="text-[#64748B] text-xs font-normal"> tasks</span>
+                  <span className="text-slate-400 text-xs font-normal"> tasks</span>
                 </span>
               </div>
 
               {/* Task Progress Bar */}
-              <div className="w-full h-2.5 bg-slate-200/70 rounded-full overflow-hidden p-0.5 border border-slate-200">
+              <div className="w-full h-2.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden p-0.5 border border-slate-200/60 dark:border-slate-700/60">
                 <div
-                  className="h-full bg-gradient-to-r from-[#714B67] to-[#5B3B52] rounded-full transition-all duration-700 shadow-sm"
+                  className="h-full bg-gradient-to-r from-[#714B67] to-[#8C5D80] rounded-full transition-all duration-700 shadow-sm"
                   style={{ width: `${Math.max(0, Math.min(100, metrics.taskPct))}%` }}
                 />
               </div>
 
               {/* Mini Column Counters */}
               <div className="grid grid-cols-3 gap-2 pt-0.5 text-center">
-                <div className="bg-white p-1.5 rounded-xl border border-slate-200">
-                  <span className="text-[10px] text-[#64748B] block font-medium">To Do</span>
-                  <span className="text-xs font-bold text-[#0F172A] font-mono">{todoTasks.length}</span>
+                <div className="glass-card bg-white/80 dark:bg-slate-900/80 p-1.5 rounded-xl border border-slate-200/60 dark:border-slate-700/60">
+                  <span className="text-[10px] text-slate-500 dark:text-slate-400 block font-medium">To Do</span>
+                  <span className="text-xs font-bold text-slate-900 dark:text-white font-mono">{todoTasks.length}</span>
                 </div>
-                <div className="bg-white p-1.5 rounded-xl border border-slate-200">
-                  <span className="text-[10px] text-amber-600 block font-medium">Doing</span>
-                  <span className="text-xs font-bold text-amber-700 font-mono">{doingTasks.length}</span>
+                <div className="glass-card bg-white/80 dark:bg-slate-900/80 p-1.5 rounded-xl border border-slate-200/60 dark:border-slate-700/60">
+                  <span className="text-[10px] text-amber-600 dark:text-amber-400 block font-medium">Doing</span>
+                  <span className="text-xs font-bold text-amber-600 dark:text-amber-400 font-mono">{doingTasks.length}</span>
                 </div>
-                <div className="bg-white p-1.5 rounded-xl border border-slate-200">
-                  <span className="text-[10px] text-emerald-600 block font-medium">Done</span>
-                  <span className="text-xs font-bold text-emerald-700 font-mono">{doneTasks.length}</span>
+                <div className="glass-card bg-white/80 dark:bg-slate-900/80 p-1.5 rounded-xl border border-slate-200/60 dark:border-slate-700/60">
+                  <span className="text-[10px] text-emerald-600 dark:text-emerald-400 block font-medium">Done</span>
+                  <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400 font-mono">{doneTasks.length}</span>
                 </div>
               </div>
             </div>
@@ -504,7 +497,7 @@ export default function TaskBoardPage() {
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="bg-white border border-slate-200/80 p-4 rounded-2xl shadow-once-card flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="glass-card bg-white/80 dark:bg-slate-900/80 border border-slate-200/80 dark:border-slate-800/80 p-4 rounded-2xl shadow-md flex flex-col md:flex-row md:items-center justify-between gap-4">
         {/* Left: Search Input */}
         <div className="relative w-full md:w-80">
           <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
@@ -513,7 +506,7 @@ export default function TaskBoardPage() {
             placeholder="Search tasks, volunteers, or keywords..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl text-[#0F172A] placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#714B67]/20 focus:border-[#714B67] focus:bg-white transition-all"
+            className="w-full pl-10 pr-4 py-2 text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#714B67] dark:focus:ring-purple-400 transition-all font-medium"
           />
         </div>
 
@@ -523,7 +516,7 @@ export default function TaskBoardPage() {
           <select
             value={priorityFilter}
             onChange={(e) => setPriorityFilter(e.target.value)}
-            className="bg-slate-50 border border-slate-200 text-[#0F172A] text-xs font-medium rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#714B67]/20 focus:border-[#714B67]"
+            className="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white text-xs font-bold rounded-xl px-3.5 py-2 focus:outline-none focus:ring-2 focus:ring-[#714B67] dark:focus:ring-purple-400"
           >
             <option value="all">All Priorities</option>
             <option value="urgent">🚨 Urgent</option>
@@ -536,10 +529,10 @@ export default function TaskBoardPage() {
           {isAuthenticated && (
             <button
               onClick={() => setOnlyMyTasks(!onlyMyTasks)}
-              className={`px-3.5 py-2 rounded-xl text-xs font-semibold transition-all flex items-center gap-1.5 ${
+              className={`px-4 py-2 rounded-full text-xs font-bold transition-all flex items-center gap-1.5 ${
                 onlyMyTasks
-                  ? 'bg-[#0F172A] text-white shadow-sm'
-                  : 'bg-slate-50 text-slate-600 hover:text-[#0F172A] border border-slate-200'
+                  ? 'bg-gradient-to-r from-[#714B67] to-[#8C5D80] text-white shadow-md shadow-purple-500/20'
+                  : 'glass-card bg-slate-50/70 dark:bg-slate-800/60 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white border border-slate-200/80 dark:border-slate-700/80'
               }`}
             >
               <UserCheck className="w-3.5 h-3.5" />
@@ -552,19 +545,19 @@ export default function TaskBoardPage() {
       {/* --- KANBAN BOARD COLUMNS --- */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* 1. TO DO COLUMN */}
-        <div className="bg-slate-50/80 border border-slate-200/80 rounded-3xl p-4 sm:p-5 flex flex-col min-h-[520px] shadow-sm">
+        <div className="glass-panel bg-slate-50/70 dark:bg-slate-900/60 border border-white/40 dark:border-slate-800/80 rounded-3xl p-5 flex flex-col min-h-[540px] shadow-xl">
           {/* Column Header */}
-          <div className="flex items-center justify-between pb-3.5 mb-3 border-b border-slate-200">
+          <div className="flex items-center justify-between pb-3.5 mb-3 border-b border-slate-200/60 dark:border-slate-800/60">
             <div className="flex items-center gap-2">
               <span className="w-2.5 h-2.5 rounded-full bg-slate-400" />
-              <h3 className="text-xs font-bold text-[#0F172A] uppercase tracking-wider">To Do</h3>
-              <span className="text-[11px] font-bold bg-white text-slate-600 border border-slate-200 px-2 py-0.5 rounded-full font-mono">
+              <h3 className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-wider">To Do</h3>
+              <span className="text-[11px] font-bold bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 px-2.5 py-0.5 rounded-full font-mono">
                 {todoTasks.length}
               </span>
             </div>
             <button
               onClick={() => handleOpenNewTask('todo')}
-              className="p-1 text-slate-500 hover:text-[#0F172A] hover:bg-white rounded-lg transition-colors border border-transparent hover:border-slate-200"
+              className="p-1.5 text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-white dark:hover:bg-slate-800 rounded-full transition-colors"
               title="Add task to To Do"
             >
               <Plus className="w-4 h-4" />
@@ -572,11 +565,11 @@ export default function TaskBoardPage() {
           </div>
 
           {/* Cards List */}
-          <div className="space-y-3 flex-1 overflow-y-auto pr-1">
+          <div className="space-y-3.5 flex-1 overflow-y-auto pr-1">
             {isTasksLoading ? (
               <div className="p-8 text-center animate-pulse text-xs text-slate-400">Loading tasks...</div>
             ) : todoTasks.length === 0 ? (
-              <div className="py-12 text-center text-xs text-slate-400 border border-dashed border-slate-200 rounded-2xl bg-white/40">
+              <div className="py-12 text-center text-xs text-slate-400 border border-dashed border-slate-200 dark:border-slate-800 rounded-2xl bg-white/30 dark:bg-slate-900/30">
                 No tasks to do.
               </div>
             ) : (
@@ -598,19 +591,19 @@ export default function TaskBoardPage() {
         </div>
 
         {/* 2. DOING / IN PROGRESS COLUMN */}
-        <div className="bg-slate-50/80 border border-slate-200/80 rounded-3xl p-4 sm:p-5 flex flex-col min-h-[520px] shadow-sm">
+        <div className="glass-panel bg-slate-50/70 dark:bg-slate-900/60 border border-white/40 dark:border-slate-800/80 rounded-3xl p-5 flex flex-col min-h-[540px] shadow-xl">
           {/* Column Header */}
-          <div className="flex items-center justify-between pb-3.5 mb-3 border-b border-amber-200">
+          <div className="flex items-center justify-between pb-3.5 mb-3 border-b border-amber-300/40 dark:border-amber-700/50">
             <div className="flex items-center gap-2">
               <span className="w-2.5 h-2.5 rounded-full bg-amber-500 animate-pulse" />
-              <h3 className="text-xs font-bold text-[#0F172A] uppercase tracking-wider">In Progress</h3>
-              <span className="text-[11px] font-bold bg-amber-50 text-amber-800 border border-amber-200 px-2 py-0.5 rounded-full font-mono">
+              <h3 className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-wider">In Progress</h3>
+              <span className="text-[11px] font-bold bg-amber-500/20 text-amber-800 dark:text-amber-200 border border-amber-500/30 px-2.5 py-0.5 rounded-full font-mono">
                 {doingTasks.length}
               </span>
             </div>
             <button
               onClick={() => handleOpenNewTask('doing')}
-              className="p-1 text-slate-500 hover:text-[#0F172A] hover:bg-white rounded-lg transition-colors border border-transparent hover:border-slate-200"
+              className="p-1.5 text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-white dark:hover:bg-slate-800 rounded-full transition-colors"
               title="Add task to In Progress"
             >
               <Plus className="w-4 h-4" />
@@ -618,11 +611,11 @@ export default function TaskBoardPage() {
           </div>
 
           {/* Cards List */}
-          <div className="space-y-3 flex-1 overflow-y-auto pr-1">
+          <div className="space-y-3.5 flex-1 overflow-y-auto pr-1">
             {isTasksLoading ? (
               <div className="p-8 text-center animate-pulse text-xs text-slate-400">Loading tasks...</div>
             ) : doingTasks.length === 0 ? (
-              <div className="py-12 text-center text-xs text-slate-400 border border-dashed border-slate-200 rounded-2xl bg-white/40">
+              <div className="py-12 text-center text-xs text-slate-400 border border-dashed border-slate-200 dark:border-slate-800 rounded-2xl bg-white/30 dark:bg-slate-900/30">
                 No tasks in progress.
               </div>
             ) : (
@@ -644,19 +637,19 @@ export default function TaskBoardPage() {
         </div>
 
         {/* 3. DONE / COMPLETED COLUMN */}
-        <div className="bg-slate-50/80 border border-slate-200/80 rounded-3xl p-4 sm:p-5 flex flex-col min-h-[520px] shadow-sm">
+        <div className="glass-panel bg-slate-50/70 dark:bg-slate-900/60 border border-white/40 dark:border-slate-800/80 rounded-3xl p-5 flex flex-col min-h-[540px] shadow-xl">
           {/* Column Header */}
-          <div className="flex items-center justify-between pb-3.5 mb-3 border-b border-emerald-200">
+          <div className="flex items-center justify-between pb-3.5 mb-3 border-b border-emerald-300/40 dark:border-emerald-700/50">
             <div className="flex items-center gap-2">
-              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-              <h3 className="text-xs font-bold text-[#0F172A] uppercase tracking-wider">Done</h3>
-              <span className="text-[11px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200 px-2 py-0.5 rounded-full font-mono">
+              <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+              <h3 className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-wider">Done</h3>
+              <span className="text-[11px] font-bold bg-emerald-500/20 text-emerald-800 dark:text-emerald-200 border border-emerald-500/30 px-2.5 py-0.5 rounded-full font-mono">
                 {doneTasks.length}
               </span>
             </div>
             <button
               onClick={() => handleOpenNewTask('done')}
-              className="p-1 text-slate-500 hover:text-[#0F172A] hover:bg-white rounded-lg transition-colors border border-transparent hover:border-slate-200"
+              className="p-1.5 text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-white dark:hover:bg-slate-800 rounded-full transition-colors"
               title="Add task to Done"
             >
               <Plus className="w-4 h-4" />
@@ -664,11 +657,11 @@ export default function TaskBoardPage() {
           </div>
 
           {/* Cards List */}
-          <div className="space-y-3 flex-1 overflow-y-auto pr-1">
+          <div className="space-y-3.5 flex-1 overflow-y-auto pr-1">
             {isTasksLoading ? (
               <div className="p-8 text-center animate-pulse text-xs text-slate-400">Loading tasks...</div>
             ) : doneTasks.length === 0 ? (
-              <div className="py-12 text-center text-xs text-slate-400 border border-dashed border-slate-200 rounded-2xl bg-white/40">
+              <div className="py-12 text-center text-xs text-slate-400 border border-dashed border-slate-200 dark:border-slate-800 rounded-2xl bg-white/30 dark:bg-slate-900/30">
                 No tasks completed yet.
               </div>
             ) : (

@@ -11,16 +11,17 @@ export function Button({
   onClick,
   ...props
 }) {
-  const baseStyles = 'inline-flex items-center justify-center font-semibold transition-all duration-150 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#714B67] disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap shrink-0 active:scale-[0.99]';
+  const baseStyles = 'inline-flex items-center justify-center font-semibold transition-all duration-200 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#714B67] dark:focus:ring-offset-slate-900 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap shrink-0 active:scale-[0.98] select-none';
 
   const variants = {
-    primary: 'bg-[#714B67] hover:bg-[#5B3B52] text-white shadow-sm hover:shadow border border-[#714B67]',
-    brand: 'bg-[#714B67] hover:bg-[#5B3B52] text-white shadow-sm hover:shadow border border-[#714B67]',
-    secondary: 'bg-white hover:bg-[#FAF5F9] text-[#714B67] border border-[#D4BFD2] shadow-sm hover:border-[#714B67]',
-    outline: 'bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 hover:border-slate-300 shadow-sm',
-    accent: 'bg-[#714B67] hover:bg-[#5B3B52] text-white shadow-sm border border-[#714B67]',
-    danger: 'bg-rose-600 hover:bg-rose-700 text-white shadow-sm border border-rose-600',
-    ghost: 'bg-transparent hover:bg-slate-100 text-slate-600 hover:text-slate-900',
+    primary: 'bg-[#714B67] hover:bg-[#5B3B52] dark:bg-[#87567D] dark:hover:bg-[#714B67] text-white shadow-md shadow-[#714B67]/20 hover:shadow-lg hover:shadow-[#714B67]/30 border border-[#714B67]/80',
+    brand: 'bg-[#714B67] hover:bg-[#5B3B52] dark:bg-[#87567D] dark:hover:bg-[#714B67] text-white shadow-md shadow-[#714B67]/20 hover:shadow-lg hover:shadow-[#714B67]/30 border border-[#714B67]/80',
+    secondary: 'bg-white/80 dark:bg-slate-900/80 backdrop-blur-md hover:bg-[#FAF5F9] dark:hover:bg-slate-800 text-[#714B67] dark:text-[#F3EAF2] border border-[#D4BFD2] dark:border-white/10 shadow-sm hover:border-[#714B67]',
+    outline: 'bg-white/70 dark:bg-slate-900/60 backdrop-blur-md hover:bg-white dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-white/10 hover:border-slate-300 dark:hover:border-white/20 shadow-xs',
+    accent: 'bg-sky-500 hover:bg-sky-600 text-white shadow-md shadow-sky-500/20 hover:shadow-lg border border-sky-500',
+    danger: 'bg-rose-600 hover:bg-rose-700 text-white shadow-md shadow-rose-600/20 hover:shadow-lg border border-rose-600',
+    ghost: 'bg-transparent hover:bg-slate-100/80 dark:hover:bg-white/10 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white',
+    glass: 'bg-white/60 dark:bg-white/10 backdrop-blur-lg hover:bg-white/80 dark:hover:bg-white/15 text-slate-800 dark:text-white border border-white/60 dark:border-white/10 shadow-sm',
   };
 
   const sizes = {
@@ -51,3 +52,4 @@ export function Button({
     </button>
   );
 }
+

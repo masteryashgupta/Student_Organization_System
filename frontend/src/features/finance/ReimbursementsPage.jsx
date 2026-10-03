@@ -194,29 +194,29 @@ export default function ReimbursementsPage() {
   const pendingTotal = pendingList.reduce((acc, curr) => acc + parseFloat(curr.amount || 0), 0);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8 animate-fadeIn pb-16">
       {/* Header Banner */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-6 sm:p-8 rounded-2xl border border-border shadow-odoo-card">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 glass-panel p-6 sm:p-8 rounded-3xl border border-white/40 dark:border-slate-800/80 shadow-xl">
         <div>
           <div className="flex items-center gap-2 mb-1.5">
-            <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#714B67]/10 text-[#714B67] border border-[#714B67]/20">
+            <span className="px-3.5 py-1 rounded-full text-xs font-bold bg-purple-500/10 dark:bg-purple-500/20 text-[#714B67] dark:text-purple-300 border border-purple-500/30 shadow-sm">
               Treasury Management
             </span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-[#222222] tracking-tight">Member Reimbursements</h1>
-          <p className="text-sm text-[#66636A] mt-1">
+          <h1 className="text-2xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">Member Reimbursements</h1>
+          <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
             Submit out-of-pocket expense claims or review pending officer approvals.
           </p>
         </div>
 
         {/* View Switcher Tabs */}
-        <div className="flex items-center gap-2 bg-[#F4F6F8] p-1.5 rounded-xl border border-border">
+        <div className="flex items-center gap-2 glass-card bg-slate-100/70 dark:bg-slate-900/60 p-1.5 rounded-2xl border border-slate-200/80 dark:border-slate-800/80">
           <button
             onClick={() => setActiveTab('submit')}
-            className={`px-4 py-2 rounded-lg text-xs font-semibold transition-all ${
+            className={`px-5 py-2.5 rounded-xl text-xs font-bold transition-all ${
               activeTab === 'submit'
-                ? 'bg-[#714B67] text-white shadow-sm'
-                : 'text-[#66636A] hover:text-[#222222] hover:bg-white'
+                ? 'bg-gradient-to-r from-[#714B67] to-[#8C5D80] text-white shadow-md shadow-purple-500/20'
+                : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
             Submit Request
@@ -224,15 +224,15 @@ export default function ReimbursementsPage() {
           {isOfficer && (
             <button
               onClick={() => setActiveTab('queue')}
-              className={`px-4 py-2 rounded-lg text-xs font-semibold transition-all flex items-center gap-2 ${
+              className={`px-5 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-2 ${
                 activeTab === 'queue'
-                  ? 'bg-[#714B67] text-white shadow-sm'
-                  : 'text-[#66636A] hover:text-[#222222] hover:bg-white'
+                  ? 'bg-gradient-to-r from-[#714B67] to-[#8C5D80] text-white shadow-md shadow-purple-500/20'
+                  : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
               }`}
             >
               <span>Officer Queue</span>
               {pendingList.length > 0 && (
-                <span className="w-5 h-5 rounded-full bg-[#E2B714] text-[#222222] text-[11px] font-bold flex items-center justify-center">
+                <span className="w-5 h-5 rounded-full bg-amber-400 text-slate-950 text-[11px] font-black flex items-center justify-center shadow-sm">
                   {pendingList.length}
                 </span>
               )}
@@ -245,10 +245,10 @@ export default function ReimbursementsPage() {
       {activeTab === 'submit' && (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Submission Form Card */}
-          <Card className="lg:col-span-1 border-border shadow-odoo-card bg-white">
+          <Card className="lg:col-span-1 glass-panel border-white/40 dark:border-slate-800/80 shadow-2xl rounded-3xl">
             <CardHeader>
-              <CardTitle className="text-lg text-[#222222]">Request Reimbursement</CardTitle>
-              <CardDescription className="text-xs text-[#66636A]">
+              <CardTitle className="text-xl font-extrabold text-slate-900 dark:text-white">Request Reimbursement</CardTitle>
+              <CardDescription className="text-xs text-slate-500 dark:text-slate-400">
                 Submit an itemized claim for club expenses paid out of pocket.
               </CardDescription>
             </CardHeader>
@@ -266,41 +266,41 @@ export default function ReimbursementsPage() {
                 />
 
                 <div className="space-y-1">
-                  <label className="block text-xs font-medium text-[#222222]">
-                    Itemized Description <span className="text-danger-500">*</span>
+                  <label className="block text-xs font-bold text-slate-900 dark:text-white">
+                    Itemized Description <span className="text-rose-500">*</span>
                   </label>
                   <textarea
                     rows="3"
                     placeholder="e.g. Pizza and drinks for Friday workshop"
                     value={form.description}
                     onChange={(e) => setForm((prev) => ({ ...prev, description: e.target.value }))}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-border text-[#222222] text-sm focus:outline-none focus:border-[#714B67] focus:ring-1 focus:ring-[#714B67] transition-colors"
+                    className="w-full px-4 py-3 rounded-2xl bg-white/80 dark:bg-slate-800/80 border border-slate-200/80 dark:border-slate-700/80 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#714B67] dark:focus:ring-purple-400 transition-all font-medium"
                     required
                   />
-                  {errors.description && <p className="text-xs text-danger-500">{errors.description}</p>}
+                  {errors.description && <p className="text-xs text-rose-500 font-semibold">{errors.description}</p>}
                 </div>
 
                 <div className="space-y-1">
-                  <label className="block text-xs font-medium text-[#222222]">
+                  <label className="block text-xs font-bold text-slate-900 dark:text-white">
                     Receipt Image / PDF Proof
                   </label>
                   <input
                     type="file"
                     accept=".pdf,.jpg,.jpeg,.png,.webp"
                     onChange={handleFileChange}
-                    className="w-full text-xs text-[#66636A] file:mr-3 file:py-2 file:px-3.5 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-[#714B67]/10 file:text-[#714B67] hover:file:bg-[#714B67]/20 cursor-pointer"
+                    className="w-full text-xs text-slate-500 dark:text-slate-400 file:mr-3 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-bold file:bg-purple-500/10 file:text-[#714B67] dark:file:text-purple-300 hover:file:bg-purple-500/20 cursor-pointer"
                   />
                   {errors.receipt ? (
-                    <p className="text-xs text-danger-500">{errors.receipt}</p>
+                    <p className="text-xs text-rose-500 font-semibold">{errors.receipt}</p>
                   ) : (
-                    <p className="text-[11px] text-[#66636A]">Allowed formats: PDF, JPG, PNG, WEBP (Max 10MB)</p>
+                    <p className="text-[11px] text-slate-400">Allowed formats: PDF, JPG, PNG, WEBP (Max 10MB)</p>
                   )}
                 </div>
 
                 <Button
                   type="submit"
                   variant="primary"
-                  className="w-full mt-2 bg-[#714B67] hover:bg-[#5B3B52] text-white"
+                  className="w-full mt-2 rounded-full bg-gradient-to-r from-[#714B67] to-[#8C5D80] hover:from-[#5B3B52] hover:to-[#714B67] text-white font-bold shadow-lg shadow-purple-500/20 active:scale-95 transition-transform"
                   isLoading={submitting}
                 >
                   Submit Reimbursement
@@ -310,11 +310,11 @@ export default function ReimbursementsPage() {
           </Card>
 
           {/* User's Submitted Claims List */}
-          <Card className="lg:col-span-2 border-border shadow-odoo-card bg-white">
+          <Card className="lg:col-span-2 glass-panel border-white/40 dark:border-slate-800/80 shadow-2xl rounded-3xl overflow-hidden">
             <CardHeader className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4">
               <div>
-                <CardTitle className="text-lg text-[#222222]">Recent Requests & History</CardTitle>
-                <CardDescription className="text-xs text-[#66636A]">
+                <CardTitle className="text-xl font-extrabold text-slate-900 dark:text-white">Recent Requests & History</CardTitle>
+                <CardDescription className="text-xs text-slate-500 dark:text-slate-400">
                   Track current approval status and review officer feedback.
                 </CardDescription>
               </div>
@@ -333,13 +333,13 @@ export default function ReimbursementsPage() {
             </CardHeader>
             <CardContent className="p-0">
               {isLoading ? (
-                <div className="py-12 text-center text-[#66636A] text-sm">Loading reimbursement history...</div>
+                <div className="py-12 text-center text-slate-400 text-sm">Loading reimbursement history...</div>
               ) : isError ? (
-                <div className="py-8 text-center text-danger-500 text-sm">
+                <div className="py-8 text-center text-rose-500 text-sm">
                   Failed to load reimbursements. <Button size="sm" variant="ghost" onClick={() => refetch()}>Retry</Button>
                 </div>
               ) : reimbursements.length === 0 ? (
-                <div className="py-12 text-center text-[#66636A] text-sm">
+                <div className="py-12 text-center text-slate-400 text-sm">
                   No reimbursement claims found matching your filter.
                 </div>
               ) : (
@@ -356,19 +356,19 @@ export default function ReimbursementsPage() {
                   </TableHeader>
                   <TableBody>
                     {reimbursements.map((item) => (
-                      <TableRow key={item.id} className="hover:bg-[#FAF9F7]">
-                        <TableCell className="text-xs font-mono text-[#66636A] whitespace-nowrap">
+                      <TableRow key={item.id} className="hover:bg-purple-500/5 dark:hover:bg-purple-500/10">
+                        <TableCell className="text-xs font-mono text-slate-500 dark:text-slate-400 whitespace-nowrap">
                           {new Date(item.created_at).toLocaleDateString()}
                         </TableCell>
-                        <TableCell className="text-xs font-medium text-[#222222]">
+                        <TableCell className="text-xs font-bold text-slate-900 dark:text-white">
                           {item.requester_name}
                         </TableCell>
-                        <TableCell className="text-xs text-[#66636A] max-w-[200px] truncate">
+                        <TableCell className="text-xs text-slate-500 dark:text-slate-400 max-w-[200px] truncate">
                           {item.description}
-                          {item.notes && <p className="text-[11px] text-amber-700 italic">Note: {item.notes}</p>}
+                          {item.notes && <p className="text-[11px] text-amber-600 dark:text-amber-400 italic">Note: {item.notes}</p>}
                         </TableCell>
                         <TableCell>
-                          <Badge variant={getStatusBadgeVariant(item.status)}>
+                          <Badge variant={getStatusBadgeVariant(item.status)} className="rounded-full px-3">
                             {item.status_display || item.status}
                           </Badge>
                         </TableCell>
@@ -378,15 +378,15 @@ export default function ReimbursementsPage() {
                               href={item.receipt_url}
                               target="_blank"
                               rel="noreferrer"
-                              className="text-[#714B67] hover:underline font-semibold flex items-center gap-1"
+                              className="text-[#714B67] dark:text-purple-400 hover:underline font-bold flex items-center gap-1"
                             >
                               📄 Receipt
                             </a>
                           ) : (
-                            <span className="text-[#999]">None</span>
+                            <span className="text-slate-400">None</span>
                           )}
                         </TableCell>
-                        <TableCell className="text-right font-bold text-sm text-[#222222]">
+                        <TableCell className="text-right font-black text-sm text-slate-900 dark:text-white">
                           ${item.amount}
                         </TableCell>
                       </TableRow>
@@ -404,55 +404,55 @@ export default function ReimbursementsPage() {
         <div className="space-y-6">
           {/* Officer Metrics Bar */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <Card className="border-amber-200 bg-amber-50/70 shadow-sm">
+            <Card className="glass-panel border-amber-300/40 dark:border-amber-700/50 bg-amber-500/5 shadow-lg rounded-3xl">
               <CardHeader className="pb-2">
-                <CardDescription className="text-amber-800 text-xs font-semibold uppercase">
+                <CardDescription className="text-amber-800 dark:text-amber-300 text-xs font-bold uppercase tracking-wider">
                   Pending Review Queue
                 </CardDescription>
-                <CardTitle className="text-2xl text-[#222222]">
+                <CardTitle className="text-3xl font-black text-slate-900 dark:text-white mt-1">
                   {pendingList.length} request(s)
                 </CardTitle>
               </CardHeader>
-              <CardContent className="text-xs text-[#66636A]">
-                Total Pending Value: <strong className="text-amber-900 font-bold">${pendingTotal.toFixed(2)}</strong>
+              <CardContent className="text-xs text-slate-500 dark:text-slate-400">
+                Total Pending Value: <strong className="text-amber-600 dark:text-amber-400 font-bold">${pendingTotal.toFixed(2)}</strong>
               </CardContent>
             </Card>
 
-            <Card className="border-[#D4BFD2] bg-[#FAF5F9] shadow-sm">
+            <Card className="glass-panel border-purple-300/40 dark:border-purple-700/50 bg-purple-500/5 shadow-lg rounded-3xl">
               <CardHeader className="pb-2">
-                <CardDescription className="text-[#714B67] text-xs font-semibold uppercase">
+                <CardDescription className="text-[#714B67] dark:text-purple-300 text-xs font-bold uppercase tracking-wider">
                   Approved & Ledger Logged
                 </CardDescription>
-                <CardTitle className="text-2xl text-[#222222]">
+                <CardTitle className="text-3xl font-black text-slate-900 dark:text-white mt-1">
                   {reimbursements.filter((r) => r.status === 'approved').length} request(s)
                 </CardTitle>
               </CardHeader>
-              <CardContent className="text-xs text-[#66636A]">
+              <CardContent className="text-xs text-slate-500 dark:text-slate-400">
                 Posted to central expense ledger
               </CardContent>
             </Card>
 
-            <Card className="border-emerald-200 bg-emerald-50/70 shadow-sm">
+            <Card className="glass-panel border-emerald-300/40 dark:border-emerald-700/50 bg-emerald-500/5 shadow-lg rounded-3xl">
               <CardHeader className="pb-2">
-                <CardDescription className="text-emerald-800 text-xs font-semibold uppercase">
+                <CardDescription className="text-emerald-700 dark:text-emerald-400 text-xs font-bold uppercase tracking-wider">
                   Paid Out & Completed
                 </CardDescription>
-                <CardTitle className="text-2xl text-[#222222]">
+                <CardTitle className="text-3xl font-black text-slate-900 dark:text-white mt-1">
                   {reimbursements.filter((r) => r.status === 'paid').length} request(s)
                 </CardTitle>
               </CardHeader>
-              <CardContent className="text-xs text-[#66636A]">
+              <CardContent className="text-xs text-slate-500 dark:text-slate-400">
                 Disbursements completed
               </CardContent>
             </Card>
           </div>
 
           {/* Queue Table */}
-          <Card className="border-border shadow-odoo-card bg-white">
+          <Card className="glass-panel border-white/40 dark:border-slate-800/80 shadow-2xl rounded-3xl overflow-hidden">
             <CardHeader className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4">
               <div>
-                <CardTitle className="text-lg text-[#222222]">Officer Approval & Disbursement Desk</CardTitle>
-                <CardDescription className="text-xs text-[#66636A]">
+                <CardTitle className="text-xl font-extrabold text-slate-900 dark:text-white">Officer Approval & Disbursement Desk</CardTitle>
+                <CardDescription className="text-xs text-slate-500 dark:text-slate-400">
                   Review submitted claims, inspect receipts, approve to record in central ledger, or mark as paid.
                 </CardDescription>
               </div>
@@ -471,9 +471,9 @@ export default function ReimbursementsPage() {
             </CardHeader>
             <CardContent className="p-0">
               {isLoading ? (
-                <div className="py-12 text-center text-[#66636A] text-sm">Loading officer queue...</div>
+                <div className="py-12 text-center text-slate-400 text-sm">Loading officer queue...</div>
               ) : reimbursements.length === 0 ? (
-                <div className="py-12 text-center text-[#66636A] text-sm">No reimbursements found.</div>
+                <div className="py-12 text-center text-slate-400 text-sm">No reimbursements found.</div>
               ) : (
                 <Table>
                   <TableHeader>
@@ -489,15 +489,15 @@ export default function ReimbursementsPage() {
                   </TableHeader>
                   <TableBody>
                     {reimbursements.map((item) => (
-                      <TableRow key={item.id} className="hover:bg-[#FAF9F7]">
-                        <TableCell className="text-xs font-mono text-[#66636A] whitespace-nowrap">
+                      <TableRow key={item.id} className="hover:bg-purple-500/5 dark:hover:bg-purple-500/10">
+                        <TableCell className="text-xs font-mono text-slate-500 dark:text-slate-400 whitespace-nowrap">
                           {new Date(item.created_at).toLocaleDateString()}
                         </TableCell>
-                        <TableCell className="text-xs font-medium text-[#222222]">
+                        <TableCell className="text-xs font-bold text-slate-900 dark:text-white">
                           <div>{item.requester_name}</div>
-                          <div className="text-[11px] text-[#66636A]">{item.requester_email}</div>
+                          <div className="text-[11px] text-slate-400 font-normal">{item.requester_email}</div>
                         </TableCell>
-                        <TableCell className="text-xs text-[#66636A] max-w-[200px] truncate">
+                        <TableCell className="text-xs text-slate-500 dark:text-slate-400 max-w-[200px] truncate">
                           {item.description}
                         </TableCell>
                         <TableCell className="text-xs">
@@ -506,20 +506,20 @@ export default function ReimbursementsPage() {
                               href={item.receipt_url}
                               target="_blank"
                               rel="noreferrer"
-                              className="text-[#714B67] hover:underline font-semibold"
+                              className="text-[#714B67] dark:text-purple-400 hover:underline font-bold"
                             >
                               View Proof
                             </a>
                           ) : (
-                            <span className="text-[#999]">No Receipt</span>
+                            <span className="text-slate-400">No Receipt</span>
                           )}
                         </TableCell>
                         <TableCell>
-                          <Badge variant={getStatusBadgeVariant(item.status)}>
+                          <Badge variant={getStatusBadgeVariant(item.status)} className="rounded-full px-3">
                             {item.status_display || item.status}
                           </Badge>
                         </TableCell>
-                        <TableCell className="font-bold text-sm text-[#222222] whitespace-nowrap">
+                        <TableCell className="font-black text-sm text-slate-900 dark:text-white whitespace-nowrap">
                           ${item.amount}
                         </TableCell>
                         <TableCell className="text-right whitespace-nowrap">
@@ -528,7 +528,7 @@ export default function ReimbursementsPage() {
                               <Button
                                 variant="primary"
                                 size="sm"
-                                className="text-xs py-1 px-2.5 bg-emerald-600 hover:bg-emerald-700 text-white"
+                                className="text-xs py-1.5 px-3.5 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold"
                                 onClick={() => setActionModal({ isOpen: true, type: 'approve', item, notes: '' })}
                               >
                                 Approve & Record
@@ -536,7 +536,7 @@ export default function ReimbursementsPage() {
                               <Button
                                 variant="danger"
                                 size="sm"
-                                className="text-xs py-1 px-2.5"
+                                className="text-xs py-1.5 px-3.5 rounded-full font-bold"
                                 onClick={() => setActionModal({ isOpen: true, type: 'reject', item, notes: '' })}
                               >
                                 Reject
@@ -548,7 +548,7 @@ export default function ReimbursementsPage() {
                             <Button
                               variant="secondary"
                               size="sm"
-                              className="text-xs py-1 px-2.5 border-emerald-600/40 text-emerald-700 hover:bg-emerald-50"
+                              className="text-xs py-1.5 px-3.5 rounded-full border-emerald-500/50 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500/10 font-bold"
                               onClick={() => setActionModal({ isOpen: true, type: 'markPaid', item, notes: '' })}
                             >
                               Mark as Paid
@@ -556,7 +556,7 @@ export default function ReimbursementsPage() {
                           )}
 
                           {(item.status === 'paid' || item.status === 'rejected') && (
-                            <span className="text-xs text-[#66636A] font-mono">
+                            <span className="text-xs text-slate-400 font-mono">
                               {item.status === 'paid' ? 'Completed' : 'Closed'}
                             </span>
                           )}
@@ -585,21 +585,21 @@ export default function ReimbursementsPage() {
       >
         {actionModal.item && (
           <div className="space-y-4">
-            <div className="p-3.5 rounded-xl bg-[#F4F6F8] border border-border text-xs space-y-1 text-[#222222]">
+            <div className="p-4 rounded-2xl glass-card bg-slate-50/70 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700/80 text-xs space-y-1 text-slate-900 dark:text-white">
               <p><strong>Claim ID:</strong> #{actionModal.item.id}</p>
               <p><strong>Requester:</strong> {actionModal.item.requester_name} ({actionModal.item.requester_email})</p>
-              <p><strong>Amount:</strong> <span className="text-emerald-700 font-bold">${actionModal.item.amount}</span></p>
+              <p><strong>Amount:</strong> <span className="text-emerald-600 dark:text-emerald-400 font-black">${actionModal.item.amount}</span></p>
               <p><strong>Description:</strong> {actionModal.item.description}</p>
             </div>
 
             {actionModal.type === 'approve' && (
-              <p className="text-xs text-emerald-800 bg-emerald-50 p-2.5 rounded-lg border border-emerald-200">
+              <p className="text-xs text-emerald-950 dark:text-emerald-200 bg-emerald-500/10 p-3 rounded-xl border border-emerald-500/30">
                 Approving this claim will automatically post a <strong>${actionModal.item.amount} expense transaction</strong> into the central shared ledger.
               </p>
             )}
 
             <div className="space-y-1">
-              <label className="block text-xs font-medium text-[#222222]">
+              <label className="block text-xs font-bold text-slate-900 dark:text-white">
                 Officer Notes / Reason (Optional)
               </label>
               <textarea
@@ -607,18 +607,18 @@ export default function ReimbursementsPage() {
                 placeholder={actionModal.type === 'reject' ? 'State reason for rejection...' : 'Add payment transfer reference or notes...'}
                 value={actionModal.notes}
                 onChange={(e) => setActionModal((prev) => ({ ...prev, notes: e.target.value }))}
-                className="w-full px-3 py-2 rounded-xl bg-white border border-border text-[#222222] text-xs focus:outline-none focus:border-[#714B67] focus:ring-1 focus:ring-[#714B67]"
+                className="w-full px-3.5 py-2.5 rounded-2xl bg-white/80 dark:bg-slate-800/80 border border-slate-200/80 dark:border-slate-700/80 text-slate-900 dark:text-white text-xs focus:outline-none focus:ring-2 focus:ring-[#714B67] dark:focus:ring-purple-400"
               />
             </div>
 
-            <div className="flex justify-end gap-3 pt-3 border-t border-border">
-              <Button variant="outline" size="sm" onClick={closeActionModal}>
+            <div className="flex justify-end gap-3 pt-3 border-t border-slate-200/60 dark:border-slate-800/60">
+              <Button variant="outline" size="sm" onClick={closeActionModal} className="rounded-full">
                 Cancel
               </Button>
               <Button
                 variant={actionModal.type === 'reject' ? 'danger' : 'primary'}
                 size="sm"
-                className={actionModal.type !== 'reject' ? 'bg-[#714B67] hover:bg-[#5B3B52] text-white' : ''}
+                className={actionModal.type !== 'reject' ? 'rounded-full bg-gradient-to-r from-[#714B67] to-[#8C5D80] text-white font-bold' : 'rounded-full font-bold'}
                 onClick={handleExecuteAction}
                 isLoading={approveMut.isPending || rejectMut.isPending || markPaidMut.isPending}
               >

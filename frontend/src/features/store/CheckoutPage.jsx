@@ -126,14 +126,14 @@ export default function CheckoutPage() {
 
   if (items.length === 0) {
     return (
-      <div className="max-w-md mx-auto py-16 text-center bg-white rounded-3xl border border-border shadow-odoo-card p-10 space-y-4">
-        <div className="w-16 h-16 rounded-2xl bg-[#714B67]/10 flex items-center justify-center mx-auto text-[#714B67]">
+      <div className="max-w-md mx-auto py-16 text-center glass-panel rounded-3xl border border-white/40 dark:border-slate-800/80 shadow-2xl p-10 space-y-4 animate-fadeIn">
+        <div className="w-16 h-16 rounded-3xl bg-purple-500/10 dark:bg-purple-500/20 flex items-center justify-center mx-auto text-[#714B67] dark:text-purple-300 shadow-inner">
           <ShoppingBag className="w-8 h-8" />
         </div>
-        <h2 className="text-2xl font-bold text-[#222222]">Your Cart is Empty</h2>
-        <p className="text-sm text-[#66636A]">Add products to your cart before proceeding to checkout.</p>
+        <h2 className="text-2xl font-extrabold text-slate-900 dark:text-white">Your Cart is Empty</h2>
+        <p className="text-sm text-slate-500 dark:text-slate-400">Add products to your cart before proceeding to checkout.</p>
         <Link to="/store">
-          <Button variant="primary" className="bg-[#714B67] hover:bg-[#5B3B52] text-white">
+          <Button variant="primary" className="rounded-full px-8 bg-gradient-to-r from-[#714B67] to-[#8C5D80] hover:from-[#5B3B52] hover:to-[#714B67] text-white shadow-lg shadow-purple-500/20 font-bold">
             Browse Store Catalog
           </Button>
         </Link>
@@ -142,17 +142,17 @@ export default function CheckoutPage() {
   }
 
   return (
-    <div className="max-w-6xl mx-auto pb-20 space-y-8">
+    <div className="max-w-6xl mx-auto pb-20 space-y-8 animate-fadeIn">
       {/* Header */}
-      <div className="flex items-center justify-between border-b border-border pb-5">
+      <div className="flex items-center justify-between border-b border-slate-200/60 dark:border-slate-800/60 pb-5">
         <div>
-          <Link to="/store" className="text-xs font-semibold text-[#714B67] hover:text-[#5B3B52] flex items-center gap-1.5 mb-1.5 transition-colors">
+          <Link to="/store" className="text-xs font-bold text-[#714B67] dark:text-purple-400 hover:underline flex items-center gap-1.5 mb-1.5 transition-colors">
             <ArrowLeft className="w-4 h-4" /> Back to Store
           </Link>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-[#222222]">Order Checkout & Payment</h1>
+          <h1 className="text-2xl sm:text-4xl font-extrabold text-slate-900 dark:text-white">Order Checkout & Payment</h1>
         </div>
-        <div className="flex items-center gap-2 text-xs font-semibold text-emerald-800 bg-emerald-50 px-3 py-1.5 rounded-full border border-emerald-200">
-          <Lock className="w-4 h-4 text-emerald-600" />
+        <div className="flex items-center gap-2 text-xs font-bold text-emerald-800 dark:text-emerald-300 bg-emerald-500/10 dark:bg-emerald-500/20 px-3.5 py-1.5 rounded-full border border-emerald-500/30">
+          <Lock className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
           <span>Secure Club Checkout</span>
         </div>
       </div>
@@ -161,8 +161,8 @@ export default function CheckoutPage() {
         {/* Left Column: Buyer & Pickup Information */}
         <div className="lg:col-span-7 space-y-6">
           {/* Buyer Details Card */}
-          <div className="p-6 rounded-3xl bg-white border border-border space-y-4 shadow-odoo-card">
-            <h2 className="text-base font-bold text-[#222222] flex items-center gap-2 border-b border-border pb-3">
+          <div className="p-6 sm:p-8 rounded-3xl glass-panel border-white/40 dark:border-slate-800/80 space-y-4 shadow-xl">
+            <h2 className="text-lg font-extrabold text-slate-900 dark:text-white flex items-center gap-2 border-b border-slate-200/60 dark:border-slate-800/60 pb-3">
               <span>1. Buyer Information</span>
             </h2>
 
@@ -211,18 +211,18 @@ export default function CheckoutPage() {
           </div>
 
           {/* Pickup & Delivery Location Card */}
-          <div className="p-6 rounded-3xl bg-white border border-border space-y-4 shadow-odoo-card">
-            <h2 className="text-base font-bold text-[#222222] flex items-center gap-2 border-b border-border pb-3">
+          <div className="p-6 sm:p-8 rounded-3xl glass-panel border-white/40 dark:border-slate-800/80 space-y-4 shadow-xl">
+            <h2 className="text-lg font-extrabold text-slate-900 dark:text-white flex items-center gap-2 border-b border-slate-200/60 dark:border-slate-800/60 pb-3">
               <span>2. Campus Pickup Details</span>
             </h2>
 
-            <div className="space-y-3">
+            <div className="space-y-4">
               <div>
-                <label className="text-xs font-semibold text-[#222222] block mb-1.5">Pickup Location</label>
+                <label className="text-xs font-bold text-slate-900 dark:text-white block mb-2">Pickup Location</label>
                 <select
                   value={formData.pickupLocation}
                   onChange={(e) => handleInputChange('pickupLocation', e.target.value)}
-                  className="w-full bg-[#FAF9F7] border border-border rounded-xl px-3.5 py-2.5 text-sm text-[#222222] focus:outline-none focus:ring-2 focus:ring-[#714B67] transition-all"
+                  className="w-full bg-white/80 dark:bg-slate-800/80 border border-slate-200/80 dark:border-slate-700/80 rounded-2xl px-4 py-3 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#714B67] dark:focus:ring-purple-400 transition-all font-medium"
                 >
                   <option value="Club Headquarters (Student Center Rm 204)">Club Headquarters (Student Center Rm 204)</option>
                   <option value="Skyline Club Merch Table (Plaza Booth #3)">Skyline Club Merch Table (Plaza Booth #3)</option>
@@ -240,55 +240,55 @@ export default function CheckoutPage() {
           </div>
 
           {/* Payment Provider Selection */}
-          <div className="p-6 rounded-3xl bg-white border border-border space-y-4 shadow-odoo-card">
-            <h2 className="text-base font-bold text-[#222222] flex items-center gap-2 border-b border-border pb-3">
+          <div className="p-6 sm:p-8 rounded-3xl glass-panel border-white/40 dark:border-slate-800/80 space-y-4 shadow-xl">
+            <h2 className="text-lg font-extrabold text-slate-900 dark:text-white flex items-center gap-2 border-b border-slate-200/60 dark:border-slate-800/60 pb-3">
               <span>3. Payment Gateway Provider</span>
             </h2>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <button
                 type="button"
                 onClick={() => setPaymentProvider('mock')}
-                className={`p-4 rounded-2xl border text-left transition-all flex flex-col justify-between ${
+                className={`p-5 rounded-3xl border-2 text-left transition-all flex flex-col justify-between ${
                   paymentProvider === 'mock'
-                    ? 'bg-[#714B67]/10 border-[#714B67] ring-1 ring-[#714B67] text-[#222222] shadow-sm'
-                    : 'bg-[#FAF9F7] border-border text-[#66636A] hover:border-gray-300 hover:text-[#222222]'
+                    ? 'bg-purple-500/10 dark:bg-purple-500/20 border-[#714B67] dark:border-purple-400 ring-1 ring-[#714B67] text-slate-900 dark:text-white shadow-lg shadow-purple-500/10'
+                    : 'glass-card bg-slate-50/50 dark:bg-slate-800/40 border-slate-200/80 dark:border-slate-700/80 text-slate-500 dark:text-slate-400 hover:border-purple-300'
                 }`}
               >
                 <div className="flex items-center justify-between mb-3">
-                  <div className="p-2 rounded-xl bg-[#714B67]/10 text-[#714B67]">
+                  <div className="p-2.5 rounded-2xl bg-purple-500/20 text-[#714B67] dark:text-purple-300 shadow-sm">
                     <CheckCircle2 className="w-5 h-5" />
                   </div>
-                  <Badge variant="success" size="sm" className="bg-emerald-50 text-emerald-800 border-emerald-200">
+                  <Badge variant="success" size="sm" className="rounded-full px-3">
                     Offline / Demo
                   </Badge>
                 </div>
                 <div>
-                  <h4 className="text-sm font-bold text-[#222222]">Instant / Cash / Transfer</h4>
-                  <p className="text-xs text-[#66636A] mt-1">Works 100% offline. Instant order approval & stock reservation.</p>
+                  <h4 className="text-sm font-extrabold text-slate-900 dark:text-white">Instant / Cash / Transfer</h4>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Works 100% offline. Instant order approval & stock reservation.</p>
                 </div>
               </button>
 
               <button
                 type="button"
                 onClick={() => setPaymentProvider('stripe')}
-                className={`p-4 rounded-2xl border text-left transition-all flex flex-col justify-between ${
+                className={`p-5 rounded-3xl border-2 text-left transition-all flex flex-col justify-between ${
                   paymentProvider === 'stripe'
-                    ? 'bg-[#714B67]/10 border-[#714B67] ring-1 ring-[#714B67] text-[#222222] shadow-sm'
-                    : 'bg-[#FAF9F7] border-border text-[#66636A] hover:border-gray-300 hover:text-[#222222]'
+                    ? 'bg-purple-500/10 dark:bg-purple-500/20 border-[#714B67] dark:border-purple-400 ring-1 ring-[#714B67] text-slate-900 dark:text-white shadow-lg shadow-purple-500/10'
+                    : 'glass-card bg-slate-50/50 dark:bg-slate-800/40 border-slate-200/80 dark:border-slate-700/80 text-slate-500 dark:text-slate-400 hover:border-purple-300'
                 }`}
               >
                 <div className="flex items-center justify-between mb-3">
-                  <div className="p-2 rounded-xl bg-[#017E84]/15 text-[#017E84]">
+                  <div className="p-2.5 rounded-2xl bg-teal-500/20 text-teal-600 dark:text-teal-400 shadow-sm">
                     <CreditCard className="w-5 h-5" />
                   </div>
-                  <Badge variant="accent" size="sm" className="bg-[#017E84]/10 text-[#017E84] border-[#017E84]/20">
+                  <Badge variant="accent" size="sm" className="rounded-full px-3">
                     Test Gateway
                   </Badge>
                 </div>
                 <div>
-                  <h4 className="text-sm font-bold text-[#222222]">Credit / Debit Card</h4>
-                  <p className="text-xs text-[#66636A] mt-1">Stripe test-mode integration with simulated card processing.</p>
+                  <h4 className="text-sm font-extrabold text-slate-900 dark:text-white">Credit / Debit Card</h4>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Stripe test-mode integration with simulated card processing.</p>
                 </div>
               </button>
             </div>
@@ -297,62 +297,62 @@ export default function CheckoutPage() {
 
         {/* Right Column: Itemized Order Summary */}
         <div className="lg:col-span-5">
-          <div className="p-6 rounded-3xl bg-white border border-border space-y-6 shadow-odoo-card sticky top-6">
-            <h2 className="text-lg font-bold text-[#222222] border-b border-border pb-3 flex items-center justify-between">
+          <div className="p-6 sm:p-8 rounded-3xl glass-panel border-white/40 dark:border-slate-800/80 space-y-6 shadow-2xl sticky top-6 backdrop-blur-2xl">
+            <h2 className="text-xl font-extrabold text-slate-900 dark:text-white border-b border-slate-200/60 dark:border-slate-800/60 pb-3 flex items-center justify-between">
               <span>Order Summary</span>
-              <span className="text-xs font-normal text-[#66636A]">{totalItems} {totalItems === 1 ? 'item' : 'items'}</span>
+              <span className="text-xs font-normal text-slate-500 dark:text-slate-400">{totalItems} {totalItems === 1 ? 'item' : 'items'}</span>
             </h2>
 
             {/* Items List */}
             <div className="max-h-60 overflow-y-auto space-y-3 pr-1">
               {items.map((item) => (
                 <div key={item.variantId} className="flex items-center justify-between gap-3 text-xs">
-                  <div className="flex items-center gap-2.5 min-w-0">
-                    <div className="w-10 h-10 rounded-lg bg-canvas overflow-hidden flex-shrink-0 border border-border flex items-center justify-center">
+                  <div className="flex items-center gap-3 min-w-0">
+                    <div className="w-12 h-12 rounded-xl bg-slate-100 dark:bg-slate-800 overflow-hidden flex-shrink-0 border border-slate-200/60 dark:border-slate-700/60 flex items-center justify-center">
                       {item.image ? (
                         <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
                       ) : (
-                        <div className="w-full h-full flex items-center justify-center text-[9px] font-bold text-[#66636A]">
+                        <div className="w-full h-full flex items-center justify-center text-[9px] font-bold text-slate-400">
                           {item.type?.toUpperCase()}
                         </div>
                       )}
                     </div>
                     <div className="truncate">
-                      <p className="font-semibold text-[#222222] truncate">{item.name}</p>
-                      <p className="text-[#66636A]">Size: <strong className="text-[#222222]">{item.size}</strong> × {item.qty}</p>
+                      <p className="font-bold text-slate-900 dark:text-white truncate">{item.name}</p>
+                      <p className="text-slate-500 dark:text-slate-400">Size: <strong className="text-slate-800 dark:text-slate-200">{item.size}</strong> × {item.qty}</p>
                     </div>
                   </div>
-                  <span className="font-bold text-[#222222]">${(item.price * item.qty).toFixed(2)}</span>
+                  <span className="font-extrabold text-slate-900 dark:text-white">${(item.price * item.qty).toFixed(2)}</span>
                 </div>
               ))}
             </div>
 
             {/* Member Discount Badge */}
             {discountPct > 0 ? (
-              <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-200 flex items-center justify-between text-xs text-emerald-800">
-                <div className="flex items-center gap-1.5 font-medium">
-                  <ShieldCheck className="w-4 h-4 text-emerald-600" />
+              <div className="p-3.5 rounded-2xl glass-card bg-emerald-500/10 border border-emerald-300/40 dark:border-emerald-700/50 flex items-center justify-between text-xs text-emerald-950 dark:text-emerald-200">
+                <div className="flex items-center gap-1.5 font-bold">
+                  <ShieldCheck className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                   <span>Member Privilege ({discountPct}% Off)</span>
                 </div>
-                <span className="font-bold text-emerald-700">-${discountAmount.toFixed(2)}</span>
+                <span className="font-black text-emerald-600 dark:text-emerald-400">-${discountAmount.toFixed(2)}</span>
               </div>
             ) : null}
 
             {/* Financial Calculations */}
-            <div className="space-y-2 text-xs text-[#66636A] border-t border-border pt-4">
+            <div className="space-y-2 text-xs text-slate-500 dark:text-slate-400 border-t border-slate-200/60 dark:border-slate-800/60 pt-4">
               <div className="flex justify-between">
                 <span>Subtotal</span>
-                <span className="text-[#222222] font-semibold">${subtotal.toFixed(2)}</span>
+                <span className="text-slate-900 dark:text-white font-bold">${subtotal.toFixed(2)}</span>
               </div>
               {discountAmount > 0 && (
-                <div className="flex justify-between text-emerald-600 font-medium">
+                <div className="flex justify-between text-emerald-600 dark:text-emerald-400 font-medium">
                   <span>Member Savings</span>
                   <span>-${discountAmount.toFixed(2)}</span>
                 </div>
               )}
-              <div className="flex justify-between text-base font-extrabold text-[#222222] border-t border-border pt-3">
+              <div className="flex justify-between text-base font-extrabold text-slate-900 dark:text-white border-t border-slate-200/60 dark:border-slate-800/60 pt-3">
                 <span>Final Total Due</span>
-                <span className="text-[#714B67] text-lg font-black">${totalPayable.toFixed(2)}</span>
+                <span className="text-[#714B67] dark:text-purple-300 text-xl font-black">${totalPayable.toFixed(2)}</span>
               </div>
             </div>
 
@@ -361,7 +361,7 @@ export default function CheckoutPage() {
               type="submit"
               variant="primary"
               size="lg"
-              className="w-full bg-[#714B67] hover:bg-[#5B3B52] text-white shadow-sm font-bold"
+              className="w-full rounded-full bg-gradient-to-r from-[#714B67] to-[#8C5D80] hover:from-[#5B3B52] hover:to-[#714B67] text-white shadow-lg shadow-purple-500/20 font-bold active:scale-95 transition-transform"
               isLoading={isProcessing}
             >
               <Lock className="w-4 h-4 mr-2" />

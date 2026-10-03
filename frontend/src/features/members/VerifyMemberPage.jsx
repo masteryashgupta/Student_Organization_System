@@ -20,16 +20,16 @@ export default function VerifyMemberPage() {
   // Gate officer-only access
   if (!isOfficer) {
     return (
-      <div className="max-w-2xl mx-auto py-12">
-        <Card className="border-rose-200 bg-rose-50 shadow-sm">
+      <div className="max-w-2xl mx-auto py-12 px-4">
+        <Card className="glass-panel border-rose-300/40 dark:border-rose-900/50 bg-rose-500/10 backdrop-blur-xl rounded-3xl shadow-xl">
           <CardContent className="p-8 text-center space-y-4">
-            <div className="w-16 h-16 rounded-2xl bg-rose-100 text-rose-700 mx-auto flex items-center justify-center">
+            <div className="w-16 h-16 rounded-2xl bg-rose-500/20 text-rose-600 dark:text-rose-400 mx-auto flex items-center justify-center shadow-inner">
               <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
               </svg>
             </div>
-            <h2 className="text-xl font-bold text-[#222222]">Officer Access Required</h2>
-            <p className="text-[#66636A] text-sm max-w-md mx-auto">
+            <h2 className="text-2xl font-bold text-slate-900 dark:text-white">Officer Access Required</h2>
+            <p className="text-slate-600 dark:text-slate-300 text-sm max-w-md mx-auto leading-relaxed">
               The Member Verification tool is restricted to club officers, leaders, and administrators for door check-ins and event admissions.
             </p>
           </CardContent>
@@ -108,35 +108,35 @@ export default function VerifyMemberPage() {
   };
 
   return (
-    <div className="space-y-8 max-w-5xl mx-auto pb-12">
+    <div className="space-y-8 max-w-5xl mx-auto pb-12 animate-fadeIn">
       {/* Top Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-border pb-6">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200/60 dark:border-slate-800/80 pb-6">
         <div>
           <div className="flex items-center gap-3">
-            <span className="p-2.5 rounded-xl bg-[#714B67]/10 text-[#714B67] border border-[#714B67]/20">
+            <span className="p-3 rounded-2xl bg-gradient-to-tr from-purple-500/20 to-pink-500/20 text-[#714B67] dark:text-purple-300 border border-purple-500/30 shadow-sm">
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
               </svg>
             </span>
             <div>
-              <h1 className="text-2xl font-extrabold text-[#222222] tracking-tight">Door Member Verification</h1>
-              <p className="text-sm text-[#66636A]">
+              <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">Door Member Verification</h1>
+              <p className="text-sm text-slate-500 dark:text-slate-400">
                 Instant digital lookup for event entry, voting eligibility, and door admission.
               </p>
             </div>
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <Badge variant="primary" size="lg" className="px-3.5 py-1.5 font-medium bg-[#714B67]/10 text-[#714B67] border border-[#714B67]/20">
-            <span className="w-2 h-2 rounded-full bg-emerald-600 animate-pulse mr-2 inline-block"></span>
+          <Badge variant="primary" size="lg" className="px-4 py-1.5 font-medium rounded-full bg-emerald-500/10 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse mr-2 inline-block shadow-sm"></span>
             Door Scanner Active
           </Badge>
         </div>
       </div>
 
       {/* Search Input Card */}
-      <Card className="bg-white border-border shadow-odoo-card">
-        <CardContent className="p-6">
+      <Card className="glass-panel border-white/40 dark:border-slate-800/80 rounded-3xl shadow-xl overflow-hidden">
+        <CardContent className="p-6 sm:p-8">
           <form id="verify-search-form" onSubmit={handleSearch} className="space-y-4">
             <div className="flex flex-col sm:flex-row gap-3 items-stretch">
               <div className="flex-1 relative">
@@ -149,13 +149,13 @@ export default function VerifyMemberPage() {
                     if (errorMsg) setErrorMsg(null);
                   }}
                   autoFocus
-                  className="w-full text-base py-3 bg-white border-border text-[#222222] placeholder-gray-400 rounded-xl focus:ring-2 focus:ring-[#714B67]"
+                  className="w-full text-base py-3.5 pl-4 pr-10 bg-white/70 dark:bg-slate-900/70 border-slate-200/80 dark:border-slate-700/80 text-slate-900 dark:text-white placeholder-slate-400 rounded-2xl focus:ring-2 focus:ring-[#714B67] dark:focus:ring-purple-400 transition-all shadow-inner"
                 />
                 {query && (
                   <button
                     type="button"
                     onClick={handleClear}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-[#66636A] hover:text-[#222222] p-1 rounded-md"
+                    className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1.5 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
                     title="Clear input"
                   >
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -169,11 +169,11 @@ export default function VerifyMemberPage() {
                 variant="primary"
                 size="lg"
                 disabled={loading || !query.trim()}
-                className="px-6 py-3 font-semibold shadow-sm bg-[#714B67] hover:bg-[#5B3B52] text-white flex items-center justify-center gap-2"
+                className="px-8 py-3.5 font-bold shadow-lg shadow-purple-500/20 bg-gradient-to-r from-[#714B67] to-[#8C5D80] hover:from-[#5B3B52] hover:to-[#714B67] text-white rounded-2xl flex items-center justify-center gap-2 transition-transform active:scale-95"
               >
                 {loading ? (
                   <>
-                    <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
+                    <svg className="animate-spin -ml-1 mr-2 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                     </svg>
@@ -181,7 +181,7 @@ export default function VerifyMemberPage() {
                   </>
                 ) : (
                   <>
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                     </svg>
                     Verify Member
@@ -191,16 +191,16 @@ export default function VerifyMemberPage() {
             </div>
 
             {/* Quick tips & Scanner helper */}
-            <div className="flex flex-wrap items-center justify-between text-xs text-[#66636A] gap-2 pt-1">
+            <div className="flex flex-wrap items-center justify-between text-xs text-slate-500 dark:text-slate-400 gap-2 pt-2">
               <span className="flex items-center gap-1.5">
-                <kbd className="px-2 py-0.5 rounded bg-[#F4F6F8] border border-border font-mono text-[11px] text-[#222222]">Enter</kbd>
-                to verify instantly from hardware barcode/QR scanner or keyboard
+                <kbd className="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 font-mono text-[11px] text-slate-700 dark:text-slate-300 font-bold shadow-sm">Enter</kbd>
+                to verify instantly from hardware scanner or keyboard
               </span>
               {result && (
                 <button
                   type="button"
                   onClick={handleClear}
-                  className="text-[#714B67] hover:underline font-semibold"
+                  className="text-[#714B67] dark:text-purple-400 hover:underline font-bold"
                 >
                   Verify Another Student
                 </button>
@@ -212,14 +212,16 @@ export default function VerifyMemberPage() {
 
       {/* Error / Not Found Display */}
       {errorMsg && (
-        <div className="p-4 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 flex items-start gap-3.5 animate-fadeIn">
-          <svg className="w-5 h-5 text-rose-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
+        <div className="p-5 rounded-2xl glass-card bg-rose-500/10 border border-rose-300/40 dark:border-rose-900/50 text-rose-800 dark:text-rose-300 flex items-start gap-4 animate-fadeIn shadow-lg">
+          <div className="p-2 rounded-xl bg-rose-500/20 text-rose-600 dark:text-rose-400 shrink-0 mt-0.5">
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
           <div className="flex-1">
-            <h4 className="font-bold text-rose-900 text-sm">Verification Not Found</h4>
-            <p className="text-xs text-rose-800 mt-0.5">{errorMsg}</p>
-            <p className="text-xs text-rose-700 mt-2">
+            <h4 className="font-bold text-rose-950 dark:text-rose-200 text-sm">Verification Not Found</h4>
+            <p className="text-xs text-rose-800 dark:text-rose-300 mt-1">{errorMsg}</p>
+            <p className="text-xs text-rose-700 dark:text-rose-400 mt-2 font-medium">
               Tip: Confirm the student's registered university email, member ID, or have them open their digital QR pass.
             </p>
           </div>
@@ -231,38 +233,38 @@ export default function VerifyMemberPage() {
         <div className="space-y-6 animate-fadeIn">
           {/* Main Status Hero Banner */}
           <div
-            className={`p-6 rounded-2xl border flex flex-col md:flex-row items-center justify-between gap-6 shadow-sm ${
+            className={`p-6 sm:p-8 rounded-3xl border backdrop-blur-xl flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl transition-all ${
               result.is_active_member
-                ? 'bg-emerald-50/70 border-emerald-200 text-emerald-900'
+                ? 'bg-emerald-500/10 border-emerald-300/40 dark:border-emerald-700/50 text-emerald-950 dark:text-emerald-200'
                 : result.status === 'expired'
-                ? 'bg-rose-50/70 border-rose-200 text-rose-900'
+                ? 'bg-rose-500/10 border-rose-300/40 dark:border-rose-800/50 text-rose-950 dark:text-rose-200'
                 : result.status === 'pending'
-                ? 'bg-amber-50/70 border-amber-200 text-amber-900'
-                : 'bg-[#F4F6F8] border-border text-[#222222]'
+                ? 'bg-amber-500/10 border-amber-300/40 dark:border-amber-800/50 text-amber-950 dark:text-amber-200'
+                : 'glass-panel text-slate-900 dark:text-white'
             }`}
           >
             <div className="flex items-center gap-5 text-center md:text-left">
               <div
-                className={`w-16 h-16 rounded-2xl flex items-center justify-center shrink-0 shadow-sm ${
+                className={`w-16 h-16 rounded-2xl flex items-center justify-center shrink-0 shadow-lg ${
                   result.is_active_member
-                    ? 'bg-emerald-600 text-white'
+                    ? 'bg-gradient-to-tr from-emerald-600 to-teal-500 text-white shadow-emerald-500/30'
                     : result.status === 'expired'
-                    ? 'bg-rose-600 text-white'
+                    ? 'bg-gradient-to-tr from-rose-600 to-red-500 text-white shadow-rose-500/30'
                     : result.status === 'pending'
-                    ? 'bg-amber-600 text-white'
-                    : 'bg-[#222222] text-white'
+                    ? 'bg-gradient-to-tr from-amber-600 to-orange-500 text-white shadow-amber-500/30'
+                    : 'bg-slate-800 text-white'
                 }`}
               >
                 {result.is_active_member ? (
-                  <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-9 h-9" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7" />
                   </svg>
                 ) : result.status === 'expired' ? (
-                  <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-9 h-9" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M6 18L18 6M6 6l12 12" />
                   </svg>
                 ) : (
-                  <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-9 h-9" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                   </svg>
                 )}
@@ -270,14 +272,14 @@ export default function VerifyMemberPage() {
               <div>
                 <div className="flex flex-wrap items-center justify-center md:justify-start gap-2.5">
                   <span
-                    className={`text-xs font-bold tracking-widest uppercase px-3 py-1 rounded-full border ${
+                    className={`text-xs font-bold tracking-wider uppercase px-3.5 py-1 rounded-full border shadow-sm ${
                       result.is_active_member
-                        ? 'bg-emerald-100 text-emerald-800 border-emerald-300'
+                        ? 'bg-emerald-100/80 dark:bg-emerald-900/60 text-emerald-800 dark:text-emerald-200 border-emerald-300 dark:border-emerald-700'
                         : result.status === 'expired'
-                        ? 'bg-rose-100 text-rose-800 border-rose-300'
+                        ? 'bg-rose-100/80 dark:bg-rose-900/60 text-rose-800 dark:text-rose-200 border-rose-300 dark:border-rose-700'
                         : result.status === 'pending'
-                        ? 'bg-amber-100 text-amber-800 border-amber-300'
-                        : 'bg-gray-100 text-gray-800 border-gray-300'
+                        ? 'bg-amber-100/80 dark:bg-amber-900/60 text-amber-800 dark:text-amber-200 border-amber-300 dark:border-amber-700'
+                        : 'bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 border-slate-300 dark:border-slate-700'
                     }`}
                   >
                     {result.is_active_member
@@ -289,30 +291,30 @@ export default function VerifyMemberPage() {
                       : 'NO ACTIVE MEMBERSHIP'}
                   </span>
                   {result.tier && (
-                    <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-[#714B67]/10 text-[#714B67] border border-[#714B67]/20">
+                    <span className="text-xs font-semibold px-3 py-1 rounded-full bg-purple-500/10 dark:bg-purple-500/20 text-[#714B67] dark:text-purple-300 border border-purple-500/30">
                       {result.tier}
                     </span>
                   )}
                 </div>
-                <h3 className="text-2xl font-extrabold text-[#222222] mt-1.5">{result.name || result.email}</h3>
-                <p className="text-sm text-[#66636A]">{result.email}</p>
+                <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white mt-2">{result.name || result.email}</h3>
+                <p className="text-sm text-slate-500 dark:text-slate-400 font-medium">{result.email}</p>
               </div>
             </div>
 
             <div className="flex flex-col items-center md:items-end gap-1.5 shrink-0">
               {result.is_active_member ? (
                 <div className="text-right">
-                  <div className="text-sm font-bold text-emerald-800">
+                  <div className="text-base font-bold text-emerald-700 dark:text-emerald-400">
                     {result.days_until_expiry} Days Remaining
                   </div>
-                  <div className="text-xs text-[#66636A]">
+                  <div className="text-xs text-slate-500 dark:text-slate-400 font-medium">
                     Expires on: {result.expires_on ? new Date(result.expires_on).toLocaleDateString() : 'N/A'}
                   </div>
                 </div>
               ) : (
                 <div className="text-right">
-                  <div className="text-sm font-bold text-rose-800">Door Action Required</div>
-                  <div className="text-xs text-[#66636A]">{result.message}</div>
+                  <div className="text-base font-bold text-rose-700 dark:text-rose-400">Door Action Required</div>
+                  <div className="text-xs text-slate-500 dark:text-slate-400 font-medium">{result.message}</div>
                 </div>
               )}
             </div>
@@ -322,44 +324,44 @@ export default function VerifyMemberPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* 2 Cols: Member Profile & Discounts */}
             <div className="md:col-span-2 space-y-6">
-              <Card className="bg-white border-border shadow-odoo-card">
+              <Card className="glass-panel border-white/40 dark:border-slate-800/80 rounded-3xl shadow-xl">
                 <CardHeader>
-                  <CardTitle className="text-base text-[#222222] flex items-center justify-between">
+                  <CardTitle className="text-lg font-bold text-slate-900 dark:text-white flex items-center justify-between">
                     <span>Membership & Account Verification</span>
-                    <Badge variant="neutral">User ID #{result.user_id}</Badge>
+                    <Badge variant="neutral" className="rounded-full font-mono text-xs px-3">User ID #{result.user_id}</Badge>
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                    <div className="p-3.5 rounded-xl bg-[#F4F6F8] border border-border">
-                      <p className="text-xs text-[#66636A] font-medium">Account Role</p>
-                      <p className="text-sm font-semibold text-[#222222] mt-0.5 capitalize">{result.role}</p>
+                <CardContent className="space-y-5">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3.5">
+                    <div className="p-4 rounded-2xl glass-card bg-slate-50/60 dark:bg-slate-800/50 border border-slate-200/60 dark:border-slate-700/60">
+                      <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">Account Role</p>
+                      <p className="text-sm font-bold text-slate-900 dark:text-white mt-1 capitalize">{result.role}</p>
                     </div>
-                    <div className="p-3.5 rounded-xl bg-[#F4F6F8] border border-border">
-                      <p className="text-xs text-[#66636A] font-medium">Membership Tier</p>
-                      <p className="text-sm font-semibold text-[#714B67] mt-0.5">{result.tier || 'None'}</p>
+                    <div className="p-4 rounded-2xl glass-card bg-slate-50/60 dark:bg-slate-800/50 border border-slate-200/60 dark:border-slate-700/60">
+                      <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">Membership Tier</p>
+                      <p className="text-sm font-bold text-[#714B67] dark:text-purple-300 mt-1">{result.tier || 'None'}</p>
                     </div>
-                    <div className="p-3.5 rounded-xl bg-[#F4F6F8] border border-border">
-                      <p className="text-xs text-[#66636A] font-medium">Dues Payment</p>
-                      <p className={`text-sm font-semibold mt-0.5 ${result.dues_paid ? 'text-emerald-700' : 'text-rose-700'}`}>
+                    <div className="p-4 rounded-2xl glass-card bg-slate-50/60 dark:bg-slate-800/50 border border-slate-200/60 dark:border-slate-700/60">
+                      <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">Dues Payment</p>
+                      <p className={`text-sm font-bold mt-1 ${result.dues_paid ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400'}`}>
                         {result.dues_paid ? 'Paid & Recorded' : 'Unpaid'}
                       </p>
                     </div>
-                    <div className="p-3.5 rounded-xl bg-[#F4F6F8] border border-border">
-                      <p className="text-xs text-[#66636A] font-medium">Start Date</p>
-                      <p className="text-sm font-semibold text-[#222222] mt-0.5">
+                    <div className="p-4 rounded-2xl glass-card bg-slate-50/60 dark:bg-slate-800/50 border border-slate-200/60 dark:border-slate-700/60">
+                      <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">Start Date</p>
+                      <p className="text-sm font-bold text-slate-900 dark:text-white mt-1">
                         {result.start_date ? new Date(result.start_date).toLocaleDateString() : '—'}
                       </p>
                     </div>
-                    <div className="p-3.5 rounded-xl bg-[#F4F6F8] border border-border">
-                      <p className="text-xs text-[#66636A] font-medium">Expiry Date</p>
-                      <p className="text-sm font-semibold text-[#222222] mt-0.5">
+                    <div className="p-4 rounded-2xl glass-card bg-slate-50/60 dark:bg-slate-800/50 border border-slate-200/60 dark:border-slate-700/60">
+                      <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">Expiry Date</p>
+                      <p className="text-sm font-bold text-slate-900 dark:text-white mt-1">
                         {result.expires_on ? new Date(result.expires_on).toLocaleDateString() : '—'}
                       </p>
                     </div>
-                    <div className="p-3.5 rounded-xl bg-[#F4F6F8] border border-border">
-                      <p className="text-xs text-[#66636A] font-medium">Member ID</p>
-                      <p className="text-sm font-semibold text-[#222222] mt-0.5">
+                    <div className="p-4 rounded-2xl glass-card bg-slate-50/60 dark:bg-slate-800/50 border border-slate-200/60 dark:border-slate-700/60">
+                      <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">Member ID</p>
+                      <p className="text-sm font-bold text-slate-900 dark:text-white mt-1">
                         {result.member_id ? `#${result.member_id}` : 'No Record'}
                       </p>
                     </div>
@@ -367,27 +369,27 @@ export default function VerifyMemberPage() {
 
                   {/* Club Perks Matrix */}
                   <div className="pt-2">
-                    <h4 className="text-xs font-semibold text-[#222222] uppercase tracking-wider mb-2.5">
+                    <h4 className="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-3">
                       Applicable Club Perks & Discounts
                     </h4>
-                    <div className="grid grid-cols-2 gap-3">
-                      <div className="p-3.5 rounded-xl bg-[#714B67]/5 border border-[#714B67]/20 flex items-center justify-between">
+                    <div className="grid grid-cols-2 gap-3.5">
+                      <div className="p-4 rounded-2xl glass-card bg-purple-500/10 border border-purple-500/20 dark:border-purple-500/30 flex items-center justify-between">
                         <div>
-                          <p className="text-xs text-[#714B67] font-medium">Ticket Discount</p>
-                          <p className="text-lg font-bold text-[#222222]">{result.ticket_discount_pct}% OFF</p>
+                          <p className="text-xs text-purple-700 dark:text-purple-300 font-medium">Ticket Discount</p>
+                          <p className="text-xl font-extrabold text-slate-900 dark:text-white">{result.ticket_discount_pct}% OFF</p>
                         </div>
-                        <span className="p-2 rounded-lg bg-[#714B67]/10 text-[#714B67]">
+                        <span className="p-2.5 rounded-xl bg-purple-500/20 text-[#714B67] dark:text-purple-300 shadow-sm">
                           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z" />
                           </svg>
                         </span>
                       </div>
-                      <div className="p-3.5 rounded-xl bg-[#017E84]/5 border border-[#017E84]/20 flex items-center justify-between">
+                      <div className="p-4 rounded-2xl glass-card bg-teal-500/10 border border-teal-500/20 dark:border-teal-500/30 flex items-center justify-between">
                         <div>
-                          <p className="text-xs text-[#017E84] font-medium">Merch Store Discount</p>
-                          <p className="text-lg font-bold text-[#222222]">{result.merch_discount_pct}% OFF</p>
+                          <p className="text-xs text-teal-700 dark:text-teal-300 font-medium">Merch Store Discount</p>
+                          <p className="text-xl font-extrabold text-slate-900 dark:text-white">{result.merch_discount_pct}% OFF</p>
                         </div>
-                        <span className="p-2 rounded-lg bg-[#017E84]/10 text-[#017E84]">
+                        <span className="p-2.5 rounded-xl bg-teal-500/20 text-[#017E84] dark:text-teal-300 shadow-sm">
                           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                           </svg>
@@ -401,18 +403,18 @@ export default function VerifyMemberPage() {
 
             {/* 1 Col: Member Digital Pass & QR Code */}
             <div className="space-y-6">
-              <Card className="bg-white border-border shadow-odoo-card text-center">
+              <Card className="glass-panel border-white/40 dark:border-slate-800/80 rounded-3xl shadow-xl text-center">
                 <CardHeader className="pb-2">
-                  <CardTitle className="text-sm font-bold text-[#222222]">
+                  <CardTitle className="text-base font-bold text-slate-900 dark:text-white">
                     Digital Verification Pass
                   </CardTitle>
-                  <CardDescription className="text-xs text-[#66636A]">
+                  <CardDescription className="text-xs text-slate-500 dark:text-slate-400">
                     Scan via QR or optical badge reader
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="p-5 flex flex-col items-center space-y-4">
                   {result.qr_code ? (
-                    <div className="p-3 bg-white rounded-2xl shadow-sm inline-block border-2 border-border">
+                    <div className="p-3 bg-white rounded-2xl shadow-md inline-block border border-slate-200">
                       <img
                         src={result.qr_code}
                         alt="Member Verification QR Code"
@@ -420,7 +422,7 @@ export default function VerifyMemberPage() {
                       />
                     </div>
                   ) : (
-                    <div className="w-40 h-40 rounded-2xl bg-[#F4F6F8] border border-border flex flex-col items-center justify-center p-4 text-[#66636A] text-xs">
+                    <div className="w-40 h-40 rounded-2xl bg-slate-100 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 flex flex-col items-center justify-center p-4 text-slate-400 text-xs">
                       <svg className="w-8 h-8 mb-2 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
                       </svg>
@@ -430,7 +432,7 @@ export default function VerifyMemberPage() {
 
                   {result.token && (
                     <div className="w-full">
-                      <p className="text-[11px] text-[#66636A] font-mono truncate bg-[#F4F6F8] px-2 py-1.5 rounded-lg border border-border">
+                      <p className="text-[11px] text-slate-600 dark:text-slate-300 font-mono truncate bg-slate-100/80 dark:bg-slate-800/80 px-3 py-2 rounded-xl border border-slate-200/80 dark:border-slate-700/80">
                         Token: {result.token}
                       </p>
                     </div>
@@ -439,7 +441,7 @@ export default function VerifyMemberPage() {
                   <Button
                     variant="outline"
                     size="sm"
-                    className="w-full text-xs"
+                    className="w-full text-xs rounded-full"
                     onClick={handleClear}
                   >
                     Scan Next Student
@@ -453,45 +455,45 @@ export default function VerifyMemberPage() {
 
       {/* Door Verification Session History Log */}
       {recentChecks.length > 0 && (
-        <Card className="bg-white border-border shadow-sm">
+        <Card className="glass-panel border-white/40 dark:border-slate-800/80 rounded-3xl shadow-xl">
           <CardHeader>
             <div className="flex items-center justify-between">
-              <CardTitle className="text-base text-[#222222] flex items-center gap-2">
-                <svg className="w-4 h-4 text-[#66636A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <CardTitle className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                <svg className="w-4 h-4 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
                 Door Session Activity Log
               </CardTitle>
-              <span className="text-xs text-[#66636A]">{recentChecks.length} recent checks</span>
+              <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">{recentChecks.length} recent checks</span>
             </div>
           </CardHeader>
           <CardContent className="p-0">
-            <div className="divide-y divide-border overflow-x-auto">
+            <div className="divide-y divide-slate-100 dark:divide-slate-800 overflow-x-auto">
               {recentChecks.map((item) => (
                 <div
                   key={item.id}
                   onClick={() => handleQuickLookup(item.email)}
-                  className="px-5 py-3.5 flex items-center justify-between hover:bg-[#FAF9F7] cursor-pointer transition-colors text-sm"
+                  className="px-6 py-4 flex items-center justify-between hover:bg-purple-500/5 dark:hover:bg-purple-500/10 cursor-pointer transition-colors text-sm"
                   title="Click to re-verify"
                 >
                   <div className="flex items-center gap-3">
                     <div
                       className={`w-2.5 h-2.5 rounded-full ${
-                        item.isActive ? 'bg-emerald-600 shadow-sm' : 'bg-rose-500'
+                        item.isActive ? 'bg-emerald-500 shadow-sm shadow-emerald-500/50' : 'bg-rose-500 shadow-sm shadow-rose-500/50'
                       }`}
                     ></div>
                     <div>
-                      <p className="font-semibold text-[#222222]">{item.name}</p>
-                      <p className="text-xs text-[#66636A]">{item.email}</p>
+                      <p className="font-bold text-slate-900 dark:text-white">{item.name}</p>
+                      <p className="text-xs text-slate-500 dark:text-slate-400">{item.email}</p>
                     </div>
                   </div>
 
                   <div className="flex items-center gap-4">
-                    <span className="text-xs text-[#66636A] hidden sm:inline-block">{item.tier}</span>
-                    <Badge variant={item.isActive ? 'success' : 'danger'} size="sm">
+                    <span className="text-xs text-slate-500 dark:text-slate-400 hidden sm:inline-block font-medium">{item.tier}</span>
+                    <Badge variant={item.isActive ? 'success' : 'danger'} size="sm" className="rounded-full px-3">
                       {item.isActive ? 'ACTIVE' : item.status.toUpperCase()}
                     </Badge>
-                    <span className="text-xs font-mono text-[#66636A]">{item.timestamp}</span>
+                    <span className="text-xs font-mono text-slate-400 dark:text-slate-500">{item.timestamp}</span>
                   </div>
                 </div>
               ))}

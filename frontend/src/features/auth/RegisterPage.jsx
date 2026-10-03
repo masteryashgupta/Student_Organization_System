@@ -93,83 +93,77 @@ export default function RegisterPage() {
 
   return (
     <div className="relative min-h-[calc(100vh-140px)] flex items-center justify-center py-6 sm:py-12 px-4 sm:px-6 lg:px-8">
-      {/* Subtle ambient decorative depth */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden flex items-center justify-center">
-        <div className="w-[500px] h-[500px] bg-[#714B67]/5 rounded-full blur-3xl -top-24 -right-20 animate-pulse duration-1000" />
-        <div className="w-[450px] h-[450px] bg-[#714B67]/5 rounded-full blur-3xl -bottom-20 -left-20" />
-      </div>
-
       <div className="relative w-full max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
         {/* LEFT: Brand & Value Proposition */}
         <div className="lg:col-span-5 space-y-6 text-left">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#F3EAF2] border border-[#D4BFD2] text-[#714B67] text-xs font-bold uppercase tracking-wider">
-            <Sparkles className="w-3.5 h-3.5 text-[#714B67]" />
+          <div className="dual-badge-pill">
+            <Sparkles className="w-3.5 h-3.5 text-[#714B67] dark:text-[#F3EAF2]" />
             <span>Join the Community</span>
           </div>
 
           <div className="space-y-3">
-            <h1 className="text-3xl sm:text-4xl font-black text-[#0F172A] tracking-tight leading-[1.15]">
-              Unlock full access to <span className="text-[#714B67]">Skyline Club</span>.
+            <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-[1.15]">
+              Unlock full access to <span className="text-[#714B67] dark:text-[#A97B9F]">Skyline Club</span>.
             </h1>
-            <p className="text-sm text-[#64748B] leading-relaxed">
+            <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
               Create your account in seconds to RSVP for club events, unlock member merchandise discounts, participate in volunteer action items, and access member perks.
             </p>
           </div>
 
           <div className="space-y-3 pt-2">
-            <div className="flex items-start gap-3 p-3.5 rounded-2xl bg-white/70 border border-slate-200/80 shadow-xs">
-              <div className="w-8 h-8 rounded-xl bg-[#F3EAF2] text-[#714B67] flex items-center justify-center shrink-0">
+            <div className="flex items-start gap-3 p-4 rounded-3xl bg-white/70 dark:bg-slate-900/60 backdrop-blur-xl border border-slate-200/80 dark:border-white/10 shadow-xs hover:border-[#D4BFD2] dark:hover:border-white/20 transition-all">
+              <div className="w-9 h-9 rounded-2xl bg-[#F3EAF2] dark:bg-[#714B67]/30 text-[#714B67] dark:text-[#F3EAF2] flex items-center justify-center shrink-0 shadow-xs">
                 <Users className="w-4 h-4" />
               </div>
               <div>
-                <h4 className="text-xs font-bold text-[#0F172A]">All Membership Tiers</h4>
-                <p className="text-[11px] text-[#64748B] mt-0.5">Guest, Regular Member, Volunteer, Leader</p>
+                <h4 className="text-xs font-bold text-slate-900 dark:text-white">All Membership Tiers</h4>
+                <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">Guest, Regular Member, Volunteer, Leader</p>
               </div>
             </div>
 
-            <div className="flex items-start gap-3 p-3.5 rounded-2xl bg-white/70 border border-slate-200/80 shadow-xs">
-              <div className="w-8 h-8 rounded-xl bg-[#F3EAF2] text-[#714B67] flex items-center justify-center shrink-0">
+            <div className="flex items-start gap-3 p-4 rounded-3xl bg-white/70 dark:bg-slate-900/60 backdrop-blur-xl border border-slate-200/80 dark:border-white/10 shadow-xs hover:border-[#D4BFD2] dark:hover:border-white/20 transition-all">
+              <div className="w-9 h-9 rounded-2xl bg-[#F3EAF2] dark:bg-[#714B67]/30 text-[#714B67] dark:text-[#F3EAF2] flex items-center justify-center shrink-0 shadow-xs">
                 <Award className="w-4 h-4" />
               </div>
               <div>
-                <h4 className="text-xs font-bold text-[#0F172A]">Official Membership Badge</h4>
-                <p className="text-[11px] text-[#64748B] mt-0.5">Manage digital dues and QR event check-ins</p>
+                <h4 className="text-xs font-bold text-slate-900 dark:text-white">Official Membership Badge</h4>
+                <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">Manage digital dues and QR event check-ins</p>
               </div>
             </div>
 
-            <div className="flex items-start gap-3 p-3.5 rounded-2xl bg-white/70 border border-slate-200/80 shadow-xs">
-              <div className="w-8 h-8 rounded-xl bg-[#F3EAF2] text-[#714B67] flex items-center justify-center shrink-0">
+            <div className="flex items-start gap-3 p-4 rounded-3xl bg-white/70 dark:bg-slate-900/60 backdrop-blur-xl border border-slate-200/80 dark:border-white/10 shadow-xs hover:border-[#D4BFD2] dark:hover:border-white/20 transition-all">
+              <div className="w-9 h-9 rounded-2xl bg-[#F3EAF2] dark:bg-[#714B67]/30 text-[#714B67] dark:text-[#F3EAF2] flex items-center justify-center shrink-0 shadow-xs">
                 <ShieldCheck className="w-4 h-4" />
               </div>
               <div>
-                <h4 className="text-xs font-bold text-[#0F172A]">Student Governance</h4>
-                <p className="text-[11px] text-[#64748B] mt-0.5">Budget transparency & reimbursement portals</p>
+                <h4 className="text-xs font-bold text-slate-900 dark:text-white">Student Governance</h4>
+                <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">Budget transparency & reimbursement portals</p>
               </div>
             </div>
           </div>
 
-          <div className="flex items-center gap-2 text-xs font-medium text-[#64748B]">
-            <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+          <div className="flex items-center gap-2 text-xs font-medium text-slate-500 dark:text-slate-400">
+            <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
             <span>Instant sign-up • No upfront fees for guest tier</span>
           </div>
         </div>
 
         {/* RIGHT: Register Card */}
         <div className="lg:col-span-7 flex justify-center lg:justify-end">
-          <div className="w-full max-w-[500px] bg-white rounded-3xl border border-slate-200 shadow-xl shadow-[#714B67]/5 p-6 sm:p-8">
+          <div className="w-full max-w-[500px] bg-white/85 dark:bg-slate-900/80 backdrop-blur-2xl rounded-3xl border border-slate-200/80 dark:border-white/10 shadow-2xl p-7 sm:p-9">
             <div className="text-center pb-5">
-              <div className="mx-auto w-12 h-12 rounded-2xl bg-gradient-to-tr from-[#714B67] to-[#5B3B52] flex items-center justify-center font-black text-white text-xl shadow-md mb-2">
+              <div className="mx-auto w-12 h-12 rounded-2xl bg-gradient-to-tr from-[#714B67] to-[#87567D] flex items-center justify-center font-extrabold text-white text-xl shadow-md mb-2">
                 S
               </div>
-              <h2 className="text-2xl font-black text-[#0F172A] tracking-tight">Create Account</h2>
-              <p className="text-xs text-[#64748B] mt-1">
+              <h2 className="text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">Create Account</h2>
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
                 Enter your details to join Skyline Student Organization
               </p>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-3.5">
               <div className="space-y-1 text-left">
-                <label className="block text-xs font-bold uppercase tracking-wider text-slate-700">
+                <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
                   Full Name
                 </label>
                 <input
@@ -179,16 +173,16 @@ export default function RegisterPage() {
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  className="block w-full rounded-xl bg-white border border-slate-200 px-3.5 py-2.5 text-sm text-[#0F172A] placeholder-slate-400 focus:outline-none focus:border-[#714B67] focus:ring-2 focus:ring-[#714B67]/20 transition-all shadow-xs"
+                  className="block w-full rounded-2xl bg-white/80 dark:bg-slate-900/70 backdrop-blur-md border border-slate-200/80 dark:border-white/10 px-4 py-2.5 text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-[#714B67] dark:focus:border-[#A97B9F] focus:ring-4 focus:ring-[#714B67]/20 dark:focus:ring-[#A97B9F]/20 transition-all shadow-xs"
                 />
                 {errors.name && (
-                  <p className="text-xs text-rose-600 font-medium">{errors.name}</p>
+                  <p className="text-xs text-rose-600 dark:text-rose-400 font-medium">{errors.name}</p>
                 )}
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="space-y-1 text-left">
-                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-700">
+                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
                     Email Address
                   </label>
                   <input
@@ -198,15 +192,15 @@ export default function RegisterPage() {
                     value={formData.email}
                     onChange={handleChange}
                     required
-                    className="block w-full rounded-xl bg-white border border-slate-200 px-3.5 py-2.5 text-sm text-[#0F172A] placeholder-slate-400 focus:outline-none focus:border-[#714B67] focus:ring-2 focus:ring-[#714B67]/20 transition-all shadow-xs"
+                    className="block w-full rounded-2xl bg-white/80 dark:bg-slate-900/70 backdrop-blur-md border border-slate-200/80 dark:border-white/10 px-4 py-2.5 text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-[#714B67] dark:focus:border-[#A97B9F] focus:ring-4 focus:ring-[#714B67]/20 dark:focus:ring-[#A97B9F]/20 transition-all shadow-xs"
                   />
                   {errors.email && (
-                    <p className="text-xs text-rose-600 font-medium">{errors.email}</p>
+                    <p className="text-xs text-rose-600 dark:text-rose-400 font-medium">{errors.email}</p>
                   )}
                 </div>
 
                 <div className="space-y-1 text-left">
-                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-700">
+                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
                     Phone Number
                   </label>
                   <input
@@ -215,7 +209,7 @@ export default function RegisterPage() {
                     placeholder="(555) 000-1234"
                     value={formData.phone}
                     onChange={handleChange}
-                    className="block w-full rounded-xl bg-white border border-slate-200 px-3.5 py-2.5 text-sm text-[#0F172A] placeholder-slate-400 focus:outline-none focus:border-[#714B67] focus:ring-2 focus:ring-[#714B67]/20 transition-all shadow-xs"
+                    className="block w-full rounded-2xl bg-white/80 dark:bg-slate-900/70 backdrop-blur-md border border-slate-200/80 dark:border-white/10 px-4 py-2.5 text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-[#714B67] dark:focus:border-[#A97B9F] focus:ring-4 focus:ring-[#714B67]/20 dark:focus:ring-[#A97B9F]/20 transition-all shadow-xs"
                   />
                 </div>
               </div>
@@ -238,7 +232,7 @@ export default function RegisterPage() {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="space-y-1 text-left">
-                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-700">
+                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
                     Password
                   </label>
                   <div className="relative">
@@ -249,23 +243,23 @@ export default function RegisterPage() {
                       value={formData.password}
                       onChange={handleChange}
                       required
-                      className="block w-full rounded-xl bg-white border border-slate-200 pl-3.5 pr-9 py-2.5 text-sm text-[#0F172A] placeholder-slate-400 focus:outline-none focus:border-[#714B67] focus:ring-2 focus:ring-[#714B67]/20 transition-all shadow-xs"
+                      className="block w-full rounded-2xl bg-white/80 dark:bg-slate-900/70 backdrop-blur-md border border-slate-200/80 dark:border-white/10 pl-4 pr-10 py-2.5 text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-[#714B67] dark:focus:border-[#A97B9F] focus:ring-4 focus:ring-[#714B67]/20 dark:focus:ring-[#A97B9F]/20 transition-all shadow-xs"
                     />
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute inset-y-0 right-0 pr-2.5 flex items-center text-slate-400 hover:text-slate-600"
+                      className="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
                     >
-                      {showPassword ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
+                      {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                     </button>
                   </div>
                   {errors.password && (
-                    <p className="text-xs text-rose-600 font-medium">{errors.password}</p>
+                    <p className="text-xs text-rose-600 dark:text-rose-400 font-medium">{errors.password}</p>
                   )}
                 </div>
 
                 <div className="space-y-1 text-left">
-                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-700">
+                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
                     Confirm Password
                   </label>
                   <div className="relative">
@@ -276,18 +270,18 @@ export default function RegisterPage() {
                       value={formData.password_confirm}
                       onChange={handleChange}
                       required
-                      className="block w-full rounded-xl bg-white border border-slate-200 pl-3.5 pr-9 py-2.5 text-sm text-[#0F172A] placeholder-slate-400 focus:outline-none focus:border-[#714B67] focus:ring-2 focus:ring-[#714B67]/20 transition-all shadow-xs"
+                      className="block w-full rounded-2xl bg-white/80 dark:bg-slate-900/70 backdrop-blur-md border border-slate-200/80 dark:border-white/10 pl-4 pr-10 py-2.5 text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-[#714B67] dark:focus:border-[#A97B9F] focus:ring-4 focus:ring-[#714B67]/20 dark:focus:ring-[#A97B9F]/20 transition-all shadow-xs"
                     />
                     <button
                       type="button"
                       onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                      className="absolute inset-y-0 right-0 pr-2.5 flex items-center text-slate-400 hover:text-slate-600"
+                      className="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
                     >
-                      {showConfirmPassword ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
+                      {showConfirmPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                     </button>
                   </div>
                   {errors.password_confirm && (
-                    <p className="text-xs text-rose-600 font-medium">{errors.password_confirm}</p>
+                    <p className="text-xs text-rose-600 dark:text-rose-400 font-medium">{errors.password_confirm}</p>
                   )}
                 </div>
               </div>
@@ -297,18 +291,18 @@ export default function RegisterPage() {
                 variant="primary"
                 size="lg"
                 isLoading={loading}
-                className="w-full mt-3 font-bold shadow-md hover:shadow-lg"
+                className="w-full mt-3 font-bold shadow-lg"
               >
                 <span>Create Account</span>
                 {!loading && <ArrowRight className="w-4 h-4 ml-1.5" />}
               </Button>
             </form>
 
-            <div className="mt-5 pt-4 border-t border-slate-100 text-center text-xs text-[#64748B]">
+            <div className="mt-5 pt-4 border-t border-slate-100 dark:border-white/5 text-center text-xs text-slate-500 dark:text-slate-400">
               Already have an account?{' '}
               <Link
                 to="/login"
-                className="text-[#714B67] font-bold hover:text-[#5B3B52] hover:underline transition-colors ml-1"
+                className="text-[#714B67] dark:text-[#A97B9F] font-bold hover:underline transition-colors ml-1"
               >
                 Sign in here
               </Link>
@@ -319,3 +313,4 @@ export default function RegisterPage() {
     </div>
   );
 }
+

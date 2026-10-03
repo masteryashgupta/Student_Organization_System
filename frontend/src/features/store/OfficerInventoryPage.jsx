@@ -162,29 +162,29 @@ export default function OfficerInventoryPage() {
   return (
     <div className="max-w-7xl mx-auto pb-24 space-y-8 animate-fadeIn">
       {/* Top Header & Breadcrumb */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-border pb-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200/60 dark:border-slate-800/60 pb-6">
         <div>
           <div className="flex items-center gap-2 mb-2">
-            <Badge variant="accent" className="flex items-center gap-1.5 px-3 py-1 font-semibold bg-[#714B67]/10 text-[#714B67] border-[#714B67]/20">
-              <ShieldCheck className="w-3.5 h-3.5 text-[#714B67]" /> Officer Control Desk
+            <Badge variant="accent" className="flex items-center gap-1.5 px-3.5 py-1 font-bold rounded-full">
+              <ShieldCheck className="w-3.5 h-3.5" /> Officer Control Desk
             </Badge>
-            <span className="text-[#66636A]">/</span>
-            <Link to="/store" className="text-xs font-semibold text-[#66636A] hover:text-[#714B67] flex items-center gap-1 transition-colors">
+            <span className="text-slate-400">/</span>
+            <Link to="/store" className="text-xs font-bold text-slate-500 hover:text-[#714B67] dark:text-slate-400 dark:hover:text-purple-300 flex items-center gap-1 transition-colors">
               <ArrowLeft className="w-3 h-3" /> Live Store
             </Link>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-[#222222] tracking-tight flex items-center gap-2.5">
+          <h1 className="text-2xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight flex items-center gap-2.5">
             Merch Stock & Low-Stock Alerts
           </h1>
-          <p className="text-sm text-[#66636A] mt-1">
+          <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
             Real-time per-size stock monitoring, automated replenishment alerts (&le; 5 units), and instant SKU restock.
           </p>
         </div>
 
         <div className="flex items-center gap-3">
           <Link to="/store/manage/orders">
-            <Button variant="outline" size="sm" className="font-semibold border-border text-[#222222] hover:bg-white">
-              <Boxes className="w-4 h-4 mr-1.5 text-[#714B67]" /> Order Fulfillment Desk
+            <Button variant="outline" size="sm" className="font-bold rounded-full border-slate-200/80 dark:border-slate-700/80 hover:bg-slate-100 dark:hover:bg-slate-800">
+              <Boxes className="w-4 h-4 mr-1.5 text-[#714B67] dark:text-purple-400" /> Order Fulfillment Desk
             </Button>
           </Link>
           <Button
@@ -192,9 +192,9 @@ export default function OfficerInventoryPage() {
             size="sm"
             onClick={() => refetch()}
             disabled={isFetching}
-            className="text-[#66636A] hover:text-[#222222]"
+            className="rounded-full text-slate-500 hover:text-slate-900 dark:hover:text-white"
           >
-            <RefreshCw className={`w-4 h-4 ${isFetching ? 'animate-spin text-[#714B67]' : ''}`} />
+            <RefreshCw className={`w-4 h-4 ${isFetching ? 'animate-spin text-[#714B67] dark:text-purple-400' : ''}`} />
           </Button>
         </div>
       </div>
@@ -202,81 +202,81 @@ export default function OfficerInventoryPage() {
       {/* KPI Stats Cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {/* Total SKUs */}
-        <div className="bg-white border border-border p-5 rounded-2xl shadow-odoo-card">
-          <div className="flex items-center justify-between text-[#66636A] mb-2">
+        <div className="glass-panel border-white/40 dark:border-slate-800/80 p-6 rounded-3xl shadow-lg">
+          <div className="flex items-center justify-between text-slate-500 dark:text-slate-400 mb-2">
             <span className="text-xs font-bold uppercase tracking-wider">Active SKUs</span>
-            <Layers className="w-4 h-4 text-[#714B67]" />
+            <Layers className="w-4 h-4 text-[#714B67] dark:text-purple-400" />
           </div>
-          <div className="text-3xl font-black text-[#222222]">{stats.totalSKUs}</div>
-          <p className="text-xs text-[#66636A] mt-1">Across {products.length} catalog products</p>
+          <div className="text-3xl font-black text-slate-900 dark:text-white">{stats.totalSKUs}</div>
+          <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Across {products.length} catalog products</p>
         </div>
 
         {/* Low Stock Alert (<= 5) */}
         <div
           onClick={() => setStockFilter(stockFilter === 'low' ? 'all' : 'low')}
-          className={`cursor-pointer transition-all border p-5 rounded-2xl shadow-odoo-card ${
+          className={`cursor-pointer transition-all border p-6 rounded-3xl shadow-lg backdrop-blur-xl ${
             stats.lowStockCount > 0
-              ? 'bg-amber-50/50 border-amber-300 hover:border-amber-400'
-              : 'bg-white border-border'
+              ? 'bg-amber-500/10 border-amber-300/40 dark:border-amber-700/50 hover:border-amber-400'
+              : 'glass-panel border-white/40 dark:border-slate-800/80'
           }`}
         >
-          <div className="flex items-center justify-between text-amber-800 mb-2">
+          <div className="flex items-center justify-between text-amber-800 dark:text-amber-300 mb-2">
             <span className="text-xs font-bold uppercase tracking-wider flex items-center gap-1">
               <AlertTriangle className="w-3.5 h-3.5" /> Low Stock (&le; 5)
             </span>
-            <span className="text-xs font-bold bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full border border-amber-200">
+            <span className="text-xs font-bold bg-amber-500/20 text-amber-800 dark:text-amber-200 px-2.5 py-0.5 rounded-full border border-amber-500/30">
               {stats.lowStockCount}
             </span>
           </div>
-          <div className="text-3xl font-black text-amber-700">{stats.lowStockCount}</div>
-          <p className="text-xs text-amber-800/80 mt-1">Requires replenishment</p>
+          <div className="text-3xl font-black text-amber-600 dark:text-amber-400">{stats.lowStockCount}</div>
+          <p className="text-xs text-amber-800/80 dark:text-amber-300/80 mt-1">Requires replenishment</p>
         </div>
 
         {/* Out of Stock (0) */}
         <div
           onClick={() => setStockFilter(stockFilter === 'out' ? 'all' : 'out')}
-          className={`cursor-pointer transition-all border p-5 rounded-2xl shadow-odoo-card ${
+          className={`cursor-pointer transition-all border p-6 rounded-3xl shadow-lg backdrop-blur-xl ${
             stats.outOfStockCount > 0
-              ? 'bg-rose-50/50 border-rose-300 hover:border-rose-400'
-              : 'bg-white border-border'
+              ? 'bg-rose-500/10 border-rose-300/40 dark:border-rose-800/50 hover:border-rose-400'
+              : 'glass-panel border-white/40 dark:border-slate-800/80'
           }`}
         >
-          <div className="flex items-center justify-between text-rose-800 mb-2">
+          <div className="flex items-center justify-between text-rose-800 dark:text-rose-300 mb-2">
             <span className="text-xs font-bold uppercase tracking-wider flex items-center gap-1">
               <TrendingDown className="w-3.5 h-3.5" /> Out of Stock (0)
             </span>
-            <span className="text-xs font-bold bg-rose-100 text-rose-800 px-2 py-0.5 rounded-full border border-rose-200">
+            <span className="text-xs font-bold bg-rose-500/20 text-rose-800 dark:text-rose-200 px-2.5 py-0.5 rounded-full border border-rose-500/30">
               {stats.outOfStockCount}
             </span>
           </div>
-          <div className="text-3xl font-black text-rose-700">{stats.outOfStockCount}</div>
-          <p className="text-xs text-rose-800/80 mt-1">Buying currently disabled</p>
+          <div className="text-3xl font-black text-rose-600 dark:text-rose-400">{stats.outOfStockCount}</div>
+          <p className="text-xs text-rose-800/80 dark:text-rose-300/80 mt-1">Buying currently disabled</p>
         </div>
 
         {/* Total Units in Stock */}
-        <div className="bg-white border border-border p-5 rounded-2xl shadow-odoo-card">
-          <div className="flex items-center justify-between text-[#66636A] mb-2">
+        <div className="glass-panel border-white/40 dark:border-slate-800/80 p-6 rounded-3xl shadow-lg">
+          <div className="flex items-center justify-between text-slate-500 dark:text-slate-400 mb-2">
             <span className="text-xs font-bold uppercase tracking-wider">Total Units on Hand</span>
-            <Package className="w-4 h-4 text-emerald-600" />
+            <Package className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
           </div>
-          <div className="text-3xl font-black text-emerald-600">{stats.totalUnits}</div>
-          <p className="text-xs text-[#66636A] mt-1">
+          <div className="text-3xl font-black text-emerald-600 dark:text-emerald-400">{stats.totalUnits}</div>
+          <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
             ${stats.totalAssetValue.toFixed(2)} retail inventory
           </p>
         </div>
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="bg-white border border-border p-4 rounded-2xl shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="glass-card bg-slate-100/70 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800/80 p-4 rounded-2xl shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
         {/* Status Filter Tabs */}
-        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 md:pb-0 scrollbar-none">
+        <div className="flex items-center gap-2 overflow-x-auto pb-1 md:pb-0 scrollbar-none">
           <button
             type="button"
             onClick={() => setStockFilter('all')}
-            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
+            className={`px-4 py-2 rounded-full text-xs font-bold transition-all whitespace-nowrap ${
               stockFilter === 'all'
-                ? 'bg-[#714B67] text-white shadow-sm'
-                : 'bg-[#FAF9F7] text-[#66636A] hover:text-[#222222] border border-border'
+                ? 'bg-gradient-to-r from-[#714B67] to-[#8C5D80] text-white shadow-md shadow-purple-500/20'
+                : 'glass-card bg-white/70 dark:bg-slate-900/70 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white border border-slate-200/80 dark:border-slate-800/80'
             }`}
           >
             All SKUs ({flattenedInventory.length})
@@ -284,10 +284,10 @@ export default function OfficerInventoryPage() {
           <button
             type="button"
             onClick={() => setStockFilter('low')}
-            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap flex items-center gap-1.5 ${
+            className={`px-4 py-2 rounded-full text-xs font-bold transition-all whitespace-nowrap flex items-center gap-1.5 ${
               stockFilter === 'low'
-                ? 'bg-amber-600 text-white shadow-sm'
-                : 'bg-amber-50 text-amber-800 hover:bg-amber-100 border border-amber-200'
+                ? 'bg-amber-600 text-white shadow-md shadow-amber-500/20'
+                : 'bg-amber-500/10 text-amber-800 dark:text-amber-200 border border-amber-300/40 dark:border-amber-700/50'
             }`}
           >
             <AlertTriangle className="w-3 h-3" />
@@ -296,10 +296,10 @@ export default function OfficerInventoryPage() {
           <button
             type="button"
             onClick={() => setStockFilter('out')}
-            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap flex items-center gap-1.5 ${
+            className={`px-4 py-2 rounded-full text-xs font-bold transition-all whitespace-nowrap flex items-center gap-1.5 ${
               stockFilter === 'out'
-                ? 'bg-rose-600 text-white shadow-sm'
-                : 'bg-rose-50 text-rose-800 hover:bg-rose-100 border border-rose-200'
+                ? 'bg-rose-600 text-white shadow-md shadow-rose-500/20'
+                : 'bg-rose-500/10 text-rose-800 dark:text-rose-200 border border-rose-300/40 dark:border-rose-800/50'
             }`}
           >
             <TrendingDown className="w-3 h-3" />
@@ -308,10 +308,10 @@ export default function OfficerInventoryPage() {
           <button
             type="button"
             onClick={() => setStockFilter('healthy')}
-            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
+            className={`px-4 py-2 rounded-full text-xs font-bold transition-all whitespace-nowrap ${
               stockFilter === 'healthy'
-                ? 'bg-emerald-600 text-white shadow-sm'
-                : 'bg-emerald-50 text-emerald-800 hover:bg-emerald-100 border border-emerald-200'
+                ? 'bg-emerald-600 text-white shadow-md shadow-emerald-500/20'
+                : 'bg-emerald-500/10 text-emerald-800 dark:text-emerald-200 border border-emerald-300/40 dark:border-emerald-700/50'
             }`}
           >
             Healthy ({stats.healthyCount})
@@ -320,29 +320,29 @@ export default function OfficerInventoryPage() {
 
         {/* Search Input */}
         <div className="relative w-full md:w-80">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#66636A]" />
+          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
           <input
             type="text"
             placeholder="Search SKU, Product, or Size..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-9 pr-4 py-2 text-xs bg-[#FAF9F7] border border-border rounded-xl text-[#222222] placeholder-[#66636A] focus:outline-none focus:ring-2 focus:ring-[#714B67] transition-all"
+            className="w-full pl-9 pr-4 py-2 text-xs bg-white/80 dark:bg-slate-800/80 border border-slate-200/80 dark:border-slate-700/80 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#714B67] dark:focus:ring-purple-400 transition-all font-medium"
           />
         </div>
       </div>
 
       {/* Inventory Table */}
-      <div className="bg-white border border-border rounded-3xl overflow-hidden shadow-odoo-card">
+      <div className="glass-panel border-white/40 dark:border-slate-800/80 rounded-3xl overflow-hidden shadow-2xl">
         {isLoading ? (
           <div className="p-12 text-center space-y-3">
             <div className="w-8 h-8 border-2 border-[#714B67] border-t-transparent rounded-full animate-spin mx-auto" />
-            <p className="text-xs text-[#66636A]">Loading live stock levels from inventory database...</p>
+            <p className="text-xs text-slate-400">Loading live stock levels from inventory database...</p>
           </div>
         ) : filteredInventory.length === 0 ? (
           <div className="p-16 text-center space-y-3">
-            <CheckCircle2 className="w-12 h-12 text-emerald-600 mx-auto opacity-70" />
-            <h3 className="text-base font-bold text-[#222222]">No Inventory Issues Found</h3>
-            <p className="text-xs text-[#66636A] max-w-sm mx-auto">
+            <CheckCircle2 className="w-12 h-12 text-emerald-600 dark:text-emerald-400 mx-auto opacity-70" />
+            <h3 className="text-lg font-bold text-slate-900 dark:text-white">No Inventory Issues Found</h3>
+            <p className="text-xs text-slate-500 dark:text-slate-400 max-w-sm mx-auto">
               {stockFilter === 'low'
                 ? 'Great news! No merchandise items are currently under the 5-unit low stock threshold.'
                 : stockFilter === 'out'
@@ -357,7 +357,7 @@ export default function OfficerInventoryPage() {
                   setStockFilter('all');
                   setSearchQuery('');
                 }}
-                className="border-border text-[#222222] hover:bg-[#FAF9F7]"
+                className="rounded-full px-5"
               >
                 Clear Filters
               </Button>
@@ -367,17 +367,17 @@ export default function OfficerInventoryPage() {
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="border-b border-border bg-[#FAF9F7] text-[11px] font-bold text-[#66636A] uppercase tracking-wider">
-                  <th className="py-3.5 px-4">Product / SKU</th>
-                  <th className="py-3.5 px-4">Category</th>
-                  <th className="py-3.5 px-4 text-center">Variant / Size</th>
-                  <th className="py-3.5 px-4">Unit Price</th>
-                  <th className="py-3.5 px-4">Stock Health</th>
-                  <th className="py-3.5 px-4 text-center">Units on Hand</th>
-                  <th className="py-3.5 px-4 text-right">Quick Restock</th>
+                <tr className="border-b border-slate-200/60 dark:border-slate-800/60 bg-slate-50/50 dark:bg-slate-900/50 text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+                  <th className="py-4 px-5">Product / SKU</th>
+                  <th className="py-4 px-5">Category</th>
+                  <th className="py-4 px-5 text-center">Variant / Size</th>
+                  <th className="py-4 px-5">Unit Price</th>
+                  <th className="py-4 px-5">Stock Health</th>
+                  <th className="py-4 px-5 text-center">Units on Hand</th>
+                  <th className="py-4 px-5 text-right">Quick Restock</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-border text-xs">
+              <tbody className="divide-y divide-slate-100 dark:divide-slate-800 text-xs">
                 {filteredInventory.map((item) => {
                   const isZero = item.stock_qty === 0;
                   const isLow = item.stock_qty > 0 && item.stock_qty <= 5;
@@ -385,32 +385,32 @@ export default function OfficerInventoryPage() {
                   return (
                     <tr
                       key={`${item.productId}-${item.variantId}-${item.size}`}
-                      className={`hover:bg-[#FAF9F7]/70 transition-colors ${
+                      className={`hover:bg-purple-500/5 dark:hover:bg-purple-500/10 transition-colors ${
                         isZero
-                          ? 'bg-rose-50/30'
+                          ? 'bg-rose-500/5'
                           : isLow
-                          ? 'bg-amber-50/30'
+                          ? 'bg-amber-500/5'
                           : ''
                       }`}
                     >
                       {/* Product Name & Thumbnail */}
-                      <td className="py-3.5 px-4">
+                      <td className="py-4 px-5">
                         <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 rounded-lg bg-canvas border border-border overflow-hidden flex-shrink-0 flex items-center justify-center text-[#66636A]">
+                          <div className="w-11 h-11 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200/60 dark:border-slate-700/60 overflow-hidden flex-shrink-0 flex items-center justify-center text-slate-400">
                             {item.imageUrl ? (
                               <img src={item.imageUrl} alt={item.productName} className="w-full h-full object-cover" />
                             ) : (
-                              <Package className="w-5 h-5 text-[#66636A]" />
+                              <Package className="w-5 h-5 text-slate-400" />
                             )}
                           </div>
                           <div>
                             <Link
                               to={`/store/${item.productId}`}
-                              className="font-bold text-[#222222] hover:text-[#714B67] transition-colors line-clamp-1"
+                              className="font-bold text-slate-900 dark:text-white hover:text-[#714B67] dark:hover:text-purple-300 transition-colors line-clamp-1"
                             >
                               {item.productName}
                             </Link>
-                            <span className="text-[10px] font-mono text-[#66636A] block">
+                            <span className="text-[10px] font-mono text-slate-400 block">
                               {item.sku}
                             </span>
                           </div>
@@ -418,50 +418,50 @@ export default function OfficerInventoryPage() {
                       </td>
 
                       {/* Category */}
-                      <td className="py-3.5 px-4">
-                        <span className="capitalize text-[#66636A] bg-[#FAF9F7] border border-border px-2 py-0.5 rounded-md text-[11px] font-medium">
+                      <td className="py-4 px-5">
+                        <span className="capitalize text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 border border-slate-200/60 dark:border-slate-700/60 px-2.5 py-1 rounded-lg text-[11px] font-semibold">
                           {item.productType}
                         </span>
                       </td>
 
                       {/* Size */}
-                      <td className="py-3.5 px-4 text-center">
-                        <span className="inline-block px-2.5 py-1 bg-[#FAF9F7] border border-border font-mono font-bold text-[#222222] rounded-md text-xs">
+                      <td className="py-4 px-5 text-center">
+                        <span className="inline-block px-3 py-1 bg-slate-100 dark:bg-slate-800 border border-slate-200/60 dark:border-slate-700/60 font-mono font-bold text-slate-900 dark:text-white rounded-lg text-xs">
                           {item.size}
                         </span>
                       </td>
 
                       {/* Unit Price */}
-                      <td className="py-3.5 px-4 font-semibold text-[#222222]">
+                      <td className="py-4 px-5 font-bold text-slate-900 dark:text-white">
                         ${item.price.toFixed(2)}
                       </td>
 
                       {/* Stock Health Status */}
-                      <td className="py-3.5 px-4">
+                      <td className="py-4 px-5">
                         {isZero ? (
-                          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold bg-rose-50 text-rose-800 border border-rose-200">
+                          <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-bold bg-rose-500/20 text-rose-800 dark:text-rose-200 border border-rose-300/40 dark:border-rose-800/50">
                             <TrendingDown className="w-3 h-3" /> Out of Stock
                           </span>
                         ) : isLow ? (
-                          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold bg-amber-50 text-amber-800 border border-amber-200">
+                          <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-bold bg-amber-500/20 text-amber-800 dark:text-amber-200 border border-amber-300/40 dark:border-amber-800/50">
                             <AlertTriangle className="w-3 h-3" /> Low Stock (&le; 5)
                           </span>
                         ) : (
-                          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200">
+                          <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-bold bg-emerald-500/20 text-emerald-800 dark:text-emerald-200 border border-emerald-300/40 dark:border-emerald-700/50">
                             <CheckCircle2 className="w-3 h-3" /> Healthy
                           </span>
                         )}
                       </td>
 
                       {/* Units on Hand */}
-                      <td className="py-3.5 px-4 text-center">
+                      <td className="py-4 px-5 text-center">
                         <span
-                          className={`font-mono text-sm font-black ${
+                          className={`font-mono text-base font-black ${
                             isZero
-                              ? 'text-rose-600'
+                              ? 'text-rose-600 dark:text-rose-400'
                               : isLow
-                              ? 'text-amber-600'
-                              : 'text-[#222222]'
+                              ? 'text-amber-600 dark:text-amber-400'
+                              : 'text-slate-900 dark:text-white'
                           }`}
                         >
                           {item.stock_qty}
@@ -469,12 +469,12 @@ export default function OfficerInventoryPage() {
                       </td>
 
                       {/* Restock Action Button */}
-                      <td className="py-3.5 px-4 text-right">
+                      <td className="py-4 px-5 text-right">
                         <Button
                           variant={isZero ? 'danger' : isLow ? 'warning' : 'outline'}
                           size="sm"
                           onClick={() => handleOpenRestock(item)}
-                          className="h-8 text-xs font-semibold"
+                          className="h-8 text-xs font-bold rounded-full px-4"
                         >
                           <PlusCircle className="w-3.5 h-3.5 mr-1" /> Restock
                         </Button>
@@ -496,32 +496,32 @@ export default function OfficerInventoryPage() {
           title={`Restock: ${restockItem.productName}`}
         >
           <div className="space-y-5 p-1 text-xs">
-            <div className="bg-[#FAF9F7] p-4 rounded-xl border border-border space-y-2">
+            <div className="glass-card bg-slate-50/70 dark:bg-slate-800/60 p-4 rounded-2xl border border-slate-200/80 dark:border-slate-700/80 space-y-2.5">
               <div className="flex justify-between">
-                <span className="text-[#66636A]">Variant Size:</span>
-                <span className="font-bold text-[#222222] font-mono bg-white border border-border px-2 py-0.5 rounded">
+                <span className="text-slate-500 dark:text-slate-400">Variant Size:</span>
+                <span className="font-bold text-slate-900 dark:text-white font-mono bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 px-2.5 py-0.5 rounded-md">
                   {restockItem.size}
                 </span>
               </div>
               <div className="flex justify-between">
-                <span className="text-[#66636A]">Current Stock Level:</span>
+                <span className="text-slate-500 dark:text-slate-400">Current Stock Level:</span>
                 <span
                   className={`font-bold font-mono ${
-                    restockItem.stock_qty === 0 ? 'text-rose-600' : 'text-amber-600'
+                    restockItem.stock_qty === 0 ? 'text-rose-600 dark:text-rose-400' : 'text-amber-600 dark:text-amber-400'
                   }`}
                 >
                   {restockItem.stock_qty} unit(s)
                 </span>
               </div>
               <div className="flex justify-between">
-                <span className="text-[#66636A]">SKU Code:</span>
-                <span className="font-mono text-[#222222]">{restockItem.sku}</span>
+                <span className="text-slate-500 dark:text-slate-400">SKU Code:</span>
+                <span className="font-mono text-slate-900 dark:text-white font-semibold">{restockItem.sku}</span>
               </div>
             </div>
 
             {/* Quantity Input */}
             <div className="space-y-2">
-              <label className="text-xs font-bold text-[#222222] uppercase tracking-wider">
+              <label className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">
                 Units to Add
               </label>
               <Input
@@ -538,10 +538,10 @@ export default function OfficerInventoryPage() {
                     key={quickAmount}
                     type="button"
                     onClick={() => setRestockQty(quickAmount)}
-                    className={`text-xs px-2.5 py-1 rounded-lg border transition-all ${
+                    className={`text-xs px-3 py-1.5 rounded-xl border font-bold transition-all ${
                       restockQty === quickAmount
-                        ? 'bg-[#714B67] border-[#714B67] text-white font-semibold'
-                        : 'bg-[#FAF9F7] border-border text-[#66636A] hover:text-[#222222]'
+                        ? 'bg-[#714B67] border-[#714B67] text-white shadow-sm'
+                        : 'glass-card bg-slate-100/70 dark:bg-slate-800/60 border-slate-200/80 dark:border-slate-700/80 text-slate-600 dark:text-slate-300 hover:text-slate-900'
                     }`}
                   >
                     +{quickAmount}
@@ -551,11 +551,11 @@ export default function OfficerInventoryPage() {
             </div>
 
             {/* Restock Summary */}
-            <div className="p-3 bg-[#714B67]/10 border border-[#714B67]/20 rounded-xl text-xs text-[#714B67] flex items-center gap-2">
-              <Zap className="w-4 h-4 text-[#714B67] flex-shrink-0" />
+            <div className="p-3.5 bg-purple-500/10 border border-purple-500/20 rounded-2xl text-xs text-[#714B67] dark:text-purple-300 flex items-center gap-2.5">
+              <Zap className="w-4 h-4 text-[#714B67] dark:text-purple-300 flex-shrink-0" />
               <span>
                 New resulting stock after replenishment will be{' '}
-                <strong className="text-[#222222] font-mono">
+                <strong className="text-slate-900 dark:text-white font-mono">
                   {restockItem.stock_qty + Number(restockQty || 0)} units
                 </strong>
                 .
@@ -563,12 +563,12 @@ export default function OfficerInventoryPage() {
             </div>
 
             {/* Modal Actions */}
-            <div className="flex items-center justify-end gap-3 pt-2 border-t border-border">
+            <div className="flex items-center justify-end gap-3 pt-2 border-t border-slate-200/60 dark:border-slate-800/60">
               <Button
                 variant="ghost"
                 onClick={() => setRestockItem(null)}
                 disabled={restockMutation.isPending}
-                className="text-[#66636A] hover:text-[#222222]"
+                className="rounded-full text-slate-500"
               >
                 Cancel
               </Button>
@@ -576,7 +576,7 @@ export default function OfficerInventoryPage() {
                 variant="primary"
                 onClick={handleConfirmRestock}
                 disabled={restockMutation.isPending}
-                className="bg-[#714B67] hover:bg-[#5B3B52] text-white"
+                className="rounded-full bg-gradient-to-r from-[#714B67] to-[#8C5D80] hover:from-[#5B3B52] hover:to-[#714B67] text-white font-bold"
               >
                 {restockMutation.isPending ? 'Restocking...' : `Confirm +${restockQty} Units`}
               </Button>

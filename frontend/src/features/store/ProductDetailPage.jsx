@@ -15,11 +15,11 @@ function ProductDetailImage({ src, name, type }) {
 
   if (!src || imgError) {
     return (
-      <div className="w-full h-full bg-gradient-to-br from-slate-100 to-slate-200 flex flex-col items-center justify-center text-slate-500 p-8 text-center select-none">
-        <div className="w-20 h-20 rounded-3xl bg-white/80 shadow-md flex items-center justify-center mb-4">
-          <ShoppingBag className="w-10 h-10 text-[#714B67]" />
+      <div className="w-full h-full bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-900 flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 p-8 text-center select-none">
+        <div className="w-20 h-20 rounded-3xl bg-white/80 dark:bg-slate-800/80 shadow-md flex items-center justify-center mb-4">
+          <ShoppingBag className="w-10 h-10 text-[#714B67] dark:text-purple-400" />
         </div>
-        <span className="text-base font-extrabold uppercase tracking-wider text-slate-800 line-clamp-2">{name}</span>
+        <span className="text-base font-extrabold uppercase tracking-wider text-slate-800 dark:text-slate-200 line-clamp-2">{name}</span>
         <span className="text-xs font-semibold text-slate-400 uppercase mt-1">{type}</span>
       </div>
     );
@@ -108,13 +108,13 @@ export default function ProductDetailPage() {
   if (isLoading) {
     return (
       <div className="max-w-5xl mx-auto py-12 animate-pulse space-y-6">
-        <div className="h-6 bg-gray-100 rounded w-32" />
+        <div className="h-6 bg-slate-200 dark:bg-slate-700 rounded-full w-32" />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-          <div className="h-96 bg-gray-100 rounded-3xl" />
+          <div className="h-96 glass-card bg-slate-100/50 dark:bg-slate-800/40 rounded-3xl" />
           <div className="space-y-4">
-            <div className="h-8 bg-gray-100 rounded w-3/4" />
-            <div className="h-6 bg-gray-100 rounded w-1/4" />
-            <div className="h-32 bg-gray-100 rounded" />
+            <div className="h-8 bg-slate-200 dark:bg-slate-700 rounded-xl w-3/4" />
+            <div className="h-6 bg-slate-200 dark:bg-slate-700 rounded-xl w-1/4" />
+            <div className="h-32 bg-slate-200 dark:bg-slate-700 rounded-2xl" />
           </div>
         </div>
       </div>
@@ -123,12 +123,12 @@ export default function ProductDetailPage() {
 
   if (error || !product) {
     return (
-      <div className="max-w-lg mx-auto text-center py-20 bg-white rounded-3xl border border-border p-8 space-y-4 shadow-sm">
-        <AlertCircle className="w-12 h-12 text-danger-500 mx-auto" />
-        <h2 className="text-xl font-bold text-[#222222]">Product Not Found</h2>
-        <p className="text-sm text-[#66636A]">The requested merchandise item does not exist or has been retired.</p>
+      <div className="max-w-lg mx-auto text-center py-20 glass-panel rounded-3xl border border-white/40 dark:border-slate-800/80 p-8 space-y-4 shadow-xl">
+        <AlertCircle className="w-12 h-12 text-rose-500 mx-auto" />
+        <h2 className="text-xl font-bold text-slate-900 dark:text-white">Product Not Found</h2>
+        <p className="text-sm text-slate-500 dark:text-slate-400">The requested merchandise item does not exist or has been retired.</p>
         <Link to="/store">
-          <Button variant="primary" className="bg-[#714B67] hover:bg-[#5B3B52] text-white">Return to Store</Button>
+          <Button variant="primary" className="rounded-full bg-gradient-to-r from-[#714B67] to-[#8C5D80] text-white">Return to Store</Button>
         </Link>
       </div>
     );
@@ -143,30 +143,30 @@ export default function ProductDetailPage() {
   const discountedPrice = discountPct > 0 ? unitPrice * (1 - discountPct / 100) : unitPrice;
 
   return (
-    <div className="max-w-6xl mx-auto pb-20 space-y-8">
+    <div className="max-w-6xl mx-auto pb-20 space-y-8 animate-fadeIn">
       {/* Breadcrumb Navigation */}
       <div className="flex items-center justify-between">
         <Link
           to="/store"
-          className="inline-flex items-center text-sm font-medium text-[#66636A] hover:text-[#222222] transition-colors"
+          className="inline-flex items-center text-sm font-semibold text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors"
         >
           <ArrowLeft className="w-4 h-4 mr-1.5" /> Back to Merch Catalog
         </Link>
 
-        <Button variant="ghost" size="sm" onClick={openDrawer} className="text-[#66636A] hover:text-[#222222]">
-          <ShoppingBag className="w-4 h-4 mr-2" /> View Cart
+        <Button variant="ghost" size="sm" onClick={openDrawer} className="rounded-full text-slate-600 dark:text-slate-300">
+          <ShoppingBag className="w-4 h-4 mr-2 text-[#714B67] dark:text-purple-400" /> View Cart
         </Button>
       </div>
 
       {/* Main Product Display Card */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 bg-white border border-border rounded-3xl p-6 sm:p-10 shadow-odoo-card">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 glass-panel border-white/40 dark:border-slate-800/80 rounded-3xl p-6 sm:p-10 shadow-2xl">
         {/* Left: Product Media Gallery */}
         <div className="lg:col-span-6 flex flex-col items-center justify-center">
-          <div className="relative w-full aspect-square rounded-2xl bg-[#F4F6F8] border border-border overflow-hidden flex items-center justify-center group">
+          <div className="relative w-full aspect-square rounded-3xl bg-slate-100/70 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800/60 overflow-hidden flex items-center justify-center group shadow-inner">
             <ProductDetailImage src={product.image} name={product.name} type={product.type} />
 
             <div className="absolute top-4 left-4 z-10">
-              <Badge variant="accent" size="md">
+              <Badge variant="accent" size="md" className="rounded-full px-3.5 shadow-md">
                 {product.type_display || product.type?.toUpperCase()}
               </Badge>
             </div>
@@ -177,19 +177,19 @@ export default function ProductDetailPage() {
         <div className="lg:col-span-6 flex flex-col justify-between space-y-6">
           <div className="space-y-4">
             <div>
-              <span className="text-xs font-bold text-[#714B67] uppercase tracking-widest">
+              <span className="text-xs font-bold text-[#714B67] dark:text-purple-300 uppercase tracking-widest">
                 Official Club Merchandise
               </span>
-              <h1 className="text-2xl sm:text-3xl font-extrabold text-[#222222] mt-1 leading-tight">
+              <h1 className="text-2xl sm:text-4xl font-extrabold text-slate-900 dark:text-white mt-1 leading-tight">
                 {product.name}
               </h1>
             </div>
 
             {/* Price Display & Discount Banner */}
             <div className="flex items-baseline gap-3">
-              <span className="text-3xl font-black text-[#222222]">${unitPrice.toFixed(2)}</span>
+              <span className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white">${unitPrice.toFixed(2)}</span>
               {discountPct > 0 && (
-                <span className="text-lg font-bold text-emerald-700">
+                <span className="text-base sm:text-lg font-bold text-emerald-600 dark:text-emerald-400">
                   ${discountedPrice.toFixed(2)} with Member Discount ({discountPct}% off)
                 </span>
               )}
@@ -197,43 +197,43 @@ export default function ProductDetailPage() {
 
             {/* Member Discount Promo Card */}
             {discountPct > 0 ? (
-              <div className="p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 flex items-center gap-2.5 text-xs text-emerald-800">
-                <ShieldCheck className="w-5 h-5 text-emerald-600 flex-shrink-0" />
+              <div className="p-4 rounded-2xl glass-card bg-emerald-500/10 border border-emerald-300/40 dark:border-emerald-700/50 flex items-center gap-3 text-xs text-emerald-950 dark:text-emerald-200">
+                <ShieldCheck className="w-5 h-5 text-emerald-600 dark:text-emerald-400 flex-shrink-0" />
                 <span>
                   <strong>Active Member Privilege:</strong> Your {discountPct}% merchandise discount is automatically calculated at checkout.
                 </span>
               </div>
             ) : isAuthenticated ? (
-              <div className="p-3.5 rounded-xl bg-[#F4F6F8] border border-border flex items-center justify-between text-xs text-[#66636A]">
+              <div className="p-4 rounded-2xl glass-card bg-slate-100/70 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700/80 flex items-center justify-between text-xs text-slate-600 dark:text-slate-300">
                 <div className="flex items-center gap-2">
                   <Sparkles className="w-4 h-4 text-amber-500" />
                   <span>Join Gold Membership for an extra 15% off all store merchandise.</span>
                 </div>
-                <Link to="/join" className="text-[#714B67] font-bold hover:underline">
+                <Link to="/join" className="text-[#714B67] dark:text-purple-400 font-bold hover:underline ml-2 shrink-0">
                   Upgrade
                 </Link>
               </div>
             ) : null}
 
             {/* Description */}
-            <div className="text-sm text-[#66636A] leading-relaxed border-t border-border pt-4">
+            <div className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed border-t border-slate-200/60 dark:border-slate-800/60 pt-4">
               <p>{product.description || 'Premium official Skyline Club student merchandise crafted with ultra-comfortable materials and club crest embroidery.'}</p>
             </div>
           </div>
 
           {/* ── SIZE SELECTOR WITH LIVE PER-SIZE STOCK ── */}
-          <div className="space-y-4 border-t border-border pt-5">
+          <div className="space-y-4 border-t border-slate-200/60 dark:border-slate-800/60 pt-5">
             <div className="flex items-center justify-between">
-              <label className="text-xs font-bold uppercase tracking-wider text-[#222222]">
+              <label className="text-xs font-bold uppercase tracking-wider text-slate-900 dark:text-white">
                 Select Size:
               </label>
               {selectedVariant && (
-                <span className={`text-xs font-semibold ${
+                <span className={`text-xs font-bold ${
                   selectedVariant.stock_qty <= 0
-                    ? 'text-rose-700'
+                    ? 'text-rose-600 dark:text-rose-400'
                     : selectedVariant.stock_qty <= 5
-                    ? 'text-amber-700'
-                    : 'text-emerald-700'
+                    ? 'text-amber-600 dark:text-amber-400'
+                    : 'text-emerald-600 dark:text-emerald-400'
                 }`}>
                   {selectedVariant.stock_qty <= 0
                     ? 'Out of Stock'
@@ -256,23 +256,23 @@ export default function ProductDetailPage() {
                     type="button"
                     disabled={!inStock}
                     onClick={() => handleSelectSize(variant)}
-                    className={`relative p-3 rounded-xl border text-center transition-all duration-150 flex flex-col items-center justify-center ${
+                    className={`relative p-3.5 rounded-2xl border-2 text-center transition-all duration-200 flex flex-col items-center justify-center ${
                       isSelected
-                        ? 'bg-[#714B67]/10 border-[#714B67] text-[#714B67] shadow-sm ring-1 ring-[#714B67]'
+                        ? 'bg-purple-500/10 dark:bg-purple-500/20 border-[#714B67] dark:border-purple-400 text-[#714B67] dark:text-purple-300 shadow-md shadow-purple-500/10'
                         : inStock
-                        ? 'bg-white border-border text-[#222222] hover:border-gray-400'
-                        : 'bg-gray-100 border-gray-200 text-gray-400 cursor-not-allowed opacity-50'
+                        ? 'glass-card bg-white/70 dark:bg-slate-900/60 border-slate-200/80 dark:border-slate-800/80 text-slate-900 dark:text-white hover:border-purple-300 dark:hover:border-purple-700'
+                        : 'bg-slate-100/50 dark:bg-slate-800/30 border-slate-200/50 dark:border-slate-800/50 text-slate-400 cursor-not-allowed opacity-50'
                     }`}
                   >
-                    <span className={`text-sm font-bold ${!inStock ? 'line-through' : ''}`}>
+                    <span className={`text-sm font-extrabold ${!inStock ? 'line-through' : ''}`}>
                       {variant.size}
                     </span>
-                    <span className="text-[10px] mt-0.5 font-medium text-[#66636A]">
+                    <span className="text-[10px] mt-0.5 font-medium text-slate-500 dark:text-slate-400">
                       {inStock ? `${variant.stock_qty} left` : 'Sold Out'}
                     </span>
 
                     {isSelected && (
-                      <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-[#714B67]" />
+                      <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-[#714B67] dark:bg-purple-400 shadow-sm" />
                     )}
                   </button>
                 );
@@ -283,22 +283,22 @@ export default function ProductDetailPage() {
           {/* Quantity Selector & Add to Cart Button */}
           <div className="space-y-4 pt-2">
             <div className="flex items-center gap-4">
-              <div className="flex items-center border border-border rounded-xl bg-[#F4F6F8] px-2 py-1">
-                <span className="text-xs font-semibold text-[#66636A] mr-3 pl-1">Qty:</span>
+              <div className="flex items-center border border-slate-200/80 dark:border-slate-700/80 rounded-2xl glass-card bg-slate-100/70 dark:bg-slate-800/60 px-3 py-1.5 shadow-inner">
+                <span className="text-xs font-bold text-slate-500 dark:text-slate-400 mr-3 pl-1">Qty:</span>
                 <button
                   type="button"
                   onClick={() => setQuantity((q) => Math.max(1, q - 1))}
                   disabled={quantity <= 1 || !isSelectedInStock}
-                  className="p-1.5 text-[#66636A] hover:text-[#222222] disabled:opacity-30 transition-colors"
+                  className="p-1.5 text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white disabled:opacity-30 transition-colors"
                 >
                   <Minus className="w-4 h-4" />
                 </button>
-                <span className="px-3 text-sm font-bold text-[#222222]">{quantity}</span>
+                <span className="px-3 text-sm font-black text-slate-900 dark:text-white">{quantity}</span>
                 <button
                   type="button"
                   onClick={() => setQuantity((q) => Math.min(maxAvailableQty, q + 1))}
                   disabled={quantity >= maxAvailableQty || !isSelectedInStock}
-                  className="p-1.5 text-[#66636A] hover:text-[#222222] disabled:opacity-30 transition-colors"
+                  className="p-1.5 text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white disabled:opacity-30 transition-colors"
                 >
                   <Plus className="w-4 h-4" />
                 </button>
@@ -308,7 +308,7 @@ export default function ProductDetailPage() {
               <Button
                 variant="primary"
                 size="lg"
-                className="flex-1 shadow-sm bg-[#714B67] hover:bg-[#5B3B52] text-white font-semibold"
+                className="flex-1 rounded-full shadow-lg shadow-purple-500/20 bg-gradient-to-r from-[#714B67] to-[#8C5D80] hover:from-[#5B3B52] hover:to-[#714B67] text-white font-bold transition-transform active:scale-95"
                 disabled={!hasAnyStock || !isSelectedInStock}
                 isLoading={isAdding}
                 onClick={handleAddToCart}

@@ -67,7 +67,7 @@ export default function EventDetailPage() {
   } = useQuery({
     queryKey: ['event-availability', id],
     queryFn: () => fetchEventAvailability(id),
-    refetchInterval: 3000, // Live real-time counter updates from Postgres
+    refetchInterval: 3000,
     refetchIntervalInBackground: false,
     enabled: !!id,
   });
@@ -132,7 +132,6 @@ export default function EventDetailPage() {
     onSuccess: (newTicket) => {
       setPurchasedTicket(newTicket);
       toast.success('Ticket confirmed! Your QR boarding pass is ready.');
-      // Instantly invalidate availability to update live seats count
       queryClient.invalidateQueries({ queryKey: ['event-availability', id] });
       queryClient.invalidateQueries({ queryKey: ['events'] });
     },
@@ -142,7 +141,6 @@ export default function EventDetailPage() {
         err.response?.data?.message ||
         'Unable to complete ticket purchase. Please try again.';
       toast.error(msg);
-      // Re-fetch availability in case the last seat was just purchased
       queryClient.invalidateQueries({ queryKey: ['event-availability', id] });
     },
   });
@@ -178,11 +176,11 @@ export default function EventDetailPage() {
   if (isEventLoading) {
     return (
       <div className="max-w-5xl mx-auto space-y-6 animate-pulse py-8">
-        <div className="h-6 bg-gray-200 rounded w-32" />
-        <div className="h-64 bg-white rounded-3xl border border-border shadow-odoo-card" />
+        <div className="h-6 bg-slate-200 dark:bg-white/10 rounded w-32" />
+        <div className="h-64 bg-white/70 dark:bg-slate-900/60 rounded-3xl border border-slate-200/80 dark:border-white/10 shadow-xl" />
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="md:col-span-2 h-96 bg-white rounded-2xl border border-border shadow-odoo-card" />
-          <div className="h-96 bg-white rounded-2xl border border-border shadow-odoo-card" />
+          <div className="md:col-span-2 h-96 bg-white/70 dark:bg-slate-900/60 rounded-3xl border border-slate-200/80 dark:border-white/10 shadow-xl" />
+          <div className="h-96 bg-white/70 dark:bg-slate-900/60 rounded-3xl border border-slate-200/80 dark:border-white/10 shadow-xl" />
         </div>
       </div>
     );
@@ -191,13 +189,13 @@ export default function EventDetailPage() {
   if (isEventError || !event) {
     return (
       <div className="max-w-2xl mx-auto py-12 text-center space-y-4">
-        <AlertCircle className="w-12 h-12 text-danger-400 mx-auto" />
-        <h2 className="text-2xl font-bold text-white">Event Not Found</h2>
-        <p className="text-slate-400 text-sm">
+        <AlertCircle className="w-12 h-12 text-rose-500 mx-auto" />
+        <h2 className="text-2xl font-bold text-slate-900 dark:text-white">Event Not Found</h2>
+        <p className="text-slate-500 dark:text-slate-400 text-sm">
           {eventError?.message || 'The requested event does not exist or has been removed.'}
         </p>
         <Link to="/events">
-          <Button variant="secondary" className="mt-4">
+          <Button variant="secondary" className="mt-4 font-bold">
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Events List
           </Button>
@@ -212,7 +210,7 @@ export default function EventDetailPage() {
       <div>
         <Link
           to="/events"
-          className="inline-flex items-center gap-2 text-sm text-ink-muted hover:text-ink transition-colors font-medium"
+          className="inline-flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors font-semibold"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Back to All Events</span>
@@ -222,12 +220,12 @@ export default function EventDetailPage() {
       {/* SUCCESS CONFIRMATION MODAL / TICKET DISPLAY */}
       {purchasedTicket ? (
         <div className="space-y-6 animate-fade-in">
-          <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-900 flex items-center justify-between shadow-sm">
+          <div className="p-4 rounded-3xl bg-emerald-50/80 dark:bg-emerald-950/30 backdrop-blur-xl border border-emerald-200/80 dark:border-emerald-800/40 text-emerald-950 dark:text-emerald-100 flex items-center justify-between shadow-xl">
             <div className="flex items-center gap-3">
-              <CheckCircle2 className="w-6 h-6 text-emerald-600 shrink-0" />
+              <CheckCircle2 className="w-6 h-6 text-emerald-600 dark:text-emerald-400 shrink-0" />
               <div>
-                <h3 className="font-bold text-base text-ink">Ticket Purchase Confirmed!</h3>
-                <p className="text-xs text-ink-muted">
+                <h3 className="font-bold text-base text-slate-900 dark:text-white">Ticket Purchase Confirmed!</h3>
+                <p className="text-xs text-slate-600 dark:text-slate-300">
                   Your ticket has been recorded in the central club ledger. Present your QR code at the door for entry.
                 </p>
               </div>
@@ -241,6 +239,7 @@ export default function EventDetailPage() {
                 variant="primary"
                 size="sm"
                 onClick={() => setPurchasedTicket(null)}
+                className="font-bold"
               >
                 Buy Another
               </Button>
@@ -248,9 +247,9 @@ export default function EventDetailPage() {
           </div>
 
           {/* Realistic Perforated Digital Ticket Pass */}
-          <div className="max-w-2xl mx-auto bg-white border border-border rounded-3xl overflow-hidden shadow-odoo-card-hover relative">
+          <div className="max-w-2xl mx-auto bg-white/85 dark:bg-slate-900/80 backdrop-blur-2xl border border-slate-200/80 dark:border-white/10 rounded-3xl overflow-hidden shadow-2xl relative">
             {/* Header Accent */}
-            <div className="bg-brand p-6 sm:p-8 text-white">
+            <div className="bg-gradient-to-r from-[#714B67] to-[#87567D] p-6 sm:p-8 text-white">
               <div className="flex items-center justify-between text-xs font-semibold tracking-wider uppercase opacity-90 mb-2">
                 <span>Skyline Student Association</span>
                 <span className="bg-white/20 px-2.5 py-0.5 rounded-full backdrop-blur-sm">
@@ -258,7 +257,7 @@ export default function EventDetailPage() {
                 </span>
               </div>
               <h2 className="text-2xl sm:text-3xl font-extrabold">{event.title}</h2>
-              <p className="text-brand-100 text-xs sm:text-sm mt-1">{formatDateTime(event.datetime)}</p>
+              <p className="text-purple-100 text-xs sm:text-sm mt-1">{formatDateTime(event.datetime || event.event_date)}</p>
             </div>
 
             {/* Ticket Body Content */}
@@ -266,29 +265,29 @@ export default function EventDetailPage() {
               {/* Left Column: Attendee & Event Details */}
               <div className="sm:col-span-2 space-y-4 text-sm">
                 <div>
-                  <span className="text-xs text-ink-subtle uppercase tracking-wider block">Attendee Name</span>
-                  <span className="font-bold text-ink text-base">{purchasedTicket.holder_name}</span>
+                  <span className="text-xs text-slate-400 dark:text-slate-500 uppercase tracking-wider block">Attendee Name</span>
+                  <span className="font-bold text-slate-900 dark:text-white text-base">{purchasedTicket.holder_name}</span>
                 </div>
                 <div>
-                  <span className="text-xs text-ink-subtle uppercase tracking-wider block">Email</span>
-                  <span className="font-medium text-ink-muted">{purchasedTicket.holder_email}</span>
+                  <span className="text-xs text-slate-400 dark:text-slate-500 uppercase tracking-wider block">Email</span>
+                  <span className="font-medium text-slate-600 dark:text-slate-300">{purchasedTicket.holder_email}</span>
                 </div>
                 <div>
-                  <span className="text-xs text-ink-subtle uppercase tracking-wider block">Venue</span>
-                  <span className="font-medium text-ink-muted flex items-center gap-1.5 mt-0.5">
-                    <MapPin className="w-3.5 h-3.5 text-accent" />
+                  <span className="text-xs text-slate-400 dark:text-slate-500 uppercase tracking-wider block">Venue</span>
+                  <span className="font-medium text-slate-600 dark:text-slate-300 flex items-center gap-1.5 mt-0.5">
+                    <MapPin className="w-3.5 h-3.5 text-[#714B67] dark:text-[#A97B9F]" />
                     {event.venue}
                   </span>
                 </div>
-                <div className="grid grid-cols-2 gap-4 pt-2 border-t border-border">
+                <div className="grid grid-cols-2 gap-4 pt-2 border-t border-slate-100 dark:border-white/5">
                   <div>
-                    <span className="text-xs text-ink-subtle uppercase tracking-wider block">Price Paid</span>
-                    <span className="font-bold text-emerald-600 text-lg">
+                    <span className="text-xs text-slate-400 dark:text-slate-500 uppercase tracking-wider block">Price Paid</span>
+                    <span className="font-bold text-emerald-600 dark:text-emerald-400 text-lg">
                       ${parseFloat(purchasedTicket.price_paid || 0).toFixed(2)}
                     </span>
                   </div>
                   <div>
-                    <span className="text-xs text-ink-subtle uppercase tracking-wider block">Status</span>
+                    <span className="text-xs text-slate-400 dark:text-slate-500 uppercase tracking-wider block">Status</span>
                     <Badge variant="success" size="sm" className="mt-1">
                       {purchasedTicket.status?.toUpperCase()}
                     </Badge>
@@ -297,36 +296,36 @@ export default function EventDetailPage() {
               </div>
 
               {/* Right Column: QR Code Container */}
-              <div className="flex flex-col items-center justify-center p-4 bg-canvas rounded-2xl border border-border">
+              <div className="flex flex-col items-center justify-center p-4 bg-slate-50/80 dark:bg-white/5 rounded-3xl border border-slate-200/80 dark:border-white/10">
                 {purchasedTicket.qr_code_data_url ? (
                   <img
                     src={purchasedTicket.qr_code_data_url}
                     alt="Ticket QR Code"
-                    className="w-36 h-36 object-contain"
+                    className="w-36 h-36 object-contain rounded-xl"
                   />
                 ) : (
                   <img
                     src={`/api/tickets/${purchasedTicket.token}/qr`}
                     alt="Ticket QR Code"
-                    className="w-36 h-36 object-contain"
+                    className="w-36 h-36 object-contain rounded-xl"
                   />
                 )}
-                <span className="text-[10px] text-ink font-mono font-semibold mt-2 tracking-tighter text-center truncate max-w-[140px]">
+                <span className="text-[10px] text-slate-900 dark:text-white font-mono font-semibold mt-2 tracking-tighter text-center truncate max-w-[140px]">
                   {purchasedTicket.token}
                 </span>
-                <span className="text-[9px] text-ink-subtle text-center mt-0.5">
+                <span className="text-[9px] text-slate-400 dark:text-slate-500 text-center mt-0.5">
                   Scan at entrance
                 </span>
               </div>
             </div>
 
             {/* Ticket Footer Security Stripe */}
-            <div className="px-6 py-3 bg-muted border-t border-border flex items-center justify-between text-xs text-ink-muted font-mono">
-              <span className="flex items-center gap-1.5 text-emerald-700">
-                <ShieldCheck className="w-4 h-4 text-emerald-600" />
+            <div className="px-6 py-3.5 bg-slate-50/80 dark:bg-white/5 border-t border-slate-100 dark:border-white/5 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 font-mono">
+              <span className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400">
+                <ShieldCheck className="w-4 h-4" />
                 Verified cryptographic ticket token
               </span>
-              <span className="text-[11px] text-ink-subtle">ID: {purchasedTicket.token.slice(0, 8)}...</span>
+              <span className="text-[11px]">ID: {purchasedTicket.token.slice(0, 8)}...</span>
             </div>
           </div>
         </div>
@@ -337,7 +336,7 @@ export default function EventDetailPage() {
         {/* Left Column: Event Overview & Information */}
         <div className="lg:col-span-2 space-y-6">
           {/* Main Hero Card */}
-          <Card className="bg-white border-border overflow-hidden shadow-odoo-card">
+          <Card className="bg-white/80 dark:bg-slate-900/70 backdrop-blur-xl border-slate-200/80 dark:border-white/10 overflow-hidden shadow-xl rounded-3xl">
             <div className="p-8 sm:p-10 space-y-6">
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <div className="flex items-center gap-3">
@@ -347,19 +346,19 @@ export default function EventDetailPage() {
                   {isOfficer && (
                     <div className="flex items-center gap-2">
                       <Link to={`/events/${event.id}/checkin`}>
-                        <Button variant="secondary" size="sm" className="h-7 text-xs text-ink-muted hover:text-ink">
-                          <ShieldCheck className="w-3.5 h-3.5 mr-1 text-accent" />
+                        <Button variant="secondary" size="sm" className="h-8 text-xs">
+                          <ShieldCheck className="w-3.5 h-3.5 mr-1 text-sky-500" />
                           Gate Check-In
                         </Button>
                       </Link>
                       <Link to={`/events/${event.id}/stats`}>
-                        <Button variant="secondary" size="sm" className="h-7 text-xs text-ink-muted hover:text-ink">
-                          <BarChart3 className="w-3.5 h-3.5 mr-1 text-brand" />
+                        <Button variant="secondary" size="sm" className="h-8 text-xs">
+                          <BarChart3 className="w-3.5 h-3.5 mr-1 text-[#714B67] dark:text-[#A97B9F]" />
                           Analytics
                         </Button>
                       </Link>
                       <Link to={`/events/${event.id}/edit`}>
-                        <Button variant="secondary" size="sm" className="h-7 text-xs text-ink-muted hover:text-ink">
+                        <Button variant="secondary" size="sm" className="h-8 text-xs">
                           <Edit3 className="w-3.5 h-3.5 mr-1" />
                           Edit
                         </Button>
@@ -367,37 +366,37 @@ export default function EventDetailPage() {
                     </div>
                   )}
                 </div>
-                <div className="flex items-center gap-2 text-xs text-ink-subtle">
+                <div className="flex items-center gap-2 text-xs text-slate-400 dark:text-slate-500">
                   <Clock className="w-3.5 h-3.5" />
                   <span>Added {new Date(event.created_at).toLocaleDateString()}</span>
                 </div>
               </div>
 
-              <h1 className="text-3xl sm:text-4xl font-black text-ink tracking-tight leading-tight">
+              <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-tight">
                 {event.title}
               </h1>
 
               {/* Event Metadata Strip */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 rounded-2xl bg-muted border border-border text-sm">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 rounded-3xl bg-slate-50/80 dark:bg-white/5 border border-slate-200/80 dark:border-white/5 text-sm">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-white border border-border flex items-center justify-center text-brand">
+                  <div className="w-10 h-10 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200/80 dark:border-white/10 flex items-center justify-center text-[#714B67] dark:text-[#A97B9F] shadow-xs">
                     <Calendar className="w-5 h-5" />
                   </div>
                   <div>
-                    <span className="text-xs text-ink-subtle block">Date & Time</span>
-                    <span className="font-semibold text-ink text-xs sm:text-sm">
-                      {formatDateTime(event.datetime)}
+                    <span className="text-xs text-slate-400 dark:text-slate-500 block font-semibold uppercase tracking-wider">Date & Time</span>
+                    <span className="font-semibold text-slate-900 dark:text-white text-xs sm:text-sm">
+                      {formatDateTime(event.datetime || event.event_date)}
                     </span>
                   </div>
                 </div>
 
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-white border border-border flex items-center justify-center text-accent">
+                  <div className="w-10 h-10 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200/80 dark:border-white/10 flex items-center justify-center text-sky-500 shadow-xs">
                     <MapPin className="w-5 h-5" />
                   </div>
                   <div>
-                    <span className="text-xs text-ink-subtle block">Venue / Location</span>
-                    <span className="font-semibold text-ink text-xs sm:text-sm">
+                    <span className="text-xs text-slate-400 dark:text-slate-500 block font-semibold uppercase tracking-wider">Venue / Location</span>
+                    <span className="font-semibold text-slate-900 dark:text-white text-xs sm:text-sm">
                       {event.venue}
                     </span>
                   </div>
@@ -406,10 +405,10 @@ export default function EventDetailPage() {
 
               {/* Description */}
               <div className="space-y-3">
-                <h3 className="text-xs font-bold text-ink-subtle uppercase tracking-wider">
+                <h3 className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">
                   About This Event
                 </h3>
-                <p className="text-ink-muted text-sm sm:text-base leading-relaxed whitespace-pre-line">
+                <p className="text-slate-600 dark:text-slate-300 text-sm sm:text-base leading-relaxed whitespace-pre-line">
                   {event.description || 'No detailed description provided for this campus event.'}
                 </p>
               </div>
@@ -419,18 +418,18 @@ export default function EventDetailPage() {
 
         {/* Right Column: Live Inventory & Ticket Checkout Box */}
         <div className="space-y-6">
-          <Card className="bg-white border-border shadow-odoo-card relative overflow-hidden">
+          <Card className="bg-white/80 dark:bg-slate-900/70 backdrop-blur-xl border-slate-200/80 dark:border-white/10 shadow-xl rounded-3xl relative overflow-hidden">
             {/* Live Indicator Pulse Strip */}
-            <div className="bg-muted px-5 py-2.5 border-b border-border flex items-center justify-between text-xs">
+            <div className="bg-slate-50/80 dark:bg-white/5 px-5 py-2.5 border-b border-slate-100 dark:border-white/5 flex items-center justify-between text-xs">
               <div className="flex items-center gap-2">
                 <span className="relative flex h-2 w-2">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
                 </span>
-                <span className="text-ink font-medium">Live Seat Inventory</span>
+                <span className="text-slate-900 dark:text-white font-medium">Live Seat Inventory</span>
               </div>
-              <span className="text-[11px] text-ink-subtle flex items-center gap-1">
-                <RefreshCw className={`w-3 h-3 ${isAvailFetching ? 'animate-spin text-accent' : ''}`} />
+              <span className="text-[11px] text-slate-400 dark:text-slate-500 flex items-center gap-1">
+                <RefreshCw className={`w-3 h-3 ${isAvailFetching ? 'animate-spin text-[#714B67] dark:text-[#A97B9F]' : ''}`} />
                 Auto-syncs
               </span>
             </div>
@@ -439,46 +438,46 @@ export default function EventDetailPage() {
               {/* Real-time Seats Left Counter */}
               <div className="space-y-2">
                 <div className="flex items-baseline justify-between">
-                  <span className="text-xs font-semibold uppercase tracking-wider text-ink-subtle">
+                  <span className="text-xs font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500">
                     Seats Available
                   </span>
                   <div className="text-right">
                     <span
                       className={`text-3xl font-black ${
-                        isSoldOut ? 'text-danger-600' : remaining < 10 ? 'text-amber-500' : 'text-emerald-600'
+                        isSoldOut ? 'text-rose-600 dark:text-rose-400' : remaining < 10 ? 'text-amber-500' : 'text-emerald-600 dark:text-emerald-400'
                       }`}
                     >
                       {remaining}
                     </span>
-                    <span className="text-xs text-ink-subtle font-medium ml-1">/ {capacity} left</span>
+                    <span className="text-xs text-slate-400 dark:text-slate-500 font-medium ml-1">/ {capacity} left</span>
                   </div>
                 </div>
 
                 {/* Progress Bar */}
-                <div className="w-full h-2 bg-muted rounded-full overflow-hidden border border-border">
+                <div className="w-full h-2 bg-slate-100 dark:bg-white/10 rounded-full overflow-hidden border border-slate-200/80 dark:border-white/5">
                   <div
                     className={`h-full transition-all duration-500 ${
-                      isSoldOut ? 'bg-danger-500' : occupancyPercent > 80 ? 'bg-amber-500' : 'bg-emerald-500'
+                      isSoldOut ? 'bg-rose-500' : occupancyPercent > 80 ? 'bg-amber-500' : 'bg-emerald-500'
                     }`}
                     style={{ width: `${occupancyPercent}%` }}
                   />
                 </div>
-                <div className="flex justify-between text-[11px] text-ink-subtle">
+                <div className="flex justify-between text-[11px] text-slate-400 dark:text-slate-500">
                   <span>{sold} ticket{sold === 1 ? '' : 's'} claimed</span>
                   <span>{occupancyPercent}% full</span>
                 </div>
               </div>
 
               {/* Dynamic Member vs Non-Member Pricing Callout */}
-              <div className="p-4 rounded-xl bg-muted border border-border space-y-3">
+              <div className="p-4 rounded-3xl bg-slate-50/80 dark:bg-white/5 border border-slate-200/80 dark:border-white/5 space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs text-ink-muted">Your Ticket Price:</span>
+                  <span className="text-xs text-slate-500 dark:text-slate-400">Your Ticket Price:</span>
                   <div className="text-right">
-                    <span className="text-2xl font-black text-ink">
+                    <span className="text-2xl font-black text-slate-900 dark:text-white">
                       ${applicablePrice.toFixed(2)}
                     </span>
                     {isMember && savings > 0 && (
-                      <span className="text-[11px] text-emerald-600 block font-medium">
+                      <span className="text-[11px] text-emerald-600 dark:text-emerald-400 block font-medium">
                         You save ${savings.toFixed(2)}!
                       </span>
                     )}
@@ -486,25 +485,25 @@ export default function EventDetailPage() {
                 </div>
 
                 {/* Pricing Tier Notice */}
-                <div className="pt-2 border-t border-border text-xs">
+                <div className="pt-2 border-t border-slate-200/80 dark:border-white/5 text-xs">
                   {isMember ? (
-                    <div className="flex items-center gap-1.5 text-emerald-700 font-medium">
-                      <Sparkles className="w-3.5 h-3.5 shrink-0 text-accent" />
+                    <div className="flex items-center gap-1.5 text-emerald-700 dark:text-emerald-300 font-medium">
+                      <Sparkles className="w-3.5 h-3.5 shrink-0 text-[#714B67] dark:text-[#A97B9F]" />
                       <span>Active Member Pricing applied ({user?.name || user?.username})</span>
                     </div>
                   ) : (
                     <div className="space-y-1">
-                      <div className="flex justify-between text-ink-muted text-xs">
+                      <div className="flex justify-between text-slate-500 dark:text-slate-400 text-xs">
                         <span>Standard General Admission:</span>
-                        <span className="font-semibold text-ink">${nonmemberPrice.toFixed(2)}</span>
+                        <span className="font-semibold text-slate-900 dark:text-white">${nonmemberPrice.toFixed(2)}</span>
                       </div>
-                      <div className="flex justify-between text-brand font-medium text-xs">
+                      <div className="flex justify-between text-[#714B67] dark:text-[#A97B9F] font-semibold text-xs">
                         <span>Club Member Rate:</span>
-                        <span className="text-emerald-600 font-bold">${memberPrice.toFixed(2)}</span>
+                        <span className="text-emerald-600 dark:text-emerald-400 font-bold">${memberPrice.toFixed(2)}</span>
                       </div>
                       {!isAuthenticated && (
-                        <p className="text-[11px] text-ink-subtle pt-1">
-                          <Link to="/login" className="text-accent hover:underline">
+                        <p className="text-[11px] text-slate-400 dark:text-slate-500 pt-1">
+                          <Link to="/login" className="text-[#714B67] dark:text-[#A97B9F] hover:underline font-bold">
                             Log in as member
                           </Link>{' '}
                           to unlock member rates.
@@ -517,9 +516,9 @@ export default function EventDetailPage() {
 
               {/* BUY TICKET FORM */}
               {isSoldOut ? (
-                <div className="p-4 rounded-xl bg-danger-50 border border-danger-200 text-center space-y-2">
-                  <h4 className="font-bold text-danger-700 text-sm">Event is Completely Sold Out</h4>
-                  <p className="text-xs text-danger-600">
+                <div className="p-4 rounded-3xl bg-rose-50/80 dark:bg-rose-950/30 border border-rose-200/80 dark:border-rose-900/50 text-center space-y-2">
+                  <h4 className="font-bold text-rose-700 dark:text-rose-300 text-sm">Event is Completely Sold Out</h4>
+                  <p className="text-xs text-rose-600 dark:text-rose-400">
                     All {capacity} seats have been reserved. Please check back later in case seats are released.
                   </p>
                 </div>
@@ -558,7 +557,7 @@ export default function EventDetailPage() {
                   </div>
 
                   {purchaseMutation.isError && (
-                    <div className="p-3 rounded-lg bg-danger-50 border border-danger-200 text-danger-700 text-xs">
+                    <div className="p-3 rounded-2xl bg-rose-50/80 dark:bg-rose-950/30 border border-rose-200/80 dark:border-rose-900/50 text-rose-700 dark:text-rose-300 text-xs">
                       {purchaseMutation.error?.response?.data?.detail ||
                         'Failed to purchase ticket. Please try again.'}
                     </div>
@@ -568,7 +567,7 @@ export default function EventDetailPage() {
                     type="submit"
                     variant="primary"
                     size="lg"
-                    className="w-full font-bold shadow-md shadow-accent/20"
+                    className="w-full font-bold shadow-lg"
                     isLoading={purchaseMutation.isPending}
                     disabled={isSoldOut || purchaseMutation.isPending}
                   >
@@ -576,7 +575,7 @@ export default function EventDetailPage() {
                     <span>Purchase Ticket (${applicablePrice.toFixed(2)})</span>
                   </Button>
 
-                  <p className="text-[11px] text-center text-ink-subtle">
+                  <p className="text-[11px] text-center text-slate-400 dark:text-slate-500 font-medium">
                     Instant confirmation • Cryptographic QR • Recorded in ledger
                   </p>
                 </form>
@@ -588,3 +587,4 @@ export default function EventDetailPage() {
     </div>
   );
 }
+

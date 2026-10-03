@@ -135,13 +135,13 @@ export default function TreasurerDashboardPage() {
 
   if (!isOfficer) {
     return (
-      <Card className="max-w-lg mx-auto my-12 text-center p-8 border-border bg-white shadow-odoo-card">
-        <h2 className="text-xl font-bold text-ink mb-2">Officer Access Required</h2>
-        <p className="text-sm text-ink-muted mb-4">
+      <Card className="max-w-lg mx-auto my-12 text-center p-8 glass-panel rounded-3xl border border-white/40 dark:border-slate-800/80 shadow-2xl">
+        <h2 className="text-2xl font-extrabold text-slate-900 dark:text-white mb-2">Officer Access Required</h2>
+        <p className="text-sm text-slate-500 dark:text-slate-400 mb-6">
           The Treasurer Dashboard contains sensitive financial records and is restricted to club officers and admins.
         </p>
         <Link to="/">
-          <Button variant="outline" size="sm">
+          <Button variant="outline" size="sm" className="rounded-full px-6">
             Back to Overview
           </Button>
         </Link>
@@ -156,38 +156,38 @@ export default function TreasurerDashboardPage() {
   );
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8 animate-fadeIn pb-16">
       {/* Header & Main Controls */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-6 rounded-2xl border border-border shadow-odoo-card">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 glass-panel p-6 sm:p-8 rounded-3xl border border-white/40 dark:border-slate-800/80 shadow-xl">
         <div>
-          <div className="flex items-center gap-2 mb-1">
-            <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+          <div className="flex items-center gap-2 mb-1.5">
+            <span className="px-3.5 py-1 rounded-full text-xs font-bold bg-emerald-500/10 dark:bg-emerald-500/20 text-emerald-800 dark:text-emerald-300 border border-emerald-500/30 shadow-sm">
               Live Central Ledger
             </span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-ink tracking-tight">Treasurer Dashboard</h1>
-          <p className="text-sm text-ink-muted mt-1">
+          <h1 className="text-2xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">Treasurer Dashboard</h1>
+          <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
             Real-time financial breakdown, ledger reports, reimbursements, and CSV export.
           </p>
         </div>
 
         <div className="flex flex-wrap items-center gap-2.5">
           <Link to="/reimbursements">
-            <Button variant="outline" size="sm">
+            <Button variant="outline" size="sm" className="rounded-full border-slate-200/80 dark:border-slate-700/80 hover:bg-slate-100 dark:hover:bg-slate-800 font-bold">
               Reimbursements Portal
             </Button>
           </Link>
-          <Button variant="outline" size="sm" onClick={handleExportCSV}>
+          <Button variant="outline" size="sm" onClick={handleExportCSV} className="rounded-full border-slate-200/80 dark:border-slate-700/80 hover:bg-slate-100 dark:hover:bg-slate-800 font-bold">
             📥 Download CSV
           </Button>
-          <Button variant="primary" size="sm" onClick={() => setIsModalOpen(true)}>
+          <Button variant="primary" size="sm" onClick={() => setIsModalOpen(true)} className="rounded-full bg-gradient-to-r from-[#714B67] to-[#8C5D80] hover:from-[#5B3B52] hover:to-[#714B67] text-white shadow-md shadow-purple-500/20 font-bold">
             + Manual Transaction
           </Button>
         </div>
       </div>
 
       {/* Date Range Filter Bar */}
-      <Card className="border-border bg-white shadow-2sm">
+      <Card className="glass-panel border-white/40 dark:border-slate-800/80 rounded-2xl shadow-sm">
         <CardContent className="p-4 flex flex-col sm:flex-row items-end justify-between gap-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 flex-1">
             <Input
@@ -213,7 +213,7 @@ export default function TreasurerDashboardPage() {
                 setStartDate('');
                 setEndDate('');
               }}
-              className="text-xs text-ink-muted hover:text-ink"
+              className="text-xs text-slate-500 hover:text-slate-900 dark:hover:text-white rounded-full"
             >
               Reset Date Filter
             </Button>
@@ -224,62 +224,62 @@ export default function TreasurerDashboardPage() {
       {/* Top 3 Summary Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
         {/* Card 1: Total Income */}
-        <Card className="border-emerald-200 bg-white shadow-odoo-card">
+        <Card className="glass-panel border-emerald-300/40 dark:border-emerald-700/50 rounded-3xl shadow-xl bg-emerald-500/5">
           <CardHeader className="pb-2">
-            <CardDescription className="text-emerald-700 font-semibold text-xs tracking-wider uppercase">
+            <CardDescription className="text-emerald-700 dark:text-emerald-400 font-bold text-xs tracking-wider uppercase">
               Total Inflow (Income)
             </CardDescription>
-            <CardTitle className="text-3xl font-extrabold text-emerald-600 mt-1">
+            <CardTitle className="text-3xl sm:text-4xl font-black text-emerald-600 dark:text-emerald-400 mt-2">
               ${isSummaryLoading ? '...' : summary?.total_income || '0.00'}
             </CardTitle>
           </CardHeader>
-          <CardContent className="text-xs text-ink-muted">
+          <CardContent className="text-xs text-slate-500 dark:text-slate-400 font-medium">
             Dues, ticket sales, merch orders, and cash donations
           </CardContent>
         </Card>
 
         {/* Card 2: Total Expense */}
-        <Card className="border-rose-200 bg-white shadow-odoo-card">
+        <Card className="glass-panel border-rose-300/40 dark:border-rose-800/50 rounded-3xl shadow-xl bg-rose-500/5">
           <CardHeader className="pb-2">
-            <CardDescription className="text-rose-700 font-semibold text-xs tracking-wider uppercase">
+            <CardDescription className="text-rose-700 dark:text-rose-400 font-bold text-xs tracking-wider uppercase">
               Total Outflow (Expenses)
             </CardDescription>
-            <CardTitle className="text-3xl font-extrabold text-rose-600 mt-1">
+            <CardTitle className="text-3xl sm:text-4xl font-black text-rose-600 dark:text-rose-400 mt-2">
               ${isSummaryLoading ? '...' : summary?.total_expense || '0.00'}
             </CardTitle>
           </CardHeader>
-          <CardContent className="text-xs text-ink-muted">
+          <CardContent className="text-xs text-slate-500 dark:text-slate-400 font-medium">
             Approved reimbursements and manual expense entries
           </CardContent>
         </Card>
 
         {/* Card 3: Net Cash Balance */}
-        <Card className="border-purple-200 bg-white shadow-odoo-card">
+        <Card className="glass-panel border-purple-300/40 dark:border-purple-800/50 rounded-3xl shadow-xl bg-purple-500/5">
           <CardHeader className="pb-2">
-            <CardDescription className="text-[#714B67] font-semibold text-xs tracking-wider uppercase">
+            <CardDescription className="text-[#714B67] dark:text-purple-300 font-bold text-xs tracking-wider uppercase">
               Net Treasury Balance
             </CardDescription>
-            <CardTitle className="text-3xl font-extrabold text-[#714B67] mt-1">
+            <CardTitle className="text-3xl sm:text-4xl font-black text-[#714B67] dark:text-purple-300 mt-2">
               ${isSummaryLoading ? '...' : summary?.current_balance || '0.00'}
             </CardTitle>
           </CardHeader>
-          <CardContent className="text-xs text-ink-muted">
+          <CardContent className="text-xs text-slate-500 dark:text-slate-400 font-medium">
             Current available net cash funds on hand
           </CardContent>
         </Card>
       </div>
 
       {/* Category Breakdown Progress Bars & Chart View */}
-      <Card className="border-border bg-white shadow-odoo-card">
+      <Card className="glass-panel border-white/40 dark:border-slate-800/80 rounded-3xl shadow-xl">
         <CardHeader>
-          <CardTitle className="text-lg text-ink">Category Financial Breakdown</CardTitle>
-          <CardDescription className="text-xs">
+          <CardTitle className="text-xl font-extrabold text-slate-900 dark:text-white">Category Financial Breakdown</CardTitle>
+          <CardDescription className="text-xs text-slate-500 dark:text-slate-400">
             Comparison of inflows vs outflows across standard ledger categories.
           </CardDescription>
         </CardHeader>
         <CardContent>
           {isSummaryLoading ? (
-            <div className="py-8 text-center text-ink-muted text-sm">Calculating category metrics...</div>
+            <div className="py-8 text-center text-slate-400 text-sm">Calculating category metrics...</div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {breakdownList.map((cat) => {
@@ -289,21 +289,21 @@ export default function TreasurerDashboardPage() {
                 const expensePct = (expense / maxCategoryAmount) * 100;
 
                 return (
-                  <div key={cat.category} className="p-4 rounded-xl bg-[#FAF9F7] border border-border space-y-2">
+                  <div key={cat.category} className="p-5 rounded-2xl glass-card bg-slate-50/60 dark:bg-slate-800/50 border border-slate-200/60 dark:border-slate-700/60 space-y-3 shadow-sm">
                     <div className="flex items-center justify-between">
-                      <span className="font-semibold text-sm text-ink">{cat.label}</span>
-                      <span className="text-xs text-ink-muted">{cat.count} transaction(s)</span>
+                      <span className="font-extrabold text-sm text-slate-900 dark:text-white">{cat.label}</span>
+                      <span className="text-xs text-slate-400 font-medium">{cat.count} transaction(s)</span>
                     </div>
 
                     {/* Progress Bars */}
-                    <div className="space-y-1.5 pt-1">
+                    <div className="space-y-2 pt-1">
                       {/* Income Bar */}
                       <div>
-                        <div className="flex justify-between text-[11px] text-emerald-700 font-medium mb-0.5">
+                        <div className="flex justify-between text-[11px] text-emerald-600 dark:text-emerald-400 font-bold mb-1">
                           <span>Income</span>
                           <span>${cat.income}</span>
                         </div>
-                        <div className="w-full bg-[#E9E7E5] rounded-full h-2 overflow-hidden">
+                        <div className="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-2.5 overflow-hidden">
                           <div
                             className="bg-emerald-500 h-full rounded-full transition-all duration-300"
                             style={{ width: `${Math.min(incomePct, 100)}%` }}
@@ -313,11 +313,11 @@ export default function TreasurerDashboardPage() {
 
                       {/* Expense Bar */}
                       <div>
-                        <div className="flex justify-between text-[11px] text-rose-700 font-medium mb-0.5">
+                        <div className="flex justify-between text-[11px] text-rose-600 dark:text-rose-400 font-bold mb-1">
                           <span>Expense</span>
                           <span>${cat.expense}</span>
                         </div>
-                        <div className="w-full bg-[#E9E7E5] rounded-full h-2 overflow-hidden">
+                        <div className="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-2.5 overflow-hidden">
                           <div
                             className="bg-rose-500 h-full rounded-full transition-all duration-300"
                             style={{ width: `${Math.min(expensePct, 100)}%` }}
@@ -326,9 +326,9 @@ export default function TreasurerDashboardPage() {
                       </div>
                     </div>
 
-                    <div className="flex justify-between items-center text-xs pt-2 border-t border-border font-medium">
-                      <span className="text-ink-muted">Net Category Total</span>
-                      <span className={parseFloat(cat.net) >= 0 ? 'text-emerald-700 font-bold' : 'text-rose-700 font-bold'}>
+                    <div className="flex justify-between items-center text-xs pt-3 border-t border-slate-200/60 dark:border-slate-700/60 font-medium">
+                      <span className="text-slate-500 dark:text-slate-400">Net Category Total</span>
+                      <span className={parseFloat(cat.net) >= 0 ? 'text-emerald-600 dark:text-emerald-400 font-black' : 'text-rose-600 dark:text-rose-400 font-black'}>
                         ${cat.net}
                       </span>
                     </div>
@@ -341,11 +341,11 @@ export default function TreasurerDashboardPage() {
       </Card>
 
       {/* Filterable Transactions Table */}
-      <Card className="border-border bg-white shadow-odoo-card">
+      <Card className="glass-panel border-white/40 dark:border-slate-800/80 rounded-3xl shadow-xl overflow-hidden">
         <CardHeader className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4">
           <div>
-            <CardTitle className="text-lg text-ink">Central Shared Ledger</CardTitle>
-            <CardDescription className="text-xs">
+            <CardTitle className="text-xl font-extrabold text-slate-900 dark:text-white">Central Shared Ledger</CardTitle>
+            <CardDescription className="text-xs text-slate-500 dark:text-slate-400">
               Live read-only transaction history populated by membership, events, store, reimbursements, and manual entries.
             </CardDescription>
           </div>
@@ -387,11 +387,11 @@ export default function TreasurerDashboardPage() {
         </CardHeader>
         <CardContent className="p-0">
           {isTxLoading ? (
-            <div className="py-12 text-center text-ink-muted text-sm">Loading central ledger transactions...</div>
+            <div className="py-12 text-center text-slate-400 text-sm">Loading central ledger transactions...</div>
           ) : isTxError ? (
-            <div className="py-8 text-center text-danger-600 text-sm">Failed to load transactions.</div>
+            <div className="py-8 text-center text-rose-500 text-sm">Failed to load transactions.</div>
           ) : transactions.length === 0 ? (
-            <div className="py-12 text-center text-ink-muted text-sm">No transactions match the selected filters.</div>
+            <div className="py-12 text-center text-slate-400 text-sm">No transactions match the selected filters.</div>
           ) : (
             <Table>
               <TableHeader>
@@ -406,26 +406,26 @@ export default function TreasurerDashboardPage() {
               </TableHeader>
               <TableBody>
                 {transactions.map((tx) => (
-                  <TableRow key={tx.id} className="hover:bg-[#FAF9F7]">
-                    <TableCell className="text-xs font-mono text-ink whitespace-nowrap">
+                  <TableRow key={tx.id} className="hover:bg-purple-500/5 dark:hover:bg-purple-500/10">
+                    <TableCell className="text-xs font-mono text-slate-900 dark:text-white whitespace-nowrap">
                       {new Date(tx.date).toLocaleDateString()}{' '}
                       <span className="text-slate-400">{new Date(tx.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
                     </TableCell>
                     <TableCell>
-                      <Badge variant={tx.type === 'income' ? 'success' : 'danger'}>
+                      <Badge variant={tx.type === 'income' ? 'success' : 'danger'} className="rounded-full px-3">
                         {tx.type_display || tx.type}
                       </Badge>
                     </TableCell>
-                    <TableCell className="text-xs font-medium text-ink">
+                    <TableCell className="text-xs font-bold text-slate-900 dark:text-white">
                       {tx.category_display || tx.category}
                     </TableCell>
-                    <TableCell className="text-xs text-[#714B67] font-semibold max-w-[140px] truncate">
+                    <TableCell className="text-xs text-[#714B67] dark:text-purple-300 font-bold max-w-[140px] truncate">
                       {tx.source}
                     </TableCell>
-                    <TableCell className="text-xs text-ink-muted max-w-[220px] truncate">
+                    <TableCell className="text-xs text-slate-500 dark:text-slate-400 max-w-[220px] truncate">
                       {tx.description || '—'}
                     </TableCell>
-                    <TableCell className={`text-right font-bold text-sm ${tx.type === 'income' ? 'text-emerald-600' : 'text-rose-600'}`}>
+                    <TableCell className={`text-right font-black text-sm ${tx.type === 'income' ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400'}`}>
                       {tx.type === 'income' ? '+' : '-'}${tx.amount}
                     </TableCell>
                   </TableRow>
@@ -443,7 +443,7 @@ export default function TreasurerDashboardPage() {
         title="Record Manual Transaction"
       >
         <form onSubmit={handleManualSubmit} className="space-y-4">
-          <p className="text-xs text-ink-muted">
+          <p className="text-xs text-slate-500 dark:text-slate-400">
             Use this form for off-platform cash donations, bake sales, or direct bank charges.
           </p>
 
@@ -493,21 +493,21 @@ export default function TreasurerDashboardPage() {
           />
 
           <div className="space-y-1">
-            <label className="block text-xs font-medium text-ink">Description / Note</label>
+            <label className="block text-xs font-bold text-slate-900 dark:text-white">Description / Note</label>
             <textarea
               rows="3"
               placeholder="Additional details regarding this entry..."
               value={manualForm.description}
               onChange={(e) => setManualForm((prev) => ({ ...prev, description: e.target.value }))}
-              className="w-full px-3 py-2 rounded-xl bg-white border border-border text-ink text-xs focus:outline-none focus:border-[#714B67]"
+              className="w-full px-3.5 py-2.5 rounded-2xl bg-white/80 dark:bg-slate-800/80 border border-slate-200/80 dark:border-slate-700/80 text-slate-900 dark:text-white text-xs focus:outline-none focus:ring-2 focus:ring-[#714B67] dark:focus:ring-purple-400"
             />
           </div>
 
-          <div className="flex justify-end gap-3 pt-3 border-t border-border">
-            <Button type="button" variant="outline" size="sm" onClick={() => setIsModalOpen(false)}>
+          <div className="flex justify-end gap-3 pt-3 border-t border-slate-200/60 dark:border-slate-800/60">
+            <Button type="button" variant="outline" size="sm" onClick={() => setIsModalOpen(false)} className="rounded-full">
               Cancel
             </Button>
-            <Button type="submit" variant="primary" size="sm" isLoading={manualMutation.isPending}>
+            <Button type="submit" variant="primary" size="sm" isLoading={manualMutation.isPending} className="rounded-full bg-gradient-to-r from-[#714B67] to-[#8C5D80] text-white font-bold">
               Record Entry
             </Button>
           </div>

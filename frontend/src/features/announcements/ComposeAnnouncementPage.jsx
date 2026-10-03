@@ -7,6 +7,7 @@ import { Input } from '../../components/ui/Input';
 import { Select } from '../../components/ui/Select';
 import { Button } from '../../components/ui/Button';
 import { createAnnouncement, sendAnnouncement } from './announcementsApi';
+import { Megaphone, ArrowLeft, Send, Mail, ShieldAlert, Sparkles } from 'lucide-react';
 
 export default function ComposeAnnouncementPage() {
   const [formData, setFormData] = useState({
@@ -84,46 +85,69 @@ export default function ComposeAnnouncementPage() {
 
   if (!isOfficer) {
     return (
-      <Card className="max-w-lg mx-auto my-12 text-center p-8 border-rose-200 bg-rose-50 shadow-sm">
-        <h2 className="text-xl font-bold text-[#222222] mb-2">Officer Access Required</h2>
-        <p className="text-sm text-[#66636A] mb-4">
-          Only club officers and leaders are authorized to compose and dispatch announcements.
-        </p>
-        <Link to="/announcements">
-          <Button variant="outline" size="sm">
-            Back to Feed
-          </Button>
-        </Link>
-      </Card>
+      <div className="max-w-lg mx-auto my-12 animate-fade-in">
+        <Card className="glass-panel text-center p-8 rounded-3xl border-rose-500/20 bg-rose-500/5 shadow-xl">
+          <div className="w-12 h-12 rounded-2xl bg-rose-500/10 text-rose-500 flex items-center justify-center mx-auto mb-4">
+            <ShieldAlert className="w-6 h-6" />
+          </div>
+          <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-2">Officer Access Required</h2>
+          <p className="text-sm text-slate-600 dark:text-slate-300 mb-6 leading-relaxed">
+            Only club officers and leaders are authorized to compose and dispatch announcements.
+          </p>
+          <Link to="/announcements">
+            <Button variant="outline" size="sm" className="rounded-full">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Feed
+            </Button>
+          </Link>
+        </Card>
+      </div>
     );
   }
 
   return (
-    <div className="max-w-3xl mx-auto space-y-6">
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-extrabold text-[#222222]">Compose Announcement</h1>
-          <p className="text-sm text-[#66636A]">
-            Publish an official notice to the club board and email target member groups.
-          </p>
+    <div className="max-w-3xl mx-auto space-y-8 animate-fade-in">
+      {/* Header Banner */}
+      <div className="relative overflow-hidden rounded-3xl glass-panel p-8 bg-gradient-to-r from-violet-500/10 via-purple-500/10 to-indigo-500/10 border border-violet-500/20">
+        <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="space-y-1">
+            <div className="flex items-center gap-2">
+              <span className="p-2.5 rounded-2xl bg-violet-600/10 dark:bg-violet-400/10 text-violet-600 dark:text-violet-400">
+                <Megaphone className="w-6 h-6" />
+              </span>
+              <span className="text-xs font-bold uppercase tracking-wider text-violet-600 dark:text-violet-400 bg-violet-50 dark:bg-violet-950/40 px-3 py-1 rounded-full border border-violet-200 dark:border-violet-800/60">
+                Officer Dispatch
+              </span>
+            </div>
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+              Compose Announcement
+            </h1>
+            <p className="text-sm text-slate-600 dark:text-slate-300">
+              Publish an official notice to the club board and email target member groups.
+            </p>
+          </div>
+          <Link to="/announcements">
+            <Button variant="outline" size="sm" className="rounded-full shadow-sm">
+              <ArrowLeft className="w-4 h-4 mr-1.5" />
+              Cancel
+            </Button>
+          </Link>
         </div>
-        <Link to="/announcements">
-          <Button variant="ghost" size="sm">
-            Cancel
-          </Button>
-        </Link>
       </div>
 
-      <Card className="border-border bg-white shadow-odoo-card">
-        <CardHeader>
-          <CardTitle className="text-lg text-[#222222]">Announcement Details</CardTitle>
-          <CardDescription className="text-xs text-[#66636A]">
+      <Card className="glass-panel rounded-3xl border border-white/20 dark:border-white/10 shadow-2xl overflow-hidden">
+        <CardHeader className="p-6 sm:p-8 border-b border-slate-200/60 dark:border-slate-800/60 bg-slate-50/50 dark:bg-slate-900/30">
+          <CardTitle className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+            <Sparkles className="w-5 h-5 text-violet-600 dark:text-violet-400" />
+            Announcement Details
+          </CardTitle>
+          <CardDescription className="text-xs text-slate-500 dark:text-slate-400 mt-1">
             Fill in the headline, message details, and target recipient audience.
           </CardDescription>
         </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-4">
+
+        <CardContent className="p-6 sm:p-8">
+          <form onSubmit={handleSubmit} className="space-y-6">
             <Input
               label="Announcement Title / Headline"
               name="title"
@@ -132,6 +156,7 @@ export default function ComposeAnnouncementPage() {
               value={formData.title}
               onChange={handleChange}
               error={errors.title}
+              className="rounded-2xl bg-white/80 dark:bg-slate-800/80 border-slate-200 dark:border-slate-700/60"
               required
             />
 
@@ -147,11 +172,12 @@ export default function ComposeAnnouncementPage() {
               ]}
               error={errors.audience}
               helperText="Determines who can see this notice in the feed and who receives the email notification."
+              className="rounded-2xl bg-white/80 dark:bg-slate-800/80 border-slate-200 dark:border-slate-700/60"
             />
 
-            <div className="space-y-1">
-              <label className="block text-xs font-semibold text-[#222222]">
-                Message Body <span className="text-danger-500">*</span>
+            <div className="space-y-1.5">
+              <label className="block text-xs font-semibold text-slate-700 dark:text-slate-200">
+                Message Body <span className="text-rose-500">*</span>
               </label>
               <textarea
                 name="body"
@@ -159,34 +185,42 @@ export default function ComposeAnnouncementPage() {
                 placeholder="Write full announcement message details..."
                 value={formData.body}
                 onChange={handleChange}
-                className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-border text-[#222222] text-sm focus:outline-none focus:border-[#714B67] focus:ring-1 focus:ring-[#714B67] transition-colors"
+                className="w-full px-4 py-3 rounded-2xl bg-white/80 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/60 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500/30 focus:border-violet-500 transition-all"
                 required
               />
-              {errors.body && <p className="text-xs text-danger-500">{errors.body}</p>}
+              {errors.body && <p className="text-xs text-rose-500 mt-1">{errors.body}</p>}
             </div>
 
-            <div className="flex items-center gap-3 pt-2">
+            <div className="flex items-center gap-3 p-4 rounded-2xl bg-violet-500/5 border border-violet-500/10">
               <input
                 type="checkbox"
                 id="sendEmailNow"
                 name="sendEmailNow"
                 checked={formData.sendEmailNow}
                 onChange={handleChange}
-                className="w-4 h-4 rounded border-border text-[#714B67] accent-[#714B67] focus:ring-[#714B67]"
+                className="w-4 h-4 rounded border-slate-300 dark:border-slate-600 text-violet-600 accent-violet-600 focus:ring-violet-500"
               />
-              <label htmlFor="sendEmailNow" className="text-sm font-medium text-[#222222]">
+              <label htmlFor="sendEmailNow" className="text-sm font-medium text-slate-800 dark:text-slate-200 flex items-center gap-2 cursor-pointer">
+                <Mail className="w-4 h-4 text-violet-600 dark:text-violet-400" />
                 Dispatch email broadcast to target audience immediately upon publishing
               </label>
             </div>
 
-            <CardFooter className="px-0 pt-4 border-t border-border flex items-center justify-between">
+            <CardFooter className="px-0 pt-6 border-t border-slate-200/60 dark:border-slate-800/60 flex items-center justify-between">
               <Link to="/announcements">
-                <Button type="button" variant="outline" size="sm">
+                <Button type="button" variant="outline" size="sm" className="rounded-full">
                   Cancel
                 </Button>
               </Link>
-              <Button type="submit" variant="primary" size="sm" className="bg-[#714B67] hover:bg-[#5B3B52] text-white shadow-sm font-semibold" isLoading={loading}>
-                {formData.sendEmailNow ? 'Publish & Send Email' : 'Save as Announcement'}
+              <Button
+                type="submit"
+                variant="primary"
+                size="sm"
+                className="rounded-full bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-700 hover:to-indigo-700 text-white shadow-lg shadow-violet-600/25 font-semibold px-6 hover:scale-[1.02] transition-all"
+                isLoading={loading}
+              >
+                <Send className="w-4 h-4 mr-2" />
+                {formData.sendEmailNow ? 'Publish & Dispatch Email' : 'Save Notice'}
               </Button>
             </CardFooter>
           </form>

@@ -35,10 +35,6 @@ export default function AppShell() {
 
   const navItems = getRegisteredNavItems(user?.role || 'public');
 
-  const defaultNavItems = [
-    { path: '/', label: 'Overview', icon: Home },
-  ];
-
   // Helper to map icons for each route
   const getNavIcon = (path) => {
     if (path === '/') return Home;
@@ -67,49 +63,41 @@ export default function AppShell() {
     });
   }, [navItems]);
 
-  const getBadgeVariant = (role) => {
-    switch (role) {
-      case 'admin':
-        return 'danger';
-      case 'leader':
-        return 'warning';
-      case 'member':
-        return 'success';
-      case 'volunteer':
-        return 'accent';
-      default:
-        return 'neutral';
-    }
-  };
-
   return (
-    <div className="min-h-screen flex flex-col text-[#0F172A] selection:bg-[#714B67] selection:text-white overflow-x-hidden max-w-full">
-      {/* Top Floating Bar Header (Once UI Minimalist Style) */}
+    <div className="min-h-screen flex flex-col text-slate-900 dark:text-slate-100 selection:bg-[#714B67] selection:text-white overflow-x-hidden max-w-full relative transition-colors duration-300">
+      {/* Background ambient lighting orbs for glassmorphism depth */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden -z-10">
+        <div className="absolute -top-32 left-1/4 w-96 h-96 bg-[#714B67]/10 dark:bg-[#A97B9F]/15 rounded-full blur-3xl filter transform-gpu" />
+        <div className="absolute top-1/3 -right-20 w-80 h-80 bg-sky-400/10 dark:bg-sky-500/10 rounded-full blur-3xl filter transform-gpu" />
+        <div className="absolute -bottom-20 left-1/3 w-96 h-96 bg-purple-400/10 dark:bg-purple-600/10 rounded-full blur-3xl filter transform-gpu" />
+      </div>
+
+      {/* Top Floating Bar Header */}
       <header className="sticky top-0 z-50 w-full pt-3 sm:pt-4 pb-2 px-4 sm:px-6 pointer-events-none">
-        <div className="max-w-7xl mx-auto flex items-center justify-between pointer-events-auto gap-2">
+        <div className="max-w-7xl mx-auto flex items-center justify-between pointer-events-auto gap-3">
           {/* Top-Left: Location / Campus Status */}
-          <div className="flex items-center gap-2 text-xs font-semibold text-[#64748B] shrink-0">
+          <div className="flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-white/70 dark:bg-slate-900/60 backdrop-blur-xl border border-slate-200/80 dark:border-white/10 text-xs font-semibold text-slate-600 dark:text-slate-300 shrink-0 shadow-xs">
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
             <span className="hidden sm:inline">Skyline Campus • Room 204</span>
-            <span className="sm:hidden font-mono">Skyline OS</span>
+            <span className="sm:hidden font-mono text-[11px]">Skyline OS</span>
           </div>
 
           {/* Top-Center: FLOATING PILL NAVBAR */}
           <nav
-            className="hidden md:inline-flex items-center gap-1 px-3 py-1.5 rounded-full pill-navbar max-w-[calc(100vw-320px)] overflow-x-auto whitespace-nowrap scrollbar-none"
+            className="hidden md:inline-flex items-center gap-1 px-3 py-1.5 rounded-full pill-navbar max-w-[calc(100vw-340px)] overflow-x-auto whitespace-nowrap scrollbar-none"
             aria-label="Main Navigation"
           >
             {/* Home circular button */}
             <Link
               to="/"
-              className={`w-7 h-7 rounded-full flex items-center justify-center transition-all ${
+              className={`w-8 h-8 rounded-full flex items-center justify-center transition-all duration-200 ${
                 location.pathname === '/'
-                  ? 'bg-[#714B67] text-white shadow-sm'
-                  : 'bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-900'
+                  ? 'bg-[#714B67] dark:bg-[#87567D] text-white shadow-md shadow-[#714B67]/25'
+                  : 'bg-slate-100/80 dark:bg-white/5 text-slate-600 dark:text-slate-300 hover:bg-slate-200/80 dark:hover:bg-white/10 hover:text-slate-900 dark:hover:text-white'
               }`}
               title="Overview Home"
             >
-              <Home className="w-3.5 h-3.5" />
+              <Home className="w-4 h-4" />
             </Link>
 
             {/* Nav Links */}
@@ -122,10 +110,10 @@ export default function AppShell() {
                   <Link
                     key={item.path}
                     to={item.path}
-                    className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold transition-all ${
+                    className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 ${
                       isActive
-                        ? 'bg-[#714B67] text-white shadow-sm'
-                        : 'text-[#64748B] hover:text-[#0F172A] hover:bg-[#FAF5F9]'
+                        ? 'bg-[#714B67] dark:bg-[#87567D] text-white shadow-md shadow-[#714B67]/25'
+                        : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-[#FAF5F9]/80 dark:hover:bg-white/10'
                     }`}
                   >
                     <IconComponent className="w-3.5 h-3.5 opacity-80" />
@@ -135,19 +123,19 @@ export default function AppShell() {
               })}
 
             {/* Vertical Divider */}
-            <div className="h-4 w-[1px] bg-slate-200/80 mx-1"></div>
+            <div className="h-4 w-[1px] bg-slate-200/80 dark:bg-white/10 mx-1"></div>
 
             {/* Dark / Light Theme Toggle Button */}
             <button
               type="button"
               onClick={toggleTheme}
-              className="w-7 h-7 rounded-full flex items-center justify-center text-slate-500 hover:text-[#0F172A] hover:bg-slate-100 transition-colors"
+              className="w-8 h-8 rounded-full flex items-center justify-center text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10 transition-colors"
               title={isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
             >
               {isDark ? (
-                <Sun className="w-3.5 h-3.5 text-amber-400" />
+                <Sun className="w-4 h-4 text-amber-400" />
               ) : (
-                <Moon className="w-3.5 h-3.5" />
+                <Moon className="w-4 h-4" />
               )}
             </button>
           </nav>
@@ -158,12 +146,12 @@ export default function AppShell() {
               <div className="flex items-center gap-2">
                 <Link
                   to="/members/me"
-                  className="flex items-center gap-2 pl-2 pr-3 py-1 rounded-full bg-white/90 border border-slate-200/80 shadow-sm hover:border-[#D4BFD2] transition-all text-xs font-medium"
+                  className="flex items-center gap-2 pl-2 pr-3.5 py-1.5 rounded-full bg-white/80 dark:bg-slate-900/70 backdrop-blur-xl border border-slate-200/80 dark:border-white/10 shadow-sm hover:border-[#D4BFD2] dark:hover:border-white/25 transition-all text-xs font-semibold text-slate-800 dark:text-slate-200"
                 >
-                  <div className="w-6 h-6 rounded-full bg-gradient-to-tr from-[#714B67] to-[#5B3B52] text-white flex items-center justify-center font-bold text-[10px]">
+                  <div className="w-6 h-6 rounded-full bg-gradient-to-tr from-[#714B67] to-[#87567D] text-white flex items-center justify-center font-bold text-[10px] shadow-xs">
                     {user?.name ? user.name.charAt(0).toUpperCase() : 'U'}
                   </div>
-                  <span className="hidden sm:inline font-semibold text-[#0F172A] max-w-[100px] truncate">
+                  <span className="hidden sm:inline max-w-[100px] truncate">
                     {user?.name || user?.username}
                   </span>
                 </Link>
@@ -173,7 +161,7 @@ export default function AppShell() {
                     logout();
                     navigate('/');
                   }}
-                  className="p-1.5 rounded-full text-slate-400 hover:text-rose-600 hover:bg-white transition-colors"
+                  className="w-8 h-8 rounded-full flex items-center justify-center bg-white/70 dark:bg-slate-900/60 backdrop-blur-xl border border-slate-200/80 dark:border-white/10 text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-white dark:hover:bg-slate-800 transition-colors shadow-xs"
                   title="Sign Out"
                 >
                   <LogOut className="w-4 h-4" />
@@ -183,13 +171,13 @@ export default function AppShell() {
               <div className="flex items-center gap-2">
                 <Link
                   to="/login"
-                  className="text-xs font-semibold text-[#64748B] hover:text-[#0F172A] px-3 py-1.5 transition-colors"
+                  className="text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white px-3 py-1.5 transition-colors"
                 >
                   Sign In
                 </Link>
                 <Link
                   to="/register"
-                  className="text-xs font-bold text-white bg-[#714B67] hover:bg-[#5B3B52] px-4 py-1.5 rounded-full shadow-sm hover:shadow transition-all"
+                  className="text-xs font-bold text-white bg-[#714B67] hover:bg-[#5B3B52] dark:bg-[#87567D] dark:hover:bg-[#714B67] px-4 py-2 rounded-full shadow-md shadow-[#714B67]/25 hover:shadow-lg transition-all"
                 >
                   Join Club
                 </Link>
@@ -200,7 +188,7 @@ export default function AppShell() {
             <button
               type="button"
               onClick={toggleTheme}
-              className="md:hidden p-1.5 rounded-full bg-white/90 border border-slate-200/80 text-slate-600 shadow-sm"
+              className="md:hidden w-8 h-8 rounded-full flex items-center justify-center bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-slate-200/80 dark:border-white/10 text-slate-600 dark:text-slate-300 shadow-xs"
               title={isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
             >
               {isDark ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4" />}
@@ -209,7 +197,7 @@ export default function AppShell() {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-1.5 rounded-full bg-white/90 border border-slate-200/80 text-slate-600"
+              className="md:hidden w-8 h-8 rounded-full flex items-center justify-center bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-slate-200/80 dark:border-white/10 text-slate-600 dark:text-slate-300 shadow-xs"
               aria-label="Toggle Menu"
             >
               {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
@@ -219,8 +207,8 @@ export default function AppShell() {
 
         {/* Mobile Navigation Drawer */}
         {mobileMenuOpen && (
-          <div className="md:hidden mt-2 p-4 rounded-3xl bg-white/95 backdrop-blur-xl border border-slate-200 shadow-xl space-y-2 pointer-events-auto animate-fade-in">
-            <div className="grid grid-cols-2 gap-1.5">
+          <div className="md:hidden mt-2 p-4 rounded-3xl bg-white/95 dark:bg-slate-900/95 backdrop-blur-2xl border border-slate-200/80 dark:border-white/10 shadow-2xl space-y-2 pointer-events-auto animate-in fade-in slide-in-from-top-2 duration-200">
+            <div className="grid grid-cols-2 gap-2">
               {combinedNav.map((item) => {
                 const isActive = location.pathname === item.path;
                 const IconComponent = item.icon;
@@ -229,10 +217,10 @@ export default function AppShell() {
                     key={item.path}
                     to={item.path}
                     onClick={() => setMobileMenuOpen(false)}
-                    className={`flex items-center gap-2 px-3 py-2 rounded-2xl text-xs font-semibold ${
+                    className={`flex items-center gap-2.5 px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition-all ${
                       isActive
-                        ? 'bg-[#714B67] text-white'
-                        : 'text-[#64748B] hover:bg-slate-100'
+                        ? 'bg-[#714B67] text-white shadow-sm'
+                        : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/5'
                     }`}
                   >
                     <IconComponent className="w-4 h-4" />
@@ -250,30 +238,31 @@ export default function AppShell() {
         <Outlet />
       </main>
 
-      {/* Minimalist Once UI Footer */}
-      <footer className="w-full border-t border-slate-200/70 bg-white/50 backdrop-blur-sm mt-auto py-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#64748B]">
-          <div className="flex items-center gap-2">
-            <div className="w-5 h-5 rounded-md bg-[#0F172A] text-white flex items-center justify-center font-bold text-[10px]">
+      {/* Minimalist Glass Footer */}
+      <footer className="w-full border-t border-slate-200/80 dark:border-white/10 bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl mt-auto py-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 dark:text-slate-400">
+          <div className="flex items-center gap-2.5">
+            <div className="w-6 h-6 rounded-lg bg-gradient-to-tr from-[#714B67] to-[#87567D] text-white flex items-center justify-center font-bold text-[11px] shadow-xs">
               S
             </div>
-            <span className="font-semibold text-[#0F172A]">Skyline Student Association</span>
+            <span className="font-bold text-slate-900 dark:text-white">Skyline Student Association</span>
             <span>•</span>
             <span>Est. 2024</span>
           </div>
 
-          <div className="flex items-center gap-4 font-medium">
-            <Link to="/events" className="hover:text-[#0F172A]">Events</Link>
-            <Link to="/store" className="hover:text-[#0F172A]">Merch</Link>
-            <Link to="/members" className="hover:text-[#0F172A]">Join Us</Link>
-            <Link to="/announcements" className="hover:text-[#0F172A]">News</Link>
+          <div className="flex items-center gap-5 font-semibold">
+            <Link to="/events" className="hover:text-slate-900 dark:hover:text-white transition-colors">Events</Link>
+            <Link to="/store" className="hover:text-slate-900 dark:hover:text-white transition-colors">Merch</Link>
+            <Link to="/members" className="hover:text-slate-900 dark:hover:text-white transition-colors">Join Us</Link>
+            <Link to="/announcements" className="hover:text-slate-900 dark:hover:text-white transition-colors">News</Link>
           </div>
 
-          <p className="text-[11px] text-slate-400">
-            Powered by Once UI Design System
+          <p className="text-[11px] text-slate-400 dark:text-slate-500 font-medium">
+            Modern Glass UI • Odoo SOS
           </p>
         </div>
       </footer>
     </div>
   );
 }
+

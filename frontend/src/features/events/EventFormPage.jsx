@@ -258,7 +258,7 @@ export default function EventFormPage() {
       <div className="flex items-center justify-between">
         <Link
           to={isEditMode ? `/events/${id}` : '/events'}
-          className="inline-flex items-center gap-2 text-sm text-ink-muted hover:text-ink transition-colors font-medium"
+          className="inline-flex items-center gap-2 text-sm text-ink-muted hover:text-ink dark:text-slate-400 dark:hover:text-slate-100 transition-colors font-medium px-4 py-2 rounded-full glass-card hover:border-[#714B67]/40"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>{isEditMode ? 'Back to Event Details' : 'Back to Events'}</span>
@@ -270,7 +270,7 @@ export default function EventFormPage() {
             size="sm"
             onClick={handleDelete}
             disabled={deleteMutation.isPending}
-            className="text-xs"
+            className="text-xs rounded-full shadow-sm"
           >
             <Trash2 className="w-3.5 h-3.5 mr-1.5" />
             Delete Event
@@ -279,24 +279,26 @@ export default function EventFormPage() {
       </div>
 
       {/* Main Form Container */}
-      <Card className="bg-white border-border shadow-odoo-card overflow-hidden">
-        <div className="p-6 sm:p-8 border-b border-border bg-[#FAF9F7]">
-          <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#714B67] mb-1">
-            <Calendar className="w-4 h-4" />
+      <Card className="glass-panel overflow-hidden border-border dark:border-slate-800/80 shadow-glass">
+        <div className="p-6 sm:p-8 border-b border-border dark:border-slate-800/80 bg-white/40 dark:bg-slate-800/40 backdrop-blur-md">
+          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#714B67] dark:text-purple-400 mb-1.5">
+            <span className="p-1.5 rounded-lg bg-purple-50 dark:bg-purple-950/50 border border-purple-200/60 dark:border-purple-800/50">
+              <Calendar className="w-3.5 h-3.5" />
+            </span>
             <span>{isEditMode ? 'Event Management' : 'New Club Gathering'}</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-ink tracking-tight">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-ink dark:text-slate-100 tracking-tight">
             {isEditMode ? 'Edit Event Details' : 'Create New Event'}
           </h1>
-          <p className="text-xs sm:text-sm text-ink-muted mt-1">
+          <p className="text-xs sm:text-sm text-ink-muted dark:text-slate-400 mt-1">
             Configure event information, capacity thresholds, and tiered member pricing.
           </p>
         </div>
 
         <CardContent className="p-6 sm:p-8 space-y-6">
           {serverError && (
-            <div className="p-4 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-xs flex items-center gap-3">
-              <AlertCircle className="w-5 h-5 text-rose-600 shrink-0" />
+            <div className="p-4 rounded-2xl bg-rose-50/80 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-900/50 text-rose-800 dark:text-rose-300 text-xs flex items-center gap-3 shadow-sm">
+              <AlertCircle className="w-5 h-5 text-rose-600 dark:text-rose-400 shrink-0" />
               <span>{serverError}</span>
             </div>
           )}
@@ -304,7 +306,7 @@ export default function EventFormPage() {
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Title */}
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold uppercase tracking-wider text-ink block">
+              <label className="text-xs font-bold uppercase tracking-wider text-ink dark:text-slate-300 block">
                 Event Title *
               </label>
               <input
@@ -312,14 +314,14 @@ export default function EventFormPage() {
                 value={formData.title}
                 onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                 placeholder="e.g. Annual Skyline Leadership Gala 2026"
-                className={`w-full bg-white border rounded-xl px-4 py-2.5 text-sm text-ink placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#714B67]/20 ${
+                className={`w-full bg-white/70 dark:bg-slate-900/70 backdrop-blur-sm border rounded-2xl px-4 py-3 text-sm text-ink dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-[#714B67]/20 dark:focus:ring-purple-500/20 transition-all ${
                   formErrors.title
                     ? 'border-rose-500 focus:ring-rose-500'
-                    : 'border-border focus:border-[#714B67]'
+                    : 'border-border dark:border-slate-800 focus:border-[#714B67] dark:focus:border-purple-500'
                 }`}
               />
               {formErrors.title && (
-                <p className="text-xs text-rose-600 flex items-center gap-1 mt-1">
+                <p className="text-xs text-rose-600 dark:text-rose-400 flex items-center gap-1 mt-1">
                   <AlertCircle className="w-3.5 h-3.5" />
                   {formErrors.title}
                 </p>
@@ -328,7 +330,7 @@ export default function EventFormPage() {
 
             {/* Description */}
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold uppercase tracking-wider text-ink block">
+              <label className="text-xs font-bold uppercase tracking-wider text-ink dark:text-slate-300 block">
                 Description & Agenda *
               </label>
               <textarea
@@ -336,14 +338,14 @@ export default function EventFormPage() {
                 value={formData.description}
                 onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                 placeholder="Describe the event, guest speakers, dress code, and what attendees will experience..."
-                className={`w-full bg-white border rounded-xl p-4 text-sm text-ink placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#714B67]/20 ${
+                className={`w-full bg-white/70 dark:bg-slate-900/70 backdrop-blur-sm border rounded-2xl p-4 text-sm text-ink dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-[#714B67]/20 dark:focus:ring-purple-500/20 transition-all ${
                   formErrors.description
                     ? 'border-rose-500 focus:ring-rose-500'
-                    : 'border-border focus:border-[#714B67]'
+                    : 'border-border dark:border-slate-800 focus:border-[#714B67] dark:focus:border-purple-500'
                 }`}
               />
               {formErrors.description && (
-                <p className="text-xs text-rose-600 flex items-center gap-1 mt-1">
+                <p className="text-xs text-rose-600 dark:text-rose-400 flex items-center gap-1 mt-1">
                   <AlertCircle className="w-3.5 h-3.5" />
                   {formErrors.description}
                 </p>
@@ -354,7 +356,7 @@ export default function EventFormPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               {/* Date & Time */}
               <div className="space-y-1.5">
-                <label className="text-xs font-semibold uppercase tracking-wider text-ink block">
+                <label className="text-xs font-bold uppercase tracking-wider text-ink dark:text-slate-300 block">
                   Date & Time *
                 </label>
                 <div className="relative">
@@ -362,15 +364,15 @@ export default function EventFormPage() {
                     type="datetime-local"
                     value={formData.datetime}
                     onChange={(e) => setFormData({ ...formData, datetime: e.target.value })}
-                    className={`w-full bg-white border rounded-xl px-4 py-2.5 text-sm text-ink focus:outline-none focus:ring-2 focus:ring-[#714B67]/20 ${
+                    className={`w-full bg-white/70 dark:bg-slate-900/70 backdrop-blur-sm border rounded-2xl px-4 py-3 text-sm text-ink dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-[#714B67]/20 dark:focus:ring-purple-500/20 transition-all ${
                       formErrors.datetime
                         ? 'border-rose-500 focus:ring-rose-500'
-                        : 'border-border focus:border-[#714B67]'
+                        : 'border-border dark:border-slate-800 focus:border-[#714B67] dark:focus:border-purple-500'
                     }`}
                   />
                 </div>
                 {formErrors.datetime && (
-                  <p className="text-xs text-rose-600 flex items-center gap-1 mt-1">
+                  <p className="text-xs text-rose-600 dark:text-rose-400 flex items-center gap-1 mt-1">
                     <AlertCircle className="w-3.5 h-3.5" />
                     {formErrors.datetime}
                   </p>
@@ -379,7 +381,7 @@ export default function EventFormPage() {
 
               {/* Venue */}
               <div className="space-y-1.5">
-                <label className="text-xs font-semibold uppercase tracking-wider text-ink block">
+                <label className="text-xs font-bold uppercase tracking-wider text-ink dark:text-slate-300 block">
                   Venue / Location *
                 </label>
                 <input
@@ -387,14 +389,14 @@ export default function EventFormPage() {
                   value={formData.venue}
                   onChange={(e) => setFormData({ ...formData, venue: e.target.value })}
                   placeholder="e.g. Skyline Student Center Grand Ballroom"
-                  className={`w-full bg-white border rounded-xl px-4 py-2.5 text-sm text-ink placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#714B67]/20 ${
+                  className={`w-full bg-white/70 dark:bg-slate-900/70 backdrop-blur-sm border rounded-2xl px-4 py-3 text-sm text-ink dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-[#714B67]/20 dark:focus:ring-purple-500/20 transition-all ${
                     formErrors.venue
                       ? 'border-rose-500 focus:ring-rose-500'
-                      : 'border-border focus:border-[#714B67]'
+                      : 'border-border dark:border-slate-800 focus:border-[#714B67] dark:focus:border-purple-500'
                   }`}
                 />
                 {formErrors.venue && (
-                  <p className="text-xs text-rose-600 flex items-center gap-1 mt-1">
+                  <p className="text-xs text-rose-600 dark:text-rose-400 flex items-center gap-1 mt-1">
                     <AlertCircle className="w-3.5 h-3.5" />
                     {formErrors.venue}
                   </p>
@@ -406,7 +408,7 @@ export default function EventFormPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               {/* Capacity */}
               <div className="space-y-1.5">
-                <label className="text-xs font-semibold uppercase tracking-wider text-ink block">
+                <label className="text-xs font-bold uppercase tracking-wider text-ink dark:text-slate-300 block">
                   Maximum Seating Capacity *
                 </label>
                 <input
@@ -415,58 +417,60 @@ export default function EventFormPage() {
                   step="1"
                   value={formData.capacity}
                   onChange={(e) => setFormData({ ...formData, capacity: e.target.value })}
-                  className={`w-full bg-white border rounded-xl px-4 py-2.5 text-sm text-ink placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#714B67]/20 ${
+                  className={`w-full bg-white/70 dark:bg-slate-900/70 backdrop-blur-sm border rounded-2xl px-4 py-3 text-sm text-ink dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-[#714B67]/20 dark:focus:ring-purple-500/20 transition-all ${
                     formErrors.capacity
                       ? 'border-rose-500 focus:ring-rose-500'
-                      : 'border-border focus:border-[#714B67]'
+                      : 'border-border dark:border-slate-800 focus:border-[#714B67] dark:focus:border-purple-500'
                   }`}
                 />
                 {formErrors.capacity && (
-                  <p className="text-xs text-rose-600 flex items-center gap-1 mt-1">
+                  <p className="text-xs text-rose-600 dark:text-rose-400 flex items-center gap-1 mt-1">
                     <AlertCircle className="w-3.5 h-3.5" />
                     {formErrors.capacity}
                   </p>
                 )}
-                <span className="text-[11px] text-ink-muted block">
+                <span className="text-[11px] text-ink-muted dark:text-slate-400 block">
                   Enforces database lock concurrency limit to prevent overselling.
                 </span>
               </div>
 
               {/* Status */}
               <div className="space-y-1.5">
-                <label className="text-xs font-semibold uppercase tracking-wider text-ink block">
+                <label className="text-xs font-bold uppercase tracking-wider text-ink dark:text-slate-300 block">
                   Publication Status
                 </label>
                 <select
                   value={formData.status}
                   onChange={(e) => setFormData({ ...formData, status: e.target.value })}
-                  className="w-full bg-white border border-border rounded-xl px-4 py-2.5 text-sm text-ink focus:outline-none focus:border-[#714B67] font-medium"
+                  className="w-full bg-white/70 dark:bg-slate-900/70 backdrop-blur-sm border border-border dark:border-slate-800 rounded-2xl px-4 py-3 text-sm text-ink dark:text-slate-100 focus:outline-none focus:border-[#714B67] dark:focus:border-purple-500 font-medium"
                 >
                   <option value="draft">Draft (Visible to officers only)</option>
                   <option value="published">Published (Open for ticket purchases)</option>
                   <option value="closed">Closed (Event concluded or sales ended)</option>
                 </select>
-                <span className="text-[11px] text-ink-muted block">
+                <span className="text-[11px] text-ink-muted dark:text-slate-400 block">
                   Only 'Published' events appear in the active member ticket directory.
                 </span>
               </div>
             </div>
 
             {/* Tiered Pricing Configuration Callout */}
-            <div className="p-6 rounded-2xl bg-[#FAF9F7] border border-border space-y-4">
+            <div className="p-6 rounded-3xl bg-white/50 dark:bg-slate-800/50 backdrop-blur-md border border-border dark:border-slate-800 space-y-4 shadow-glass">
               <div className="flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-emerald-600" />
-                <h3 className="text-sm font-bold text-ink">Tiered Ticket Pricing</h3>
+                <span className="p-1.5 rounded-lg bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-200/60 dark:border-emerald-800/50 text-emerald-600 dark:text-emerald-400">
+                  <Sparkles className="w-4 h-4" />
+                </span>
+                <h3 className="text-sm font-bold text-ink dark:text-slate-100">Tiered Ticket Pricing</h3>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 {/* Member Price */}
                 <div className="space-y-1.5">
-                  <label className="text-xs font-semibold uppercase tracking-wider text-emerald-700 block">
+                  <label className="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 block">
                     Club Member Price ($) *
                   </label>
                   <div className="relative">
-                    <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm">
+                    <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-500 text-sm">
                       $
                     </span>
                     <input
@@ -476,31 +480,31 @@ export default function EventFormPage() {
                       value={formData.member_price}
                       onChange={(e) => setFormData({ ...formData, member_price: e.target.value })}
                       placeholder="0.00"
-                      className={`w-full bg-white border rounded-xl pl-8 pr-4 py-2.5 text-sm text-ink focus:outline-none focus:ring-2 focus:ring-emerald-500/20 ${
+                      className={`w-full bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm border rounded-2xl pl-8 pr-4 py-3 text-sm text-ink dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 transition-all ${
                         formErrors.member_price
                           ? 'border-rose-500 focus:ring-rose-500'
-                          : 'border-border focus:border-emerald-500'
+                          : 'border-border dark:border-slate-800 focus:border-emerald-500'
                       }`}
                     />
                   </div>
                   {formErrors.member_price && (
-                    <p className="text-xs text-rose-600 flex items-center gap-1 mt-1">
+                    <p className="text-xs text-rose-600 dark:text-rose-400 flex items-center gap-1 mt-1">
                       <AlertCircle className="w-3.5 h-3.5" />
                       {formErrors.member_price}
                     </p>
                   )}
-                  <span className="text-[11px] text-ink-muted block">
+                  <span className="text-[11px] text-ink-muted dark:text-slate-400 block">
                     Rate charged to verified active club members.
                   </span>
                 </div>
 
                 {/* Non-Member Price */}
                 <div className="space-y-1.5">
-                  <label className="text-xs font-semibold uppercase tracking-wider text-ink block">
+                  <label className="text-xs font-bold uppercase tracking-wider text-ink dark:text-slate-300 block">
                     General Admission / Non-Member ($) *
                   </label>
                   <div className="relative">
-                    <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm">
+                    <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-500 text-sm">
                       $
                     </span>
                     <input
@@ -512,20 +516,20 @@ export default function EventFormPage() {
                         setFormData({ ...formData, nonmember_price: e.target.value })
                       }
                       placeholder="10.00"
-                      className={`w-full bg-white border rounded-xl pl-8 pr-4 py-2.5 text-sm text-ink focus:outline-none focus:ring-2 focus:ring-[#714B67]/20 ${
+                      className={`w-full bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm border rounded-2xl pl-8 pr-4 py-3 text-sm text-ink dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-[#714B67]/20 dark:focus:ring-purple-500/20 transition-all ${
                         formErrors.nonmember_price
                           ? 'border-rose-500 focus:ring-rose-500'
-                          : 'border-border focus:border-[#714B67]'
+                          : 'border-border dark:border-slate-800 focus:border-[#714B67] dark:focus:border-purple-500'
                       }`}
                     />
                   </div>
                   {formErrors.nonmember_price && (
-                    <p className="text-xs text-rose-600 flex items-center gap-1 mt-1">
+                    <p className="text-xs text-rose-600 dark:text-rose-400 flex items-center gap-1 mt-1">
                       <AlertCircle className="w-3.5 h-3.5" />
                       {formErrors.nonmember_price}
                     </p>
                   )}
-                  <span className="text-[11px] text-ink-muted block">
+                  <span className="text-[11px] text-ink-muted dark:text-slate-400 block">
                     Standard admission rate for public attendees.
                   </span>
                 </div>
@@ -533,9 +537,9 @@ export default function EventFormPage() {
 
               {/* Pricing Preview Pill */}
               {memberSavings > 0 && (
-                <div className="p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 text-xs text-emerald-800 flex items-center justify-between font-medium">
+                <div className="p-4 rounded-2xl bg-emerald-50/80 dark:bg-emerald-950/40 border border-emerald-200/80 dark:border-emerald-800/60 text-xs text-emerald-800 dark:text-emerald-300 flex items-center justify-between font-medium shadow-sm">
                   <span>Membership Incentive:</span>
-                  <span className="font-bold">
+                  <span className="font-extrabold">
                     Active club members save ${memberSavings.toFixed(2)} per ticket!
                   </span>
                 </div>
@@ -543,13 +547,13 @@ export default function EventFormPage() {
             </div>
 
             {/* Form Action Buttons */}
-            <div className="pt-4 border-t border-border flex items-center justify-end gap-3">
+            <div className="pt-4 border-t border-border dark:border-slate-800 flex items-center justify-end gap-3">
               <Link to={isEditMode ? `/events/${id}` : '/events'}>
-                <Button variant="outline" type="button">
+                <Button variant="outline" type="button" className="rounded-full">
                   Cancel
                 </Button>
               </Link>
-              <Button variant="primary" type="submit" disabled={isSubmitting}>
+              <Button variant="primary" type="submit" disabled={isSubmitting} className="rounded-full shadow-md">
                 <Save className="w-4 h-4 mr-2" />
                 {isSubmitting
                   ? 'Saving Event...'
