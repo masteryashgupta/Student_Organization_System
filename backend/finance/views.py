@@ -3,17 +3,19 @@ from django.db.models import Sum, Q, Count, Value, DecimalField
 from django.db.models.functions import Coalesce
 from django.shortcuts import get_object_or_404
 from rest_framework import permissions, status, generics
-from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 
 from core.models import Transaction
+from core.services import record_transaction
 from accounts.permissions import IsOfficer
 from .models import Reimbursement
 from .serializers import (
     FinanceSummaryFilterSerializer,
     FinanceSummaryResponseSerializer,
+    FinanceTransactionSerializer,
+    ManualTransactionCreateSerializer,
     ReimbursementSerializer,
     ReimbursementActionSerializer,
 )
@@ -142,6 +144,77 @@ class FinanceSummaryView(APIView):
         return Response(response_serializer.data, status=status.HTTP_200_OK)
 
 
+class FinanceTransactionListCreateView(generics.ListCreateAPIView):
+    """
+    GET /api/finance/transactions
+      Returns a paginated list of central ledger transactions.
+      Filters: ?type=income|expense, ?category=dues|ticket|..., ?date=YYYY-MM-DD,
+               ?start_date=YYYY-MM-DD, ?end_date=YYYY-MM-DD, ?search=query
+
+    POST /api/finance/transactions
+      Officer-only manual entry for miscellaneous income/expenses (e.g. cash donations, off-platform sponsorships).
+    """
+    permission_classes = [permissions.AllowAny]
+    serializer_class = FinanceTransactionSerializer
+
+    def get_queryset(self):
+        queryset = Transaction.objects.all()
+
+        type_param = self.request.query_params.get('type')
+        if type_param:
+            queryset = queryset.filter(type__iexact=type_param)
+
+        category_param = self.request.query_params.get('category')
+        if category_param:
+            queryset = queryset.filter(category__iexact=category_param)
+
+        date_param = self.request.query_params.get('date')
+        if date_param:
+            queryset = queryset.filter(date__date=date_param)
+
+        start_date = self.request.query_params.get('start_date')
+        if start_date:
+            queryset = queryset.filter(date__date__gte=start_date)
+
+        end_date = self.request.query_params.get('end_date')
+        if end_date:
+            queryset = queryset.filter(date__date__lte=end_date)
+
+        search_query = self.request.query_params.get('search')
+        if search_query:
+            queryset = queryset.filter(
+                Q(source__icontains=search_query) | Q(description__icontains=search_query)
+            )
+
+        return queryset
+
+    def create(self, request, *args, **kwargs):
+        # Officer permission check for manual creation
+        if request.user and request.user.is_authenticated:
+            is_officer = getattr(request.user, 'is_officer', False) or request.user.is_staff or request.user.is_superuser
+            if not is_officer:
+                return Response(
+                    {"detail": "Only club officers can record manual ledger transactions."},
+                    status=status.HTTP_403_FORBIDDEN
+                )
+
+        serializer = ManualTransactionCreateSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        data = serializer.validated_data
+        tx = record_transaction(
+            type=data['type'],
+            category=data['category'],
+            amount=data['amount'],
+            source=data['source'],
+            description=data.get('description', ''),
+            date=data.get('date')
+        )
+
+        response_serializer = FinanceTransactionSerializer(tx)
+        return Response(response_serializer.data, status=status.HTTP_201_CREATED)
+
+
 class ReimbursementListCreateView(generics.ListCreateAPIView):
     """
     GET /api/reimbursements
@@ -164,7 +237,6 @@ class ReimbursementListCreateView(generics.ListCreateAPIView):
 
         user = self.request.user
         if user and user.is_authenticated:
-            # Non-officer members only see their own reimbursement requests unless explicitly requesting all
             if not getattr(user, 'is_officer', False) and not user.is_staff and not user.is_superuser:
                 queryset = queryset.filter(requester=user)
 
@@ -186,10 +258,7 @@ class ReimbursementDetailView(generics.RetrieveDestroyAPIView):
 
 
 class BaseOfficerActionView(APIView):
-    """
-    Base view checking officer permissions for reimbursement workflows.
-    """
-    permission_classes = [permissions.AllowAny]  # Open for development/testing; checks user officer status if authenticated
+    permission_classes = [permissions.AllowAny]
 
     def check_officer_permission(self, request):
         if request.user and request.user.is_authenticated:
@@ -200,10 +269,6 @@ class BaseOfficerActionView(APIView):
 
 
 class ReimbursementApproveView(BaseOfficerActionView):
-    """
-    POST /api/reimbursements/<id>/approve
-    Officer action to approve reimbursement request and post expense transaction to core ledger.
-    """
     def post(self, request, pk, *args, **kwargs):
         if not self.check_officer_permission(request):
             return Response({"detail": "Only club officers can approve reimbursements."}, status=status.HTTP_403_FORBIDDEN)
@@ -221,10 +286,6 @@ class ReimbursementApproveView(BaseOfficerActionView):
 
 
 class ReimbursementRejectView(BaseOfficerActionView):
-    """
-    POST /api/reimbursements/<id>/reject
-    Officer action to reject reimbursement request.
-    """
     def post(self, request, pk, *args, **kwargs):
         if not self.check_officer_permission(request):
             return Response({"detail": "Only club officers can reject reimbursements."}, status=status.HTTP_403_FORBIDDEN)
@@ -245,10 +306,6 @@ class ReimbursementRejectView(BaseOfficerActionView):
 
 
 class ReimbursementMarkPaidView(BaseOfficerActionView):
-    """
-    POST /api/reimbursements/<id>/mark-paid
-    Officer action to mark approved reimbursement as paid out.
-    """
     def post(self, request, pk, *args, **kwargs):
         if not self.check_officer_permission(request):
             return Response({"detail": "Only club officers can mark reimbursements as paid."}, status=status.HTTP_403_FORBIDDEN)

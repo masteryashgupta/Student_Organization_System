@@ -118,6 +118,116 @@ class FinanceSummaryAPITestCase(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
 
+class FinanceTransactionAPITestCase(APITestCase):
+    def setUp(self):
+        self.officer = User.objects.create_user(
+            username='treasurer_user',
+            email='treasurer@skyline.local',
+            password='password123',
+            role=User.ROLE_ADMIN
+        )
+        self.member = User.objects.create_user(
+            username='regular_member',
+            email='member@skyline.local',
+            password='password123',
+            role=User.ROLE_MEMBER
+        )
+        self.tx_url = reverse('finance-transaction-list-create')
+
+    def test_list_transactions_paginated_and_filtered(self):
+        now = timezone.now()
+        Transaction.objects.create(
+            type=Transaction.TYPE_INCOME,
+            category=Transaction.CATEGORY_DUES,
+            amount=Decimal('100.00'),
+            source='Membership dues online',
+            description='Annual membership dues payment',
+            date=now
+        )
+        Transaction.objects.create(
+            type=Transaction.TYPE_EXPENSE,
+            category=Transaction.CATEGORY_REIMBURSEMENT,
+            amount=Decimal('40.00'),
+            source='Reimbursement #1',
+            description='Paper supplies',
+            date=now
+        )
+
+        # 1. Unfiltered list
+        res = self.client.get(self.tx_url)
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        data = res.json()
+        results = data['results'] if 'results' in data else data
+        self.assertEqual(len(results), 2)
+
+        # 2. Filter by type=income
+        res_income = self.client.get(self.tx_url, {'type': 'income'})
+        self.assertEqual(res_income.status_code, status.HTTP_200_OK)
+        results_inc = res_income.json()['results'] if 'results' in res_income.json() else res_income.json()
+        self.assertEqual(len(results_inc), 1)
+        self.assertEqual(results_inc[0]['category'], 'dues')
+
+        # 3. Filter by search query
+        res_search = self.client.get(self.tx_url, {'search': 'Paper'})
+        self.assertEqual(res_search.status_code, status.HTTP_200_OK)
+        results_search = res_search.json()['results'] if 'results' in res_search.json() else res_search.json()
+        self.assertEqual(len(results_search), 1)
+        self.assertEqual(results_search[0]['source'], 'Reimbursement #1')
+
+    def test_create_manual_transaction_by_officer(self):
+        self.client.force_authenticate(user=self.officer)
+        payload = {
+            'type': 'income',
+            'category': 'fundraiser',
+            'amount': '250.00',
+            'source': 'Bake Sale Cash Box',
+            'description': 'Cash collected during Friday campus bake sale'
+        }
+        response = self.client.post(self.tx_url, payload)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        data = response.json()
+
+        self.assertEqual(Decimal(data['amount']), Decimal('250.00'))
+        self.assertEqual(data['source'], payload['source'])
+        self.assertEqual(data['category'], 'fundraiser')
+        self.assertEqual(data['category_display'], 'Fundraiser')
+
+        # Verify transaction recorded in DB
+        self.assertTrue(Transaction.objects.filter(source=payload['source']).exists())
+
+    def test_create_manual_transaction_by_non_officer_denied(self):
+        self.client.force_authenticate(user=self.member)
+        payload = {
+            'type': 'income',
+            'category': 'other',
+            'amount': '100.00',
+            'source': 'Unauthorized Entry'
+        }
+        response = self.client.post(self.tx_url, payload)
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_manual_transaction_validation(self):
+        self.client.force_authenticate(user=self.officer)
+
+        # Invalid amount (0.00)
+        res_amount = self.client.post(self.tx_url, {
+            'type': 'income',
+            'category': 'other',
+            'amount': '0.00',
+            'source': 'Zero Amount Test'
+        })
+        self.assertEqual(res_amount.status_code, status.HTTP_400_BAD_REQUEST)
+
+        # Short source identifier (< 3 chars)
+        res_source = self.client.post(self.tx_url, {
+            'type': 'expense',
+            'category': 'other',
+            'amount': '15.00',
+            'source': 'AB'
+        })
+        self.assertEqual(res_source.status_code, status.HTTP_400_BAD_REQUEST)
+
+
 class ReimbursementAPITestCase(APITestCase):
     def setUp(self):
         self.user = User.objects.create_user(
@@ -187,7 +297,6 @@ class ReimbursementAPITestCase(APITestCase):
         approve_url = reverse('reimbursement-approve', kwargs={'pk': reimbursement.id})
         self.client.force_authenticate(user=self.officer)
 
-        # First approval
         initial_tx_count = Transaction.objects.count()
         response = self.client.post(approve_url, {'notes': 'Approved by Treasurer'})
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -211,18 +320,15 @@ class ReimbursementAPITestCase(APITestCase):
         approve_url = reverse('reimbursement-approve', kwargs={'pk': reimbursement.id})
         self.client.force_authenticate(user=self.officer)
 
-        # Call approve 1st time
         res1 = self.client.post(approve_url, {'notes': 'First approval'})
         self.assertEqual(res1.status_code, status.HTTP_200_OK)
         tx_id_1 = res1.json()['transaction_id']
 
-        # Call approve 2nd time (duplicate request)
         tx_count_before = Transaction.objects.count()
         res2 = self.client.post(approve_url, {'notes': 'Second approval attempt'})
         self.assertEqual(res2.status_code, status.HTTP_200_OK)
         tx_id_2 = res2.json()['transaction_id']
 
-        # Assert no second ledger entry was created
         self.assertEqual(tx_id_1, tx_id_2)
         self.assertEqual(Transaction.objects.count(), tx_count_before)
 

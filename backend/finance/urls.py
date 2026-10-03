@@ -1,6 +1,7 @@
 from django.urls import path
 from .views import (
     FinanceSummaryView,
+    FinanceTransactionListCreateView,
     ReimbursementListCreateView,
     ReimbursementDetailView,
     ReimbursementApproveView,
@@ -11,6 +12,9 @@ from .views import (
 urlpatterns = [
     path('finance/summary', FinanceSummaryView.as_view(), name='finance-summary'),
     path('finance/summary/', FinanceSummaryView.as_view(), name='finance-summary-slash'),
+
+    path('finance/transactions', FinanceTransactionListCreateView.as_view(), name='finance-transaction-list-create'),
+    path('finance/transactions/', FinanceTransactionListCreateView.as_view(), name='finance-transaction-list-create-slash'),
 
     path('reimbursements', ReimbursementListCreateView.as_view(), name='reimbursement-list-create'),
     path('reimbursements/', ReimbursementListCreateView.as_view(), name='reimbursement-list-create-slash'),
