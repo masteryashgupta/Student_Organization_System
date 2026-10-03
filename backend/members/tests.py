@@ -237,3 +237,83 @@ class MemberVerifyTestCase(TestCase):
 
         self.assertEqual(response.status_code, 403)
 
+
+class JoinClubAndProfileTestCase(TestCase):
+    def setUp(self):
+        self.tier = MembershipTier.objects.create(
+            name='Silver Pass',
+            price=Decimal('45.00'),
+            duration_days=365,
+            ticket_discount_pct=Decimal('15.00'),
+            merch_discount_pct=Decimal('10.00'),
+            is_active=True
+        )
+
+    def test_public_signup_and_join_with_immediate_dues_payment(self):
+        payload = {
+            'name': 'Taylor Swift',
+            'email': 'taylor@skyline.edu',
+            'phone': '555-9999',
+            'password': 'Password123!',
+            'password_confirm': 'Password123!',
+            'tier_id': self.tier.id,
+            'pay_now': True,
+        }
+
+        response = self.client.post('/api/members/join', payload, format='json')
+        self.assertEqual(response.status_code, 201)
+        self.assertIn('access', response.data)
+        self.assertIn('membership', response.data)
+
+        # Check DB
+        user = User.objects.get(email='taylor@skyline.edu')
+        self.assertEqual(user.role, 'member')
+
+        mem = Membership.objects.get(user=user)
+        self.assertTrue(mem.dues_paid)
+        self.assertEqual(mem.status, Membership.STATUS_ACTIVE)
+        self.assertEqual(mem.dues_amount_paid, Decimal('45.00'))
+
+        # Check ledger recorded
+        tx = Transaction.objects.filter(category='dues', amount=Decimal('45.00')).first()
+        self.assertIsNotNone(tx)
+
+    def test_public_signup_validation_passwords_mismatch(self):
+        payload = {
+            'name': 'Taylor Swift',
+            'email': 'taylor2@skyline.edu',
+            'password': 'Password123!',
+            'password_confirm': 'DifferentPassword!',
+            'tier_id': self.tier.id,
+        }
+        response = self.client.post('/api/members/join', payload, format='json')
+        self.assertEqual(response.status_code, 400)
+        details = response.data.get('details', response.data)
+        self.assertIn('password_confirm', details)
+
+
+    def test_my_membership_profile_endpoint(self):
+        user = User.objects.create_user(
+            username='profile_user',
+            email='profile@skyline.edu',
+            password='Password123!',
+            name='Profile User',
+            role='member'
+        )
+        Membership.objects.create(
+            user=user,
+            tier=self.tier,
+            dues_paid=True,
+            status=Membership.STATUS_ACTIVE,
+            start_date=timezone.now().date(),
+            end_date=timezone.now().date() + timedelta(days=365)
+        )
+
+        self.client.force_login(user)
+        response = self.client.get('/api/members/profile/me')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data['user']['email'], 'profile@skyline.edu')
+        self.assertIsNotNone(response.data['membership'])
+        self.assertTrue(len(response.data['available_tiers']) >= 1)
+
+

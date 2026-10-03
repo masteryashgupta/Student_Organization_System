@@ -1,9 +1,12 @@
 from datetime import timedelta
+from decimal import Decimal
+from django.db import models
 from django.utils import timezone
 from django.contrib.auth import get_user_model
 from rest_framework import generics, permissions, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework_simplejwt.tokens import RefreshToken
 from accounts.permissions import IsOfficer
 from core.services import record_transaction
 from .models import MembershipTier, Membership
@@ -14,6 +17,7 @@ from .serializers import (
     MemberDiscountContractSerializer,
     MemberVerifyResponseSerializer,
     PayDuesSerializer,
+    JoinClubSerializer,
 )
 
 
@@ -42,7 +46,7 @@ class MembershipTierDetailView(generics.RetrieveUpdateDestroyAPIView):
 
 class MembershipListCreateView(generics.ListCreateAPIView):
     """
-    GET /api/members -> Officer list of all memberships
+    GET /api/members -> Officer list of all memberships (supports ?search= and ?status=)
     POST /api/members -> Create/assign a membership record
     """
     queryset = Membership.objects.all()
@@ -54,11 +58,21 @@ class MembershipListCreateView(generics.ListCreateAPIView):
         return [permissions.IsAuthenticated()]
 
     def get_queryset(self):
-        queryset = super().get_queryset()
+        queryset = super().get_queryset().select_related('user', 'tier')
         status_param = self.request.query_params.get('status')
-        if status_param:
+        if status_param and status_param.lower() != 'all':
             queryset = queryset.filter(status__iexact=status_param)
+        search = self.request.query_params.get('search')
+        if search:
+            search = search.strip()
+            queryset = queryset.filter(
+                models.Q(user__name__icontains=search) |
+                models.Q(user__email__icontains=search) |
+                models.Q(user__username__icontains=search) |
+                models.Q(tier__name__icontains=search)
+            )
         return queryset
+
 
 
 class MembershipDetailView(generics.RetrieveUpdateDestroyAPIView):
@@ -361,4 +375,112 @@ class PayDuesView(APIView):
             },
             status=status.HTTP_200_OK
         )
+
+
+class MyMembershipProfileView(APIView):
+    """
+    GET /api/members/profile/me
+    Returns the authenticated user's profile and membership details (with QR code and available renewal tiers).
+    """
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request):
+        user = request.user
+        membership_data = None
+        try:
+            membership = Membership.objects.select_related('tier', 'user').get(user=user)
+            membership_data = MembershipSerializer(membership).data
+        except Membership.DoesNotExist:
+            membership_data = None
+
+        active_tiers = MembershipTier.objects.filter(is_active=True)
+        tiers_data = MembershipTierSerializer(active_tiers, many=True).data
+
+        return Response({
+            "user": {
+                "id": user.id,
+                "name": user.name or user.username,
+                "email": user.email,
+                "phone": user.phone,
+                "role": user.role,
+                "role_display": user.get_role_display(),
+            },
+            "membership": membership_data,
+            "available_tiers": tiers_data,
+        }, status=status.HTTP_200_OK)
+
+
+class JoinClubView(APIView):
+    """
+    POST /api/members/join
+    Public signup and membership enrollment endpoint.
+    Atomically registers a new user, creates membership with the chosen tier,
+    and returns JWT tokens for instant auto-login.
+    """
+    permission_classes = [permissions.AllowAny]
+
+    def post(self, request):
+        serializer = JoinClubSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        data = serializer.validated_data
+        name = data['name']
+        email = data['email']
+        phone = data.get('phone', '')
+        password = data['password']
+        tier_id = data['tier_id']
+        pay_now = data.get('pay_now', False)
+
+        User = get_user_model()
+        tier = MembershipTier.objects.get(id=tier_id, is_active=True)
+
+        user = User.objects.create_user(
+            username=email,
+            email=email,
+            name=name,
+            phone=phone,
+            password=password,
+            role=User.ROLE_MEMBER if pay_now else User.ROLE_PUBLIC,
+        )
+
+        today = timezone.now().date()
+        membership = Membership.objects.create(
+            user=user,
+            tier=tier,
+            status=Membership.STATUS_ACTIVE if pay_now else Membership.STATUS_PENDING,
+            dues_paid=pay_now,
+            dues_amount_paid=tier.price if pay_now else Decimal('0.00'),
+            start_date=today if pay_now else None,
+            end_date=(today + timedelta(days=tier.duration_days)) if pay_now else None,
+        )
+
+        if pay_now:
+            record_transaction(
+                type='income',
+                category='dues',
+                amount=tier.price,
+                source=f"Member #{user.id} ({name})",
+                description=f"Membership dues payment upon joining ({tier.name})",
+                date=timezone.now()
+            )
+
+        # Generate JWT auth tokens for immediate auto-login
+        refresh = RefreshToken.for_user(user)
+
+        return Response({
+            "message": f"Welcome to Skyline Club, {name}! Your membership registration was successful.",
+            "access": str(refresh.access_token),
+            "refresh": str(refresh),
+            "user": {
+                "id": user.id,
+                "username": user.username,
+                "email": user.email,
+                "name": user.name,
+                "phone": user.phone,
+                "role": user.role,
+                "is_officer": user.is_officer,
+            },
+            "membership": MembershipSerializer(membership).data,
+        }, status=status.HTTP_201_CREATED)
+
 
