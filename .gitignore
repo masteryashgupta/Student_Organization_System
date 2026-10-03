@@ -2,7 +2,15 @@
 .env
 .env.local
 .env.*.local
-*.env
+
+# Master Plan & PDF Prompt Docs
+00_MASTER_PLAN.md
+01_README_Person1_Platform_Membership.md
+02_README_Person2_Events_Ticketing.md
+03_README_Person3_Store_Tasks.md
+04_README_Person4_Finance_Comms.md
+05_MERGE_GUIDE.md
+Student_Organization_System.pdf
 
 # Python & Django
 __pycache__/
