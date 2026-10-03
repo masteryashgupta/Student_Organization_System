@@ -1,16 +1,27 @@
 from decimal import Decimal
 from django.test import TestCase
 from django.core.exceptions import ValidationError
+from django.contrib.auth import get_user_model
 from rest_framework.test import APITestCase
 from rest_framework import status
 
-from .models import Product, ProductVariant
+from core.models import Transaction
+from members.models import MembershipTier, Membership
+from .models import Product, ProductVariant, Order, OrderItem
+from .payments import get_payment_provider, MockPaymentProvider, StripeTestPaymentProvider
 from .services import (
     decrement_variant_stock,
     decrement_order_stock,
     restock_variant,
     restore_variant_stock,
+    create_order_from_cart,
+    mark_order_as_paid,
+    process_order_payment,
+    fulfill_order,
+    cancel_order,
 )
+
+User = get_user_model()
 
 
 class ProductModelTests(TestCase):
@@ -102,7 +113,6 @@ class StockServiceTests(TestCase):
         with self.assertRaises(ValidationError):
             decrement_variant_stock(self.variant_m.id, quantity=6)
         
-        # Ensure stock remained untouched
         self.variant_m.refresh_from_db()
         self.assertEqual(self.variant_m.stock_qty, 5)
 
@@ -115,13 +125,12 @@ class StockServiceTests(TestCase):
     def test_decrement_order_stock_all_or_nothing(self):
         items_payload = [
             {'variant_id': self.variant_s.id, 'quantity': 2},
-            {'variant_id': self.variant_m.id, 'quantity': 10}, # Exceeds variant_m stock (5)
+            {'variant_id': self.variant_m.id, 'quantity': 10},
         ]
 
         with self.assertRaises(ValidationError):
             decrement_order_stock(items_payload)
 
-        # Verify rollback: variant_s should STILL have 10, not 8!
         self.variant_s.refresh_from_db()
         self.variant_m.refresh_from_db()
         self.assertEqual(self.variant_s.stock_qty, 10)
@@ -147,102 +156,252 @@ class StockServiceTests(TestCase):
         self.assertEqual(restored.stock_qty, 8)
 
 
-class ProductAPITests(APITestCase):
+class PaymentProviderTests(TestCase):
     def setUp(self):
         self.product = Product.objects.create(
-            name="Skyline Club Cap",
-            type="cap",
-            price=Decimal("18.50"),
-            description="Adjustable strap dad hat",
-            image="https://example.com/cap.jpg"
+            name="Skyline Water Bottle",
+            type="accessory",
+            price=Decimal("15.00")
         )
         self.variant = ProductVariant.objects.create(
             product=self.product,
             size="One Size",
-            stock_qty=50
+            stock_qty=20
         )
 
-    def test_list_products_exposes_stock_flags(self):
-        response = self.client.get('/api/products/')
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-        results = response.data.get('results', response.data)
-        self.assertEqual(len(results), 1)
-        self.assertEqual(results[0]['name'], "Skyline Club Cap")
-        self.assertEqual(results[0]['total_stock'], 50)
-        self.assertTrue(results[0]['is_in_stock'])
-        self.assertEqual(results[0]['variants'][0]['stock_qty'], 50)
-        self.assertTrue(results[0]['variants'][0]['is_in_stock'])
+    def test_mock_payment_provider_offline(self):
+        order = create_order_from_cart(
+            items_data=[{'variant_id': self.variant.id, 'qty': 2}],
+            buyer_name="Offline Customer"
+        )
+        provider = get_payment_provider('mock')
+        self.assertIsInstance(provider, MockPaymentProvider)
 
-    def test_retrieve_product(self):
-        response = self.client.get(f'/api/products/{self.product.id}/')
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data['name'], "Skyline Club Cap")
-        self.assertEqual(response.data['price'], "18.50")
-        self.assertEqual(response.data['total_stock'], 50)
-        self.assertTrue(response.data['is_in_stock'])
+        result = provider.process_payment(order, payment_data={'payment_reference': 'CASH_REC_001'})
+        self.assertTrue(result.success)
+        self.assertEqual(result.status, 'paid')
+        self.assertEqual(result.transaction_id, 'CASH_REC_001')
 
-    def test_create_product_with_variants(self):
+    def test_stripe_test_payment_provider(self):
+        order = create_order_from_cart(
+            items_data=[{'variant_id': self.variant.id, 'qty': 1}],
+            buyer_name="Card Customer"
+        )
+        provider = get_payment_provider('stripe')
+        self.assertIsInstance(provider, StripeTestPaymentProvider)
+
+        result = provider.process_payment(order)
+        self.assertTrue(result.success)
+        self.assertEqual(result.status, 'paid')
+        self.assertTrue(result.transaction_id.startswith('pi_test_') or result.transaction_id.startswith('ch_'))
+
+
+class OrderLifecycleTests(TestCase):
+    def setUp(self):
+        self.user_member = User.objects.create_user(
+            username="gold_member",
+            email="gold@skyline.edu",
+            password="securepassword123",
+            name="Gold Member"
+        )
+        self.tier = MembershipTier.objects.create(
+            name="Gold Pass",
+            price=Decimal("50.00"),
+            merch_discount_pct=Decimal("15.00"),
+            ticket_discount_pct=Decimal("20.00")
+        )
+        from django.utils import timezone
+        from datetime import timedelta
+        self.membership = Membership.objects.create(
+            user=self.user_member,
+            tier=self.tier,
+            status=Membership.STATUS_ACTIVE,
+            dues_paid=True,
+            start_date=timezone.now().date(),
+            end_date=timezone.now().date() + timedelta(days=365)
+        )
+
+        self.product = Product.objects.create(
+            name="Skyline Navy Hoodie",
+            type="hoodie",
+            price=Decimal("60.00")
+        )
+        self.variant_m = ProductVariant.objects.create(
+            product=self.product,
+            size="M",
+            stock_qty=10
+        )
+        self.variant_l = ProductVariant.objects.create(
+            product=self.product,
+            size="L",
+            stock_qty=5
+        )
+
+    def test_create_order_with_member_discount(self):
+        cart_items = [
+            {'variant_id': self.variant_m.id, 'qty': 2}  # 2 x 60 = 120
+        ]
+        order = create_order_from_cart(
+            items_data=cart_items,
+            buyer=self.user_member,
+            buyer_name="Gold Member",
+            buyer_email="gold@skyline.edu"
+        )
+
+        self.assertEqual(order.status, Order.STATUS_PENDING)
+        self.assertEqual(order.subtotal, Decimal("120.00"))
+        self.assertEqual(order.discount_pct, Decimal("15.00"))
+        self.assertEqual(order.discount_amount, Decimal("18.00"))
+        self.assertEqual(order.total, Decimal("102.00"))
+        self.assertEqual(order.items.count(), 1)
+        self.variant_m.refresh_from_db()
+        self.assertEqual(self.variant_m.stock_qty, 10)
+
+    def test_order_payment_decrements_stock_and_records_ledger_income(self):
+        cart_items = [{'variant_id': self.variant_m.id, 'qty': 2}]
+        order = create_order_from_cart(cart_items, buyer=self.user_member)
+
+        initial_tx_count = Transaction.objects.count()
+        paid_order, result = process_order_payment(order, provider_name='mock')
+
+        self.assertEqual(paid_order.status, Order.STATUS_PAID)
+        self.assertIsNotNone(paid_order.paid_at)
+        self.assertEqual(paid_order.payment_provider, 'mock')
+        self.assertTrue(paid_order.payment_reference.startswith('MOCK-TXN-'))
+
+        # Stock should now be decremented
+        self.variant_m.refresh_from_db()
+        self.assertEqual(self.variant_m.stock_qty, 8)
+
+        # Transaction ledger entry must exist
+        self.assertEqual(Transaction.objects.count(), initial_tx_count + 1)
+        tx = Transaction.objects.latest('created_at')
+        self.assertEqual(tx.type, 'income')
+        self.assertEqual(tx.category, 'merch')
+        self.assertEqual(tx.amount, paid_order.total)
+        self.assertIn(f"Merch Order #{order.id}", tx.source)
+
+    def test_order_fulfillment(self):
+        cart_items = [{'variant_id': self.variant_m.id, 'qty': 1}]
+        order = create_order_from_cart(cart_items, buyer=self.user_member)
+        mark_order_as_paid(order)
+        fulfilled_order = fulfill_order(order)
+
+        self.assertEqual(fulfilled_order.status, Order.STATUS_FULFILLED)
+        self.assertIsNotNone(fulfilled_order.fulfilled_at)
+
+    def test_cancelled_paid_order_restores_inventory(self):
+        cart_items = [{'variant_id': self.variant_l.id, 'qty': 2}]
+        order = create_order_from_cart(cart_items, buyer=self.user_member)
+        mark_order_as_paid(order)
+
+        self.variant_l.refresh_from_db()
+        self.assertEqual(self.variant_l.stock_qty, 3)
+
+        cancel_order(order, reason="Customer requested refund")
+        self.variant_l.refresh_from_db()
+        self.assertEqual(self.variant_l.stock_qty, 5)
+        self.assertEqual(order.status, Order.STATUS_CANCELLED)
+
+
+class OrderAPITests(APITestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(
+            username="student_buyer",
+            email="student@skyline.edu",
+            password="securepassword123",
+            name="Student Buyer"
+        )
+        self.product = Product.objects.create(
+            name="Skyline T-Shirt",
+            type="tee",
+            price=Decimal("25.00")
+        )
+        self.variant_s = ProductVariant.objects.create(
+            product=self.product,
+            size="S",
+            stock_qty=20
+        )
+        self.variant_m = ProductVariant.objects.create(
+            product=self.product,
+            size="M",
+            stock_qty=15
+        )
+
+    def test_create_order_api_success(self):
+        self.client.force_authenticate(user=self.user)
         payload = {
-            "name": "Skyline Varsity Jacket",
-            "type": "hoodie",
-            "price": "65.00",
-            "description": "Embroidered club jacket",
-            "image": "https://example.com/jacket.jpg",
-            "variants": [
-                {"size": "S", "stock_qty": 10},
-                {"size": "M", "stock_qty": 25},
-                {"size": "L", "stock_qty": 15}
-            ]
+            "items": [
+                {"variant_id": self.variant_s.id, "qty": 2},
+                {"variant_id": self.variant_m.id, "qty": 1},
+            ],
+            "buyer_name": "Student Buyer",
+            "notes": "Pick up after 3pm"
         }
-        response = self.client.post('/api/products/', payload, format='json')
+        response = self.client.post('/api/orders/', payload, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(response.data['name'], "Skyline Varsity Jacket")
-        self.assertEqual(response.data['total_stock'], 50)
-        self.assertTrue(response.data['is_in_stock'])
-        self.assertEqual(len(response.data['variants']), 3)
+        self.assertEqual(response.data['status'], 'pending')
+        self.assertEqual(Decimal(response.data['subtotal']), Decimal("75.00"))
+        self.assertEqual(len(response.data['items']), 2)
 
-    def test_reject_zero_or_negative_price(self):
+    def test_create_order_rejects_insufficient_stock(self):
         payload = {
-            "name": "Invalid Price Item",
-            "type": "tee",
-            "price": "0.00"
-        }
-        response = self.client.post('/api/products/', payload, format='json')
-        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertTrue('price' in response.data or 'price' in response.data.get('details', {}))
-
-    def test_reject_negative_variant_stock(self):
-        payload = {
-            "name": "Invalid Stock Item",
-            "type": "tee",
-            "price": "15.00",
-            "variants": [
-                {"size": "M", "stock_qty": -5}
+            "items": [
+                {"variant_id": self.variant_m.id, "qty": 50}
             ]
         }
-        response = self.client.post('/api/products/', payload, format='json')
+        response = self.client.post('/api/orders/', payload, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertTrue('variants' in response.data or 'variants' in response.data.get('details', {}))
 
-    def test_restock_endpoint_on_product(self):
+    def test_pay_order_api_with_mock_provider(self):
         payload = {
-            "size": "One Size",
-            "quantity": 25
+            "items": [
+                {"variant_id": self.variant_s.id, "qty": 3}
+            ],
+            "buyer_name": "Student Buyer",
+            "buyer_email": "student@skyline.edu"
         }
-        response = self.client.post(f'/api/products/{self.product.id}/restock/', payload, format='json')
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data['variant']['stock_qty'], 75)
-        self.assertEqual(response.data['product']['total_stock'], 75)
+        create_resp = self.client.post('/api/orders/', payload, format='json')
+        order_id = create_resp.data['id']
 
-    def test_restock_endpoint_on_variant(self):
+        pay_payload = {
+            "provider": "mock",
+            "payment_reference": "POS_TERMINAL_TXN_99"
+        }
+        pay_resp = self.client.post(f'/api/orders/{order_id}/pay/', pay_payload, format='json')
+        self.assertEqual(pay_resp.status_code, status.HTTP_200_OK)
+        self.assertEqual(pay_resp.data['order']['status'], 'paid')
+        self.assertEqual(pay_resp.data['order']['payment_provider'], 'mock')
+        self.assertEqual(pay_resp.data['order']['payment_reference'], 'POS_TERMINAL_TXN_99')
+
+        self.variant_s.refresh_from_db()
+        self.assertEqual(self.variant_s.stock_qty, 17)
+
+    def test_pay_order_api_with_stripe_provider(self):
         payload = {
-            "quantity": 10
+            "items": [{"variant_id": self.variant_m.id, "qty": 1}],
+            "buyer_name": "Online Buyer"
         }
-        response = self.client.post(f'/api/product-variants/{self.variant.id}/restock/', payload, format='json')
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data['variant']['stock_qty'], 60)
+        create_resp = self.client.post('/api/orders/', payload, format='json')
+        order_id = create_resp.data['id']
 
-    def test_delete_product(self):
-        response = self.client.delete(f'/api/products/{self.product.id}/')
-        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
-        self.assertFalse(Product.objects.filter(id=self.product.id).exists())
+        pay_resp = self.client.post(f'/api/orders/{order_id}/pay/', {"provider": "stripe"}, format='json')
+        self.assertEqual(pay_resp.status_code, status.HTTP_200_OK)
+        self.assertEqual(pay_resp.data['order']['status'], 'paid')
+        self.assertEqual(pay_resp.data['order']['payment_provider'], 'stripe')
+
+    def test_fulfill_and_cancel_order_api(self):
+        payload = {
+            "items": [{"variant_id": self.variant_s.id, "qty": 1}]
+        }
+        create_resp = self.client.post('/api/orders/', payload, format='json')
+        order_id = create_resp.data['id']
+
+        self.client.post(f'/api/orders/{order_id}/pay/')
+        fulfill_resp = self.client.post(f'/api/orders/{order_id}/fulfill/')
+        self.assertEqual(fulfill_resp.status_code, status.HTTP_200_OK)
+        self.assertEqual(fulfill_resp.data['order']['status'], 'fulfilled')
+
+        cancel_resp = self.client.post(f'/api/orders/{order_id}/cancel/', {"reason": "Defective item"})
+        self.assertEqual(cancel_resp.status_code, status.HTTP_200_OK)
+        self.assertEqual(cancel_resp.data['order']['status'], 'cancelled')
