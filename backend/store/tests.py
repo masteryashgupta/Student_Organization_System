@@ -155,6 +155,30 @@ class StockServiceTests(TestCase):
         restored = restore_variant_stock(self.variant_m.id, quantity=3)
         self.assertEqual(restored.stock_qty, 8)
 
+    def test_stock_5_sequence_and_concurrent_depletion(self):
+        product = Product.objects.create(name="T-Shirt", type="tee", price=Decimal("20.00"))
+        variant = ProductVariant.objects.create(product=product, size="L", stock_qty=5)
+
+        # 1. Initial Stock = 5, Order 3 -> Stock = 2
+        v1 = decrement_variant_stock(variant.id, quantity=3)
+        self.assertEqual(v1.stock_qty, 2)
+        variant.refresh_from_db()
+        self.assertEqual(variant.stock_qty, 2)
+
+        # 2. Stock = 2, Order 2 -> Stock = 0
+        v2 = decrement_variant_stock(variant.id, quantity=2)
+        self.assertEqual(v2.stock_qty, 0)
+        variant.refresh_from_db()
+        self.assertEqual(variant.stock_qty, 0)
+        self.assertFalse(variant.is_in_stock)
+
+        # 3. Stock = 0, Order 1 -> Rejected
+        with self.assertRaises(ValidationError) as ctx:
+            decrement_variant_stock(variant.id, quantity=1)
+        self.assertIn('Insufficient stock', str(ctx.exception))
+        variant.refresh_from_db()
+        self.assertEqual(variant.stock_qty, 0)
+
 
 class PaymentProviderTests(TestCase):
     def setUp(self):
