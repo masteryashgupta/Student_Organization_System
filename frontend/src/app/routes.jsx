@@ -9,8 +9,12 @@ import '../features/auth/authRoutes';
 import '../features/members/memberRoutes';
 import '../features/events/eventsRoutes';
 import '../features/store/storeRoutes';
+import '../features/tasks/taskRoutes';
 import '../features/finance/financeRoutes';
 import '../features/announcements/announcementsRoutes';
+
+
+
 
 export default function AppRoutes() {
   const registeredRoutes = getRegisteredRoutes();
