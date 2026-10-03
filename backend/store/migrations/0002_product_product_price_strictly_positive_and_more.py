@@ -13,10 +13,10 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AddConstraint(
             model_name='product',
-            constraint=models.CheckConstraint(condition=models.Q(('price__gt', Decimal('0.00'))), name='product_price_strictly_positive'),
+            constraint=models.CheckConstraint(check=models.Q(('price__gt', Decimal('0.00'))), name='product_price_strictly_positive'),
         ),
         migrations.AddConstraint(
             model_name='productvariant',
-            constraint=models.CheckConstraint(condition=models.Q(('stock_qty__gte', 0)), name='variant_stock_qty_non_negative'),
+            constraint=models.CheckConstraint(check=models.Q(('stock_qty__gte', 0)), name='variant_stock_qty_non_negative'),
         ),
     ]
