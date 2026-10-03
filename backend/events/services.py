@@ -4,6 +4,7 @@ import uuid
 from decimal import Decimal
 import qrcode
 from django.db import transaction
+from django.utils import timezone
 from rest_framework.exceptions import ValidationError
 from .models import Event, Ticket
 
@@ -212,3 +213,76 @@ def purchase_ticket(event_id: int, buyer_user=None, holder_name: str = "", holde
             raise ValidationError({"detail": f"Failed to record ticket transaction in central ledger: {str(exc)}"})
 
     return ticket
+
+
+@transaction.atomic
+def check_in_ticket(token: str) -> Ticket:
+    """
+    Validates and marks a ticket as checked in.
+    Uses select_for_update() inside transaction.atomic to prevent double check-ins
+    under concurrent scan conditions.
+    
+    Raises:
+        ValidationError:
+            - If ticket token is unknown / does not exist (404)
+            - If ticket is cancelled (400)
+            - If ticket is already checked in (400 with timestamp)
+    """
+    try:
+        # Lock ticket row exclusively
+        ticket = Ticket.objects.select_for_update().select_related('event').get(token=token)
+    except (Ticket.DoesNotExist, ValueError):
+        raise ValidationError({
+            "detail": "Ticket not found. Invalid or unknown ticket token."
+        })
+
+    if ticket.status == Ticket.STATUS_CANCELLED:
+        raise ValidationError({
+            "detail": "This ticket has been cancelled and cannot be used for admission."
+        })
+
+    if ticket.status == Ticket.STATUS_CHECKED_IN:
+        timestamp_str = ticket.checked_in_at.strftime('%Y-%m-%d %H:%M:%S UTC') if ticket.checked_in_at else "previously"
+        raise ValidationError({
+            "detail": f"Double check-in rejected: Ticket was already checked in at {timestamp_str}."
+        })
+
+    # Mark checked in
+    ticket.status = Ticket.STATUS_CHECKED_IN
+    ticket.checked_in_at = timezone.now()
+    ticket.save(update_fields=['status', 'checked_in_at', 'updated_at'])
+    return ticket
+
+
+def get_event_checkin_feed(event: Event, limit: int = 50) -> dict:
+    """
+    Computes real-time check-in stats and recent check-ins feed for an event.
+    """
+    total_sold = event.tickets.exclude(status=Ticket.STATUS_CANCELLED).count()
+    checked_in_count = event.tickets.filter(status=Ticket.STATUS_CHECKED_IN).count()
+    attendance_pct = round((checked_in_count / total_sold * 100), 1) if total_sold > 0 else 0.0
+
+    recent_tickets = event.tickets.filter(
+        status=Ticket.STATUS_CHECKED_IN
+    ).order_by('-checked_in_at')[:limit]
+
+    feed_items = [
+        {
+            "token": str(t.token),
+            "holder_name": t.holder_name,
+            "holder_email": t.holder_email,
+            "type": t.type,
+            "checked_in_at": t.checked_in_at,
+        }
+        for t in recent_tickets
+    ]
+
+    return {
+        "event_id": event.id,
+        "event_title": event.title,
+        "capacity": event.capacity,
+        "total_sold": total_sold,
+        "checked_in_count": checked_in_count,
+        "attendance_pct": attendance_pct,
+        "recent_checkins": feed_items,
+    }

@@ -125,3 +125,21 @@ class TicketPurchaseSerializer(serializers.Serializer):
                 attrs['holder_email'] = user.email
 
         return attrs
+
+
+class CheckInFeedItemSerializer(serializers.Serializer):
+    token = serializers.UUIDField(read_only=True)
+    holder_name = serializers.CharField(read_only=True)
+    holder_email = serializers.CharField(read_only=True)
+    type = serializers.CharField(read_only=True)
+    checked_in_at = serializers.DateTimeField(read_only=True)
+
+
+class CheckInFeedSerializer(serializers.Serializer):
+    event_id = serializers.IntegerField(read_only=True)
+    event_title = serializers.CharField(read_only=True)
+    capacity = serializers.IntegerField(read_only=True)
+    total_sold = serializers.IntegerField(read_only=True)
+    checked_in_count = serializers.IntegerField(read_only=True)
+    attendance_pct = serializers.FloatField(read_only=True)
+    recent_checkins = CheckInFeedItemSerializer(many=True, read_only=True)
