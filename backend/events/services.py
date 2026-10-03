@@ -15,17 +15,22 @@ def generate_ticket_qr_bytes(token: str) -> bytes:
     Generates a PNG image of a QR code encoding the ticket UUID token.
     """
     qr = qrcode.QRCode(
-        version=1,
+        version=None,
         error_correction=qrcode.constants.ERROR_CORRECT_M,
         box_size=10,
         border=4,
     )
-    qr.add_data(str(token))
+    qr.add_data(str(token).strip())
     qr.make(fit=True)
     img = qr.make_image(fill_color="black", back_color="white")
+    
     buffer = io.BytesIO()
-    img.save(buffer, format="PNG")
-    return buffer.getvalue()
+    try:
+        img.save(buffer, format="PNG")
+        buffer.seek(0)
+        return buffer.getvalue()
+    finally:
+        buffer.close()
 
 
 def generate_ticket_qr_data_url(token: str) -> str:
@@ -91,12 +96,7 @@ def check_event_availability(event: Event, quantity: int = 1) -> dict:
 def get_buyer_member_info(request=None, user=None) -> dict:
     """
     Determines whether the buyer is an active club member and any discount pct.
-    
-    // MOCK /api/members/me: swap at integration
-    By contract, calls GET /api/members/me or queries membership status.
-    Until fully integrated, defaults unauthenticated or mocked buyers to non-member (0% discount).
     """
-    # // MOCK /api/members/me: swap at integration
     if user and user.is_authenticated:
         try:
             from members.models import Membership
@@ -110,7 +110,6 @@ def get_buyer_member_info(request=None, user=None) -> dict:
         except Exception:
             pass
 
-    # // MOCK /api/members/me: swap at integration
     return {
         'is_active_member': False,
         'tier': None,
@@ -171,7 +170,6 @@ def purchase_ticket(event_id: int, buyer_user=None, holder_name: str = "", holde
         raise ValidationError({"detail": "This event is completely sold out. No tickets remaining."})
 
     # 3. Determine pricing (member vs nonmember)
-    # // MOCK /api/members/me: swap at integration
     member_info = get_buyer_member_info(request=request, user=buyer_user)
     ticket_type, price_paid = calculate_ticket_price(event, member_info)
 
@@ -216,6 +214,8 @@ def purchase_ticket(event_id: int, buyer_user=None, holder_name: str = "", holde
     return ticket
 
 
+from django.core.exceptions import ValidationError as DjangoValidationError
+
 @transaction.atomic
 def check_in_ticket(token: str) -> Ticket:
     """
@@ -232,7 +232,7 @@ def check_in_ticket(token: str) -> Ticket:
     try:
         # Lock ticket row exclusively
         ticket = Ticket.objects.select_for_update().select_related('event').get(token=token)
-    except (Ticket.DoesNotExist, ValueError):
+    except (Ticket.DoesNotExist, ValueError, DjangoValidationError):
         raise ValidationError({
             "detail": "Ticket not found. Invalid or unknown ticket token."
         })

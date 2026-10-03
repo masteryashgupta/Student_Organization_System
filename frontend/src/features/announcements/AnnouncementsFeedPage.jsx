@@ -81,15 +81,15 @@ export default function AnnouncementsFeedPage() {
   return (
     <div className="space-y-6">
       {/* Header Banner */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-gradient-to-r from-surface-900 via-surface-850 to-brand-950/60 p-6 rounded-2xl border border-slate-800 shadow-xl">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-6 sm:p-8 rounded-2xl border border-border shadow-odoo-card">
         <div>
-          <div className="flex items-center gap-2 mb-1">
-            <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-brand-500/20 text-brand-300 border border-brand-500/30">
+          <div className="flex items-center gap-2 mb-1.5">
+            <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#714B67]/10 text-[#714B67] border border-[#714B67]/20">
               Club Broadcast Center
             </span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">Announcements Feed</h1>
-          <p className="text-sm text-slate-400 mt-1">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-[#222222] tracking-tight">Announcements Feed</h1>
+          <p className="text-sm text-[#66636A] mt-1">
             Official club notices, event alerts, and meeting agendas for all members.
           </p>
         </div>
@@ -102,7 +102,7 @@ export default function AnnouncementsFeedPage() {
           </Link>
           {isOfficer && (
             <Link to="/announcements/compose">
-              <Button variant="primary" size="sm" className="shadow-lg shadow-brand-600/30">
+              <Button variant="primary" size="sm" className="bg-[#714B67] hover:bg-[#5B3B52] text-white shadow-sm">
                 + Compose Notice
               </Button>
             </Link>
@@ -115,15 +115,15 @@ export default function AnnouncementsFeedPage() {
         {/* Main Feed Column */}
         <div className="lg:col-span-2 space-y-4">
           {/* Controls Bar */}
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-surface-900 p-3 rounded-xl border border-slate-800">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-[#F4F6F8] p-3 rounded-xl border border-border">
             {/* Audience Tabs */}
             <div className="flex items-center gap-1 overflow-x-auto pb-1 sm:pb-0">
               <button
                 onClick={() => setSelectedAudience('')}
                 className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
                   selectedAudience === ''
-                    ? 'bg-brand-600 text-white font-semibold shadow'
-                    : 'text-slate-400 hover:text-white hover:bg-slate-800'
+                    ? 'bg-[#714B67] text-white font-semibold shadow-sm'
+                    : 'text-[#66636A] hover:text-[#222222] hover:bg-white'
                 }`}
               >
                 All Audiences
@@ -132,8 +132,8 @@ export default function AnnouncementsFeedPage() {
                 onClick={() => setSelectedAudience('all')}
                 className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
                   selectedAudience === 'all'
-                    ? 'bg-brand-600 text-white font-semibold shadow'
-                    : 'text-slate-400 hover:text-white hover:bg-slate-800'
+                    ? 'bg-[#714B67] text-white font-semibold shadow-sm'
+                    : 'text-[#66636A] hover:text-[#222222] hover:bg-white'
                 }`}
               >
                 Everyone
@@ -142,8 +142,8 @@ export default function AnnouncementsFeedPage() {
                 onClick={() => setSelectedAudience('members')}
                 className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
                   selectedAudience === 'members'
-                    ? 'bg-brand-600 text-white font-semibold shadow'
-                    : 'text-slate-400 hover:text-white hover:bg-slate-800'
+                    ? 'bg-[#714B67] text-white font-semibold shadow-sm'
+                    : 'text-[#66636A] hover:text-[#222222] hover:bg-white'
                 }`}
               >
                 Members Only
@@ -152,8 +152,8 @@ export default function AnnouncementsFeedPage() {
                 onClick={() => setSelectedAudience('volunteers')}
                 className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
                   selectedAudience === 'volunteers'
-                    ? 'bg-brand-600 text-white font-semibold shadow'
-                    : 'text-slate-400 hover:text-white hover:bg-slate-800'
+                    ? 'bg-[#714B67] text-white font-semibold shadow-sm'
+                    : 'text-[#66636A] hover:text-[#222222] hover:bg-white'
                 }`}
               >
                 Volunteers
@@ -167,24 +167,24 @@ export default function AnnouncementsFeedPage() {
                 placeholder="Search feed..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="py-1 text-xs"
+                className="py-1 text-xs bg-white border-border text-[#222222]"
               />
             </div>
           </div>
 
           {/* Announcements Feed Items */}
           {isLoading ? (
-            <div className="py-12 text-center text-slate-400">Loading announcements feed...</div>
+            <div className="py-12 text-center text-[#66636A]">Loading announcements feed...</div>
           ) : isError ? (
-            <div className="p-4 rounded-xl bg-danger-950/60 border border-danger-700 text-danger-200 text-sm flex justify-between items-center">
+            <div className="p-4 rounded-xl bg-danger-50 border border-danger-200 text-danger-700 text-sm flex justify-between items-center">
               <span>Failed to load announcements from server.</span>
               <Button size="sm" variant="ghost" onClick={() => refetch()}>
                 Retry
               </Button>
             </div>
           ) : filteredAnnouncements.length === 0 ? (
-            <Card className="py-12 text-center">
-              <p className="text-slate-400 text-sm">No announcements found matching your filter.</p>
+            <Card className="py-12 text-center bg-white border-border shadow-sm">
+              <p className="text-[#66636A] text-sm">No announcements found matching your filter.</p>
               {isOfficer && (
                 <Link to="/announcements/compose" className="mt-3 inline-block">
                   <Button variant="outline" size="sm">
@@ -195,7 +195,7 @@ export default function AnnouncementsFeedPage() {
             </Card>
           ) : (
             filteredAnnouncements.map((item) => (
-              <Card key={item.id} className="border-slate-800 hover:border-slate-700/80 transition-all">
+              <Card key={item.id} className="border-border bg-white shadow-odoo-card hover:shadow-md transition-all">
                 <CardHeader className="pb-2">
                   <div className="flex items-start justify-between gap-3">
                     <div>
@@ -204,25 +204,25 @@ export default function AnnouncementsFeedPage() {
                           {item.audience_display || item.audience}
                         </Badge>
                         {item.is_sent ? (
-                          <span className="text-[11px] font-medium text-emerald-400 flex items-center gap-1 bg-emerald-950/60 px-2 py-0.5 rounded-full border border-emerald-800/60">
+                          <span className="text-[11px] font-medium text-emerald-800 flex items-center gap-1 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
                             ✓ Emailed on {new Date(item.sent_at).toLocaleDateString()}
                           </span>
                         ) : (
-                          <span className="text-[11px] font-medium text-amber-400 bg-amber-950/50 px-2 py-0.5 rounded-full border border-amber-800/50">
+                          <span className="text-[11px] font-medium text-amber-800 bg-amber-50 px-2.5 py-0.5 rounded-full border border-amber-200">
                             Draft Notice
                           </span>
                         )}
                       </div>
-                      <CardTitle className="text-lg text-white">{item.title}</CardTitle>
+                      <CardTitle className="text-lg text-[#222222] font-bold">{item.title}</CardTitle>
                     </div>
                   </div>
                 </CardHeader>
                 <CardContent className="py-2">
-                  <p className="text-slate-300 text-sm whitespace-pre-line leading-relaxed">{item.body}</p>
+                  <p className="text-[#222222] text-sm whitespace-pre-line leading-relaxed">{item.body}</p>
                 </CardContent>
-                <CardFooter className="pt-3 border-t border-slate-800/60 flex items-center justify-between text-xs text-slate-400">
+                <CardFooter className="pt-3 border-t border-border flex items-center justify-between text-xs text-[#66636A]">
                   <div className="flex items-center gap-2">
-                    <span className="font-medium text-slate-300">{item.author_name}</span>
+                    <span className="font-semibold text-[#222222]">{item.author_name}</span>
                     <span>•</span>
                     <span>{new Date(item.created_at).toLocaleString()}</span>
                   </div>
@@ -230,7 +230,7 @@ export default function AnnouncementsFeedPage() {
                     <Button
                       variant={item.is_sent ? 'secondary' : 'primary'}
                       size="sm"
-                      className="text-xs py-1"
+                      className={`text-xs py-1 ${!item.is_sent ? 'bg-[#714B67] hover:bg-[#5B3B52] text-white shadow-sm' : ''}`}
                       isLoading={sendMutation.isPending && sendMutation.variables === item.id}
                       onClick={() => sendMutation.mutate(item.id)}
                     >
@@ -245,10 +245,10 @@ export default function AnnouncementsFeedPage() {
 
         {/* Sidebar Column: Email Mailing List Subscription */}
         <div className="space-y-4">
-          <Card className="border-brand-600/30 bg-gradient-to-b from-surface-900 to-brand-950/30">
+          <Card className="border-[#714B67]/20 bg-[#714B67]/5 shadow-sm">
             <CardHeader>
-              <CardTitle className="text-base text-white">Join Club Mailing List</CardTitle>
-              <CardDescription className="text-xs">
+              <CardTitle className="text-base text-[#222222]">Join Club Mailing List</CardTitle>
+              <CardDescription className="text-xs text-[#66636A]">
                 Receive important announcements directly in your email inbox automatically.
               </CardDescription>
             </CardHeader>
@@ -260,12 +260,12 @@ export default function AnnouncementsFeedPage() {
                   value={subscribeEmailInput}
                   onChange={(e) => setSubscribeEmailInput(e.target.value)}
                   required
-                  className="text-xs"
+                  className="text-xs bg-white border-border text-[#222222]"
                 />
                 <Button
                   type="submit"
                   variant="primary"
-                  className="w-full text-xs"
+                  className="w-full text-xs bg-[#714B67] hover:bg-[#5B3B52] text-white font-semibold"
                   isLoading={submittingSub}
                 >
                   Subscribe to Updates
@@ -275,13 +275,13 @@ export default function AnnouncementsFeedPage() {
           </Card>
 
           {/* Value Prop Banner */}
-          <Card className="border-slate-800">
+          <Card className="border-border bg-white shadow-sm">
             <CardHeader className="pb-2">
-              <CardTitle className="text-sm font-semibold text-slate-200">
+              <CardTitle className="text-sm font-bold text-[#222222]">
                 Why One Unified Broadcast Board?
               </CardTitle>
             </CardHeader>
-            <CardContent className="text-xs text-slate-400 space-y-2">
+            <CardContent className="text-xs text-[#66636A] space-y-2">
               <p>
                 No more copy-pasting meeting notices across multiple fragmented WhatsApp or Discord groups.
               </p>

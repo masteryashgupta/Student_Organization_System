@@ -56,6 +56,7 @@ class Migration(migrations.Migration):
         ),
         migrations.AddConstraint(
             model_name='project',
-            constraint=models.CheckConstraint(condition=models.Q(('goal_amount__gte', Decimal('0.00'))), name='project_goal_amount_non_negative'),
+            constraint=models.CheckConstraint(check=models.Q(('goal_amount__gte', Decimal('0.00'))), name='project_goal_amount_non_negative'),
         ),
     ]
+

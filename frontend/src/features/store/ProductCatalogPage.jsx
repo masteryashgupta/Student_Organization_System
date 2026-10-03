@@ -64,19 +64,16 @@ export default function ProductCatalogPage() {
   return (
     <div className="space-y-8 pb-16">
       {/* Header Banner */}
-      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-brand-900 via-surface-900 to-accent-950 border border-brand-500/20 p-6 sm:p-10 shadow-2xl">
-        <div className="absolute top-0 right-0 -mt-12 -mr-12 w-64 h-64 bg-brand-500/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-1/3 -mb-12 w-64 h-64 bg-accent-500/10 rounded-full blur-3xl pointer-events-none" />
-
+      <div className="relative overflow-hidden rounded-2xl bg-white border border-border p-6 sm:p-8 shadow-odoo-card">
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="max-w-xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-500/20 border border-brand-400/30 text-brand-300 text-xs font-semibold uppercase tracking-wider mb-3">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#714B67]/10 border border-[#714B67]/20 text-[#714B67] text-xs font-semibold uppercase tracking-wider mb-3">
               <Sparkles className="w-3.5 h-3.5" /> Official Skyline Club Apparel
             </div>
-            <h1 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight">
+            <h1 className="text-2xl sm:text-4xl font-extrabold text-[#222222] tracking-tight leading-tight">
               Campus Merch & Gear Store
             </h1>
-            <p className="text-sm sm:text-base text-slate-300 mt-2 leading-relaxed">
+            <p className="text-sm sm:text-base text-[#66636A] mt-2 leading-relaxed">
               High-quality custom club hoodies, t-shirts, and accessories. Active club members receive exclusive tier discounts at checkout.
             </p>
           </div>
@@ -93,12 +90,12 @@ export default function ProductCatalogPage() {
               variant="primary"
               size="md"
               onClick={openDrawer}
-              className="relative shadow-lg shadow-brand-600/30"
+              className="relative shadow-sm bg-[#714B67] hover:bg-[#5B3B52] text-white"
             >
               <ShoppingBag className="w-4 h-4 mr-2" />
               <span>Cart</span>
               {totalItems > 0 && (
-                <span className="ml-2 px-2 py-0.5 rounded-full bg-accent-500 text-white text-xs font-black animate-pulse">
+                <span className="ml-2 px-2 py-0.5 rounded-full bg-emerald-600 text-white text-xs font-black animate-pulse">
                   {totalItems}
                 </span>
               )}
@@ -106,6 +103,32 @@ export default function ProductCatalogPage() {
           </div>
         </div>
       </div>
+
+      {/* Officer Store Controls (Only visible when relevant to officers/managers) */}
+      {isOfficer && (
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 p-4 bg-brand-50/70 border border-brand-200/80 rounded-2xl shadow-sm">
+          <div className="flex items-center gap-2">
+            <span className="w-2.5 h-2.5 rounded-full bg-brand animate-pulse" />
+            <span className="text-xs font-bold text-brand uppercase tracking-wider">
+              Store Operations
+            </span>
+          </div>
+          <div className="flex flex-wrap items-center gap-2.5">
+            <Link to="/store/manage/orders">
+              <Button variant="outline" size="sm" className="bg-white hover:bg-muted border-border">
+                <Package className="w-4 h-4 mr-1.5 text-amber-600" />
+                Store Orders Desk
+              </Button>
+            </Link>
+            <Link to="/store/manage/inventory">
+              <Button variant="outline" size="sm" className="bg-white hover:bg-muted border-border">
+                <AlertTriangle className="w-4 h-4 mr-1.5 text-rose-600" />
+                Low Stock &amp; Inventory
+              </Button>
+            </Link>
+          </div>
+        </div>
+      )}
 
       {/* Filter and Search Bar */}
       <div className="space-y-4">
@@ -119,8 +142,8 @@ export default function ProductCatalogPage() {
                 onClick={() => setSelectedCategory(cat.id)}
                 className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition-all duration-150 ${
                   isSelected
-                    ? 'bg-brand-600 text-white shadow-lg shadow-brand-600/25 scale-[1.02]'
-                    : 'bg-surface-900/80 hover:bg-surface-800 text-slate-300 border border-slate-800'
+                    ? 'bg-[#714B67] text-white shadow-sm scale-[1.02]'
+                    : 'bg-white hover:bg-gray-50 text-[#66636A] border border-border'
                 }`}
               >
                 {cat.label}
@@ -130,25 +153,25 @@ export default function ProductCatalogPage() {
         </div>
 
         {/* Search, In-Stock Toggle, & Sorting Controls */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-3 bg-surface-900/60 p-3 rounded-2xl border border-slate-800/80">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-3 bg-[#F4F6F8] p-3 rounded-2xl border border-border">
           <div className="relative w-full sm:w-80">
-            <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+            <Search className="w-4 h-4 text-[#66636A] absolute left-3.5 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               placeholder="Search products, hoodies, sizes..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-surface-950/80 border border-slate-700/80 rounded-xl pl-9 pr-4 py-2 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-brand-500"
+              className="w-full bg-white border border-border rounded-xl pl-9 pr-4 py-2 text-xs sm:text-sm text-[#222222] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#714B67]"
             />
           </div>
 
           <div className="flex items-center gap-3 w-full sm:w-auto justify-end">
-            <label className="flex items-center gap-2 text-xs font-medium text-slate-300 cursor-pointer select-none">
+            <label className="flex items-center gap-2 text-xs font-medium text-[#222222] cursor-pointer select-none">
               <input
                 type="checkbox"
                 checked={inStockOnly}
                 onChange={(e) => setInStockOnly(e.target.checked)}
-                className="w-4 h-4 rounded border-slate-700 bg-surface-950 text-brand-600 focus:ring-brand-500"
+                className="w-4 h-4 rounded border-border text-[#714B67] accent-[#714B67] focus:ring-[#714B67]"
               />
               <span>In-stock only</span>
             </label>
@@ -156,7 +179,7 @@ export default function ProductCatalogPage() {
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
-              className="bg-surface-950/80 border border-slate-700/80 rounded-xl px-3 py-2 text-xs sm:text-sm text-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-500"
+              className="bg-white border border-border rounded-xl px-3 py-2 text-xs sm:text-sm text-[#222222] focus:outline-none focus:ring-2 focus:ring-[#714B67]"
             >
               <option value="newest">Newest Arrivals</option>
               <option value="price-low">Price: Low to High</option>
@@ -170,24 +193,24 @@ export default function ProductCatalogPage() {
       {isLoading ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {[1, 2, 3, 4, 5, 6, 7, 8].map((n) => (
-            <div key={n} className="rounded-2xl bg-surface-900 border border-slate-800 p-4 space-y-3 animate-pulse">
-              <div className="w-full h-52 bg-slate-800 rounded-xl" />
-              <div className="h-4 bg-slate-800 rounded w-3/4" />
-              <div className="h-4 bg-slate-800 rounded w-1/2" />
+            <div key={n} className="rounded-2xl bg-white border border-border p-4 space-y-3 animate-pulse shadow-sm">
+              <div className="w-full h-52 bg-gray-100 rounded-xl" />
+              <div className="h-4 bg-gray-100 rounded w-3/4" />
+              <div className="h-4 bg-gray-100 rounded w-1/2" />
             </div>
           ))}
         </div>
       ) : error ? (
-        <div className="text-center py-16 bg-surface-900/60 rounded-3xl border border-danger-900/40 p-6">
-          <AlertTriangle className="w-10 h-10 text-danger-400 mx-auto mb-3" />
-          <h3 className="text-lg font-bold text-white">Unable to Load Catalog</h3>
-          <p className="text-sm text-slate-400 mt-1">Please ensure the backend server is running on localhost:8000.</p>
+        <div className="text-center py-16 bg-white rounded-3xl border border-danger-200 p-6 shadow-sm">
+          <AlertTriangle className="w-10 h-10 text-danger-500 mx-auto mb-3" />
+          <h3 className="text-lg font-bold text-[#222222]">Unable to Load Catalog</h3>
+          <p className="text-sm text-[#66636A] mt-1">Please ensure the backend server is running on localhost:8000.</p>
         </div>
       ) : products.length === 0 ? (
-        <div className="text-center py-20 bg-surface-900/40 rounded-3xl border border-slate-800 p-8">
-          <Package className="w-12 h-12 text-slate-500 mx-auto mb-3" />
-          <h3 className="text-lg font-bold text-white">No Products Found</h3>
-          <p className="text-sm text-slate-400 mt-1 max-w-sm mx-auto">
+        <div className="text-center py-20 bg-white rounded-3xl border border-border p-8 shadow-sm">
+          <Package className="w-12 h-12 text-[#66636A] mx-auto mb-3" />
+          <h3 className="text-lg font-bold text-[#222222]">No Products Found</h3>
+          <p className="text-sm text-[#66636A] mt-1 max-w-sm mx-auto">
             {searchQuery ? `No merchandise matching "${searchQuery}".` : 'No store merchandise items are currently listed in this category.'}
           </p>
           {(searchQuery || selectedCategory !== 'all') && (
@@ -214,10 +237,10 @@ export default function ProductCatalogPage() {
             return (
               <div
                 key={product.id}
-                className="group relative rounded-2xl bg-surface-900/90 border border-slate-800/80 hover:border-brand-500/50 hover:shadow-xl hover:shadow-brand-600/10 transition-all duration-200 flex flex-col justify-between overflow-hidden"
+                className="group relative rounded-2xl bg-white border border-border hover:border-[#714B67]/50 hover:shadow-lg transition-all duration-200 flex flex-col justify-between overflow-hidden shadow-odoo-card"
               >
                 {/* Product Image Showcase */}
-                <div className="relative h-60 w-full bg-slate-950/60 overflow-hidden flex items-center justify-center border-b border-slate-800/60">
+                <div className="relative h-60 w-full bg-[#F4F6F8] overflow-hidden flex items-center justify-center border-b border-border">
                   {product.image ? (
                     <img
                       src={product.image}
@@ -225,7 +248,7 @@ export default function ProductCatalogPage() {
                       className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
                     />
                   ) : (
-                    <div className="flex flex-col items-center justify-center text-slate-600">
+                    <div className="flex flex-col items-center justify-center text-[#66636A]">
                       <ShoppingBag className="w-12 h-12 mb-1 opacity-40" />
                       <span className="text-xs font-semibold uppercase tracking-wider">{product.type}</span>
                     </div>
@@ -241,15 +264,15 @@ export default function ProductCatalogPage() {
                   {/* Stock Availability Pill */}
                   <div className="absolute top-3 right-3">
                     {!hasStock ? (
-                      <span className="px-2.5 py-1 rounded-full text-[11px] font-bold bg-danger-950/90 text-danger-300 border border-danger-700/60 shadow-md">
+                      <span className="px-2.5 py-1 rounded-full text-[11px] font-bold bg-rose-50 text-rose-800 border border-rose-200 shadow-sm">
                         Sold Out
                       </span>
                     ) : isLowStock ? (
-                      <span className="px-2.5 py-1 rounded-full text-[11px] font-bold bg-amber-950/90 text-amber-300 border border-amber-700/60 shadow-md animate-pulse">
+                      <span className="px-2.5 py-1 rounded-full text-[11px] font-bold bg-amber-50 text-amber-800 border border-amber-200 shadow-sm animate-pulse">
                         Only {product.total_stock} left!
                       </span>
                     ) : (
-                      <span className="px-2.5 py-1 rounded-full text-[11px] font-bold bg-emerald-950/90 text-emerald-300 border border-emerald-700/60 shadow-md">
+                      <span className="px-2.5 py-1 rounded-full text-[11px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200 shadow-sm">
                         {product.total_stock} in stock
                       </span>
                     )}
@@ -259,17 +282,17 @@ export default function ProductCatalogPage() {
                 {/* Product Content & Size Pills */}
                 <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
                   <div>
-                    <h3 className="text-base font-bold text-white group-hover:text-brand-300 transition-colors line-clamp-1">
+                    <h3 className="text-base font-bold text-[#222222] group-hover:text-[#714B67] transition-colors line-clamp-1">
                       {product.name}
                     </h3>
-                    <p className="text-xs text-slate-400 mt-1 line-clamp-2 leading-relaxed">
+                    <p className="text-xs text-[#66636A] mt-1 line-clamp-2 leading-relaxed">
                       {product.description || 'Premium official Skyline Club student merchandise.'}
                     </p>
                   </div>
 
                   {/* Available Sizes Preview */}
                   <div>
-                    <span className="text-[11px] font-semibold text-slate-400 block mb-1.5 uppercase tracking-wider">
+                    <span className="text-[11px] font-semibold text-[#66636A] block mb-1.5 uppercase tracking-wider">
                       Sizes & Stock:
                     </span>
                     <div className="flex flex-wrap gap-1.5">
@@ -281,11 +304,11 @@ export default function ProductCatalogPage() {
                             title={`Size ${v.size}: ${v.stock_qty} available`}
                             className={`px-2 py-0.5 rounded-md text-[11px] font-bold transition-all ${
                               inStock
-                                ? 'bg-surface-800 text-slate-200 border border-slate-700'
-                                : 'bg-surface-950/40 text-slate-600 border border-slate-800 line-through opacity-60'
+                                ? 'bg-[#F4F6F8] text-[#222222] border border-border'
+                                : 'bg-gray-100 text-gray-400 border border-gray-200 line-through opacity-60'
                             }`}
                           >
-                            {v.size} {inStock && <span className="text-[9px] text-slate-400 font-normal">({v.stock_qty})</span>}
+                            {v.size} {inStock && <span className="text-[9px] text-[#66636A] font-normal">({v.stock_qty})</span>}
                           </span>
                         );
                       })}
@@ -293,17 +316,17 @@ export default function ProductCatalogPage() {
                   </div>
 
                   {/* Price & Action */}
-                  <div className="pt-3 border-t border-slate-800/80 flex items-center justify-between">
+                  <div className="pt-3 border-t border-border flex items-center justify-between">
                     <div>
-                      <span className="text-xs text-slate-400 block">Retail Price</span>
-                      <span className="text-lg font-black text-white">${Number(product.price).toFixed(2)}</span>
+                      <span className="text-xs text-[#66636A] block">Retail Price</span>
+                      <span className="text-lg font-black text-[#222222]">${Number(product.price).toFixed(2)}</span>
                     </div>
 
                     <Link to={`/store/${product.id}`}>
                       <Button
                         variant={hasStock ? 'primary' : 'outline'}
                         size="sm"
-                        className="group-hover:translate-x-0.5 transition-transform"
+                        className={`group-hover:translate-x-0.5 transition-transform ${hasStock ? 'bg-[#714B67] hover:bg-[#5B3B52] text-white shadow-sm' : ''}`}
                       >
                         <span>{hasStock ? 'Select Size' : 'View Item'}</span>
                         <ArrowRight className="w-3.5 h-3.5 ml-1" />

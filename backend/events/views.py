@@ -25,10 +25,12 @@ from .services import (
 )
 
 
+from rest_framework import filters
+
 class EventViewSet(viewsets.ModelViewSet):
     """
     CRUD ViewSet for managing Events.
-    - GET /api/events/ : List all events (supports ?status= query filter)
+    - GET /api/events/ : List all events (supports ?status= query filter and search)
     - POST /api/events/ : Create a new event
     - GET /api/events/{id}/ : Retrieve event details
     - PUT /api/events/{id}/ : Update event
@@ -41,7 +43,15 @@ class EventViewSet(viewsets.ModelViewSet):
     """
     queryset = Event.objects.all().order_by('datetime')
     serializer_class = EventSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.AllowAny]
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+    search_fields = ['title', 'venue', 'description']
+    ordering_fields = ['datetime', 'capacity', 'created_at']
+
+    def get_permissions(self):
+        if self.action in ['create', 'update', 'partial_update', 'destroy', 'checkin_feed', 'stats']:
+            return [IsOfficer()]
+        return [permissions.AllowAny()]
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -114,6 +124,8 @@ class EventViewSet(viewsets.ModelViewSet):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
+from django.core.exceptions import ValidationError as DjangoValidationError
+
 class TicketQRView(APIView):
     """
     GET /api/tickets/{token}/qr
@@ -124,7 +136,7 @@ class TicketQRView(APIView):
     def get(self, request, token):
         try:
             ticket = Ticket.objects.get(token=token)
-        except (Ticket.DoesNotExist, ValueError):
+        except (Ticket.DoesNotExist, ValueError, DjangoValidationError):
             return Response(
                 {"detail": "Ticket with specified token not found."},
                 status=status.HTTP_404_NOT_FOUND

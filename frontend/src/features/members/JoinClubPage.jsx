@@ -204,14 +204,14 @@ export default function JoinClubPage() {
     <div className="max-w-4xl mx-auto space-y-8 py-4 pb-16 animate-fadeIn">
       {/* Hero Header */}
       <div className="text-center space-y-3 max-w-2xl mx-auto">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-brand-500/10 border border-brand-500/20 text-brand-400 text-xs font-semibold uppercase tracking-wider">
-          <span className="w-2 h-2 rounded-full bg-brand-400 animate-pulse"></span>
+        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#714B67]/10 border border-[#714B67]/20 text-[#714B67] text-xs font-semibold uppercase tracking-wider">
+          <span className="w-2 h-2 rounded-full bg-[#714B67] animate-pulse"></span>
           2026–2027 Academic Season
         </div>
-        <h1 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+        <h1 className="text-3xl sm:text-4xl font-extrabold text-[#222222] tracking-tight">
           Join the Skyline Student Association
         </h1>
-        <p className="text-base text-slate-400">
+        <p className="text-base text-[#66636A]">
           Get official voting rights, priority access to campus workshops, merchandise discounts, and exclusive event passes.
         </p>
       </div>
@@ -220,8 +220,8 @@ export default function JoinClubPage() {
         {/* Tier Selection Section */}
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <h2 className="text-lg font-bold text-white flex items-center gap-2">
-              <span className="w-6 h-6 rounded-full bg-brand-600 text-white text-xs flex items-center justify-center font-bold">1</span>
+            <h2 className="text-lg font-bold text-[#222222] flex items-center gap-2">
+              <span className="w-6 h-6 rounded-full bg-[#714B67] text-white text-xs flex items-center justify-center font-bold">1</span>
               Choose Your Membership Plan
             </h2>
             {errors.tier_id && <p className="text-xs text-danger-500 font-medium">{errors.tier_id}</p>}
@@ -230,7 +230,7 @@ export default function JoinClubPage() {
           {loadingTiers ? (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {[1, 2, 3].map((i) => (
-                <div key={i} className="h-44 bg-surface-900/60 rounded-xl animate-pulse border border-slate-800" />
+                <div key={i} className="h-44 bg-gray-100 rounded-xl animate-pulse border border-border" />
               ))}
             </div>
           ) : (
@@ -246,12 +246,12 @@ export default function JoinClubPage() {
                     }}
                     className={`relative rounded-2xl p-5 cursor-pointer border-2 transition-all duration-200 flex flex-col justify-between ${
                       isSelected
-                        ? 'bg-brand-950/40 border-brand-500 shadow-xl shadow-brand-900/30 -translate-y-1'
-                        : 'bg-surface-900/70 border-slate-800 hover:border-slate-700 hover:bg-surface-800/80'
+                        ? 'bg-[#714B67]/5 border-[#714B67] shadow-md -translate-y-1'
+                        : 'bg-white border-border hover:border-gray-300 hover:shadow-sm'
                     }`}
                   >
                     {isSelected && (
-                      <div className="absolute top-3 right-3 text-brand-400">
+                      <div className="absolute top-3 right-3 text-[#714B67]">
                         <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                           <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                         </svg>
@@ -262,25 +262,25 @@ export default function JoinClubPage() {
                       <Badge variant={isSelected ? 'primary' : 'neutral'} size="sm">
                         {tier.duration_days} Days Access
                       </Badge>
-                      <h3 className="text-lg font-bold text-white mt-2.5">{tier.name}</h3>
-                      <p className="text-xs text-slate-400 mt-1 line-clamp-2">{tier.description}</p>
+                      <h3 className="text-lg font-bold text-[#222222] mt-2.5">{tier.name}</h3>
+                      <p className="text-xs text-[#66636A] mt-1 line-clamp-2">{tier.description}</p>
                     </div>
 
-                    <div className="mt-5 pt-4 border-t border-slate-800/80">
+                    <div className="mt-5 pt-4 border-t border-border">
                       <div className="flex items-baseline gap-1">
-                        <span className="text-2xl font-extrabold text-white">${tier.price}</span>
-                        <span className="text-xs text-slate-400">/ term</span>
+                        <span className="text-2xl font-extrabold text-[#222222]">${tier.price}</span>
+                        <span className="text-xs text-[#66636A]">/ term</span>
                       </div>
 
-                      <div className="mt-3 space-y-1.5 text-xs text-slate-300">
+                      <div className="mt-3 space-y-1.5 text-xs text-[#66636A]">
                         <div className="flex items-center gap-1.5">
-                          <svg className="w-4 h-4 text-emerald-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <svg className="w-4 h-4 text-emerald-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
                           </svg>
                           <span>{tier.ticket_discount_pct}% Event Ticket Discount</span>
                         </div>
                         <div className="flex items-center gap-1.5">
-                          <svg className="w-4 h-4 text-accent-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <svg className="w-4 h-4 text-[#714B67] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
                           </svg>
                           <span>{tier.merch_discount_pct}% Merch Store Discount</span>
@@ -295,13 +295,13 @@ export default function JoinClubPage() {
         </div>
 
         {/* Member Profile Details Section */}
-        <Card className="bg-surface-900 border-slate-800 shadow-2xl">
+        <Card className="bg-white border-border shadow-odoo-card">
           <CardHeader>
-            <CardTitle className="text-lg flex items-center gap-2">
-              <span className="w-6 h-6 rounded-full bg-brand-600 text-white text-xs flex items-center justify-center font-bold">2</span>
+            <CardTitle className="text-lg text-[#222222] flex items-center gap-2">
+              <span className="w-6 h-6 rounded-full bg-[#714B67] text-white text-xs flex items-center justify-center font-bold">2</span>
               Student & Contact Information
             </CardTitle>
-            <CardDescription>
+            <CardDescription className="text-xs text-[#66636A]">
               Your credentials for club event check-ins and member discounts.
             </CardDescription>
           </CardHeader>
@@ -381,8 +381,8 @@ export default function JoinClubPage() {
             )}
 
             {/* Dues Payment Mode Selection */}
-            <div className="pt-3 border-t border-slate-800">
-              <label className="text-sm font-medium text-slate-200 block mb-2">
+            <div className="pt-3 border-t border-border">
+              <label className="text-sm font-semibold text-[#222222] block mb-2">
                 Dues Payment Options
               </label>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -390,8 +390,8 @@ export default function JoinClubPage() {
                   onClick={() => setFormData({ ...formData, pay_now: true })}
                   className={`p-3.5 rounded-xl border cursor-pointer flex items-center gap-3 transition-colors ${
                     formData.pay_now
-                      ? 'bg-emerald-950/40 border-emerald-500/60 text-emerald-200'
-                      : 'bg-surface-950/60 border-slate-800 text-slate-400 hover:bg-surface-800'
+                      ? 'bg-emerald-50 border-emerald-500 text-emerald-900 shadow-sm'
+                      : 'bg-[#FAF9F7] border-border text-[#66636A] hover:bg-white'
                   }`}
                 >
                   <input
@@ -399,11 +399,11 @@ export default function JoinClubPage() {
                     name="pay_mode"
                     checked={formData.pay_now}
                     onChange={() => setFormData({ ...formData, pay_now: true })}
-                    className="accent-emerald-500 h-4 w-4"
+                    className="accent-emerald-600 h-4 w-4"
                   />
                   <div>
-                    <p className="text-sm font-bold text-white">Pay & Activate Instantly</p>
-                    <p className="text-xs text-slate-400">Activates discount perks immediately and records in club ledger.</p>
+                    <p className="text-sm font-bold text-[#222222]">Pay & Activate Instantly</p>
+                    <p className="text-xs text-[#66636A]">Activates discount perks immediately and records in club ledger.</p>
                   </div>
                 </label>
 
@@ -411,8 +411,8 @@ export default function JoinClubPage() {
                   onClick={() => setFormData({ ...formData, pay_now: false })}
                   className={`p-3.5 rounded-xl border cursor-pointer flex items-center gap-3 transition-colors ${
                     !formData.pay_now
-                      ? 'bg-amber-950/40 border-amber-500/60 text-amber-200'
-                      : 'bg-surface-950/60 border-slate-800 text-slate-400 hover:bg-surface-800'
+                      ? 'bg-amber-50 border-amber-500 text-amber-900 shadow-sm'
+                      : 'bg-[#FAF9F7] border-border text-[#66636A] hover:bg-white'
                   }`}
                 >
                   <input
@@ -420,19 +420,19 @@ export default function JoinClubPage() {
                     name="pay_mode"
                     checked={!formData.pay_now}
                     onChange={() => setFormData({ ...formData, pay_now: false })}
-                    className="accent-amber-500 h-4 w-4"
+                    className="accent-amber-600 h-4 w-4"
                   />
                   <div>
-                    <p className="text-sm font-bold text-white">Pay Later (Cash / Door)</p>
-                    <p className="text-xs text-slate-400">Create pending membership and pay dues during your first club meeting.</p>
+                    <p className="text-sm font-bold text-[#222222]">Pay Later (Cash / Door)</p>
+                    <p className="text-xs text-[#66636A]">Create pending membership and pay dues during your first club meeting.</p>
                   </div>
                 </label>
               </div>
             </div>
           </CardContent>
 
-          <CardFooter className="bg-surface-950/60 p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div className="text-xs text-slate-400 text-center sm:text-left">
+          <CardFooter className="bg-[#FAF9F7] border-t border-border p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="text-xs text-[#66636A] text-center sm:text-left">
               By joining, you agree to abide by the Skyline Club constitution & community bylaws.
             </div>
 
@@ -441,7 +441,7 @@ export default function JoinClubPage() {
               variant="primary"
               size="lg"
               disabled={submitting}
-              className="w-full sm:w-auto px-8 font-bold shadow-lg shadow-brand-600/30"
+              className="w-full sm:w-auto px-8 font-bold bg-[#714B67] hover:bg-[#5B3B52] text-white shadow-sm"
             >
               {submitting ? (
                 'Processing Registration...'
@@ -456,9 +456,9 @@ export default function JoinClubPage() {
       </form>
 
       {!user && (
-        <div className="text-center text-sm text-slate-400">
+        <div className="text-center text-sm text-[#66636A]">
           Already have an account?{' '}
-          <Link to="/login" className="text-brand-400 hover:text-brand-300 font-semibold underline">
+          <Link to="/login" className="text-[#714B67] hover:underline font-semibold">
             Sign in here
           </Link>
         </div>

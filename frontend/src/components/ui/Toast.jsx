@@ -5,12 +5,30 @@ const ToastContext = createContext(null);
 export function ToastProvider({ children }) {
   const [toasts, setToasts] = useState([]);
 
-  const addToast = (message, type = 'info', duration = 4000) => {
+  const addToast = (msgOrOptions, type = 'info', duration = 4000) => {
+    let message = '';
+    let title = '';
+    let toastType = type;
+    let toastDuration = duration;
+
+    if (typeof msgOrOptions === 'object' && msgOrOptions !== null) {
+      message = msgOrOptions.message || msgOrOptions.text || '';
+      title = msgOrOptions.title || '';
+      toastType = msgOrOptions.type || 'info';
+      toastDuration = msgOrOptions.duration || 4000;
+    } else {
+      message = String(msgOrOptions || '');
+    }
+
+    if (toastType === 'error') {
+      toastType = 'danger';
+    }
+
     const id = Date.now() + Math.random();
-    setToasts((prev) => [...prev, { id, message, type }]);
+    setToasts((prev) => [...prev, { id, title, message, type: toastType }]);
     setTimeout(() => {
       removeToast(id);
-    }, duration);
+    }, toastDuration);
   };
 
   const removeToast = (id) => {
@@ -18,10 +36,11 @@ export function ToastProvider({ children }) {
   };
 
   const toast = {
-    success: (msg) => addToast(msg, 'success'),
-    error: (msg) => addToast(msg, 'danger'),
-    warning: (msg) => addToast(msg, 'warning'),
-    info: (msg) => addToast(msg, 'info'),
+    addToast,
+    success: (msg, duration) => addToast(msg, 'success', duration),
+    error: (msg, duration) => addToast(msg, 'danger', duration),
+    warning: (msg, duration) => addToast(msg, 'warning', duration),
+    info: (msg, duration) => addToast(msg, 'info', duration),
   };
 
   const typeStyles = {
@@ -39,14 +58,17 @@ export function ToastProvider({ children }) {
         {toasts.map((t) => (
           <div
             key={t.id}
-            className={`pointer-events-auto p-4 rounded-xl border backdrop-blur-md shadow-2xl transition-all duration-300 transform translate-y-0 text-sm font-medium flex items-center justify-between ${
+            className={`pointer-events-auto p-4 rounded-xl border backdrop-blur-md shadow-2xl transition-all duration-300 transform translate-y-0 text-sm font-medium flex items-start justify-between ${
               typeStyles[t.type] || typeStyles.info
             }`}
           >
-            <span>{t.message}</span>
+            <div className="flex flex-col space-y-0.5 pr-2">
+              {t.title && <span className="font-semibold text-white text-xs uppercase tracking-wider">{t.title}</span>}
+              <span>{t.message}</span>
+            </div>
             <button
               onClick={() => removeToast(t.id)}
-              className="ml-3 text-slate-400 hover:text-white"
+              className="ml-3 text-slate-400 hover:text-white flex-shrink-0"
             >
               &times;
             </button>

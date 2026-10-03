@@ -76,13 +76,13 @@ export default function RegisterPage() {
 
   return (
     <div className="flex items-center justify-center min-h-[80vh] py-8 px-4">
-      <Card className="max-w-lg w-full border-slate-700/80">
+      <Card className="max-w-lg w-full bg-white border-border shadow-odoo-card">
         <CardHeader className="text-center pb-2">
-          <div className="mx-auto w-12 h-12 rounded-2xl bg-gradient-to-tr from-brand-600 to-accent-500 flex items-center justify-center font-bold text-white text-xl shadow-lg shadow-brand-600/30 mb-3">
+          <div className="mx-auto w-12 h-12 rounded-2xl bg-brand flex items-center justify-center font-bold text-white text-xl shadow-sm mb-3">
             S
           </div>
-          <CardTitle className="text-2xl">Join Skyline Club</CardTitle>
-          <CardDescription>
+          <CardTitle className="text-2xl text-ink">Join Skyline Club</CardTitle>
+          <CardDescription className="text-ink-muted">
             Create your account to join events, purchase merch, and access member dues
           </CardDescription>
         </CardHeader>
@@ -162,9 +162,9 @@ export default function RegisterPage() {
             </Button>
           </form>
         </CardContent>
-        <CardFooter className="justify-center text-sm text-slate-400">
+        <CardFooter className="justify-center text-sm text-ink-muted">
           Already have an account?{' '}
-          <Link to="/login" className="ml-1 text-brand-400 font-semibold hover:underline">
+          <Link to="/login" className="ml-1 text-accent font-semibold hover:underline">
             Sign in here
           </Link>
         </CardFooter>

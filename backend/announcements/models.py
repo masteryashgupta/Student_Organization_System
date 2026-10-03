@@ -73,7 +73,7 @@ class Announcement(models.Model):
     sent_at = models.DateTimeField(null=True, blank=True, help_text="Timestamp when announcement was emailed")
 
     class Meta:
-        ordering = ['-created_at']
+        ordering = ['-created_at', '-id']
         verbose_name = 'Announcement'
         verbose_name_plural = 'Announcements'
 
