@@ -556,11 +556,7 @@ export default function OverviewPage() {
                 {/* Open Full Kanban Board Button */}
                 <Link
                   to="/tasks"
-                  className={`block text-center py-2.5 rounded-xl text-xs font-bold transition-all shadow-sm ${
-                    frameTheme === 'light'
-                      ? 'bg-[#0F172A] hover:bg-slate-800 text-white'
-                      : 'bg-white hover:bg-slate-100 text-slate-900'
-                  }`}
+                  className="block text-center py-2.5 rounded-xl text-xs font-bold transition-all shadow-sm bg-sky-600 hover:bg-sky-700 text-white"
                 >
                   Open Full Kanban Board &rarr;
                 </Link>
@@ -597,11 +593,7 @@ export default function OverviewPage() {
                   <Button
                     variant="primary"
                     size="sm"
-                    className={`w-full font-bold ${
-                      frameTheme === 'light'
-                        ? 'bg-[#0F172A] hover:bg-slate-800 text-white'
-                        : 'bg-white text-slate-900 hover:bg-slate-100'
-                    }`}
+                    className="w-full font-bold bg-sky-600 hover:bg-sky-700 text-white"
                   >
                     Reserve Ticket ($15.00)
                   </Button>
@@ -734,11 +726,7 @@ export default function OverviewPage() {
                   <Button
                     variant="primary"
                     size="sm"
-                    className={`w-full font-bold ${
-                      frameTheme === 'light'
-                        ? 'bg-[#0F172A] hover:bg-slate-800 text-white'
-                        : 'bg-white text-slate-900 hover:bg-slate-100'
-                    }`}
+                    className="w-full font-bold bg-sky-600 hover:bg-sky-700 text-white"
                   >
                     File Claim
                   </Button>

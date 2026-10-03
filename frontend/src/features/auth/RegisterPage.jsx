@@ -76,17 +76,17 @@ export default function RegisterPage() {
 
   return (
     <div className="flex items-center justify-center min-h-[80vh] py-8 px-4">
-      <Card className="max-w-lg w-full bg-white border-border shadow-odoo-card">
-        <CardHeader className="text-center pb-2">
-          <div className="mx-auto w-12 h-12 rounded-2xl bg-brand flex items-center justify-center font-bold text-white text-xl shadow-sm mb-3">
+      <Card className="max-w-lg w-full bg-white dark:bg-[#131B2E] border border-slate-200 dark:border-slate-800 shadow-xl rounded-3xl p-2 sm:p-4">
+        <CardHeader className="text-center pb-4 border-none">
+          <div className="mx-auto w-12 h-12 rounded-2xl bg-gradient-to-tr from-sky-500 to-indigo-600 flex items-center justify-center font-bold text-white text-xl shadow-md mb-3">
             S
           </div>
-          <CardTitle className="text-2xl text-ink">Join Skyline Club</CardTitle>
-          <CardDescription className="text-ink-muted">
+          <CardTitle className="text-2xl font-extrabold text-slate-900 dark:text-white">Join Skyline Club</CardTitle>
+          <CardDescription className="text-slate-500 dark:text-slate-400 mt-1">
             Create your account to join events, purchase merch, and access member dues
           </CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="pt-0">
           <form onSubmit={handleSubmit} className="space-y-4">
             <Input
               label="Full Name"
@@ -155,16 +155,17 @@ export default function RegisterPage() {
             <Button
               type="submit"
               variant="primary"
-              className="w-full mt-3"
+              size="lg"
+              className="w-full mt-3 bg-sky-600 hover:bg-sky-700 text-white font-bold"
               isLoading={loading}
             >
               Create Account
             </Button>
           </form>
         </CardContent>
-        <CardFooter className="justify-center text-sm text-ink-muted">
+        <CardFooter className="justify-center text-sm text-slate-500 dark:text-slate-400 border-none pt-2">
           Already have an account?{' '}
-          <Link to="/login" className="ml-1 text-accent font-semibold hover:underline">
+          <Link to="/login" className="ml-1 text-sky-600 dark:text-sky-400 font-semibold hover:underline">
             Sign in here
           </Link>
         </CardFooter>

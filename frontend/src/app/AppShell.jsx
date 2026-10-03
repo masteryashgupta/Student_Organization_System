@@ -104,7 +104,7 @@ export default function AppShell() {
               to="/"
               className={`w-7 h-7 rounded-full flex items-center justify-center transition-all ${
                 location.pathname === '/'
-                  ? 'bg-[#0F172A] text-white shadow-sm'
+                  ? 'bg-sky-600 text-white shadow-sm'
                   : 'bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-900'
               }`}
               title="Overview Home"
@@ -124,7 +124,7 @@ export default function AppShell() {
                     to={item.path}
                     className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold transition-all ${
                       isActive
-                        ? 'bg-[#0F172A] dark:bg-white dark:text-[#0F172A] text-white shadow-sm'
+                        ? 'bg-sky-600 dark:bg-sky-500 text-white shadow-sm'
                         : 'text-[#64748B] dark:text-slate-300 hover:text-[#0F172A] dark:hover:text-white hover:bg-slate-100/70 dark:hover:bg-slate-800'
                     }`}
                   >
@@ -160,7 +160,7 @@ export default function AppShell() {
                   to="/members/me"
                   className="flex items-center gap-2 pl-2 pr-3 py-1 rounded-full bg-white/90 dark:bg-slate-800/90 border border-slate-200/80 dark:border-slate-700 shadow-sm hover:border-slate-300 dark:hover:border-slate-600 transition-all text-xs font-medium"
                 >
-                  <div className="w-6 h-6 rounded-full bg-[#0F172A] dark:bg-slate-700 text-white flex items-center justify-center font-bold text-[10px]">
+                  <div className="w-6 h-6 rounded-full bg-gradient-to-tr from-sky-500 to-indigo-600 text-white flex items-center justify-center font-bold text-[10px]">
                     {user?.name ? user.name.charAt(0).toUpperCase() : 'U'}
                   </div>
                   <span className="hidden sm:inline font-semibold text-[#0F172A] dark:text-white max-w-[100px] truncate">
@@ -189,7 +189,7 @@ export default function AppShell() {
                 </Link>
                 <Link
                   to="/register"
-                  className="text-xs font-bold text-white bg-[#0F172A] hover:bg-slate-800 px-3.5 py-1.5 rounded-full shadow-sm"
+                  className="text-xs font-bold text-white bg-sky-600 hover:bg-sky-700 px-4 py-1.5 rounded-full shadow-sm transition-all"
                 >
                   Join Club
                 </Link>
@@ -231,7 +231,7 @@ export default function AppShell() {
                     onClick={() => setMobileMenuOpen(false)}
                     className={`flex items-center gap-2 px-3 py-2 rounded-2xl text-xs font-semibold ${
                       isActive
-                        ? 'bg-[#0F172A] text-white'
+                        ? 'bg-sky-600 text-white'
                         : 'text-[#64748B] hover:bg-slate-100'
                     }`}
                   >

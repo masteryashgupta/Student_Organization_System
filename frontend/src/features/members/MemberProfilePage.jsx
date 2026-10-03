@@ -7,6 +7,7 @@ import { Badge } from '../../components/ui/Badge';
 import { Button } from '../../components/ui/Button';
 import { Modal } from '../../components/ui/Modal';
 import { useToast } from '../../components/ui/Toast';
+import { ShieldCheck, Sparkles, Award, QrCode, RefreshCw, CheckCircle2, AlertTriangle, ArrowRight } from 'lucide-react';
 
 export default function MemberProfilePage() {
   const { user, refetchUser } = useAuth();
@@ -73,12 +74,12 @@ export default function MemberProfilePage() {
 
   if (loading) {
     return (
-      <div className="max-w-4xl mx-auto py-12 text-center text-[#66636A] space-y-4">
-        <svg className="animate-spin h-8 w-8 text-[#714B67] mx-auto" fill="none" viewBox="0 0 24 24">
+      <div className="max-w-4xl mx-auto py-16 text-center text-slate-500 space-y-4">
+        <svg className="animate-spin h-8 w-8 text-sky-600 mx-auto" fill="none" viewBox="0 0 24 24">
           <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
           <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
         </svg>
-        <p>Loading your membership pass and club perks...</p>
+        <p className="text-sm font-medium">Loading your membership pass and club perks...</p>
       </div>
     );
   }
@@ -90,19 +91,21 @@ export default function MemberProfilePage() {
   const tierDetails = membership?.tier_details;
 
   return (
-    <div className="max-w-5xl mx-auto space-y-8 pb-16 animate-fadeIn">
+    <div className="max-w-5xl mx-auto space-y-8 pb-16 animate-fade-in">
       {/* Top Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-border pb-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-6">
         <div>
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-[#714B67] flex items-center justify-center font-bold text-white text-base shadow-sm">
+            <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-sky-500 to-indigo-600 flex items-center justify-center font-bold text-white text-lg shadow-md">
               {(user?.name || user?.username || 'U').charAt(0).toUpperCase()}
             </div>
             <div>
-              <h1 className="text-2xl font-extrabold text-[#222222] tracking-tight">
+              <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
                 {user?.name || user?.username}
               </h1>
-              <p className="text-xs text-[#66636A]">{user?.email} • Role: <span className="capitalize font-semibold text-[#222222]">{user?.role}</span></p>
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                {user?.email} • Role: <span className="capitalize font-bold text-slate-800 dark:text-slate-200">{user?.role}</span>
+              </p>
             </div>
           </div>
         </div>
@@ -111,26 +114,24 @@ export default function MemberProfilePage() {
           <Button
             variant="primary"
             size="md"
-            className="font-bold shadow-sm bg-[#714B67] hover:bg-[#5B3B52] text-white gap-2"
+            className="font-bold shadow-sm bg-sky-600 hover:bg-sky-700 text-white gap-2 px-5 py-2.5"
             onClick={() => setRenewModalOpen(true)}
           >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-            </svg>
+            <RefreshCw className="w-4 h-4" />
             {membership ? (isActive ? 'Renew / Extend Plan' : 'Pay Dues & Activate') : 'Join a Plan'}
           </Button>
         </div>
       </div>
 
-      {/* Main Membership Banner */}
+      {/* Main Membership Status Banner */}
       {membership ? (
         <div
-          className={`p-6 rounded-2xl border flex flex-col md:flex-row items-center justify-between gap-6 shadow-sm ${
+          className={`p-6 rounded-3xl border flex flex-col md:flex-row items-center justify-between gap-6 shadow-sm ${
             isActive
-              ? 'bg-emerald-50/70 border-emerald-200 text-emerald-900'
+              ? 'bg-emerald-50/80 border-emerald-200/90 text-emerald-950 dark:bg-emerald-950/30 dark:border-emerald-800 dark:text-emerald-100'
               : membership.status === 'expired'
-              ? 'bg-rose-50/70 border-rose-200 text-rose-900'
-              : 'bg-amber-50/70 border-amber-200 text-amber-900'
+              ? 'bg-rose-50/80 border-rose-200/90 text-rose-950 dark:bg-rose-950/30 dark:border-rose-800 dark:text-rose-100'
+              : 'bg-amber-50/80 border-amber-200/90 text-amber-950 dark:bg-amber-950/30 dark:border-amber-800 dark:text-amber-100'
           }`}
         >
           <div className="flex items-center gap-5 text-center md:text-left">
@@ -144,27 +145,23 @@ export default function MemberProfilePage() {
               }`}
             >
               {isActive ? (
-                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7" />
-                </svg>
+                <CheckCircle2 className="w-8 h-8" />
               ) : (
-                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                </svg>
+                <AlertTriangle className="w-8 h-8" />
               )}
             </div>
 
             <div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 justify-center md:justify-start">
                 <Badge variant={isActive ? 'success' : membership.status === 'expired' ? 'danger' : 'warning'}>
                   {isActive ? 'Active Member' : membership.status === 'expired' ? 'Expired' : 'Pending Payment'}
                 </Badge>
-                <span className="text-xs text-[#714B67] font-semibold">{tierDetails?.name}</span>
+                <span className="text-xs font-bold text-sky-700 dark:text-sky-300">{tierDetails?.name}</span>
               </div>
-              <h3 className="text-xl font-bold text-[#222222] mt-1">
+              <h3 className="text-xl font-extrabold text-slate-900 dark:text-white mt-1">
                 {isActive ? 'Your Membership is Active' : membership.status === 'expired' ? 'Membership Expired' : 'Dues Unpaid'}
               </h3>
-              <p className="text-xs text-[#66636A] mt-0.5">
+              <p className="text-xs text-slate-600 dark:text-slate-300 mt-0.5">
                 {isActive
                   ? `Valid until ${new Date(membership.end_date).toLocaleDateString()} (${membership.days_until_expiry} days remaining)`
                   : 'Pay annual dues to restore discounts and club voting rights.'}
@@ -174,84 +171,92 @@ export default function MemberProfilePage() {
 
           <div className="text-center md:text-right shrink-0">
             <Button
-              variant="outline"
+              variant="secondary"
               size="sm"
               onClick={() => setRenewModalOpen(true)}
-              className="text-xs"
+              className="text-xs font-bold px-4 py-2 border-slate-300"
             >
               {isActive ? 'Extend Plan' : 'Pay Dues Now'}
             </Button>
           </div>
         </div>
       ) : (
-        <Card className="bg-white border-amber-200 p-6 text-center space-y-3 rounded-2xl shadow-sm">
-          <div className="w-12 h-12 rounded-xl bg-amber-100 text-amber-800 mx-auto flex items-center justify-center">
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
+        <Card className="bg-gradient-to-br from-amber-50/70 via-white to-sky-50/70 border border-amber-200/80 p-8 text-center space-y-4 rounded-3xl shadow-sm">
+          <div className="w-14 h-14 rounded-2xl bg-amber-100 text-amber-800 mx-auto flex items-center justify-center shadow-xs">
+            <Sparkles className="w-7 h-7 text-amber-600" />
           </div>
-          <h3 className="text-lg font-bold text-[#222222]">No Active Membership Tier Enrolled</h3>
-          <p className="text-xs text-[#66636A] max-w-md mx-auto">
-            You are currently registered as a public student. Join a membership tier to unlock ticket discounts, merch savings, and club voting rights.
-          </p>
-          <Button variant="primary" size="md" className="bg-[#714B67] hover:bg-[#5B3B52] text-white" onClick={() => setRenewModalOpen(true)}>
-            Choose a Membership Tier
-          </Button>
+          <div className="space-y-1">
+            <h3 className="text-xl font-extrabold text-slate-900 dark:text-white">No Active Membership Tier Enrolled</h3>
+            <p className="text-sm text-slate-600 dark:text-slate-300 max-w-lg mx-auto leading-relaxed">
+              You are currently registered as a public student. Join a membership tier to unlock ticket discounts, merch savings, and club voting rights.
+            </p>
+          </div>
+          <div className="pt-2">
+            <Button
+              variant="primary"
+              size="md"
+              className="bg-sky-600 hover:bg-sky-700 text-white font-bold px-6 py-2.5 shadow-sm"
+              onClick={() => setRenewModalOpen(true)}
+            >
+              Choose a Membership Tier
+            </Button>
+          </div>
         </Card>
       )}
 
-      {/* Grid: 2 cols benefits & info + 1 col digital card */}
+      {/* Grid: Benefits & Discounts + Digital Membership Pass */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {/* Left 2 Cols: Details & Benefits */}
+        {/* Left 2 Cols: Benefits & Discounts */}
         <div className="md:col-span-2 space-y-6">
-          <Card className="bg-white border-border shadow-odoo-card">
-            <CardHeader>
-              <CardTitle className="text-base text-[#222222]">Active Club Benefits & Discounts</CardTitle>
-              <CardDescription className="text-xs text-[#66636A]">
+          <Card className="bg-white dark:bg-[#131B2E] border border-slate-200 dark:border-slate-800 shadow-sm rounded-3xl">
+            <CardHeader className="border-b border-slate-100 dark:border-slate-800">
+              <CardTitle className="text-base sm:text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                <ShieldCheck className="w-5 h-5 text-sky-600" />
+                Active Club Benefits &amp; Discounts
+              </CardTitle>
+              <CardDescription className="text-xs text-slate-500 dark:text-slate-400">
                 Discounts automatically applied across Event Ticketing and Merch Store.
               </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-5 p-6">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="p-4 rounded-xl bg-[#714B67]/5 border border-[#714B67]/20 flex items-center justify-between">
+                {/* Event Ticket Discount */}
+                <div className="p-4 rounded-2xl bg-sky-50/70 dark:bg-sky-950/30 border border-sky-200/80 dark:border-sky-800/60 flex items-center justify-between">
                   <div>
-                    <p className="text-xs text-[#714B67] font-semibold">Event Ticket Discount</p>
-                    <p className="text-2xl font-black text-[#222222] mt-1">
+                    <p className="text-xs text-sky-700 dark:text-sky-300 font-bold uppercase tracking-wider">Event Ticket Discount</p>
+                    <p className="text-3xl font-black text-slate-900 dark:text-white mt-1 font-mono">
                       {isActive ? `${tierDetails?.ticket_discount_pct || 0}%` : '0%'}
                     </p>
-                    <p className="text-[11px] text-[#66636A] mt-0.5">Applied on all campus events</p>
+                    <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">Applied on all campus events</p>
                   </div>
-                  <span className="p-3 rounded-xl bg-[#714B67]/10 text-[#714B67]">
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z" />
-                    </svg>
+                  <span className="p-3 rounded-2xl bg-sky-100 dark:bg-sky-900/50 text-sky-600 dark:text-sky-300">
+                    <Award className="w-6 h-6" />
                   </span>
                 </div>
 
-                <div className="p-4 rounded-xl bg-[#017E84]/5 border border-[#017E84]/20 flex items-center justify-between">
+                {/* Merch Store Discount */}
+                <div className="p-4 rounded-2xl bg-emerald-50/70 dark:bg-emerald-950/30 border border-emerald-200/80 dark:border-emerald-800/60 flex items-center justify-between">
                   <div>
-                    <p className="text-xs text-[#017E84] font-semibold">Merch Store Discount</p>
-                    <p className="text-2xl font-black text-[#222222] mt-1">
+                    <p className="text-xs text-emerald-700 dark:text-emerald-300 font-bold uppercase tracking-wider">Merch Store Discount</p>
+                    <p className="text-3xl font-black text-slate-900 dark:text-white mt-1 font-mono">
                       {isActive ? `${tierDetails?.merch_discount_pct || 0}%` : '0%'}
                     </p>
-                    <p className="text-[11px] text-[#66636A] mt-0.5">Applied on club apparel & items</p>
+                    <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">Applied on club apparel &amp; items</p>
                   </div>
-                  <span className="p-3 rounded-xl bg-[#017E84]/10 text-[#017E84]">
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-                    </svg>
+                  <span className="p-3 rounded-2xl bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-300">
+                    <Sparkles className="w-6 h-6" />
                   </span>
                 </div>
               </div>
 
               {/* Validity Progress Meter */}
               {membership && (
-                <div className="pt-4 border-t border-border space-y-2">
-                  <div className="flex justify-between text-xs font-medium">
-                    <span className="text-[#66636A]">Membership Term Duration</span>
-                    <span className="text-[#222222]">{membership.days_until_expiry} days remaining</span>
+                <div className="pt-4 border-t border-slate-100 dark:border-slate-800 space-y-2">
+                  <div className="flex justify-between text-xs font-semibold">
+                    <span className="text-slate-600 dark:text-slate-400">Membership Term Duration</span>
+                    <span className="text-slate-900 dark:text-white font-mono">{membership.days_until_expiry} days remaining</span>
                   </div>
-                  <div className="w-full h-2.5 bg-[#F4F6F8] rounded-full overflow-hidden border border-border">
+                  <div className="w-full h-2.5 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden border border-slate-200/80 dark:border-slate-700">
                     <div
                       className={`h-full transition-all duration-500 rounded-full ${
                         membership.days_until_expiry > 30
@@ -265,7 +270,7 @@ export default function MemberProfilePage() {
                       }}
                     />
                   </div>
-                  <div className="flex justify-between text-[11px] text-[#66636A] font-mono">
+                  <div className="flex justify-between text-[11px] text-slate-500 dark:text-slate-400 font-mono">
                     <span>Start: {membership.start_date ? new Date(membership.start_date).toLocaleDateString() : '—'}</span>
                     <span>End: {membership.end_date ? new Date(membership.end_date).toLocaleDateString() : '—'}</span>
                   </div>
@@ -275,15 +280,15 @@ export default function MemberProfilePage() {
           </Card>
         </div>
 
-        {/* Right 1 Col: Digital Pass & QR */}
+        {/* Right 1 Col: Digital Membership Pass */}
         <div className="space-y-6">
-          <Card className="bg-white border-border shadow-odoo-card text-center overflow-hidden">
-            <div className="p-3 bg-[#714B67] text-white font-bold text-xs tracking-wider uppercase">
+          <Card className="bg-white dark:bg-[#131B2E] border border-slate-200 dark:border-slate-800 shadow-sm rounded-3xl text-center overflow-hidden">
+            <div className="py-3 px-4 bg-gradient-to-r from-sky-600 to-indigo-600 text-white font-bold text-xs tracking-wider uppercase">
               Official Membership Pass
             </div>
             <CardContent className="p-6 space-y-4">
               {membership?.qr_code ? (
-                <div className="p-3 bg-white rounded-2xl shadow-sm inline-block border-2 border-border">
+                <div className="p-3 bg-white rounded-2xl shadow-sm inline-block border-2 border-slate-200">
                   <img
                     src={membership.qr_code}
                     alt="Digital Pass QR"
@@ -291,16 +296,17 @@ export default function MemberProfilePage() {
                   />
                 </div>
               ) : (
-                <div className="w-40 h-40 rounded-2xl bg-[#F4F6F8] border border-border flex flex-col items-center justify-center p-4 text-[#66636A] text-xs mx-auto">
+                <div className="w-40 h-40 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 flex flex-col items-center justify-center p-4 text-slate-500 dark:text-slate-400 text-xs mx-auto">
+                  <QrCode className="w-10 h-10 mb-2 opacity-40 text-slate-400" />
                   <p>QR pass will appear when dues are paid.</p>
                 </div>
               )}
 
-              <div>
-                <p className="text-sm font-bold text-[#222222]">{user?.name || user?.username}</p>
-                <p className="text-xs text-[#714B67] font-semibold">{tierDetails?.name || 'Public Member'}</p>
+              <div className="space-y-1">
+                <p className="text-base font-extrabold text-slate-900 dark:text-white">{user?.name || user?.username}</p>
+                <p className="text-xs font-bold text-sky-600 dark:text-sky-400">{tierDetails?.name || 'Public Member'}</p>
                 {membership?.verification_token && (
-                  <p className="text-[10px] text-[#66636A] font-mono mt-2 truncate bg-[#F4F6F8] p-1 rounded border border-border">
+                  <p className="text-[10px] text-slate-500 dark:text-slate-400 font-mono mt-2 truncate bg-slate-50 dark:bg-slate-800/80 p-1.5 rounded-lg border border-slate-200 dark:border-slate-700">
                     Token: {membership.verification_token}
                   </p>
                 )}
@@ -318,7 +324,7 @@ export default function MemberProfilePage() {
           title="Renew / Select Membership Plan"
         >
           <div className="space-y-5">
-            <p className="text-xs text-[#66636A]">
+            <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
               Select your preferred tier. Recording payment will activate your discounts immediately and register the transaction in the ledger.
             </p>
 
@@ -329,23 +335,23 @@ export default function MemberProfilePage() {
                   <div
                     key={t.id}
                     onClick={() => setSelectedTierId(t.id)}
-                    className={`p-4 rounded-xl border cursor-pointer flex items-center justify-between transition-colors ${
+                    className={`p-4 rounded-2xl border cursor-pointer flex items-center justify-between transition-all ${
                       isSelected
-                        ? 'bg-[#714B67]/5 border-[#714B67] shadow-sm'
-                        : 'bg-white border-border hover:border-gray-300'
+                        ? 'bg-sky-50 dark:bg-sky-950/40 border-sky-500 shadow-sm ring-1 ring-sky-500'
+                        : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 hover:border-slate-300'
                     }`}
                   >
                     <div>
                       <div className="flex items-center gap-2">
-                        <span className="font-bold text-[#222222] text-sm">{t.name}</span>
+                        <span className="font-bold text-slate-900 dark:text-white text-sm">{t.name}</span>
                         <Badge variant="neutral" size="sm">{t.duration_days} days</Badge>
                       </div>
-                      <p className="text-xs text-[#66636A] mt-1">
+                      <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
                         {t.ticket_discount_pct}% Ticket discount • {t.merch_discount_pct}% Merch discount
                       </p>
                     </div>
                     <div className="text-right">
-                      <span className="text-lg font-bold text-[#222222]">${t.price}</span>
+                      <span className="text-lg font-black text-slate-900 dark:text-white">${t.price}</span>
                     </div>
                   </div>
                 );
@@ -365,7 +371,7 @@ export default function MemberProfilePage() {
               <Button
                 variant="primary"
                 size="md"
-                className="w-1/2 font-bold bg-[#714B67] hover:bg-[#5B3B52] text-white"
+                className="w-1/2 font-bold bg-sky-600 hover:bg-sky-700 text-white"
                 onClick={handleRenew}
                 disabled={renewing || !selectedTierId}
               >
