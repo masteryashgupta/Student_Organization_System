@@ -32,8 +32,8 @@ INSTALLED_APPS = [
     # Local feature apps
     'core',
     'accounts',
+    'events',
     # 'members',
-    # 'events',
     # 'store',
     # 'tasks',
     # 'finance',
