@@ -77,3 +77,40 @@ class TicketSerializer(serializers.ModelSerializer):
             'updated_at',
         ]
         read_only_fields = ['id', 'token', 'created_at', 'updated_at']
+
+
+class TicketPurchaseSerializer(serializers.Serializer):
+    holder_name = serializers.CharField(
+        max_length=255,
+        required=False,
+        allow_blank=True,
+        help_text="Name of attendee holding the ticket (defaults to user name if logged in)"
+    )
+    holder_email = serializers.EmailField(
+        required=False,
+        allow_blank=True,
+        help_text="Email of attendee (defaults to user email if logged in)"
+    )
+
+    def validate(self, attrs):
+        request = self.context.get('request')
+        user = request.user if request else None
+
+        name = (attrs.get('holder_name') or '').strip()
+        email = (attrs.get('holder_email') or '').strip()
+
+        if not user or not user.is_authenticated:
+            errors = {}
+            if not name:
+                errors['holder_name'] = "Name is required for ticket purchase."
+            if not email:
+                errors['holder_email'] = "Email is required for ticket purchase."
+            if errors:
+                raise serializers.ValidationError(errors)
+        else:
+            if not name:
+                attrs['holder_name'] = getattr(user, 'name', '') or user.username
+            if not email:
+                attrs['holder_email'] = user.email
+
+        return attrs

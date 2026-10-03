@@ -241,3 +241,132 @@ class EventAvailabilityTests(APITestCase):
         with self.assertRaises(DRFValidationError) as ctx:
             check_event_availability(self.event, quantity=3)
         self.assertIn('remaining', str(ctx.exception.detail))
+
+
+class TicketPurchaseTests(APITestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(
+            username='student1',
+            email='student1@skyline.edu',
+            password='password123',
+            name='Alice Student',
+            role=User.ROLE_MEMBER
+        )
+        self.event = Event.objects.create(
+            title='Spring Gala 2026',
+            description='Annual spring gala dinner and dance.',
+            datetime=timezone.now() + timedelta(days=14),
+            venue='Skyline Grand Ballroom',
+            capacity=2,
+            member_price=Decimal('15.00'),
+            nonmember_price=Decimal('25.00'),
+            status=Event.STATUS_PUBLISHED
+        )
+
+    def test_guest_ticket_purchase_success_and_ledger_transaction(self):
+        from core.models import Transaction
+
+        initial_tx_count = Transaction.objects.count()
+
+        payload = {
+            'holder_name': 'Bob Guest',
+            'holder_email': 'bob@external.org',
+        }
+        res = self.client.post(f'/api/events/{self.event.id}/tickets/', payload)
+        self.assertEqual(res.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(res.data['holder_name'], 'Bob Guest')
+        self.assertEqual(res.data['holder_email'], 'bob@external.org')
+        self.assertEqual(res.data['type'], 'nonmember')
+        self.assertEqual(Decimal(str(res.data['price_paid'])), Decimal('25.00'))
+        self.assertIsNotNone(res.data['token'])
+        self.assertEqual(res.data['status'], 'valid')
+
+        # Verify ledger recorded transaction
+        self.assertEqual(Transaction.objects.count(), initial_tx_count + 1)
+        tx = Transaction.objects.first()
+        self.assertEqual(tx.type, Transaction.TYPE_INCOME)
+        self.assertEqual(tx.category, Transaction.CATEGORY_TICKET)
+        self.assertEqual(tx.amount, Decimal('25.00'))
+        self.assertIn(str(res.data['token']), tx.source)
+
+    def test_guest_ticket_purchase_missing_details_fails(self):
+        res = self.client.post(f'/api/events/{self.event.id}/tickets/', {})
+        self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
+        error_dict = res.data.get('details', res.data)
+        self.assertIn('holder_name', error_dict)
+        self.assertIn('holder_email', error_dict)
+
+    def test_authenticated_ticket_purchase_auto_populates_user(self):
+        self.client.force_authenticate(user=self.user)
+        res = self.client.post(f'/api/events/{self.event.id}/tickets/', {})
+        self.assertEqual(res.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(res.data['holder_name'], 'Alice Student')
+        self.assertEqual(res.data['holder_email'], 'student1@skyline.edu')
+
+    def test_member_pricing_applied_when_buyer_is_member(self):
+        from unittest.mock import patch
+
+        self.client.force_authenticate(user=self.user)
+        with patch('events.services.get_buyer_member_info') as mock_info:
+            mock_info.return_value = {
+                'is_active_member': True,
+                'tier': 'Gold Tier',
+                'ticket_discount_pct': 0.0,
+            }
+            res = self.client.post(f'/api/events/{self.event.id}/tickets/', {})
+            self.assertEqual(res.status_code, status.HTTP_201_CREATED)
+            self.assertEqual(res.data['type'], 'member')
+            self.assertEqual(Decimal(str(res.data['price_paid'])), Decimal('15.00'))
+
+    def test_cannot_purchase_tickets_past_capacity(self):
+        # Event capacity is 2
+        # Purchase 1
+        res1 = self.client.post(
+            f'/api/events/{self.event.id}/tickets/',
+            {'holder_name': 'Person 1', 'holder_email': 'p1@skyline.edu'}
+        )
+        self.assertEqual(res1.status_code, status.HTTP_201_CREATED)
+
+        # Purchase 2
+        res2 = self.client.post(
+            f'/api/events/{self.event.id}/tickets/',
+            {'holder_name': 'Person 2', 'holder_email': 'p2@skyline.edu'}
+        )
+        self.assertEqual(res2.status_code, status.HTTP_201_CREATED)
+
+        # Purchase 3 (oversell attempt)
+        res3 = self.client.post(
+            f'/api/events/{self.event.id}/tickets/',
+            {'holder_name': 'Person 3', 'holder_email': 'p3@skyline.edu'}
+        )
+        self.assertEqual(res3.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertIn('sold out', str(res3.data))
+
+    def test_cannot_purchase_draft_event(self):
+        self.event.status = Event.STATUS_DRAFT
+        self.event.save()
+
+        res = self.client.post(
+            f'/api/events/{self.event.id}/tickets/',
+            {'holder_name': 'Bob Guest', 'holder_email': 'bob@external.org'}
+        )
+        self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertIn('Cannot purchase tickets', str(res.data))
+
+    def test_free_ticket_purchase_does_not_fail_ledger(self):
+        free_event = Event.objects.create(
+            title='Free Orientation',
+            datetime=timezone.now() + timedelta(days=7),
+            venue='Campus Quad',
+            capacity=100,
+            member_price=Decimal('0.00'),
+            nonmember_price=Decimal('0.00'),
+            status=Event.STATUS_PUBLISHED
+        )
+        res = self.client.post(
+            f'/api/events/{free_event.id}/tickets/',
+            {'holder_name': 'Free Attendee', 'holder_email': 'free@skyline.edu'}
+        )
+        self.assertEqual(res.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(Decimal(str(res.data['price_paid'])), Decimal('0.00'))
+

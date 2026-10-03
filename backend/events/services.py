@@ -1,3 +1,6 @@
+import uuid
+from decimal import Decimal
+from django.db import transaction
 from rest_framework.exceptions import ValidationError
 from .models import Event, Ticket
 
@@ -50,3 +53,131 @@ def check_event_availability(event: Event, quantity: int = 1) -> dict:
         })
 
     return availability
+
+
+def get_buyer_member_info(request=None, user=None) -> dict:
+    """
+    Determines whether the buyer is an active club member and any discount pct.
+    
+    // MOCK /api/members/me: swap at integration
+    By contract, calls GET /api/members/me or queries membership status.
+    Until fully integrated, defaults unauthenticated or mocked buyers to non-member (0% discount).
+    """
+    # // MOCK /api/members/me: swap at integration
+    if user and user.is_authenticated:
+        try:
+            from members.models import Membership
+            membership = Membership.objects.select_related('tier').get(user=user)
+            if membership.is_active_member:
+                return {
+                    'is_active_member': True,
+                    'tier': membership.tier.name if membership.tier else None,
+                    'ticket_discount_pct': float(membership.tier.ticket_discount_pct) if membership.tier else 0.0,
+                }
+        except Exception:
+            pass
+
+    # // MOCK /api/members/me: swap at integration
+    return {
+        'is_active_member': False,
+        'tier': None,
+        'ticket_discount_pct': 0.0,
+    }
+
+
+def calculate_ticket_price(event: Event, member_info: dict) -> tuple:
+    """
+    Calculates ticket type ('member' or 'nonmember') and price paid based on membership status.
+    
+    Returns:
+        tuple[str, Decimal]: (ticket_type, price_paid)
+    """
+    if member_info.get('is_active_member', False):
+        ticket_type = Ticket.TYPE_MEMBER
+        base_price = event.member_price
+        discount_pct = Decimal(str(member_info.get('ticket_discount_pct', 0.0)))
+        if discount_pct > Decimal('0.00') and event.nonmember_price > Decimal('0.00'):
+            discounted_price = (event.nonmember_price * (Decimal('1.00') - (discount_pct / Decimal('100.00')))).quantize(Decimal('0.01'))
+            final_price = min(base_price, discounted_price)
+        else:
+            final_price = base_price
+    else:
+        ticket_type = Ticket.TYPE_NONMEMBER
+        final_price = event.nonmember_price
+
+    return ticket_type, max(Decimal('0.00'), final_price)
+
+
+@transaction.atomic
+def purchase_ticket(event_id: int, buyer_user=None, holder_name: str = "", holder_email: str = "", request=None) -> Ticket:
+    """
+    Atomically purchases a ticket for an event with strict concurrency protection.
+    
+    1. Locks the Event row via select_for_update() to serialize concurrent purchases.
+    2. Re-checks live capacity under the lock to prevent overselling.
+    3. Resolves member vs non-member pricing via GET /api/members/me (or mock).
+    4. Validates buyer details.
+    5. Generates unique UUID token and creates Ticket.
+    6. Records income transaction in core ledger via core.record_transaction.
+    """
+    # 1. Lock event row to prevent race conditions on last seat
+    try:
+        event = Event.objects.select_for_update().get(id=event_id)
+    except Event.DoesNotExist:
+        raise ValidationError({"detail": f"Event with id {event_id} does not exist."})
+
+    # Validate event is published
+    if event.status != Event.STATUS_PUBLISHED:
+        raise ValidationError({
+            "detail": f"Cannot purchase tickets for an event that is {event.get_status_display().lower()}."
+        })
+
+    # 2. Re-check availability under lock
+    sold_count = event.tickets.exclude(status=Ticket.STATUS_CANCELLED).count()
+    if sold_count >= event.capacity:
+        raise ValidationError({"detail": "This event is completely sold out. No tickets remaining."})
+
+    # 3. Determine pricing (member vs nonmember)
+    # // MOCK /api/members/me: swap at integration
+    member_info = get_buyer_member_info(request=request, user=buyer_user)
+    ticket_type, price_paid = calculate_ticket_price(event, member_info)
+
+    # 4. Validate buyer details
+    if buyer_user and buyer_user.is_authenticated:
+        if not holder_name:
+            holder_name = getattr(buyer_user, 'name', '') or buyer_user.username
+        if not holder_email:
+            holder_email = buyer_user.email
+    elif not holder_name or not holder_email:
+        raise ValidationError({
+            "detail": "Both holder_name and holder_email are required for ticket purchases."
+        })
+
+    # 5. Generate unique UUID token and create Ticket
+    ticket = Ticket.objects.create(
+        event=event,
+        holder=buyer_user if (buyer_user and buyer_user.is_authenticated) else None,
+        holder_name=holder_name,
+        holder_email=holder_email,
+        type=ticket_type,
+        price_paid=price_paid,
+        status=Ticket.STATUS_VALID,
+        token=uuid.uuid4(),
+    )
+
+    # 6. Call core.record_transaction on successful ticket purchase
+    if price_paid > Decimal('0.00'):
+        try:
+            from core.services import record_transaction
+            record_transaction(
+                type='income',
+                category='ticket',
+                amount=price_paid,
+                source=f"Ticket #{ticket.token}",
+                description=f"Ticket purchase for '{event.title}' ({ticket.get_type_display()}) by {holder_name} ({holder_email})"
+            )
+        except Exception as exc:
+            # Transaction atomic rolls back everything if ledger fails
+            raise ValidationError({"detail": f"Failed to record ticket transaction in central ledger: {str(exc)}"})
+
+    return ticket
