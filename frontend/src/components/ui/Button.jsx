@@ -11,22 +11,22 @@ export function Button({
   onClick,
   ...props
 }) {
-  const baseStyles = 'inline-flex items-center justify-center font-medium transition-all duration-150 rounded-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent disabled:opacity-50 disabled:cursor-not-allowed';
+  const baseStyles = 'inline-flex items-center justify-center font-medium transition-all duration-150 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 disabled:opacity-50 disabled:cursor-not-allowed';
 
   const variants = {
-    primary: 'bg-accent hover:bg-accent-hover text-white shadow-sm hover:shadow active:scale-[0.99] border border-accent/20 focus:ring-accent',
-    secondary: 'bg-[#F6F5F4] hover:bg-[#EAE7E3] text-ink border border-border focus:ring-slate-400',
-    outline: 'bg-white hover:bg-muted text-ink border border-border hover:border-[#D1CECA] focus:ring-accent shadow-2sm',
-    accent: 'bg-brand hover:bg-brand-hover text-white shadow-sm focus:ring-brand',
-    brand: 'bg-brand hover:bg-brand-hover text-white shadow-sm focus:ring-brand',
-    danger: 'bg-danger-500 hover:bg-danger-600 text-white shadow-sm focus:ring-danger-500',
-    ghost: 'bg-transparent hover:bg-muted text-ink-muted hover:text-ink focus:ring-slate-400',
+    primary: 'bg-[#0F172A] hover:bg-slate-800 text-white shadow-sm hover:shadow active:scale-[0.99] border border-slate-900',
+    secondary: 'bg-white hover:bg-slate-50 text-[#0F172A] border border-slate-200 shadow-sm hover:border-slate-300',
+    outline: 'bg-white hover:bg-slate-50 text-[#0F172A] border border-slate-200 hover:border-slate-300 shadow-sm',
+    accent: 'bg-[#0EA5E9] hover:bg-[#0284C7] text-white shadow-sm',
+    brand: 'bg-[#0F172A] hover:bg-slate-800 text-white shadow-sm',
+    danger: 'bg-rose-600 hover:bg-rose-700 text-white shadow-sm',
+    ghost: 'bg-transparent hover:bg-slate-100 text-[#64748B] hover:text-[#0F172A]',
   };
 
   const sizes = {
-    sm: 'text-xs sm:text-[13px] px-3 py-1.5 gap-1.5 rounded-lg font-medium',
-    md: 'text-[15px] px-4 py-2.5 gap-2 font-semibold',
-    lg: 'text-[16px] px-6 py-3.5 gap-2.5 font-semibold',
+    sm: 'text-xs px-3.5 py-1.5 gap-1.5 font-semibold',
+    md: 'text-sm px-4.5 py-2 gap-2 font-semibold',
+    lg: 'text-base px-6 py-2.5 gap-2.5 font-bold',
   };
 
   return (

@@ -49,9 +49,9 @@ export default function ProjectModal({
       onClose={onClose}
       title="Create New Fundraiser / Project"
     >
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-4 text-xs">
         <div>
-          <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">
+          <label className="block text-xs font-semibold text-[#0F172A] mb-1.5">
             Project / Fundraiser Name *
           </label>
           <Input
@@ -64,7 +64,7 @@ export default function ProjectModal({
         </div>
 
         <div>
-          <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">
+          <label className="block text-xs font-semibold text-[#0F172A] mb-1.5">
             Fundraising Goal ($)
           </label>
           <Input
@@ -79,7 +79,7 @@ export default function ProjectModal({
         </div>
 
         <div>
-          <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">
+          <label className="block text-xs font-semibold text-[#0F172A] mb-1.5">
             Project Description & Objectives
           </label>
           <textarea
@@ -87,11 +87,11 @@ export default function ProjectModal({
             placeholder="Objectives, logistics, target date, and volunteer expectations..."
             value={formData.description}
             onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-            className="w-full bg-surface-950 border border-slate-700 rounded-xl p-3 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-brand-500 transition-colors resize-none"
+            className="w-full bg-white border border-slate-200 rounded-xl p-3 text-xs text-[#0F172A] placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-500 transition-all resize-none"
           />
         </div>
 
-        <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-800">
+        <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-100">
           <Button variant="ghost" type="button" onClick={onClose} disabled={isPending}>
             Cancel
           </Button>

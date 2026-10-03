@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../lib/AuthContext';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '../components/ui/Card';
 import { Badge } from '../components/ui/Badge';
 import { Button } from '../components/ui/Button';
 import {
@@ -21,535 +20,858 @@ import {
   CheckCircle2,
   Clock,
   Zap,
+  Target,
+  ChevronRight,
+  Activity,
+  Terminal,
+  Sun,
+  Moon,
+  Lock,
 } from 'lucide-react';
 
 export default function OverviewPage() {
   const { user, isAuthenticated, isOfficer } = useAuth();
+  const [activeTab, setActiveTab] = useState('productivity');
+  const [frameTheme, setFrameTheme] = useState('light');
 
   return (
-    <div className="w-full">
-      {/* 1. HERO SECTION (Pure White Background with Generous Whitespace) */}
-      <section className="bg-white pt-14 sm:pt-20 lg:pt-24 pb-8 sm:pb-12 px-4 sm:px-6 lg:px-8 text-center relative">
-        <div className="max-w-4xl mx-auto space-y-6">
-          {/* Main Hero Headline in Caveat 700: 64–88px desktop, 40–52px mobile, line-height 1.0–1.15 */}
-          <h1 className="font-odoo-script font-display text-[44px] sm:text-[66px] lg:text-[84px] font-bold text-ink leading-[1.06] tracking-normal max-w-4xl mx-auto">
-            All your club operations on{' '}
-            <span className="odoo-yellow-highlight">one platform.</span>
-          </h1>
-
-          {/* Subtitle in Caveat 700: 42–60px desktop, 30–40px mobile */}
-          <div className="relative inline-block pt-1">
-            <h2 className="font-odoo-script font-display text-[32px] sm:text-[44px] lg:text-[56px] font-bold text-ink tracking-normal leading-[1.08] inline-block">
-              Simple, efficient, yet{' '}
-              <span className="odoo-blue-underline">affordable!</span>
-            </h2>
-
-            {/* Exact Odoo-Style Arrow Doodle & Handwritten Price Note */}
-            <div className="hidden xl:flex items-center gap-2 absolute -right-52 top-1/2 -translate-y-2 rotate-[4deg] font-odoo-script font-display text-sm sm:text-base text-[#714B67] leading-tight text-left">
-              <img
-                src="/img/arrow_doodle.svg"
-                className="w-8 h-10 shrink-0"
-                alt=""
-                loading="lazy"
-              />
-              <div>
-                <span className="font-bold text-[#714B67] text-base block">$15.00 / year</span>
-                <span className="text-xs text-[#66636A]">for ALL perks</span>
-              </div>
-            </div>
+    <div className="w-full space-y-16 sm:space-y-24 pb-20">
+      {/* 1. HERO SECTION (Matched to Once UI Reference) */}
+      <section className="pt-8 sm:pt-14 pb-4 text-center relative max-w-4xl mx-auto space-y-6">
+        {/* Dual-Segment Pill Badge (like "Once UI | Featured work" in reference) */}
+        <div className="flex justify-center">
+          <div className="dual-badge-pill">
+            <span className="font-bold">Skyline UI</span>
+            <span className="dual-badge-divider"></span>
+            <span className="font-medium text-sky-800">Featured Platform</span>
           </div>
+        </div>
 
-          {/* Hero Call-to-Actions (Comfortably sized, plum primary + light neutral secondary) */}
-          <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
-            <Link to="/events" className="w-full sm:w-auto">
+        {/* Hero Headline (Clean Geometric Sans with Tight Tracking) */}
+        <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold text-[#0F172A] tracking-[-0.035em] leading-[1.08] max-w-3xl mx-auto">
+          Building bridges between students, campus, and community
+        </h1>
+
+        {/* Hero Subtitle */}
+        <p className="text-base sm:text-lg md:text-xl text-[#475569] font-normal max-w-2xl mx-auto leading-relaxed">
+          The unified student organization portal for Skyline College. Coordinate campus galas, join active project teams, track live ledger finances, and order club gear.
+        </p>
+
+        {/* Entity / Avatar Link Pill (like "About – Selene Yu" in reference) */}
+        <div className="flex justify-center pt-2">
+          <Link
+            to="/members"
+            className="avatar-link-pill group"
+          >
+            <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-sky-500 to-indigo-600 text-white flex items-center justify-center font-bold text-xs shadow-sm">
+              S
+            </div>
+            <span className="text-sm font-semibold text-[#0F172A] group-hover:text-sky-600 transition-colors">
+              About – Skyline Student Association
+            </span>
+            <ChevronRight className="w-4 h-4 text-slate-400 group-hover:translate-x-0.5 transition-transform" />
+          </Link>
+        </div>
+      </section>
+
+      {/* 2. SHOWCASE STUDIO WINDOW (macOS Window Chrome with Once UI High-Fidelity Cards) */}
+      <section className="max-w-6xl mx-auto px-1 sm:px-4">
+        <div
+          className={`p-5 sm:p-8 rounded-[28px] sm:rounded-[36px] relative overflow-hidden transition-all duration-300 ${
+            frameTheme === 'light'
+              ? 'bg-white/95 backdrop-blur-2xl border border-slate-200/90 shadow-[0_20px_70px_-15px_rgba(15,23,42,0.08)]'
+              : 'bg-[#0A0E1A] border border-white/10 shadow-[0_25px_80px_-20px_rgba(2,6,23,0.6)] text-white'
+          }`}
+        >
+          {/* Subtle Ambient Glow */}
+          <div
+            className={`absolute top-0 left-1/2 -translate-x-1/2 w-96 h-40 blur-3xl pointer-events-none rounded-full transition-opacity duration-500 ${
+              frameTheme === 'light' ? 'bg-sky-400/10' : 'bg-sky-500/15'
+            }`}
+          />
+
+          {/* Window Chrome Titlebar (macOS Style) */}
+          <div
+            className={`flex items-center justify-between pb-4 mb-6 border-b transition-colors relative z-10 ${
+              frameTheme === 'light' ? 'border-slate-100' : 'border-white/10'
+            }`}
+          >
+            {/* macOS Traffic Light Window Buttons */}
+            <div className="flex items-center gap-2">
+              <span className="w-3 h-3 rounded-full bg-[#FF5F56] border border-[#E0443E]/60 inline-block shadow-xs" />
+              <span className="w-3 h-3 rounded-full bg-[#FFBD2E] border border-[#DEA123]/60 inline-block shadow-xs" />
+              <span className="w-3 h-3 rounded-full bg-[#27C93F] border border-[#1AAB29]/60 inline-block shadow-xs" />
+            </div>
+
+            {/* Centered URL / Workspace Pill */}
+            <div
+              className={`hidden sm:flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-mono font-medium transition-colors ${
+                frameTheme === 'light'
+                  ? 'bg-slate-100/90 text-slate-600 border border-slate-200/80'
+                  : 'bg-white/5 text-slate-300 border border-white/10'
+              }`}
+            >
+              <Lock className="w-3 h-3 text-emerald-500" />
+              <span>skyline.college/workspace/platform-squad</span>
+            </div>
+
+            {/* Right: Live Sync Pulse + Theme Switcher Pill */}
+            <div className="flex items-center gap-2.5">
+              <div
+                className={`flex items-center gap-1.5 text-[11px] font-mono font-medium ${
+                  frameTheme === 'light' ? 'text-slate-500' : 'text-slate-400'
+                }`}
+              >
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                <span className="hidden xs:inline">Live 24ms</span>
+              </div>
+
+              {/* Theme Toggle Button */}
               <button
                 type="button"
-                className="w-full sm:w-auto font-sans font-semibold px-7 py-3 rounded-xl text-[15px] sm:text-[16px] bg-[#714B67] hover:bg-[#5B3B52] text-white shadow-sm hover:shadow transition-all"
+                onClick={() => setFrameTheme(frameTheme === 'light' ? 'dark' : 'light')}
+                className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-semibold border transition-all ${
+                  frameTheme === 'light'
+                    ? 'bg-slate-100 text-[#0F172A] hover:bg-slate-200/80 border-slate-200 shadow-xs'
+                    : 'bg-white/10 text-white hover:bg-white/15 border-white/15 shadow-xs'
+                }`}
+                title="Toggle Light Canvas / Dark Studio mode"
               >
-                Start now - It's free
+                {frameTheme === 'light' ? (
+                  <>
+                    <Moon className="w-3 h-3 text-slate-600" />
+                    <span>Dark Studio</span>
+                  </>
+                ) : (
+                  <>
+                    <Sun className="w-3 h-3 text-amber-400" />
+                    <span>Light Canvas</span>
+                  </>
+                )}
               </button>
-            </Link>
-
-            {!isAuthenticated ? (
-              <Link to="/register" className="w-full sm:w-auto">
-                <button
-                  type="button"
-                  className="w-full sm:w-auto font-sans font-semibold px-7 py-3 rounded-xl text-[15px] sm:text-[16px] bg-[#F3F3F5] hover:bg-[#EAE7E3] text-[#382533] border border-border/70 transition-all"
-                >
-                  Meet an advisor
-                </button>
-              </Link>
-            ) : (
-              <Link to="/store" className="w-full sm:w-auto">
-                <button
-                  type="button"
-                  className="w-full sm:w-auto font-sans font-semibold px-7 py-3 rounded-xl text-[15px] sm:text-[16px] bg-[#F3F3F5] hover:bg-[#EAE7E3] text-[#382533] border border-border/70 transition-all"
-                >
-                  Visit Club Store
-                </button>
-              </Link>
-            )}
+            </div>
           </div>
-        </div>
-      </section>
 
-      {/* Broad, Gentle Curved Edge Transitioning into Very Light-Gray Lower Canvas */}
-      <div className="w-full overflow-hidden leading-none bg-white -mb-px">
-        <svg
-          viewBox="0 0 1440 80"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          className="w-full h-10 sm:h-16 lg:h-20 block"
-          preserveAspectRatio="none"
-        >
-          <path
-            d="M0,80 Q720,0 1440,80 L1440,80 L0,80 Z"
-            fill="#F4F6F8"
-          />
-        </svg>
-      </div>
+          {/* Sub-Header: Squad Identity & Interactive Tabs */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 relative z-10">
+            <div className="flex items-center gap-3">
+              <div
+                className={`w-9 h-9 rounded-xl flex items-center justify-center transition-colors ${
+                  frameTheme === 'light'
+                    ? 'bg-sky-50 text-sky-600 border border-sky-100'
+                    : 'bg-sky-500/20 text-sky-400 border border-sky-400/30'
+                }`}
+              >
+                <Activity className="w-4.5 h-4.5" />
+              </div>
+              <div>
+                <h3
+                  className={`text-sm font-bold flex items-center gap-2 ${
+                    frameTheme === 'light' ? 'text-[#0F172A]' : 'text-white'
+                  }`}
+                >
+                  <span>Platform Squad</span>
+                  <span
+                    className={`text-[11px] font-normal font-mono ${
+                      frameTheme === 'light' ? 'text-slate-500' : 'text-slate-400'
+                    }`}
+                  >
+                    • 38 tasks active
+                  </span>
+                </h3>
+                <span className={`text-xs ${frameTheme === 'light' ? 'text-slate-500' : 'text-slate-400'}`}>
+                  Live Production Workspace
+                </span>
+              </div>
+            </div>
 
-      {/* 2. LOWER CONTENT SECTION (Very Light Cool Gray Canvas) */}
-      <section className="bg-[#F4F6F8] pb-24 sm:pb-32 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-6xl mx-auto space-y-16 sm:space-y-24">
-          {/* Floating Announcement / Event Link in small white pill with subtle shadow */}
-          <div className="flex justify-center -mt-5 sm:-mt-8 mb-4 sm:mb-8 relative z-10">
-            <Link
-              to="/events"
-              className="group inline-flex items-center gap-2.5 sm:gap-4 px-5 sm:px-7 py-2.5 rounded-full bg-white border border-[#E9E7E5] shadow-[0_2px_12px_rgba(0,0,0,0.06)] hover:border-[#F8B500] hover:shadow-[0_4px_18px_rgba(0,0,0,0.09)] transition-all text-xs sm:text-sm text-ink"
+            {/* Segmented Controller */}
+            <div
+              className={`inline-flex p-1 rounded-full border self-start sm:self-auto transition-colors ${
+                frameTheme === 'light'
+                  ? 'bg-slate-100/90 border-slate-200'
+                  : 'bg-white/5 border-white/10'
+              }`}
             >
-              <span className="text-base">🎓</span>
-              <span className="font-semibold text-ink truncate max-w-[200px] sm:max-w-none">
-                Skyline Leadership Gala &amp; Dinner
-              </span>
-              <span className="text-ink-muted text-xs hidden sm:inline">Oct 24, 2026</span>
-              <span className="text-[#714B67] font-semibold flex items-center gap-1 group-hover:translate-x-1 transition-transform">
-                Register ⟶
-              </span>
-            </Link>
+              <button
+                type="button"
+                onClick={() => setActiveTab('productivity')}
+                className={`px-3.5 py-1 rounded-full text-xs font-semibold transition-all ${
+                  activeTab === 'productivity'
+                    ? frameTheme === 'light'
+                      ? 'bg-white text-[#0F172A] shadow-sm font-bold'
+                      : 'bg-white text-slate-900 shadow-sm font-bold'
+                    : frameTheme === 'light'
+                      ? 'text-slate-600 hover:text-[#0F172A]'
+                      : 'text-slate-400 hover:text-white'
+                }`}
+              >
+                Productivity
+              </button>
+              <button
+                type="button"
+                onClick={() => setActiveTab('events')}
+                className={`px-3.5 py-1 rounded-full text-xs font-semibold transition-all ${
+                  activeTab === 'events'
+                    ? frameTheme === 'light'
+                      ? 'bg-white text-[#0F172A] shadow-sm font-bold'
+                      : 'bg-white text-slate-900 shadow-sm font-bold'
+                    : frameTheme === 'light'
+                      ? 'text-slate-600 hover:text-[#0F172A]'
+                      : 'text-slate-400 hover:text-white'
+                }`}
+              >
+                Events & Gala
+              </button>
+              <button
+                type="button"
+                onClick={() => setActiveTab('finance')}
+                className={`px-3.5 py-1 rounded-full text-xs font-semibold transition-all ${
+                  activeTab === 'finance'
+                    ? frameTheme === 'light'
+                      ? 'bg-white text-[#0F172A] shadow-sm font-bold'
+                      : 'bg-white text-slate-900 shadow-sm font-bold'
+                    : frameTheme === 'light'
+                      ? 'text-slate-600 hover:text-[#0F172A]'
+                      : 'text-slate-400 hover:text-white'
+                }`}
+              >
+                Ledger
+              </button>
+            </div>
           </div>
 
-          {/* Balanced Row of White Tiles with Simple Colorful Icons (Screenshot App Launcher Row) */}
-          <div className="pt-2 sm:pt-4">
-          <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-5">
-            {/* App 1: Ticketing (%) */}
-            <Link to="/events" className="group flex flex-col items-center">
-              <div className="w-18 h-18 sm:w-20 sm:h-20 rounded-2xl bg-white border border-border shadow-sm flex items-center justify-center group-hover:scale-105 group-hover:-translate-y-1 group-hover:shadow-md transition-all">
-                <div className="w-10 h-10 rounded-xl bg-[#FEF4F3] text-accent flex items-center justify-center font-black text-xl">
-                  %
+          {/* Tab 1: Productivity & Tasks Kanban Preview */}
+          {activeTab === 'productivity' && (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 relative z-10 animate-fade-in">
+              {/* Column 1: To Do */}
+              <div
+                className={`rounded-2xl p-4 space-y-3.5 transition-colors ${
+                  frameTheme === 'light'
+                    ? 'bg-slate-50/90 border border-slate-200/80'
+                    : 'bg-white/[0.03] border border-white/[0.08]'
+                }`}
+              >
+                <div
+                  className={`flex items-center justify-between text-xs font-semibold uppercase tracking-wider pb-2.5 border-b transition-colors ${
+                    frameTheme === 'light'
+                      ? 'text-slate-600 border-slate-200/80'
+                      : 'text-slate-400 border-white/[0.06]'
+                  }`}
+                >
+                  <span
+                    className={`flex items-center gap-1.5 font-bold ${
+                      frameTheme === 'light' ? 'text-[#0F172A]' : 'text-slate-300'
+                    }`}
+                  >
+                    <span className="w-2.5 h-2.5 rounded-full bg-amber-400" /> To Do
+                  </span>
+                  <span
+                    className={`font-mono text-[11px] font-bold px-2 py-0.5 rounded-full ${
+                      frameTheme === 'light'
+                        ? 'bg-white text-slate-700 border border-slate-200'
+                        : 'bg-white/10 text-white'
+                    }`}
+                  >
+                    3
+                  </span>
+                </div>
+
+                {/* Card 1: Frontend */}
+                <div
+                  className={`p-4 rounded-xl space-y-2.5 transition-all ${
+                    frameTheme === 'light'
+                      ? 'bg-white border border-slate-200/90 shadow-sm hover:border-sky-300 hover:shadow-md'
+                      : 'bg-white/[0.04] border border-white/[0.08] hover:border-sky-500/40 hover:bg-white/[0.06]'
+                  }`}
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-sky-500/15 text-sky-600 dark:text-sky-300 border border-sky-400/20 uppercase tracking-wider">
+                      Frontend
+                    </span>
+                    <span className="text-[10px] font-semibold text-rose-500 bg-rose-500/10 px-2 py-0.5 rounded-md border border-rose-500/20">
+                      High
+                    </span>
+                  </div>
+                  <h4
+                    className={`text-xs font-bold leading-snug ${
+                      frameTheme === 'light' ? 'text-[#0F172A]' : 'text-white'
+                    }`}
+                  >
+                    Design Once UI Theme Alignment
+                  </h4>
+                  <p
+                    className={`text-[11px] leading-relaxed ${
+                      frameTheme === 'light' ? 'text-[#475569]' : 'text-slate-400'
+                    }`}
+                  >
+                    Convert navigation and card tokens to modern minimalist SaaS aesthetic.
+                  </p>
+                  <div className="pt-2 flex items-center justify-between border-t border-slate-100 dark:border-white/5 text-[11px]">
+                    <div className="flex items-center gap-1.5">
+                      <div className="w-5 h-5 rounded-full bg-sky-100 text-sky-700 font-bold text-[9px] flex items-center justify-center">
+                        YG
+                      </div>
+                      <span className={frameTheme === 'light' ? 'text-slate-600' : 'text-slate-400'}>
+                        Yaman G.
+                      </span>
+                    </div>
+                    <span className="font-mono text-[10px] text-slate-400">2/3 Done</span>
+                  </div>
+                </div>
+
+                {/* Card 2: Logistics */}
+                <div
+                  className={`p-4 rounded-xl space-y-2.5 transition-all ${
+                    frameTheme === 'light'
+                      ? 'bg-white border border-slate-200/90 shadow-sm hover:border-sky-300 hover:shadow-md'
+                      : 'bg-white/[0.04] border border-white/[0.08] hover:border-sky-500/40 hover:bg-white/[0.06]'
+                  }`}
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-emerald-500/15 text-emerald-600 dark:text-emerald-300 border border-emerald-400/20 uppercase tracking-wider">
+                      Logistics
+                    </span>
+                    <span className="text-[10px] font-medium text-slate-500 bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded-md">
+                      Normal
+                    </span>
+                  </div>
+                  <h4
+                    className={`text-xs font-bold leading-snug ${
+                      frameTheme === 'light' ? 'text-[#0F172A]' : 'text-white'
+                    }`}
+                  >
+                    Spring Gala Catering Selection
+                  </h4>
+                  <p
+                    className={`text-[11px] leading-relaxed ${
+                      frameTheme === 'light' ? 'text-[#475569]' : 'text-slate-400'
+                    }`}
+                  >
+                    Verify banquet menus and vegetarian options for 100 ticket holders.
+                  </p>
+                  <div className="pt-2 flex items-center justify-between border-t border-slate-100 dark:border-white/5 text-[11px]">
+                    <div className="flex items-center gap-1.5">
+                      <div className="w-5 h-5 rounded-full bg-emerald-100 text-emerald-700 font-bold text-[9px] flex items-center justify-center">
+                        SY
+                      </div>
+                      <span className={frameTheme === 'light' ? 'text-slate-600' : 'text-slate-400'}>
+                        Selene Y.
+                      </span>
+                    </div>
+                    <span className="font-mono text-[10px] text-slate-400">Due Oct 18</span>
+                  </div>
                 </div>
               </div>
-              <span className="mt-2 text-xs font-semibold text-ink group-hover:text-accent transition-colors">
-                Tickets
-              </span>
-            </Link>
 
-            {/* App 2: Members (Ribbon Bookmark) */}
-            <Link to="/members" className="group flex flex-col items-center">
-              <div className="w-18 h-18 sm:w-20 sm:h-20 rounded-2xl bg-white border border-border shadow-sm flex items-center justify-center group-hover:scale-105 group-hover:-translate-y-1 group-hover:shadow-md transition-all">
-                <div className="w-10 h-10 rounded-xl bg-[#F0FDF4] text-emerald-600 flex items-center justify-center font-bold">
-                  <Users className="w-6 h-6" />
+              {/* Column 2: In Progress */}
+              <div
+                className={`rounded-2xl p-4 space-y-3.5 transition-colors ${
+                  frameTheme === 'light'
+                    ? 'bg-slate-50/90 border border-slate-200/80'
+                    : 'bg-white/[0.03] border border-white/[0.08]'
+                }`}
+              >
+                <div
+                  className={`flex items-center justify-between text-xs font-semibold uppercase tracking-wider pb-2.5 border-b transition-colors ${
+                    frameTheme === 'light'
+                      ? 'text-slate-600 border-slate-200/80'
+                      : 'text-slate-400 border-white/[0.06]'
+                  }`}
+                >
+                  <span
+                    className={`flex items-center gap-1.5 font-bold ${
+                      frameTheme === 'light' ? 'text-[#0F172A]' : 'text-slate-300'
+                    }`}
+                  >
+                    <span className="w-2.5 h-2.5 rounded-full bg-sky-500 animate-pulse" /> In Progress
+                  </span>
+                  <span
+                    className={`font-mono text-[11px] font-bold px-2 py-0.5 rounded-full ${
+                      frameTheme === 'light'
+                        ? 'bg-white text-slate-700 border border-slate-200'
+                        : 'bg-white/10 text-white'
+                    }`}
+                  >
+                    2
+                  </span>
+                </div>
+
+                {/* Card 1: Backend */}
+                <div
+                  className={`p-4 rounded-xl space-y-2.5 transition-all ${
+                    frameTheme === 'light'
+                      ? 'bg-white border border-slate-200/90 shadow-sm hover:border-sky-300 hover:shadow-md'
+                      : 'bg-white/[0.04] border border-white/[0.08] hover:border-sky-500/40 hover:bg-white/[0.06]'
+                  }`}
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-indigo-500/15 text-indigo-600 dark:text-indigo-300 border border-indigo-400/20 uppercase tracking-wider">
+                      Backend
+                    </span>
+                    <span className="text-[10px] font-bold text-red-600 bg-red-500/15 px-2 py-0.5 rounded-md border border-red-500/30 flex items-center gap-1">
+                      <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" /> Critical
+                    </span>
+                  </div>
+                  <h4
+                    className={`text-xs font-bold leading-snug ${
+                      frameTheme === 'light' ? 'text-[#0F172A]' : 'text-white'
+                    }`}
+                  >
+                    QR Code Dynamic Ticket Check-In
+                  </h4>
+                  <p
+                    className={`text-[11px] leading-relaxed ${
+                      frameTheme === 'light' ? 'text-[#475569]' : 'text-slate-400'
+                    }`}
+                  >
+                    Atomic database verification preventing double check-in at venue door.
+                  </p>
+                  <div className="pt-2 flex items-center justify-between border-t border-slate-100 dark:border-white/5 text-[11px]">
+                    <div className="flex items-center gap-1.5">
+                      <div className="w-5 h-5 rounded-full bg-indigo-100 text-indigo-700 font-bold text-[9px] flex items-center justify-center">
+                        AL
+                      </div>
+                      <span className={frameTheme === 'light' ? 'text-slate-600' : 'text-slate-400'}>
+                        Alex L.
+                      </span>
+                    </div>
+                    <span className="font-mono text-[10px] text-emerald-600 font-semibold">4/4 Tests Pass</span>
+                  </div>
+                </div>
+
+                {/* Card 2: Store */}
+                <div
+                  className={`p-4 rounded-xl space-y-2.5 transition-all ${
+                    frameTheme === 'light'
+                      ? 'bg-white border border-slate-200/90 shadow-sm hover:border-sky-300 hover:shadow-md'
+                      : 'bg-white/[0.04] border border-white/[0.08] hover:border-sky-500/40 hover:bg-white/[0.06]'
+                  }`}
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-amber-500/15 text-amber-600 dark:text-amber-300 border border-amber-400/20 uppercase tracking-wider">
+                      Store
+                    </span>
+                    <span className="text-[10px] font-medium text-slate-500 bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded-md">
+                      Normal
+                    </span>
+                  </div>
+                  <h4
+                    className={`text-xs font-bold leading-snug ${
+                      frameTheme === 'light' ? 'text-[#0F172A]' : 'text-white'
+                    }`}
+                  >
+                    Merch Hoodies Inventory Seed
+                  </h4>
+                  <p
+                    className={`text-[11px] leading-relaxed ${
+                      frameTheme === 'light' ? 'text-[#475569]' : 'text-slate-400'
+                    }`}
+                  >
+                    Per-size stock reservation with real-time depletion triggers.
+                  </p>
+                  <div className="pt-2 flex items-center justify-between border-t border-slate-100 dark:border-white/5 text-[11px]">
+                    <div className="flex items-center gap-1.5">
+                      <div className="w-5 h-5 rounded-full bg-amber-100 text-amber-700 font-bold text-[9px] flex items-center justify-center">
+                        JD
+                      </div>
+                      <span className={frameTheme === 'light' ? 'text-slate-600' : 'text-slate-400'}>
+                        Jane D.
+                      </span>
+                    </div>
+                    <span className="font-mono text-[10px] text-amber-600 font-semibold">84 units seeded</span>
+                  </div>
                 </div>
               </div>
-              <span className="mt-2 text-xs font-semibold text-ink group-hover:text-brand transition-colors">
-                Members
-              </span>
-            </Link>
 
-            {/* App 3: Store (Bag) */}
-            <Link to="/store" className="group flex flex-col items-center">
-              <div className="w-18 h-18 sm:w-20 sm:h-20 rounded-2xl bg-white border border-border shadow-sm flex items-center justify-center group-hover:scale-105 group-hover:-translate-y-1 group-hover:shadow-md transition-all">
-                <div className="w-10 h-10 rounded-xl bg-[#FFFBEB] text-amber-600 flex items-center justify-center font-bold">
-                  <ShoppingBag className="w-6 h-6" />
+              {/* Column 3: Completed */}
+              <div
+                className={`rounded-2xl p-4 space-y-3.5 transition-colors ${
+                  frameTheme === 'light'
+                    ? 'bg-slate-50/90 border border-slate-200/80'
+                    : 'bg-white/[0.03] border border-white/[0.08]'
+                }`}
+              >
+                <div
+                  className={`flex items-center justify-between text-xs font-semibold uppercase tracking-wider pb-2.5 border-b transition-colors ${
+                    frameTheme === 'light'
+                      ? 'text-slate-600 border-slate-200/80'
+                      : 'text-slate-400 border-white/[0.06]'
+                  }`}
+                >
+                  <span
+                    className={`flex items-center gap-1.5 font-bold ${
+                      frameTheme === 'light' ? 'text-[#0F172A]' : 'text-slate-300'
+                    }`}
+                  >
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" /> Completed
+                  </span>
+                  <span
+                    className={`font-mono text-[11px] font-bold px-2 py-0.5 rounded-full ${
+                      frameTheme === 'light'
+                        ? 'bg-white text-slate-700 border border-slate-200'
+                        : 'bg-white/10 text-white'
+                    }`}
+                  >
+                    12
+                  </span>
                 </div>
-              </div>
-              <span className="mt-2 text-xs font-semibold text-ink group-hover:text-amber-600 transition-colors">
-                Store
-              </span>
-            </Link>
 
-            {/* App 4: Treasury (Ledger / Dollar) */}
-            <Link to="/finance" className="group flex flex-col items-center">
-              <div className="w-18 h-18 sm:w-20 sm:h-20 rounded-2xl bg-white border border-border shadow-sm flex items-center justify-center group-hover:scale-105 group-hover:-translate-y-1 group-hover:shadow-md transition-all">
-                <div className="w-10 h-10 rounded-xl bg-[#F9F5F8] text-[#714B67] flex items-center justify-center font-bold">
-                  <DollarSign className="w-6 h-6" />
+                {/* Card 1: Completed Audit Card (Clean and verified, no strikethrough) */}
+                <div
+                  className={`p-4 rounded-xl space-y-2.5 transition-all ${
+                    frameTheme === 'light'
+                      ? 'bg-white border border-emerald-200/80 shadow-sm'
+                      : 'bg-white/[0.04] border border-emerald-500/20'
+                  }`}
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-purple-500/15 text-purple-600 dark:text-purple-300 border border-purple-400/20 uppercase tracking-wider">
+                      Audit
+                    </span>
+                    <span className="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-md bg-emerald-500/15 text-emerald-600 dark:text-emerald-300 border border-emerald-400/30">
+                      <CheckCircle2 className="w-3 h-3" /> Verified
+                    </span>
+                  </div>
+                  <h4
+                    className={`text-xs font-bold leading-snug ${
+                      frameTheme === 'light' ? 'text-[#0F172A]' : 'text-white'
+                    }`}
+                  >
+                    Cryptographic Ledger Double-Entry
+                  </h4>
+                  <p
+                    className={`text-[11px] leading-relaxed ${
+                      frameTheme === 'light' ? 'text-[#475569]' : 'text-slate-400'
+                    }`}
+                  >
+                    159 unit & integration tests passing with 100% verified math integrity.
+                  </p>
+                  <div className="pt-2 flex items-center justify-between border-t border-slate-100 dark:border-white/5 text-[11px]">
+                    <span className="text-slate-500 text-[10px]">Zero discrepancies</span>
+                    <span className="font-mono text-[10px] text-emerald-600 font-semibold">100% Passing</span>
+                  </div>
                 </div>
-              </div>
-              <span className="mt-2 text-xs font-semibold text-ink group-hover:text-[#714B67] transition-colors">
-                Treasury
-              </span>
-            </Link>
 
-            {/* App 5: Scanner (QR / Shield) */}
-            <Link to="/events/checkin" className="group flex flex-col items-center">
-              <div className="w-18 h-18 sm:w-20 sm:h-20 rounded-2xl bg-white border border-border shadow-sm flex items-center justify-center group-hover:scale-105 group-hover:-translate-y-1 group-hover:shadow-md transition-all">
-                <div className="w-10 h-10 rounded-xl bg-[#EFF6FF] text-blue-600 flex items-center justify-center font-bold">
-                  <ShieldCheck className="w-6 h-6" />
-                </div>
-              </div>
-              <span className="mt-2 text-xs font-semibold text-ink group-hover:text-blue-600 transition-colors">
-                Scanner
-              </span>
-            </Link>
-
-            {/* App 6: Broadcast (Megaphone) */}
-            <Link to="/announcements" className="group flex flex-col items-center">
-              <div className="w-18 h-18 sm:w-20 sm:h-20 rounded-2xl bg-white border border-border shadow-sm flex items-center justify-center group-hover:scale-105 group-hover:-translate-y-1 group-hover:shadow-md transition-all">
-                <div className="w-10 h-10 rounded-xl bg-[#FEF2F2] text-rose-600 flex items-center justify-center font-bold">
-                  <Megaphone className="w-6 h-6" />
-                </div>
-              </div>
-              <span className="mt-2 text-xs font-semibold text-ink group-hover:text-rose-600 transition-colors">
-                Broadcast
-              </span>
-            </Link>
-          </div>
-        </div>
-
-        {/* Live Product Preview Panel (Real Product UI Showcase) */}
-        <div className="pt-6 sm:pt-8">
-          <div className="bg-white border border-border rounded-2xl sm:rounded-3xl p-4 sm:p-8 shadow-odoo-card max-w-4xl mx-auto text-left relative overflow-hidden">
-            {/* Top Browser Bar */}
-            <div className="flex items-center justify-between pb-6 border-b border-border/70 mb-6">
-              <div className="flex items-center gap-2">
-                <span className="w-3 h-3 rounded-full bg-[#E9E7E5] inline-block" />
-                <span className="w-3 h-3 rounded-full bg-[#E9E7E5] inline-block" />
-                <span className="w-3 h-3 rounded-full bg-[#E9E7E5] inline-block" />
-                <span className="text-xs font-mono text-ink-subtle ml-2">skyline.club/portal</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                <span className="text-xs text-ink-muted font-medium">Postgres Live Sync</span>
+                {/* Open Full Kanban Board Button */}
+                <Link
+                  to="/tasks"
+                  className={`block text-center py-2.5 rounded-xl text-xs font-bold transition-all shadow-sm ${
+                    frameTheme === 'light'
+                      ? 'bg-[#0F172A] hover:bg-slate-800 text-white'
+                      : 'bg-white hover:bg-slate-100 text-slate-900'
+                  }`}
+                >
+                  Open Full Kanban Board &rarr;
+                </Link>
               </div>
             </div>
+          )}
 
-            {/* Interactive Preview Cards Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {/* Preview 1: Live Event Card */}
-              <div className="p-4 rounded-xl bg-canvas border border-border space-y-3">
-                <div className="flex items-center justify-between">
-                  <Badge variant="success" size="sm">Open for RSVP</Badge>
-                  <span className="text-[11px] text-ink-muted">In 2 weeks</span>
+          {/* Tab 2: Events & Gala Preview */}
+          {activeTab === 'events' && (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 relative z-10 animate-fade-in">
+              <div
+                className={`p-5 rounded-2xl space-y-3 transition-colors ${
+                  frameTheme === 'light'
+                    ? 'bg-slate-50/80 border border-slate-200/80'
+                    : 'bg-white/[0.04] border border-white/10'
+                }`}
+              >
+                <Badge variant="accent" size="sm" className="bg-sky-500/20 text-sky-700 dark:text-sky-300 border-sky-400/30">
+                  Upcoming Flagship
+                </Badge>
+                <h4 className={`text-base font-bold ${frameTheme === 'light' ? 'text-[#0F172A]' : 'text-white'}`}>
+                  Annual Spring Leadership Gala
+                </h4>
+                <p className={`text-xs leading-relaxed ${frameTheme === 'light' ? 'text-[#475569]' : 'text-slate-400'}`}>
+                  Skyline Grand Ballroom • Oct 24, 2026. Keynotes, dinner, and networking.
+                </p>
+                <div className="pt-2 flex items-center justify-between text-xs">
+                  <span className={frameTheme === 'light' ? 'text-slate-500' : 'text-slate-400'}>
+                    Tickets Available:
+                  </span>
+                  <span className="font-bold text-emerald-600 dark:text-emerald-400 font-mono">42 / 100 Seats</span>
                 </div>
+                <Link to="/events" className="block pt-2">
+                  <Button
+                    variant="primary"
+                    size="sm"
+                    className={`w-full font-bold ${
+                      frameTheme === 'light'
+                        ? 'bg-[#0F172A] hover:bg-slate-800 text-white'
+                        : 'bg-white text-slate-900 hover:bg-slate-100'
+                    }`}
+                  >
+                    Reserve Ticket ($15.00)
+                  </Button>
+                </Link>
+              </div>
+
+              <div
+                className={`p-5 rounded-2xl space-y-3 transition-colors ${
+                  frameTheme === 'light'
+                    ? 'bg-slate-50/80 border border-slate-200/80'
+                    : 'bg-white/[0.04] border border-white/10'
+                }`}
+              >
+                <Badge variant="neutral" size="sm" className={frameTheme === 'light' ? 'bg-slate-100 text-slate-700 border-slate-200' : 'bg-white/10 text-slate-300 border-white/10'}>
+                  Workshop
+                </Badge>
+                <h4 className={`text-base font-bold ${frameTheme === 'light' ? 'text-[#0F172A]' : 'text-white'}`}>
+                  Full-Stack Agentic Web Hackathon
+                </h4>
+                <p className={`text-xs leading-relaxed ${frameTheme === 'light' ? 'text-[#475569]' : 'text-slate-400'}`}>
+                  Engineering Lab Rm 104 • Nov 12, 2026. Build collaborative AI apps with mentors.
+                </p>
+                <div className="pt-2 flex items-center justify-between text-xs">
+                  <span className={frameTheme === 'light' ? 'text-slate-500' : 'text-slate-400'}>
+                    Registration:
+                  </span>
+                  <span className="font-bold text-sky-600 dark:text-sky-400">Free for Members</span>
+                </div>
+                <Link to="/events" className="block pt-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className={`w-full ${
+                      frameTheme === 'light'
+                        ? 'border-slate-300 text-[#0F172A] hover:bg-slate-100'
+                        : 'border-white/20 text-white hover:bg-white/10'
+                    }`}
+                  >
+                    View Details
+                  </Button>
+                </Link>
+              </div>
+
+              <div
+                className={`p-5 rounded-2xl space-y-3 flex flex-col justify-between transition-colors ${
+                  frameTheme === 'light'
+                    ? 'bg-slate-50/80 border border-slate-200/80'
+                    : 'bg-white/[0.04] border border-white/10'
+                }`}
+              >
                 <div>
-                  <h4 className="font-semibold text-ink text-sm">Spring Leadership Gala</h4>
-                  <p className="text-xs text-ink-muted mt-0.5">Grand Ballroom &bull; Formal Dinner</p>
+                  <Badge variant="neutral" size="sm" className={frameTheme === 'light' ? 'bg-slate-100 text-slate-700 border-slate-200' : 'bg-white/10 text-slate-300 border-white/10'}>
+                    Door Scanner
+                  </Badge>
+                  <h4 className={`text-base font-bold mt-2 ${frameTheme === 'light' ? 'text-[#0F172A]' : 'text-white'}`}>
+                    Officer Fast Check-In
+                  </h4>
+                  <p className={`text-xs leading-relaxed mt-1 ${frameTheme === 'light' ? 'text-[#475569]' : 'text-slate-400'}`}>
+                    Scan attendee QR code passes at entrance with zero latency on mobile.
+                  </p>
                 </div>
-                <div className="flex items-center justify-between text-xs pt-2 border-t border-border/80">
-                  <span className="text-ink-muted">Member Price:</span>
-                  <span className="font-bold text-accent text-sm">$15.00</span>
+                <Link to="/events/check-in" className="pt-2">
+                  <Button
+                    variant="secondary"
+                    size="sm"
+                    className="w-full bg-sky-500/15 text-sky-700 dark:text-sky-300 hover:bg-sky-500/25 border border-sky-400/30 font-semibold"
+                  >
+                    <QrCode className="w-3.5 h-3.5 mr-1.5" /> Launch QR Scanner
+                  </Button>
+                </Link>
+              </div>
+            </div>
+          )}
+
+          {/* Tab 3: Finance Ledger Preview */}
+          {activeTab === 'finance' && (
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 relative z-10 animate-fade-in">
+              <div
+                className={`p-5 rounded-2xl transition-colors ${
+                  frameTheme === 'light'
+                    ? 'bg-slate-50/80 border border-slate-200/80'
+                    : 'bg-white/[0.04] border border-white/10'
+                }`}
+              >
+                <span className={`text-xs uppercase font-semibold ${frameTheme === 'light' ? 'text-slate-500' : 'text-slate-400'}`}>
+                  Treasury Balance
+                </span>
+                <div className="text-3xl font-black text-emerald-600 dark:text-emerald-400 mt-2 font-mono">
+                  $14,850.00
                 </div>
+                <p className={`text-xs mt-1 ${frameTheme === 'light' ? 'text-slate-500' : 'text-slate-400'}`}>
+                  Verified double-entry ledger
+                </p>
               </div>
 
-              {/* Preview 2: Cryptographic QR Check-In Pass */}
-              <div className="p-4 rounded-xl bg-canvas border border-border space-y-3 flex flex-col justify-between">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-semibold text-ink flex items-center gap-1.5">
-                    <QrCode className="w-3.5 h-3.5 text-brand" />
-                    Encrypted Gate Pass
+              <div
+                className={`p-5 rounded-2xl transition-colors ${
+                  frameTheme === 'light'
+                    ? 'bg-slate-50/80 border border-slate-200/80'
+                    : 'bg-white/[0.04] border border-white/10'
+                }`}
+              >
+                <span className={`text-xs uppercase font-semibold ${frameTheme === 'light' ? 'text-slate-500' : 'text-slate-400'}`}>
+                  Active Fundraisers
+                </span>
+                <div className="text-3xl font-black text-sky-600 dark:text-sky-400 mt-2 font-mono">
+                  $3,200.00
+                </div>
+                <p className={`text-xs mt-1 ${frameTheme === 'light' ? 'text-slate-500' : 'text-slate-400'}`}>
+                  80% of $4,000 gala budget goal
+                </p>
+              </div>
+
+              <div
+                className={`p-5 rounded-2xl flex flex-col justify-between transition-colors ${
+                  frameTheme === 'light'
+                    ? 'bg-slate-50/80 border border-slate-200/80'
+                    : 'bg-white/[0.04] border border-white/10'
+                }`}
+              >
+                <div>
+                  <span className={`text-xs uppercase font-semibold ${frameTheme === 'light' ? 'text-slate-500' : 'text-slate-400'}`}>
+                    Member Reimbursements
                   </span>
-                  <Badge variant="primary" size="sm">Valid</Badge>
-                </div>
-                <div className="p-2.5 bg-white rounded-lg border border-border flex items-center justify-center">
-                  <div className="text-center space-y-1">
-                    <span className="font-mono text-[10px] text-ink-muted tracking-widest block">
-                      UUID #4f8a-92b1
-                    </span>
-                    <span className="text-[11px] font-semibold text-brand block">
-                      Scan at Entrance
-                    </span>
+                  <div className={`text-xl font-bold mt-1 ${frameTheme === 'light' ? 'text-[#0F172A]' : 'text-white'}`}>
+                    Instant Direct Ledger
                   </div>
                 </div>
-                <p className="text-[11px] text-ink-muted text-center">
-                  Zero duplicate check-ins via row-level locks
-                </p>
-              </div>
-
-              {/* Preview 3: Central Ledger Record */}
-              <div className="p-4 rounded-xl bg-canvas border border-border space-y-3">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-semibold text-ink flex items-center gap-1.5">
-                    <DollarSign className="w-3.5 h-3.5 text-emerald-600" />
-                    Treasury Ledger
-                  </span>
-                  <Badge variant="neutral" size="sm">Auto-Audit</Badge>
-                </div>
-                <div className="space-y-1.5 text-xs">
-                  <div className="flex justify-between py-1 border-b border-border/60">
-                    <span className="text-ink-muted">Gala Ticket Income</span>
-                    <span className="font-bold text-emerald-600">+$2,950.00</span>
-                  </div>
-                  <div className="flex justify-between py-1 border-b border-border/60">
-                    <span className="text-ink-muted">Store Hoodies Sales</span>
-                    <span className="font-bold text-emerald-600">+$1,420.00</span>
-                  </div>
-                  <div className="flex justify-between py-1">
-                    <span className="text-ink-muted">Active Reimbursements</span>
-                    <span className="font-bold text-amber-600">-$340.00</span>
-                  </div>
-                </div>
+                <Link to="/finance/reimbursements" className="pt-3">
+                  <Button
+                    variant="primary"
+                    size="sm"
+                    className={`w-full font-bold ${
+                      frameTheme === 'light'
+                        ? 'bg-[#0F172A] hover:bg-slate-800 text-white'
+                        : 'bg-white text-slate-900 hover:bg-slate-100'
+                    }`}
+                  >
+                    File Claim
+                  </Button>
+                </Link>
               </div>
             </div>
-          </div>
-        </div>
-
-        {/* 3. PRODUCT CAPABILITIES & APP DIRECTORY (Odoo App Tiles Grid) */}
-      <section className="space-y-8">
-        <div className="text-center max-w-2xl mx-auto space-y-2">
-          {/* Secondary script headline: 42–60px desktop and 30–40px mobile */}
-          <h2 className="text-[26px] sm:text-[32px] font-bold text-ink tracking-tight leading-[1.15]">
-            One platform,{' '}
-            <span className="font-display text-[32px] sm:text-[44px] lg:text-[50px] font-bold text-brand leading-[1.08] inline-block">
-              endless capabilities.
-            </span>
-          </h2>
-          <p className="text-sm sm:text-base text-ink-muted leading-relaxed">
-            All 6 specialized club apps connect to the same central database, ensuring zero spreadsheet discrepancies.
-          </p>
-        </div>
-
-        {/* 6 Clean Feature Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {/* Card 1: Events & Ticketing */}
-          <Link to="/events" className="group block">
-            <Card className="h-full hover:border-accent/40 transition-all p-7 space-y-4">
-              <div className="w-12 h-12 rounded-2xl bg-accent-50 border border-accent-200 flex items-center justify-center text-accent group-hover:scale-105 transition-transform">
-                <Calendar className="w-6 h-6" />
-              </div>
-              <div>
-                <h3 className="text-[20px] font-semibold text-ink group-hover:text-accent transition-colors">
-                  Events & Ticketing
-                </h3>
-                <p className="text-sm text-ink-muted mt-1 leading-relaxed">
-                  Publish campus galas and speaker sessions. Enforce capacity limits under concurrency and provide instant digital passes.
-                </p>
-              </div>
-              <div className="flex items-center gap-1.5 text-xs font-semibold text-accent pt-2">
-                <span>Browse galas & tickets</span>
-                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-              </div>
-            </Card>
-          </Link>
-
-          {/* Card 2: Club Membership System */}
-          <Link to="/members" className="group block">
-            <Card className="h-full hover:border-brand/40 transition-all p-7 space-y-4">
-              <div className="w-12 h-12 rounded-2xl bg-brand-50 border border-brand-200 flex items-center justify-center text-brand group-hover:scale-105 transition-transform">
-                <Users className="w-6 h-6" />
-              </div>
-              <div>
-                <h3 className="text-lg font-bold text-ink group-hover:text-brand transition-colors">
-                  Membership & Dues
-                </h3>
-                <p className="text-sm text-ink-muted mt-1 leading-relaxed">
-                  Bronze, Silver, and Gold membership tiers with automatic ticket discounts, verified student IDs, and member portals.
-                </p>
-              </div>
-              <div className="flex items-center gap-1.5 text-xs font-semibold text-brand pt-2">
-                <span>View membership plans</span>
-                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-              </div>
-            </Card>
-          </Link>
-
-          {/* Card 3: Club Merchandise Store */}
-          <Link to="/store" className="group block">
-            <Card className="h-full hover:border-amber-400/40 transition-all p-7 space-y-4">
-              <div className="w-12 h-12 rounded-2xl bg-amber-50 border border-amber-200 flex items-center justify-center text-amber-600 group-hover:scale-105 transition-transform">
-                <ShoppingBag className="w-6 h-6" />
-              </div>
-              <div>
-                <h3 className="text-lg font-bold text-ink group-hover:text-amber-600 transition-colors">
-                  Merch Store & Checkout
-                </h3>
-                <p className="text-sm text-ink-muted mt-1 leading-relaxed">
-                  Official Skyline hoodies, shirts, and stickers. Complete with cart drawer, stock deduction, and order receipts.
-                </p>
-              </div>
-              <div className="flex items-center gap-1.5 text-xs font-semibold text-amber-600 pt-2">
-                <span>Shop club apparel</span>
-                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-              </div>
-            </Card>
-          </Link>
-
-          {/* Card 4: Treasury & Finance Ledger */}
-          <Link to="/finance" className="group block">
-            <Card className="h-full hover:border-success-500/40 transition-all p-7 space-y-4">
-              <div className="w-12 h-12 rounded-2xl bg-success-50 border border-success-100 flex items-center justify-center text-success-600 group-hover:scale-105 transition-transform">
-                <DollarSign className="w-6 h-6" />
-              </div>
-              <div>
-                <h3 className="text-lg font-bold text-ink group-hover:text-success-600 transition-colors">
-                  Treasury & Accounting
-                </h3>
-                <p className="text-sm text-ink-muted mt-1 leading-relaxed">
-                  Single source of financial truth. Automatically audits ticket and merch revenue against volunteer expense claims.
-                </p>
-              </div>
-              <div className="flex items-center gap-1.5 text-xs font-semibold text-success-600 pt-2">
-                <span>View executive ledger</span>
-                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-              </div>
-            </Card>
-          </Link>
-
-          {/* Card 5: Field QR Check-In Scanner */}
-          <Link to="/events/checkin" className="group block">
-            <Card className="h-full hover:border-brand/40 transition-all p-7 space-y-4">
-              <div className="w-12 h-12 rounded-2xl bg-purple-50 border border-purple-200 flex items-center justify-center text-brand group-hover:scale-105 transition-transform">
-                <ShieldCheck className="w-6 h-6" />
-              </div>
-              <div>
-                <h3 className="text-lg font-bold text-ink group-hover:text-brand transition-colors">
-                  Mobile Field Check-In
-                </h3>
-                <p className="text-sm text-ink-muted mt-1 leading-relaxed">
-                  Camera-based QR scanning directly from officer phones with instant sound chimes and live attendance counters.
-                </p>
-              </div>
-              <div className="flex items-center gap-1.5 text-xs font-semibold text-brand pt-2">
-                <span>Open gate scanner</span>
-                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-              </div>
-            </Card>
-          </Link>
-
-          {/* Card 6: Broadcast Announcements */}
-          <Link to="/announcements" className="group block">
-            <Card className="h-full hover:border-blue-400/40 transition-all p-7 space-y-4">
-              <div className="w-12 h-12 rounded-2xl bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-600 group-hover:scale-105 transition-transform">
-                <Megaphone className="w-6 h-6" />
-              </div>
-              <div>
-                <h3 className="text-lg font-bold text-ink group-hover:text-blue-600 transition-colors">
-                  Campus Broadcast Feed
-                </h3>
-                <p className="text-sm text-ink-muted mt-1 leading-relaxed">
-                  Official announcements, newsletters, and email mailing lists for keeping the university student body informed.
-                </p>
-              </div>
-              <div className="flex items-center gap-1.5 text-xs font-semibold text-blue-600 pt-2">
-                <span>Read announcements</span>
-                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-              </div>
-            </Card>
-          </Link>
-        </div>
-      </section>
-
-      {/* 3. BENEFITS & WORKFLOW SECTION */}
-      <section className="bg-white rounded-3xl border border-border p-8 sm:p-12 space-y-10 shadow-odoo-card">
-        <div className="text-center max-w-xl mx-auto space-y-2">
-          <Badge variant="accent">Simple Student Workflow</Badge>
-          <h2 className="text-2xl sm:text-3xl font-bold text-ink">
-            How Skyline Club works
-          </h2>
-          <p className="text-sm text-ink-muted">
-            Designed for frictionless student participation and stress-free officer administration.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
-          {/* Step 1 */}
-          <div className="space-y-3 p-5 rounded-2xl bg-canvas border border-border/70">
-            <div className="w-10 h-10 rounded-xl bg-accent text-white font-bold flex items-center justify-center text-sm shadow-sm mx-auto md:mx-0">
-              1
-            </div>
-            <h3 className="font-bold text-base text-ink">Join & Verify Membership</h3>
-            <p className="text-xs text-ink-muted leading-relaxed">
-              Create an account, select an annual tier, and receive a verified student ID badge that unlocks store and event discounts.
-            </p>
-          </div>
-
-          {/* Step 2 */}
-          <div className="space-y-3 p-5 rounded-2xl bg-canvas border border-border/70">
-            <div className="w-10 h-10 rounded-xl bg-brand text-white font-bold flex items-center justify-center text-sm shadow-sm mx-auto md:mx-0">
-              2
-            </div>
-            <h3 className="font-bold text-base text-ink">Purchase & Get Encrypted QR</h3>
-            <p className="text-xs text-ink-muted leading-relaxed">
-              Reserve gala seats in real time. Transactions are verified and a cryptographic QR pass is generated for quick door admission.
-            </p>
-          </div>
-
-          {/* Step 3 */}
-          <div className="space-y-3 p-5 rounded-2xl bg-canvas border border-border/70">
-            <div className="w-10 h-10 rounded-xl bg-odoo-teal text-white font-bold flex items-center justify-center text-sm shadow-sm mx-auto md:mx-0">
-              3
-            </div>
-            <h3 className="font-bold text-base text-ink">Transparent Campus Ledger</h3>
-            <p className="text-xs text-ink-muted leading-relaxed">
-              All revenue feeds into central double-entry ledger. Officers can review attendance rates and print audit reports instantly.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* 4. VERIFIED METRICS PROOF STRIP */}
-      <section className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
-        <div className="p-6 rounded-2xl bg-white border border-border shadow-odoo-card text-center space-y-1">
-          <span className="text-3xl sm:text-4xl font-black text-accent tracking-tight block">
-            100%
-          </span>
-          <span className="text-xs text-ink-muted font-medium">Real-Time DB Sync</span>
-        </div>
-
-        <div className="p-6 rounded-2xl bg-white border border-border shadow-odoo-card text-center space-y-1">
-          <span className="text-3xl sm:text-4xl font-black text-brand tracking-tight block">
-            0
-          </span>
-          <span className="text-xs text-ink-muted font-medium">Spreadsheet Collisions</span>
-        </div>
-
-        <div className="p-6 rounded-2xl bg-white border border-border shadow-odoo-card text-center space-y-1">
-          <span className="text-3xl sm:text-4xl font-black text-odoo-teal tracking-tight block">
-            6
-          </span>
-          <span className="text-xs text-ink-muted font-medium">Connected Modules</span>
-        </div>
-
-        <div className="p-6 rounded-2xl bg-white border border-border shadow-odoo-card text-center space-y-1">
-          <span className="text-3xl sm:text-4xl font-black text-ink tracking-tight block">
-            &lt; 3s
-          </span>
-          <span className="text-xs text-ink-muted font-medium">Gate QR Scan Time</span>
-        </div>
-      </section>
-
-      {/* 5. CLOSING CTA BANNER (Odoo Warm Clean Banner) */}
-      <section className="rounded-3xl bg-gradient-to-br from-[#FAF9F7] via-white to-[#F9F5F8] border border-border p-8 sm:p-14 text-center space-y-6 shadow-odoo-card">
-        <div className="max-w-2xl mx-auto space-y-3">
-          {/* Secondary script headline: 42–60px desktop and 30–40px mobile */}
-          <h2 className="font-display text-[32px] sm:text-[44px] lg:text-[52px] font-bold text-ink tracking-tight leading-[1.1]">
-            Ready to experience <span className="marker-highlight text-accent">effortless campus life?</span>
-          </h2>
-          <p className="text-sm sm:text-base text-ink-muted leading-relaxed">
-            Join thousands of Skyline students attending events, wearing official merch, and participating in club governance.
-          </p>
-        </div>
-
-        <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
-          <Link to="/events" className="w-full sm:w-auto">
-            <Button variant="primary" size="lg" className="w-full sm:w-auto px-8 font-semibold shadow-md">
-              View Events Schedule
-            </Button>
-          </Link>
-          {!isAuthenticated ? (
-            <Link to="/register" className="w-full sm:w-auto">
-              <Button variant="outline" size="lg" className="w-full sm:w-auto px-8 font-semibold">
-                Sign Up as Member
-              </Button>
-            </Link>
-          ) : (
-            <Link to="/members" className="w-full sm:w-auto">
-              <Button variant="outline" size="lg" className="w-full sm:w-auto px-8 font-semibold">
-                My Membership
-              </Button>
-            </Link>
           )}
         </div>
       </section>
+
+      {/* 3. FOUR CORE MODULE PILLARS (Clean Minimalist Cards) */}
+      <section className="max-w-6xl mx-auto px-4 sm:px-6">
+        <div className="text-center max-w-xl mx-auto mb-12 space-y-2">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-[#0F172A] tracking-tight">
+            Designed for seamless campus governance
+          </h2>
+          <p className="text-sm text-[#64748B]">
+            Four core engines working together in one unified student organization system.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          {/* Pillar 1: Events */}
+          <Link
+            to="/events"
+            className="group p-6 rounded-3xl bg-white border border-slate-200/80 shadow-once-card hover:shadow-once-card-hover hover:border-sky-300 transition-all flex flex-col justify-between"
+          >
+            <div className="space-y-3">
+              <div className="w-10 h-10 rounded-2xl bg-sky-50 text-sky-600 flex items-center justify-center font-bold">
+                <Calendar className="w-5 h-5" />
+              </div>
+              <h3 className="text-base font-bold text-[#0F172A] group-hover:text-sky-600 transition-colors">
+                Events & Ticketing
+              </h3>
+              <p className="text-xs text-[#64748B] leading-relaxed">
+                Live seat availability, member discount pricing, and dynamic QR door check-in.
+              </p>
+            </div>
+            <div className="pt-4 flex items-center text-xs font-semibold text-sky-600 group-hover:translate-x-0.5 transition-transform">
+              <span>Browse Galas</span>
+              <ArrowRight className="w-3.5 h-3.5 ml-1" />
+            </div>
+          </Link>
+
+          {/* Pillar 2: Finance */}
+          <Link
+            to="/finance"
+            className="group p-6 rounded-3xl bg-white border border-slate-200/80 shadow-once-card hover:shadow-once-card-hover hover:border-emerald-300 transition-all flex flex-col justify-between"
+          >
+            <div className="space-y-3">
+              <div className="w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold">
+                <DollarSign className="w-5 h-5" />
+              </div>
+              <h3 className="text-base font-bold text-[#0F172A] group-hover:text-emerald-600 transition-colors">
+                Treasury Ledger
+              </h3>
+              <p className="text-xs text-[#64748B] leading-relaxed">
+                Immutable double-entry book-keeping with officer receipt approvals.
+              </p>
+            </div>
+            <div className="pt-4 flex items-center text-xs font-semibold text-emerald-600 group-hover:translate-x-0.5 transition-transform">
+              <span>View Financials</span>
+              <ArrowRight className="w-3.5 h-3.5 ml-1" />
+            </div>
+          </Link>
+
+          {/* Pillar 3: Members */}
+          <Link
+            to="/members"
+            className="group p-6 rounded-3xl bg-white border border-slate-200/80 shadow-once-card hover:shadow-once-card-hover hover:border-indigo-300 transition-all flex flex-col justify-between"
+          >
+            <div className="space-y-3">
+              <div className="w-10 h-10 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold">
+                <Users className="w-5 h-5" />
+              </div>
+              <h3 className="text-base font-bold text-[#0F172A] group-hover:text-indigo-600 transition-colors">
+                Membership Passes
+              </h3>
+              <p className="text-xs text-[#64748B] leading-relaxed">
+                Tiered membership benefits, 15% merch discounts, and cryptographic digital IDs.
+              </p>
+            </div>
+            <div className="pt-4 flex items-center text-xs font-semibold text-indigo-600 group-hover:translate-x-0.5 transition-transform">
+              <span>Join or Verify</span>
+              <ArrowRight className="w-3.5 h-3.5 ml-1" />
+            </div>
+          </Link>
+
+          {/* Pillar 4: Merch Store */}
+          <Link
+            to="/store"
+            className="group p-6 rounded-3xl bg-white border border-slate-200/80 shadow-once-card hover:shadow-once-card-hover hover:border-amber-300 transition-all flex flex-col justify-between"
+          >
+            <div className="space-y-3">
+              <div className="w-10 h-10 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center font-bold">
+                <ShoppingBag className="w-5 h-5" />
+              </div>
+              <h3 className="text-base font-bold text-[#0F172A] group-hover:text-amber-600 transition-colors">
+                Merchandise Store
+              </h3>
+              <p className="text-xs text-[#64748B] leading-relaxed">
+                Official hoodies, shirts and stickers with per-size inventory tracking.
+              </p>
+            </div>
+            <div className="pt-4 flex items-center text-xs font-semibold text-amber-600 group-hover:translate-x-0.5 transition-transform">
+              <span>Explore Merch</span>
+              <ArrowRight className="w-3.5 h-3.5 ml-1" />
+            </div>
+          </Link>
+        </div>
+      </section>
+
+      {/* 4. CALL TO ACTION WELL */}
+      <section className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+        <div className="p-8 sm:p-12 rounded-3xl bg-slate-50 border border-slate-200/80 space-y-4">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-[#0F172A] tracking-tight">
+            Ready to participate in campus life?
+          </h2>
+          <p className="text-sm text-[#64748B] max-w-lg mx-auto">
+            Create your member account in less than 30 seconds to join committees, unlock event discounts, and connect with fellow students.
+          </p>
+          <div className="pt-2 flex flex-wrap justify-center gap-3">
+            <Link to="/register">
+              <Button variant="primary" size="lg" className="bg-[#0F172A] hover:bg-slate-800 text-white rounded-full font-bold px-7">
+                Get Started Today
+              </Button>
+            </Link>
+            <Link to="/events">
+              <Button variant="outline" size="lg" className="border-slate-300 text-[#0F172A] hover:bg-white rounded-full px-7">
+                View Upcoming Events
+              </Button>
+            </Link>
+          </div>
         </div>
       </section>
     </div>

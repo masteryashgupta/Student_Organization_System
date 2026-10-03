@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Inter:wght@400;500;600;700&family=Kalam:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,144 +6,111 @@
 
 @layer base {
   :root {
-    --canvas-bg: #FAF9F7;
-    --text-main: #222222;
-    --text-muted: #66636A;
-    --border-subtle: #E9E7E5;
-    --section-muted: #F6F5F4;
-    --accent: #F15A4A;
-    --accent-hover: #D94535;
-    --brand-plum: #714B67;
+    --canvas-bg: #FFFFFF;
+    --text-main: #0F172A;
+    --text-muted: #64748B;
+    --border-subtle: #E2E8F0;
+    --accent: #0EA5E9;
+    --accent-hover: #0284C7;
   }
 
   body {
-    background-color: var(--canvas-bg);
+    background-color: #FFFFFF;
+    background-image: radial-gradient(circle at 50% 0%, #D6F1FA 0%, #EBF8FD 28%, #F8FCFD 50%, #FFFFFF 85%);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     color: var(--text-main);
-    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-family: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     min-height: 100vh;
   }
 
   body::selection {
-    background-color: var(--accent);
+    background-color: #0EA5E9;
     color: #ffffff;
   }
 
   h1, h2, h3, h4, h5, h6 {
     color: var(--text-main);
-    letter-spacing: -0.025em;
-    font-weight: 600;
+    letter-spacing: -0.03em;
+    font-weight: 700;
   }
 }
 
-@font-face {
-  font-family: 'Caveat';
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url('/fonts/caveat-700-3.woff2') format('woff2'),
-       url('https://fonts.gstatic.com/s/caveat/v23/WnznHAc5bAfYB2QRah7pcpNvOx-pjRV6eIWpYQ.woff2') format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+/* Once UI Floating Pill Navigation */
+.pill-navbar {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05), 0 2px 6px -1px rgba(0, 0, 0, 0.02);
 }
 
-@font-face {
-  font-family: 'Kalam';
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url('/fonts/kalam-700-2.woff2') format('woff2'),
-       url('https://fonts.gstatic.com/s/kalam/v16/YA9dr0WUnJr5-5kmpDrjQ-A.woff2') format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-
-.font-odoo-script,
-.font-display,
-.font-script {
-  font-family: 'Caveat', cursive !important;
-  font-weight: 700 !important;
-  letter-spacing: normal !important;
-}
-
-/* Exact Odoo-style SVG marker highlights */
-.odoo-yellow-highlight,
-.x_wd_yellow_highlight_bold_05 {
-  background-image: url("/img/yellow_highlight.svg");
-  background-position: center 60%;
-  background-repeat: no-repeat;
-  background-size: 100% 90%;
-  white-space: nowrap;
-  display: inline-block;
-  padding: 0 12px;
-  color: #222222;
-}
-
-.odoo-blue-underline,
-.x_wd_blue_highlight_01 {
-  background-image: url("/img/blue_underline.svg");
-  background-position: center bottom;
-  background-repeat: no-repeat;
-  background-size: 100% 28%;
-  white-space: nowrap;
-  display: inline-block;
-  padding-bottom: 8px;
-}
-
-/* Backward-compatible highlights */
-.marker-highlight {
-  position: relative;
-  display: inline-block;
-  white-space: nowrap;
-}
-
-.marker-highlight::after {
-  content: "";
-  position: absolute;
-  left: -8px;
-  right: -8px;
-  bottom: 8%;
-  height: 40%;
-  background-color: rgba(241, 90, 74, 0.22);
-  border-radius: 6px;
-  z-index: -1;
-  transform: rotate(-1.2deg);
-}
-
-.marker-highlight-yellow {
-  position: relative;
-  display: inline-block;
-  white-space: nowrap;
-  color: #222222;
-  z-index: 1;
-  padding: 0 6px;
-}
-
-.marker-highlight-yellow::before {
-  content: "";
-  position: absolute;
-  top: 8%;
-  left: -8px;
-  right: -10px;
-  bottom: 8%;
-  background-color: #F8B500;
-  border-radius: 14px 18px 12px 20px;
-  transform: rotate(-0.9deg);
-  z-index: -1;
-}
-
-/* Clean, modern scrollbar matching warm canvas */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-::-webkit-scrollbar-track {
-  background: #F6F5F4;
-}
-::-webkit-scrollbar-thumb {
-  background: #D1CECA;
+/* Once UI Dual Badge Pill */
+.dual-badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   border-radius: 9999px;
-  border: 2px solid #F6F5F4;
+  background-color: rgba(224, 242, 254, 0.75);
+  border: 1px solid rgba(186, 230, 253, 0.85);
+  color: #0369A1;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  padding: 5px 14px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+  transition: all 0.2s ease;
 }
-::-webkit-scrollbar-thumb:hover {
-  background: #B4B0AA;
+
+.dual-badge-pill:hover {
+  background-color: rgba(224, 242, 254, 0.95);
+  border-color: rgba(125, 211, 252, 0.9);
+}
+
+.dual-badge-divider {
+  width: 1px;
+  height: 12px;
+  background-color: rgba(14, 165, 233, 0.35);
+}
+
+/* Entity / Avatar Link Pill */
+.avatar-link-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: 9999px;
+  background-color: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  color: #0F172A;
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 5px 16px 5px 6px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  transition: all 0.2s ease;
+}
+
+.avatar-link-pill:hover {
+  border-color: #CBD5E1;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  transform: translateY(-1px);
+}
+
+/* Once UI Dark Showcase Container */
+.showcase-dark-frame {
+  background: #090D16;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 28px;
+  box-shadow: 0 25px 60px -15px rgba(15, 23, 42, 0.45);
+}
+
+@media (min-width: 640px) {
+  .showcase-dark-frame {
+    border-radius: 36px;
+  }
+}
+
+/* Smooth micro-transitions */
+button, a {
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
 }
