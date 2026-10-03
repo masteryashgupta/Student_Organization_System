@@ -1,15 +1,18 @@
 from datetime import timedelta
 from django.utils import timezone
+from django.contrib.auth import get_user_model
 from rest_framework import generics, permissions, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from accounts.permissions import IsOfficer
 from core.services import record_transaction
 from .models import MembershipTier, Membership
+from .services import generate_member_qr_data_url
 from .serializers import (
     MembershipTierSerializer,
     MembershipSerializer,
     MemberDiscountContractSerializer,
+    MemberVerifyResponseSerializer,
     PayDuesSerializer,
 )
 
@@ -105,6 +108,136 @@ class MyMembershipDiscountView(APIView):
         serializer = MemberDiscountContractSerializer(data=data)
         serializer.is_valid(raise_exception=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class MemberVerifyView(APIView):
+    """
+    GET /api/members/verify?query=<email-or-id>
+    Officer-only verification endpoint for verifying members at the door.
+    Accepts:
+      - Email address (exact or substring)
+      - Member ID or User ID (numeric)
+      - Username
+      - QR verification token
+    Returns membership status, tier, discounts, remaining days, and QR code.
+    Validates and handles 'not found' gracefully.
+    """
+    permission_classes = [IsOfficer]
+
+    def get(self, request):
+        query = request.query_params.get('query', '').strip()
+        if not query:
+            return Response(
+                {"detail": "Query parameter 'query' is required (email, ID, or QR token)."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        User = get_user_model()
+        membership = None
+
+        # 1. Match by QR verification token
+        membership = Membership.objects.select_related('user', 'tier').filter(verification_token__iexact=query).first()
+
+        # 2. Match by integer ID (Membership ID or User ID)
+        if not membership and query.isdigit():
+            query_int = int(query)
+            membership = (
+                Membership.objects.select_related('user', 'tier').filter(id=query_int).first() or
+                Membership.objects.select_related('user', 'tier').filter(user__id=query_int).first()
+            )
+
+        # 3. Match by exact email
+        if not membership:
+            membership = Membership.objects.select_related('user', 'tier').filter(user__email__iexact=query).first()
+
+        # 4. Match by exact username
+        if not membership:
+            membership = Membership.objects.select_related('user', 'tier').filter(user__username__iexact=query).first()
+
+        # 5. Fallback: match by substring in email or name
+        if not membership:
+            membership = (
+                Membership.objects.select_related('user', 'tier').filter(user__email__icontains=query).first() or
+                Membership.objects.select_related('user', 'tier').filter(user__name__icontains=query).first()
+            )
+
+        if membership:
+            is_active = membership.is_active_member
+            user = membership.user
+            tier = membership.tier
+            qr_data_url = generate_member_qr_data_url(membership.verification_token)
+
+            data = {
+                "found": True,
+                "is_active_member": is_active,
+                "member_id": membership.id,
+                "user_id": user.id,
+                "name": getattr(user, 'name', '') or user.username,
+                "email": user.email,
+                "role": user.role,
+                "tier": tier.name if tier else None,
+                "tier_details": MembershipTierSerializer(tier).data if tier else None,
+                "status": membership.status,
+                "status_display": membership.get_status_display(),
+                "start_date": membership.start_date,
+                "end_date": membership.end_date,
+                "expires_on": membership.end_date if is_active else None,
+                "days_until_expiry": membership.days_until_expiry if is_active else 0,
+                "dues_paid": membership.dues_paid,
+                "token": membership.verification_token,
+                "qr_code": qr_data_url,
+                "ticket_discount_pct": tier.ticket_discount_pct if (tier and is_active) else 0.00,
+                "merch_discount_pct": tier.merch_discount_pct if (tier and is_active) else 0.00,
+                "message": "Active member verified." if is_active else f"Membership is currently {membership.get_status_display().lower()}."
+            }
+            serializer = MemberVerifyResponseSerializer(data)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+
+        # If no membership was found, check if a registered user exists without membership
+        user_candidate = None
+        if query.isdigit():
+            user_candidate = User.objects.filter(id=int(query)).first()
+        if not user_candidate:
+            user_candidate = (
+                User.objects.filter(email__iexact=query).first() or
+                User.objects.filter(username__iexact=query).first() or
+                User.objects.filter(email__icontains=query).first() or
+                User.objects.filter(name__icontains=query).first()
+            )
+
+        if user_candidate:
+            data = {
+                "found": True,
+                "is_active_member": False,
+                "member_id": None,
+                "user_id": user_candidate.id,
+                "name": getattr(user_candidate, 'name', '') or user_candidate.username,
+                "email": user_candidate.email,
+                "role": user_candidate.role,
+                "tier": None,
+                "tier_details": None,
+                "status": "no_membership",
+                "status_display": "No Membership",
+                "start_date": None,
+                "end_date": None,
+                "expires_on": None,
+                "days_until_expiry": 0,
+                "dues_paid": False,
+                "token": None,
+                "qr_code": None,
+                "ticket_discount_pct": 0.00,
+                "merch_discount_pct": 0.00,
+                "message": "User exists in system but has no membership recorded."
+            }
+            serializer = MemberVerifyResponseSerializer(data)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+        # Neither membership nor user found
+        return Response(
+            {"detail": f"No member or user found matching '{query}'."},
+            status=status.HTTP_404_NOT_FOUND
+        )
 
 
 class ExpiringMembershipsView(generics.ListAPIView):
@@ -228,3 +361,4 @@ class PayDuesView(APIView):
             },
             status=status.HTTP_200_OK
         )
+
