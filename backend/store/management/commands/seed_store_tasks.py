@@ -42,14 +42,14 @@ class Command(BaseCommand):
                 self.stdout.write(self.style.SUCCESS(f"  + Created user: {user.username} ({user.role})"))
             users[ud["username"]] = user
 
-        # 2. Seed Merchandise Products & Granular Sizes
+        # 2. Seed Merchandise Products & Granular Sizes with Dedicated Studio Assets
         products_data = [
             {
                 "name": "Skyline Club Heavyweight Hoodie",
                 "type": Product.TYPE_HOODIE,
                 "price": Decimal("45.00"),
                 "description": "Premium 450 GSM organic French terry fleece hoodie with embroidered Skyline Club crest on the chest. Pre-shrunk, relaxed fit with double-lined hood.",
-                "image": "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=800&auto=format&fit=crop&q=60",
+                "image": "/merch/hoodie.jpg",
                 "is_active": True,
                 "variants": [
                     {"size": "S", "stock_qty": 15, "sku": "SKY-HD-S"},
@@ -64,7 +64,7 @@ class Command(BaseCommand):
                 "type": Product.TYPE_TEE,
                 "price": Decimal("22.00"),
                 "description": "100% GOTS-certified ring-spun organic cotton. Features minimalist Skyline script embroidery on the left chest and subtle hem label.",
-                "image": "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=800&auto=format&fit=crop&q=60",
+                "image": "/merch/tee.jpg",
                 "is_active": True,
                 "variants": [
                     {"size": "XS", "stock_qty": 25, "sku": "SKY-TEE-XS"},
@@ -79,7 +79,7 @@ class Command(BaseCommand):
                 "type": Product.TYPE_CAP,
                 "price": Decimal("18.00"),
                 "description": "Retro 6-panel unstructured cap in soft wide-wale corduroy. Brass buckle strap closure and custom tonal embroidery.",
-                "image": "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=800&auto=format&fit=crop&q=60",
+                "image": "/merch/cap.jpg",
                 "is_active": True,
                 "variants": [
                     {"size": "One Size", "stock_qty": 22, "sku": "SKY-CAP-OS"},
@@ -90,7 +90,7 @@ class Command(BaseCommand):
                 "type": Product.TYPE_STICKER,
                 "price": Decimal("5.00"),
                 "description": "Set of 5 weatherproof, UV-resistant vinyl stickers with rainbow holographic finish. Perfect for laptops, hydro flasks, and notebooks.",
-                "image": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&auto=format&fit=crop&q=60",
+                "image": "/merch/stickers.jpg",
                 "is_active": True,
                 "variants": [
                     {"size": "One Size", "stock_qty": 60, "sku": "SKY-STK-PK5"},
@@ -101,10 +101,21 @@ class Command(BaseCommand):
                 "type": Product.TYPE_ACCESSORY,
                 "price": Decimal("24.00"),
                 "description": "Double-wall vacuum insulated 24oz water bottle with laser-engraved Skyline Club logo. Keeps drinks ice cold for 24h or hot for 12h.",
-                "image": "https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=800&auto=format&fit=crop&q=60",
+                "image": "/merch/bottle.jpg",
                 "is_active": True,
                 "variants": [
                     {"size": "One Size", "stock_qty": 2, "sku": "SKY-BOT-24"}, # Low stock alert (<=5)
+                ],
+            },
+            {
+                "name": "Skyline Heavyweight Canvas Tote Bag",
+                "type": Product.TYPE_ACCESSORY,
+                "price": Decimal("16.00"),
+                "description": "Durable 100% organic cotton 12oz canvas tote bag with reinforced handles and official Skyline Club Campus Store badge screenprint.",
+                "image": "/merch/tote.jpg",
+                "is_active": True,
+                "variants": [
+                    {"size": "One Size", "stock_qty": 35, "sku": "SKY-TOT-OS"},
                 ],
             },
         ]
@@ -121,9 +132,18 @@ class Command(BaseCommand):
                     "is_active": p_data["is_active"],
                 }
             )
+            # Ensure images and descriptions stay updated
+            if not p_created:
+                product.image = p_data["image"]
+                product.description = p_data["description"]
+                product.price = p_data["price"]
+                product.type = p_data["type"]
+                product.is_active = p_data["is_active"]
+                product.save()
+
             created_products[product.name] = product
-            action_str = "Created" if p_created else "Found"
-            self.stdout.write(self.style.SUCCESS(f"  + {action_str} product: {product.name} (${product.price})"))
+            action_str = "Created" if p_created else "Updated"
+            self.stdout.write(self.style.SUCCESS(f"  + {action_str} product: {product.name} (${product.price}) -> {product.image}"))
 
             # Create or update variants
             for v_data in p_data["variants"]:

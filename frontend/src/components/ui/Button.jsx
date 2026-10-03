@@ -11,7 +11,7 @@ export function Button({
   onClick,
   ...props
 }) {
-  const baseStyles = 'inline-flex items-center justify-center font-medium transition-all duration-150 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 disabled:opacity-50 disabled:cursor-not-allowed';
+  const baseStyles = 'inline-flex items-center justify-center font-medium transition-all duration-150 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap flex-shrink-0';
 
   const variants = {
     primary: 'bg-[#0F172A] dark:bg-slate-800 hover:bg-slate-800 dark:hover:bg-slate-700 text-white shadow-sm hover:shadow active:scale-[0.99] border border-slate-900 dark:border-slate-700',
@@ -25,8 +25,8 @@ export function Button({
 
   const sizes = {
     sm: 'text-xs px-3.5 py-1.5 gap-1.5 font-semibold',
-    md: 'text-sm px-4.5 py-2 gap-2 font-semibold',
-    lg: 'text-base px-6 py-2.5 gap-2.5 font-bold',
+    md: 'text-sm px-5 py-2 gap-2 font-semibold',
+    lg: 'text-base px-6 py-3 gap-2.5 font-bold',
   };
 
   return (
