@@ -444,8 +444,7 @@ export default function EventFormPage() {
                 >
                   <option value="draft">Draft (Visible to officers only)</option>
                   <option value="published">Published (Open for ticket purchases)</option>
-                  <option value="cancelled">Cancelled (Closed with refund notice)</option>
-                  <option value="completed">Completed (Event finished)</option>
+                  <option value="closed">Closed (Event concluded or sales ended)</option>
                 </select>
                 <span className="text-[11px] text-slate-500 block">
                   Only 'Published' events appear in the active member ticket directory.
