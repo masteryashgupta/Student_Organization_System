@@ -25,10 +25,15 @@ export default function MemberListPage() {
   const [processingPayment, setProcessingPayment] = useState(false);
 
   useEffect(() => {
-    fetchMembers();
-  }, [statusFilter]);
+    if (isOfficer) {
+      fetchMembers();
+    } else {
+      setLoading(false);
+    }
+  }, [statusFilter, isOfficer]);
 
   const fetchMembers = async (searchQuery = search) => {
+    if (!isOfficer) return;
     try {
       setLoading(true);
       const params = {};
@@ -40,11 +45,19 @@ export default function MemberListPage() {
       setMembers(data);
     } catch (err) {
       console.error('Failed to fetch members:', err);
-      addToast({
-        title: 'Error Loading Members',
-        description: 'Failed to retrieve membership records from server.',
-        variant: 'danger',
-      });
+      if (err.response?.status === 403) {
+        addToast({
+          title: 'Access Restricted',
+          description: 'Officer permissions are required to view the member directory.',
+          variant: 'warning',
+        });
+      } else {
+        addToast({
+          title: 'Error Loading Members',
+          description: err.response?.data?.message || 'Failed to retrieve membership records from server.',
+          variant: 'danger',
+        });
+      }
     } finally {
       setLoading(false);
     }
