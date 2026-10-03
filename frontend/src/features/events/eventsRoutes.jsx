@@ -1,12 +1,21 @@
 import React from 'react';
 import EventsListPage from './EventsListPage';
 import EventDetailPage from './EventDetailPage';
+import EventCheckInPage from './EventCheckInPage';
 import { registerFeature } from '../../app/routeRegistry';
 
 const eventsRoutes = [
   {
     path: '/events',
     element: <EventsListPage />,
+  },
+  {
+    path: '/events/checkin',
+    element: <EventCheckInPage />,
+  },
+  {
+    path: '/events/:id/checkin',
+    element: <EventCheckInPage />,
   },
   {
     path: '/events/:id',
@@ -22,6 +31,11 @@ registerFeature({
     {
       path: '/events',
       label: 'Events',
+    },
+    {
+      path: '/events/checkin',
+      label: 'Ticket Check-In',
+      officerOnly: true,
     },
   ],
 });

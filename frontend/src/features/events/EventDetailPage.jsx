@@ -35,7 +35,7 @@ export default function EventDetailPage() {
   const { id } = useParams();
   const queryClient = useQueryClient();
   const toast = useToast();
-  const { user, isAuthenticated } = useAuth();
+  const { user, isAuthenticated, isOfficer } = useAuth();
 
   // Purchased ticket result state
   const [purchasedTicket, setPurchasedTicket] = useState(null);
@@ -339,9 +339,19 @@ export default function EventDetailPage() {
           <Card className="bg-surface-900/80 border-slate-800 overflow-hidden shadow-2xl">
             <div className="p-8 sm:p-10 space-y-6">
               <div className="flex flex-wrap items-center justify-between gap-3">
-                <Badge variant={event.status === 'published' ? 'success' : 'warning'} size="md">
-                  {event.status === 'published' ? 'Registration Open' : event.status}
-                </Badge>
+                <div className="flex items-center gap-3">
+                  <Badge variant={event.status === 'published' ? 'success' : 'warning'} size="md">
+                    {event.status === 'published' ? 'Registration Open' : event.status}
+                  </Badge>
+                  {isOfficer && (
+                    <Link to={`/events/${event.id}/checkin`}>
+                      <Button variant="outline" size="sm" className="h-7 text-xs border-amber-500/40 text-amber-300 hover:bg-amber-500/10">
+                        <ShieldCheck className="w-3.5 h-3.5 mr-1" />
+                        Gate Check-In
+                      </Button>
+                    </Link>
+                  )}
+                </div>
                 <div className="flex items-center gap-2 text-xs text-slate-400">
                   <Clock className="w-3.5 h-3.5" />
                   <span>Added {new Date(event.created_at).toLocaleDateString()}</span>
