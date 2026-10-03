@@ -1,8 +1,39 @@
+import io
+import base64
 import uuid
 from decimal import Decimal
+import qrcode
 from django.db import transaction
 from rest_framework.exceptions import ValidationError
 from .models import Event, Ticket
+
+
+def generate_ticket_qr_bytes(token: str) -> bytes:
+    """
+    Generates a PNG image of a QR code encoding the ticket UUID token.
+    """
+    qr = qrcode.QRCode(
+        version=1,
+        error_correction=qrcode.constants.ERROR_CORRECT_M,
+        box_size=10,
+        border=4,
+    )
+    qr.add_data(str(token))
+    qr.make(fit=True)
+    img = qr.make_image(fill_color="black", back_color="white")
+    buffer = io.BytesIO()
+    img.save(buffer, format="PNG")
+    return buffer.getvalue()
+
+
+def generate_ticket_qr_data_url(token: str) -> str:
+    """
+    Generates a base64 Data URL string of the ticket QR code.
+    Format: data:image/png;base64,...
+    """
+    raw_bytes = generate_ticket_qr_bytes(token)
+    encoded = base64.b64encode(raw_bytes).decode('utf-8')
+    return f"data:image/png;base64,{encoded}"
 
 
 def get_event_availability(event: Event) -> dict:

@@ -370,3 +370,64 @@ class TicketPurchaseTests(APITestCase):
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
         self.assertEqual(Decimal(str(res.data['price_paid'])), Decimal('0.00'))
 
+
+class TicketQRTests(APITestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(
+            username='charlie',
+            email='charlie@skyline.edu',
+            password='password123',
+            name='Charlie Day',
+            role=User.ROLE_MEMBER
+        )
+        self.event = Event.objects.create(
+            title='Spring Gala 2026',
+            description='Annual spring gala dinner and dance.',
+            datetime=timezone.now() + timedelta(days=14),
+            venue='Skyline Grand Ballroom',
+            capacity=50,
+            member_price=Decimal('15.00'),
+            nonmember_price=Decimal('25.00'),
+            status=Event.STATUS_PUBLISHED
+        )
+        self.ticket = Ticket.objects.create(
+            event=self.event,
+            holder=self.user,
+            holder_name='Charlie Day',
+            holder_email='charlie@skyline.edu',
+            type=Ticket.TYPE_MEMBER,
+            price_paid=Decimal('15.00'),
+            status=Ticket.STATUS_VALID
+        )
+
+    def test_purchase_response_includes_token_and_qr_urls(self):
+        res = self.client.post(
+            f'/api/events/{self.event.id}/tickets/',
+            {'holder_name': 'Dana Guest', 'holder_email': 'dana@external.org'}
+        )
+        self.assertEqual(res.status_code, status.HTTP_201_CREATED)
+        self.assertIn('token', res.data)
+        self.assertIn('qr_code_url', res.data)
+        self.assertIn('qr_code_data_url', res.data)
+        self.assertEqual(res.data['qr_code_url'], f"/api/tickets/{res.data['token']}/qr")
+        self.assertTrue(res.data['qr_code_data_url'].startswith('data:image/png;base64,'))
+
+    def test_get_ticket_qr_png_success(self):
+        res = self.client.get(f'/api/tickets/{self.ticket.token}/qr/')
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertEqual(res['Content-Type'], 'image/png')
+        # Check PNG header signature bytes
+        self.assertTrue(res.content.startswith(b'\x89PNG\r\n\x1a\n'))
+
+    def test_get_ticket_qr_data_url_json_success(self):
+        res = self.client.get(f'/api/tickets/{self.ticket.token}/qr/?output=data_url')
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertIn('token', res.data)
+        self.assertIn('qr_code', res.data)
+        self.assertTrue(res.data['qr_code'].startswith('data:image/png;base64,'))
+
+    def test_get_ticket_qr_invalid_token_returns_404(self):
+        res = self.client.get('/api/tickets/00000000-0000-0000-0000-000000000000/qr/')
+        self.assertEqual(res.status_code, status.HTTP_404_NOT_FOUND)
+
+

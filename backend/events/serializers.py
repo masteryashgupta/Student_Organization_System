@@ -58,6 +58,8 @@ class EventSerializer(serializers.ModelSerializer):
 
 class TicketSerializer(serializers.ModelSerializer):
     event_title = serializers.CharField(source='event.title', read_only=True)
+    qr_code_url = serializers.SerializerMethodField(read_only=True)
+    qr_code_data_url = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = Ticket
@@ -71,12 +73,21 @@ class TicketSerializer(serializers.ModelSerializer):
             'type',
             'price_paid',
             'token',
+            'qr_code_url',
+            'qr_code_data_url',
             'status',
             'checked_in_at',
             'created_at',
             'updated_at',
         ]
-        read_only_fields = ['id', 'token', 'created_at', 'updated_at']
+        read_only_fields = ['id', 'token', 'qr_code_url', 'qr_code_data_url', 'created_at', 'updated_at']
+
+    def get_qr_code_url(self, obj):
+        return f"/api/tickets/{obj.token}/qr"
+
+    def get_qr_code_data_url(self, obj):
+        from .services import generate_ticket_qr_data_url
+        return generate_ticket_qr_data_url(str(obj.token))
 
 
 class TicketPurchaseSerializer(serializers.Serializer):

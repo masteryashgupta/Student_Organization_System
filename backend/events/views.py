@@ -1,14 +1,21 @@
+from django.http import HttpResponse
 from rest_framework import viewsets, permissions, status
+from rest_framework.views import APIView
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from .models import Event
+from .models import Event, Ticket
 from .serializers import (
     EventSerializer,
     EventAvailabilitySerializer,
     TicketSerializer,
     TicketPurchaseSerializer,
 )
-from .services import get_event_availability, purchase_ticket
+from .services import (
+    get_event_availability,
+    purchase_ticket,
+    generate_ticket_qr_bytes,
+    generate_ticket_qr_data_url,
+)
 
 
 class EventViewSet(viewsets.ModelViewSet):
@@ -71,3 +78,29 @@ class EventViewSet(viewsets.ModelViewSet):
         )
 
         return Response(TicketSerializer(ticket).data, status=status.HTTP_201_CREATED)
+
+
+class TicketQRView(APIView):
+    """
+    GET /api/tickets/{token}/qr
+    Returns a PNG image of the ticket QR code (or JSON data URL if requested).
+    """
+    permission_classes = [permissions.AllowAny]
+
+    def get(self, request, token):
+        try:
+            ticket = Ticket.objects.get(token=token)
+        except (Ticket.DoesNotExist, ValueError):
+            return Response(
+                {"detail": "Ticket with specified token not found."},
+                status=status.HTTP_404_NOT_FOUND
+            )
+
+        output_param = request.query_params.get('output', '').lower()
+        if output_param in ('json', 'data_url'):
+            data_url = generate_ticket_qr_data_url(str(ticket.token))
+            return Response({"token": str(ticket.token), "qr_code": data_url}, status=status.HTTP_200_OK)
+
+        # Default: return raw PNG image
+        image_bytes = generate_ticket_qr_bytes(str(ticket.token))
+        return HttpResponse(image_bytes, content_type="image/png")
