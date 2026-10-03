@@ -1,4 +1,7 @@
+from decimal import Decimal
 from rest_framework import serializers
+from core.models import Transaction
+from .models import Reimbursement, validate_receipt_file
 
 
 class FinanceSummaryFilterSerializer(serializers.Serializer):
@@ -42,3 +45,121 @@ class FinanceSummaryResponseSerializer(serializers.Serializer):
     end_date = serializers.DateField(required=False, allow_null=True)
     breakdown = CategorySummarySerializer(many=True)
     by_category = serializers.DictField(child=serializers.DictField())
+
+
+class FinanceTransactionSerializer(serializers.ModelSerializer):
+    category_display = serializers.CharField(source='get_category_display', read_only=True)
+    type_display = serializers.CharField(source='get_type_display', read_only=True)
+
+    class Meta:
+        model = Transaction
+        fields = [
+            'id',
+            'type',
+            'type_display',
+            'category',
+            'category_display',
+            'amount',
+            'date',
+            'source',
+            'description',
+            'created_at',
+        ]
+        read_only_fields = fields
+
+
+class ManualTransactionCreateSerializer(serializers.Serializer):
+    """
+    Serializer for officer-only manual transaction entries (e.g. cash donations, miscellaneous expenses).
+    """
+    type = serializers.ChoiceField(choices=Transaction.TYPE_CHOICES)
+    category = serializers.ChoiceField(choices=Transaction.CATEGORY_CHOICES)
+    amount = serializers.DecimalField(max_digits=12, decimal_places=2)
+    source = serializers.CharField(max_length=100)
+    description = serializers.CharField(required=False, allow_blank=True, default='')
+    date = serializers.DateTimeField(required=False, allow_null=True)
+
+    def validate_amount(self, value):
+        if value <= Decimal('0.00'):
+            raise serializers.ValidationError("Transaction amount must be strictly positive (> $0.00).")
+        return value
+
+    def validate_source(self, value):
+        val = value.strip() if value else ''
+        if len(val) < 3:
+            raise serializers.ValidationError("Transaction source identifier must be at least 3 characters long.")
+        return val
+
+
+class ReimbursementSerializer(serializers.ModelSerializer):
+    requester_email = serializers.ReadOnlyField(source='requester.email', default=None)
+    requester_name = serializers.SerializerMethodField()
+    approver_email = serializers.ReadOnlyField(source='approver.email', default=None)
+    status_display = serializers.CharField(source='get_status_display', read_only=True)
+    receipt_url = serializers.SerializerMethodField()
+    transaction_id = serializers.ReadOnlyField(source='transaction.id', default=None)
+
+    class Meta:
+        model = Reimbursement
+        fields = [
+            'id',
+            'requester',
+            'requester_email',
+            'requester_name',
+            'amount',
+            'description',
+            'receipt',
+            'receipt_url',
+            'status',
+            'status_display',
+            'approver',
+            'approver_email',
+            'transaction_id',
+            'notes',
+            'created_at',
+            'updated_at',
+            'approved_at',
+            'paid_at',
+        ]
+        read_only_fields = [
+            'id',
+            'requester',
+            'status',
+            'approver',
+            'transaction_id',
+            'created_at',
+            'updated_at',
+            'approved_at',
+            'paid_at',
+        ]
+
+    def get_requester_name(self, obj):
+        if not obj.requester:
+            return "Unknown Requester"
+        full_name = f"{obj.requester.first_name} {obj.requester.last_name}".strip()
+        return full_name if full_name else obj.requester.email
+
+    def get_receipt_url(self, obj):
+        if obj.receipt:
+            request = self.context.get('request')
+            if request:
+                return request.build_absolute_uri(obj.receipt.url)
+            return obj.receipt.url
+        return None
+
+    def validate_amount(self, value):
+        if value <= Decimal('0.00'):
+            raise serializers.ValidationError("Reimbursement amount must be strictly positive (> $0.00).")
+        return value
+
+    def validate_receipt(self, file_obj):
+        if file_obj:
+            validate_receipt_file(file_obj)
+        return file_obj
+
+
+class ReimbursementActionSerializer(serializers.Serializer):
+    """
+    Serializer for officer approval, rejection, or mark-paid actions.
+    """
+    notes = serializers.CharField(required=False, allow_blank=True, default='')

@@ -41,6 +41,7 @@ wheels/
 local_settings.py
 db.sqlite3
 media/
+backend/reimbursements/
 staticfiles/
 
 # Virtual Environments
