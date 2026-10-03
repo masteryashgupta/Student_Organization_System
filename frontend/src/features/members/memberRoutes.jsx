@@ -31,6 +31,10 @@ const memberRoutes = [
     element: <MembersLanding />,
   },
   {
+    path: '/members/me',
+    element: <MemberProfilePage />,
+  },
+  {
     path: '/members/profile',
     element: <MemberProfilePage />,
   },
