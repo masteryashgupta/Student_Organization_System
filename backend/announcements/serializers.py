@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Announcement
+from .models import Announcement, MailingListSubscriber
 
 
 class AnnouncementSerializer(serializers.ModelSerializer):
@@ -48,3 +48,23 @@ class AnnouncementSerializer(serializers.ModelSerializer):
         if value not in valid_audiences:
             raise serializers.ValidationError(f"Invalid audience. Must be one of: {list(valid_audiences.keys())}")
         return value
+
+
+class MailingListSubscriberSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MailingListSubscriber
+        fields = [
+            'id',
+            'email',
+            'user',
+            'is_active',
+            'subscribed_at',
+            'unsubscribed_at',
+        ]
+        read_only_fields = ['id', 'user', 'subscribed_at', 'unsubscribed_at']
+
+    def validate_email(self, value):
+        val = value.strip().lower() if value else ''
+        if not val or '@' not in val:
+            raise serializers.ValidationError("Please provide a valid email address.")
+        return val

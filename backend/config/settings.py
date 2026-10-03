@@ -1,4 +1,5 @@
 import os
+import sys
 from pathlib import Path
 from urllib.parse import urlparse
 from dotenv import load_dotenv
@@ -102,6 +103,14 @@ DATABASES = {
         },
     }
 }
+
+# Use fast SQLite in-memory database for automated tests to bypass Supabase cloud creation locks
+if 'test' in sys.argv:
+    DATABASES['default'] = {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': ':memory:',
+    }
+
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
