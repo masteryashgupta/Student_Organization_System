@@ -12,6 +12,10 @@ import {
   Sparkles,
   AlertCircle,
   RefreshCw,
+  Plus,
+  BarChart3,
+  Edit3,
+  ShieldCheck,
 } from 'lucide-react';
 import { fetchEvents } from './eventsApi';
 import { useAuth } from '../../lib/AuthContext';
@@ -20,7 +24,7 @@ import { Badge } from '../../components/ui/Badge';
 import { Button } from '../../components/ui/Button';
 
 export default function EventsListPage() {
-  const { user } = useAuth();
+  const { user, isOfficer } = useAuth();
   const [filter, setFilter] = useState('all'); // all, published, closed
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -157,6 +161,15 @@ export default function EventsListPage() {
           >
             <RefreshCw className={`w-3.5 h-3.5 ${isFetching ? 'animate-spin' : ''}`} />
           </Button>
+
+          {isOfficer && (
+            <Link to="/events/new">
+              <Button variant="primary" size="sm" className="whitespace-nowrap text-xs">
+                <Plus className="w-3.5 h-3.5 mr-1" />
+                New Event
+              </Button>
+            </Link>
+          )}
         </div>
       </div>
 
@@ -315,7 +328,7 @@ export default function EventsListPage() {
                 </div>
 
                 {/* Footer Action */}
-                <div className="p-6 pt-0">
+                <div className="p-6 pt-0 space-y-2">
                   <Link to={`/events/${event.id}`} className="block w-full">
                     <Button
                       variant={isSoldOut ? 'secondary' : 'primary'}
@@ -325,6 +338,29 @@ export default function EventsListPage() {
                       <ArrowRight className="w-4 h-4 ml-1 transform group-hover:translate-x-1 transition-transform" />
                     </Button>
                   </Link>
+
+                  {isOfficer && (
+                    <div className="flex gap-2 pt-2 border-t border-slate-800/80">
+                      <Link to={`/events/${event.id}/stats`} className="flex-1">
+                        <Button variant="outline" size="sm" className="w-full text-xs h-7 border-slate-700 hover:border-brand-500 text-slate-300">
+                          <BarChart3 className="w-3 h-3 mr-1 text-brand-400" />
+                          Stats
+                        </Button>
+                      </Link>
+                      <Link to={`/events/${event.id}/edit`} className="flex-1">
+                        <Button variant="outline" size="sm" className="w-full text-xs h-7 border-slate-700 hover:border-slate-500 text-slate-300">
+                          <Edit3 className="w-3 h-3 mr-1" />
+                          Edit
+                        </Button>
+                      </Link>
+                      <Link to={`/events/${event.id}/checkin`} className="flex-1">
+                        <Button variant="outline" size="sm" className="w-full text-xs h-7 border-slate-700 hover:border-amber-500 text-slate-300">
+                          <ShieldCheck className="w-3 h-3 mr-1 text-amber-400" />
+                          Gate
+                        </Button>
+                      </Link>
+                    </div>
+                  )}
                 </div>
               </Card>
             );

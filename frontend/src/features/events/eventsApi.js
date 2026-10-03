@@ -62,3 +62,18 @@ export async function fetchEventStats(eventId) {
   const res = await api.get(`/events/${eventId}/stats/`);
   return res.data;
 }
+
+export async function createEvent(eventData) {
+  const res = await api.post('/events/', eventData);
+  return res.data;
+}
+
+export async function updateEvent(id, eventData) {
+  const res = await api.patch(`/events/${id}/`, eventData);
+  return res.data;
+}
+
+export async function deleteEvent(id) {
+  const res = await api.delete(`/events/${id}/`);
+  return res.data;
+}

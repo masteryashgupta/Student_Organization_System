@@ -17,6 +17,8 @@ import {
   ShieldCheck,
   RefreshCw,
   ExternalLink,
+  BarChart3,
+  Edit3,
 } from 'lucide-react';
 import {
   fetchEventById,
@@ -344,12 +346,26 @@ export default function EventDetailPage() {
                     {event.status === 'published' ? 'Registration Open' : event.status}
                   </Badge>
                   {isOfficer && (
-                    <Link to={`/events/${event.id}/checkin`}>
-                      <Button variant="outline" size="sm" className="h-7 text-xs border-amber-500/40 text-amber-300 hover:bg-amber-500/10">
-                        <ShieldCheck className="w-3.5 h-3.5 mr-1" />
-                        Gate Check-In
-                      </Button>
-                    </Link>
+                    <div className="flex items-center gap-2">
+                      <Link to={`/events/${event.id}/checkin`}>
+                        <Button variant="outline" size="sm" className="h-7 text-xs border-amber-500/40 text-amber-300 hover:bg-amber-500/10">
+                          <ShieldCheck className="w-3.5 h-3.5 mr-1" />
+                          Gate Check-In
+                        </Button>
+                      </Link>
+                      <Link to={`/events/${event.id}/stats`}>
+                        <Button variant="outline" size="sm" className="h-7 text-xs border-brand-500/40 text-brand-300 hover:bg-brand-500/10">
+                          <BarChart3 className="w-3.5 h-3.5 mr-1" />
+                          Analytics
+                        </Button>
+                      </Link>
+                      <Link to={`/events/${event.id}/edit`}>
+                        <Button variant="outline" size="sm" className="h-7 text-xs border-slate-700 text-slate-300 hover:bg-surface-800">
+                          <Edit3 className="w-3.5 h-3.5 mr-1" />
+                          Edit
+                        </Button>
+                      </Link>
+                    </div>
                   )}
                 </div>
                 <div className="flex items-center gap-2 text-xs text-slate-400">
