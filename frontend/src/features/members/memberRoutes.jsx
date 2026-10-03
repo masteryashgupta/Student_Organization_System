@@ -3,7 +3,19 @@ import JoinClubPage from './JoinClubPage';
 import MemberListPage from './MemberListPage';
 import MemberProfilePage from './MemberProfilePage';
 import VerifyMemberPage from './VerifyMemberPage';
+import { useAuth } from '../../lib/AuthContext';
 import { registerFeature } from '../../app/routeRegistry';
+
+function MembersLanding() {
+  const { user, isOfficer, isAuthenticated } = useAuth();
+  if (isOfficer) {
+    return <MemberListPage />;
+  }
+  if (isAuthenticated) {
+    return <MemberProfilePage />;
+  }
+  return <JoinClubPage />;
+}
 
 const memberRoutes = [
   {
@@ -16,7 +28,7 @@ const memberRoutes = [
   },
   {
     path: '/members',
-    element: <MemberListPage />,
+    element: <MembersLanding />,
   },
   {
     path: '/members/profile',
@@ -38,24 +50,8 @@ registerFeature({
   routes: memberRoutes,
   navItems: [
     {
-      path: '/join',
-      label: 'Join Club',
-      roles: ['public'],
-    },
-    {
-      path: '/members/profile',
-      label: 'My Membership',
-      memberOnly: true,
-    },
-    {
       path: '/members',
-      label: 'Member Roster',
-      officerOnly: true,
-    },
-    {
-      path: '/members/verify',
-      label: 'Door Verification',
-      officerOnly: true,
+      label: 'Members',
     },
   ],
 });

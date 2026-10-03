@@ -9,8 +9,6 @@ registerFeature({
   name: 'Announcements',
   navItems: [
     { path: '/announcements', label: 'Announcements' },
-    { path: '/announcements/compose', label: '+ Compose Notice', officerOnly: true },
-    { path: '/announcements/archive', label: 'Archive' },
   ],
   routes: [
     { path: '/announcements', element: <AnnouncementsFeedPage /> },

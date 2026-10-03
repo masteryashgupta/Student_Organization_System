@@ -6,21 +6,22 @@ export function Badge({
   size = 'md',
   className = '',
 }) {
-  const baseStyles = 'inline-flex items-center font-medium rounded-full border';
+  const baseStyles = 'inline-flex items-center font-medium rounded-full border transition-colors';
 
   const variants = {
-    neutral: 'bg-slate-800 text-slate-300 border-slate-700',
-    primary: 'bg-brand-950 text-brand-300 border-brand-800',
-    accent: 'bg-accent-950 text-accent-300 border-accent-800',
-    success: 'bg-emerald-950 text-emerald-300 border-emerald-800',
-    warning: 'bg-amber-950 text-amber-300 border-amber-800',
-    danger: 'bg-rose-950 text-rose-300 border-rose-800',
+    neutral: 'bg-[#F4F3F1] text-[#4F4C52] border-[#E3E1DE]',
+    primary: 'bg-accent-50 text-accent-700 border-accent-200',
+    accent: 'bg-brand-50 text-brand-700 border-brand-200',
+    brand: 'bg-brand-50 text-brand-700 border-brand-200',
+    success: 'bg-[#EAF7EE] text-[#147D3B] border-[#C8EAD2]',
+    warning: 'bg-[#FEF6E7] text-[#9A6208] border-[#FCE1B3]',
+    danger: 'bg-[#FDF0EE] text-[#B82C1D] border-[#FACBC5]',
   };
 
   const sizes = {
-    sm: 'text-xs px-2 py-0.5',
-    md: 'text-xs px-2.5 py-1',
-    lg: 'text-sm px-3 py-1',
+    sm: 'text-[11px] px-2 py-0.5 font-medium',
+    md: 'text-xs px-2.5 py-0.5 font-medium',
+    lg: 'text-xs px-3 py-1 font-semibold',
   };
 
   return (

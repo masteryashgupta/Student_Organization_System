@@ -61,22 +61,7 @@ registerFeature({
   navItems: [
     {
       path: '/store',
-      label: 'Merch Store',
-    },
-    {
-      path: '/store/orders',
-      label: 'My Orders',
-      memberOnly: true,
-    },
-    {
-      path: '/store/manage/orders',
-      label: 'Store Orders Desk',
-      officerOnly: true,
-    },
-    {
-      path: '/store/manage/inventory',
-      label: 'Low Stock & Inventory',
-      officerOnly: true,
+      label: 'Store',
     },
   ],
 });
