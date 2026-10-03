@@ -34,8 +34,8 @@ INSTALLED_APPS = [
     'accounts',
     'members',
     'events',
-    # 'store',
-    # 'tasks',
+    'store',
+    'tasks',
     # 'finance',
     # 'announcements',
 ]
