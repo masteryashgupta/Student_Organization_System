@@ -83,16 +83,16 @@ export default function TaskModal({
       onClose={onClose}
       title={task ? 'Edit Volunteer Task' : 'Create New Volunteer Task'}
     >
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-4 text-xs">
         {/* Project Selector */}
         <div>
-          <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">
+          <label className="block text-xs font-semibold text-[#0F172A] mb-1.5">
             Parent Project / Fundraiser *
           </label>
           <select
             value={formData.project}
             onChange={(e) => setFormData({ ...formData, project: e.target.value })}
-            className="w-full bg-surface-950 border border-slate-700 rounded-xl px-3.5 py-2 text-sm text-white focus:outline-none focus:border-brand-500 transition-colors"
+            className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2 text-sm text-[#0F172A] focus:outline-none focus:ring-2 focus:ring-sky-500 transition-all"
           >
             <option value="" disabled>Select a project...</option>
             {projects.map((p) => (
@@ -102,15 +102,15 @@ export default function TaskModal({
             ))}
           </select>
           {errors.project && (
-            <p className="text-xs text-rose-400 mt-1 flex items-center gap-1">
-              <AlertCircle className="w-3 h-3" /> {errors.project}
+            <p className="text-xs text-rose-500 mt-1 flex items-center gap-1 font-medium">
+              <AlertCircle className="w-3.5 h-3.5" /> {errors.project}
             </p>
           )}
         </div>
 
         {/* Task Title */}
         <div>
-          <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">
+          <label className="block text-xs font-semibold text-[#0F172A] mb-1.5">
             Task Action Title *
           </label>
           <Input
@@ -124,7 +124,7 @@ export default function TaskModal({
 
         {/* Description */}
         <div>
-          <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">
+          <label className="block text-xs font-semibold text-[#0F172A] mb-1.5">
             Instructions & Details (Optional)
           </label>
           <textarea
@@ -132,7 +132,7 @@ export default function TaskModal({
             placeholder="Detailed recipe, schedule, shift location, or specific materials needed..."
             value={formData.description}
             onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-            className="w-full bg-surface-950 border border-slate-700 rounded-xl p-3 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-brand-500 transition-colors resize-none"
+            className="w-full bg-white border border-slate-200 rounded-xl p-3 text-xs text-[#0F172A] placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-500 transition-all resize-none"
           />
         </div>
 
@@ -140,35 +140,35 @@ export default function TaskModal({
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {/* Assignee */}
           <div>
-            <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">
+            <label className="block text-xs font-semibold text-[#0F172A] mb-1.5">
               Assigned Volunteer
             </label>
             <select
               value={formData.assignee}
               onChange={(e) => setFormData({ ...formData, assignee: e.target.value })}
-              className="w-full bg-surface-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-brand-500 transition-colors"
+              className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-[#0F172A] focus:outline-none focus:ring-2 focus:ring-sky-500 transition-all"
             >
               <option value="">-- Open Slot (Unassigned) --</option>
-              {assignees.map((user) => (
-                <option key={user.id} value={user.id}>
-                  {user.display_name || user.name || user.username} ({user.role || 'member'})
+              {assignees.map((u) => (
+                <option key={u.id} value={u.id}>
+                  {u.display_name || u.name || u.username} ({u.role || 'member'})
                 </option>
               ))}
             </select>
-            <span className="text-[10px] text-slate-400 mt-1 block">
+            <span className="text-[11px] text-slate-500 mt-1 block">
               Leave unassigned for volunteers to self-claim.
             </span>
           </div>
 
           {/* Priority */}
           <div>
-            <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">
+            <label className="block text-xs font-semibold text-[#0F172A] mb-1.5">
               Priority
             </label>
             <select
               value={formData.priority}
               onChange={(e) => setFormData({ ...formData, priority: e.target.value })}
-              className="w-full bg-surface-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-brand-500 transition-colors"
+              className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-[#0F172A] focus:outline-none focus:ring-2 focus:ring-sky-500 transition-all"
             >
               <option value="low">Low Priority</option>
               <option value="medium">Medium Priority</option>
@@ -182,7 +182,7 @@ export default function TaskModal({
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {/* Due Date */}
           <div>
-            <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">
+            <label className="block text-xs font-semibold text-[#0F172A] mb-1.5">
               Target Due Date
             </label>
             <Input
@@ -194,13 +194,13 @@ export default function TaskModal({
 
           {/* Status */}
           <div>
-            <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">
+            <label className="block text-xs font-semibold text-[#0F172A] mb-1.5">
               Initial Column
             </label>
             <select
               value={formData.status}
               onChange={(e) => setFormData({ ...formData, status: e.target.value })}
-              className="w-full bg-surface-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-brand-500 transition-colors"
+              className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-[#0F172A] focus:outline-none focus:ring-2 focus:ring-sky-500 transition-all"
             >
               <option value="todo">To Do</option>
               <option value="doing">In Progress (Doing)</option>
@@ -210,7 +210,7 @@ export default function TaskModal({
         </div>
 
         {/* Modal Actions */}
-        <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-800">
+        <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-100">
           <Button variant="ghost" type="button" onClick={onClose} disabled={isPending}>
             Cancel
           </Button>
