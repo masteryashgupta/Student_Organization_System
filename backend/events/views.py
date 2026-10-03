@@ -1,6 +1,9 @@
-from rest_framework import viewsets, permissions
+from rest_framework import viewsets, permissions, status
+from rest_framework.decorators import action
+from rest_framework.response import Response
 from .models import Event
-from .serializers import EventSerializer
+from .serializers import EventSerializer, EventAvailabilitySerializer
+from .services import get_event_availability
 
 
 class EventViewSet(viewsets.ModelViewSet):
@@ -12,6 +15,7 @@ class EventViewSet(viewsets.ModelViewSet):
     - PUT /api/events/{id}/ : Update event
     - PATCH /api/events/{id}/ : Partial update event
     - DELETE /api/events/{id}/ : Remove event
+    - GET /api/events/{id}/availability : Real-time availability { capacity, sold, remaining }
     """
     queryset = Event.objects.all().order_by('datetime')
     serializer_class = EventSerializer
@@ -23,3 +27,14 @@ class EventViewSet(viewsets.ModelViewSet):
         if status_param:
             queryset = queryset.filter(status=status_param)
         return queryset
+
+    @action(detail=True, methods=['get'], permission_classes=[permissions.AllowAny], url_path='availability')
+    def availability(self, request, pk=None):
+        """
+        GET /api/events/{id}/availability
+        Computes real-time capacity, sold, and remaining seats directly from ticket counts.
+        """
+        event = self.get_object()
+        data = get_event_availability(event)
+        serializer = EventAvailabilitySerializer(data)
+        return Response(serializer.data, status=status.HTTP_200_OK)

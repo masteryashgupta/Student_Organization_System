@@ -1,5 +1,7 @@
+import uuid
 from decimal import Decimal
 from django.db import models
+from django.conf import settings
 from django.core.validators import MinValueValidator
 from django.core.exceptions import ValidationError
 from django.utils import timezone
@@ -92,5 +94,106 @@ class Event(models.Model):
         self.full_clean()
         super().save(*args, **kwargs)
 
+    def get_availability(self) -> dict:
+        """
+        Computes live availability in real-time directly from ticket counts in Postgres.
+        Returns:
+            dict: {
+                "capacity": int,
+                "sold": int,
+                "remaining": int
+            }
+        """
+        sold_count = self.tickets.exclude(status=Ticket.STATUS_CANCELLED).count()
+        remaining = max(0, self.capacity - sold_count)
+        return {
+            'capacity': self.capacity,
+            'sold': sold_count,
+            'remaining': remaining,
+        }
+
+    def can_sell_ticket(self, quantity: int = 1) -> bool:
+        """
+        Checks whether the event has sufficient remaining capacity to sell `quantity` tickets.
+        """
+        availability = self.get_availability()
+        return availability['remaining'] >= quantity and self.status == self.STATUS_PUBLISHED
+
     def __str__(self):
         return f"{self.title} ({self.datetime.strftime('%Y-%m-%d %H:%M')})"
+
+
+class Ticket(models.Model):
+    TYPE_MEMBER = 'member'
+    TYPE_NONMEMBER = 'nonmember'
+    TYPE_CHOICES = [
+        (TYPE_MEMBER, 'Member'),
+        (TYPE_NONMEMBER, 'Non-Member'),
+    ]
+
+    STATUS_VALID = 'valid'
+    STATUS_CHECKED_IN = 'checked_in'
+    STATUS_CANCELLED = 'cancelled'
+    STATUS_CHOICES = [
+        (STATUS_VALID, 'Valid'),
+        (STATUS_CHECKED_IN, 'Checked In'),
+        (STATUS_CANCELLED, 'Cancelled'),
+    ]
+
+    event = models.ForeignKey(
+        Event,
+        on_delete=models.CASCADE,
+        related_name='tickets',
+        help_text='Event for which this ticket was issued'
+    )
+    holder = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='tickets',
+        null=True,
+        blank=True,
+        help_text='User account holding the ticket (optional for guests)'
+    )
+    holder_name = models.CharField(max_length=255, blank=True, default='')
+    holder_email = models.EmailField(blank=True, default='')
+    type = models.CharField(
+        max_length=20,
+        choices=TYPE_CHOICES,
+        default=TYPE_NONMEMBER,
+        help_text='Ticket pricing tier: member or nonmember'
+    )
+    price_paid = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        default=Decimal('0.00'),
+        validators=[MinValueValidator(Decimal('0.00'))],
+        help_text='Actual monetary price paid for the ticket'
+    )
+    token = models.UUIDField(
+        default=uuid.uuid4,
+        unique=True,
+        editable=False,
+        db_index=True,
+        help_text='Unique UUID token for QR code and check-in'
+    )
+    status = models.CharField(
+        max_length=20,
+        choices=STATUS_CHOICES,
+        default=STATUS_VALID,
+        help_text='Ticket status: valid, checked_in, or cancelled'
+    )
+    checked_in_at = models.DateTimeField(null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['-created_at']
+        verbose_name = 'Ticket'
+        verbose_name_plural = 'Tickets'
+        indexes = [
+            models.Index(fields=['event', 'status'], name='ticket_event_status_idx'),
+            models.Index(fields=['token'], name='ticket_token_idx'),
+        ]
+
+    def __str__(self):
+        return f"Ticket {self.token} - {self.event.title} ({self.get_status_display()})"
