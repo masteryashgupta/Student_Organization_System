@@ -1,7 +1,9 @@
 from decimal import Decimal
 from django.db import models
+from django.conf import settings
 from django.core.validators import MinValueValidator
 from django.core.exceptions import ValidationError
+from django.utils import timezone
 
 
 class Product(models.Model):
@@ -143,3 +145,133 @@ class ProductVariant(models.Model):
 
     def __str__(self):
         return f"{self.product.name} - Size {self.size} ({self.stock_qty} in stock)"
+
+
+class Order(models.Model):
+    STATUS_PENDING = 'pending'
+    STATUS_PAID = 'paid'
+    STATUS_FULFILLED = 'fulfilled'
+    STATUS_CANCELLED = 'cancelled'
+
+    STATUS_CHOICES = [
+        (STATUS_PENDING, 'Pending Payment'),
+        (STATUS_PAID, 'Paid'),
+        (STATUS_FULFILLED, 'Fulfilled'),
+        (STATUS_CANCELLED, 'Cancelled'),
+    ]
+
+    buyer = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='store_orders',
+        help_text="Registered user who placed the order"
+    )
+    buyer_name = models.CharField(max_length=255, blank=True, default='', help_text="Customer name")
+    buyer_email = models.EmailField(blank=True, default='', help_text="Customer email for notifications")
+    status = models.CharField(
+        max_length=20,
+        choices=STATUS_CHOICES,
+        default=STATUS_PENDING,
+        help_text="Current state in the order fulfillment lifecycle"
+    )
+    subtotal = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        default=Decimal('0.00'),
+        validators=[MinValueValidator(Decimal('0.00'))],
+        help_text="Cart subtotal before member discounts"
+    )
+    discount_pct = models.DecimalField(
+        max_digits=5,
+        decimal_places=2,
+        default=Decimal('0.00'),
+        validators=[MinValueValidator(Decimal('0.00'))],
+        help_text="Applied member discount percentage"
+    )
+    discount_amount = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        default=Decimal('0.00'),
+        validators=[MinValueValidator(Decimal('0.00'))],
+        help_text="Total savings applied from discount"
+    )
+    total = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        default=Decimal('0.00'),
+        validators=[MinValueValidator(Decimal('0.00'))],
+        help_text="Final payable amount"
+    )
+    payment_provider = models.CharField(
+        max_length=50,
+        default='mock',
+        help_text="Payment gateway provider used ('mock', 'stripe', 'cash', etc.)"
+    )
+    payment_reference = models.CharField(
+        max_length=255,
+        blank=True,
+        default='',
+        help_text="External transaction / intent ID from payment provider"
+    )
+    notes = models.TextField(blank=True, default='', help_text="Customer order notes or instructions")
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    paid_at = models.DateTimeField(null=True, blank=True)
+    fulfilled_at = models.DateTimeField(null=True, blank=True)
+    cancelled_at = models.DateTimeField(null=True, blank=True)
+
+    class Meta:
+        ordering = ['-created_at']
+        verbose_name = 'Merch Order'
+        verbose_name_plural = 'Merch Orders'
+        constraints = [
+            models.CheckConstraint(
+                check=models.Q(total__gte=Decimal('0.00')),
+                name='order_total_non_negative'
+            )
+        ]
+
+    def __str__(self):
+        buyer_label = self.buyer_name or (self.buyer.username if self.buyer else "Guest")
+        return f"Order #{self.id} ({buyer_label}) - ${self.total} [{self.get_status_display()}]"
+
+
+class OrderItem(models.Model):
+    order = models.ForeignKey(
+        Order,
+        on_delete=models.CASCADE,
+        related_name='items',
+        help_text="Associated parent order"
+    )
+    variant = models.ForeignKey(
+        ProductVariant,
+        on_delete=models.PROTECT,
+        related_name='order_items',
+        help_text="Purchased product variant/size"
+    )
+    qty = models.PositiveIntegerField(
+        default=1,
+        validators=[MinValueValidator(1)],
+        help_text="Quantity ordered (must be >= 1)"
+    )
+    unit_price = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        validators=[MinValueValidator(Decimal('0.01'))],
+        help_text="Snapshot unit price at time of order creation"
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['id']
+        verbose_name = 'Order Item'
+        verbose_name_plural = 'Order Items'
+
+    @property
+    def total_price(self) -> Decimal:
+        return self.qty * self.unit_price
+
+    def __str__(self):
+        return f"{self.qty}x {self.variant.product.name} ({self.variant.size}) @ ${self.unit_price}"

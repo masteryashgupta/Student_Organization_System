@@ -3,13 +3,23 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from django.core.exceptions import ValidationError
 
-from .models import Product, ProductVariant
+from .models import Product, ProductVariant, Order, OrderItem
 from .serializers import (
     ProductSerializer,
     ProductVariantSerializer,
     RestockSerializer,
+    OrderSerializer,
+    CreateOrderSerializer,
+    PayOrderInputSerializer,
 )
-from .services import restock_variant
+from .services import (
+    restock_variant,
+    create_order_from_cart,
+    mark_order_as_paid,
+    process_order_payment,
+    fulfill_order,
+    cancel_order,
+)
 
 
 class IsOfficerOrReadOnly(permissions.BasePermission):
@@ -81,14 +91,12 @@ class ProductViewSet(viewsets.ModelViewSet):
         elif size:
             target_variant = product.variants.filter(size__iexact=size).first()
             if not target_variant:
-                # Create variant if it doesn't exist yet for this size
                 target_variant = ProductVariant.objects.create(
                     product=product,
                     size=size.upper(),
                     stock_qty=0
                 )
         else:
-            # If product has only 1 variant (e.g. One Size), default to it
             if product.variants.count() == 1:
                 target_variant = product.variants.first()
 
@@ -165,6 +173,181 @@ class ProductVariantViewSet(viewsets.ModelViewSet):
                 "status": "success",
                 "message": f"Successfully restocked {quantity} unit(s) for Size {updated_variant.size}.",
                 "variant": ProductVariantSerializer(updated_variant).data,
+            },
+            status=status.HTTP_200_OK
+        )
+
+
+class OrderViewSet(viewsets.ModelViewSet):
+    """
+    ViewSet for Merch Orders lifecycle:
+    GET /api/orders/ - List orders
+    POST /api/orders/ - Create pending order from cart with stock validation & member discount
+    GET /api/orders/{id}/ - Retrieve order details
+    POST /api/orders/{id}/pay/ - Mark order as paid, decrement stock, and record ledger income
+    POST /api/orders/{id}/fulfill/ - Mark order as fulfilled
+    POST /api/orders/{id}/cancel/ - Cancel order and restore stock if already paid
+    """
+    queryset = Order.objects.prefetch_related('items__variant__product').select_related('buyer').all()
+    serializer_class = OrderSerializer
+    permission_classes = [permissions.AllowAny]
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+    search_fields = ['buyer_name', 'buyer_email', 'buyer__username', 'id']
+    ordering_fields = ['created_at', 'total', 'status']
+    ordering = ['-created_at']
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        user = self.request.user
+
+        status_param = self.request.query_params.get('status')
+        if status_param:
+            queryset = queryset.filter(status__iexact=status_param)
+
+        # Officers and admins see all orders
+        if user and user.is_authenticated:
+            if getattr(user, 'is_officer', False) or user.is_staff:
+                return queryset
+            # Regular authenticated members see their own orders
+            return queryset.filter(buyer=user)
+
+        # For unauthenticated requests, allow querying by specific id if provided
+        return queryset
+
+    def create(self, request, *args, **kwargs):
+        """
+        POST /api/orders/
+        Payload:
+        {
+            "items": [
+                { "variant_id": 1, "qty": 2 },
+                { "variant_id": 3, "qty": 1 }
+            ],
+            "buyer_name": "Alex Smith",
+            "buyer_email": "alex@skyline.edu",
+            "notes": "Please hold at club room"
+        }
+        """
+        serializer = CreateOrderSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        items_data = serializer.validated_data['items']
+        buyer_name = serializer.validated_data.get('buyer_name', '')
+        buyer_email = serializer.validated_data.get('buyer_email', '')
+        notes = serializer.validated_data.get('notes', '')
+
+        try:
+            order = create_order_from_cart(
+                items_data=items_data,
+                buyer=request.user if request.user.is_authenticated else None,
+                buyer_name=buyer_name,
+                buyer_email=buyer_email,
+                notes=notes,
+            )
+        except ValidationError as exc:
+            return Response(
+                {"status": "error", "message": exc.message_dict if hasattr(exc, 'message_dict') else str(exc)},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        output_serializer = OrderSerializer(order)
+        return Response(output_serializer.data, status=status.HTTP_201_CREATED)
+
+    @action(detail=True, methods=['post'], permission_classes=[permissions.AllowAny])
+    def pay(self, request, pk=None):
+        """
+        POST /api/orders/{id}/pay/
+        Processes payment via the requested provider ('mock' or 'stripe').
+        Atomically decrements stock and logs financial ledger transaction upon successful payment.
+        Payload:
+        {
+            "provider": "mock", // or "stripe"
+            "payment_reference": "CASH_AT_DOOR_123",
+            "payment_data": {}
+        }
+        """
+        order = self.get_object()
+        serializer = PayOrderInputSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        provider = serializer.validated_data.get('provider', 'mock')
+        payment_reference = serializer.validated_data.get('payment_reference', '')
+        payment_data = serializer.validated_data.get('payment_data', {})
+        if payment_reference and not payment_data.get('payment_reference'):
+            payment_data['payment_reference'] = payment_reference
+
+        try:
+            updated_order, payment_result = process_order_payment(
+                order=order,
+                provider_name=provider,
+                payment_data=payment_data
+            )
+        except ValidationError as exc:
+            return Response(
+                {"status": "error", "message": exc.message_dict if hasattr(exc, 'message_dict') else str(exc)},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        return Response(
+            {
+                "status": "success",
+                "message": payment_result.message,
+                "payment_result": {
+                    "provider": provider,
+                    "transaction_id": payment_result.transaction_id,
+                    "status": payment_result.status,
+                    "client_secret": payment_result.client_secret,
+                },
+                "order": OrderSerializer(updated_order).data,
+            },
+            status=status.HTTP_200_OK
+        )
+
+    @action(detail=True, methods=['post'], permission_classes=[permissions.AllowAny])
+    def fulfill(self, request, pk=None):
+        """
+        POST /api/orders/{id}/fulfill/
+        Marks a paid order as fulfilled.
+        """
+        order = self.get_object()
+        try:
+            updated_order = fulfill_order(order)
+        except ValidationError as exc:
+            return Response(
+                {"status": "error", "message": exc.message_dict if hasattr(exc, 'message_dict') else str(exc)},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        return Response(
+            {
+                "status": "success",
+                "message": f"Order #{updated_order.id} marked as FULFILLED.",
+                "order": OrderSerializer(updated_order).data,
+            },
+            status=status.HTTP_200_OK
+        )
+
+    @action(detail=True, methods=['post'], permission_classes=[permissions.AllowAny])
+    def cancel(self, request, pk=None):
+        """
+        POST /api/orders/{id}/cancel/
+        Cancels an order and restores stock if the order was paid.
+        """
+        order = self.get_object()
+        reason = request.data.get('reason', '')
+        try:
+            updated_order = cancel_order(order, reason=reason)
+        except ValidationError as exc:
+            return Response(
+                {"status": "error", "message": exc.message_dict if hasattr(exc, 'message_dict') else str(exc)},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        return Response(
+            {
+                "status": "success",
+                "message": f"Order #{updated_order.id} has been CANCELLED.",
+                "order": OrderSerializer(updated_order).data,
             },
             status=status.HTTP_200_OK
         )
