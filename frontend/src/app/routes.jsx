@@ -6,6 +6,7 @@ import { getRegisteredRoutes } from './routeRegistry';
 
 // Import feature routes so they register automatically
 import '../features/auth/authRoutes';
+import '../features/store/storeRoutes';
 
 export default function AppRoutes() {
   const registeredRoutes = getRegisteredRoutes();
