@@ -7,6 +7,7 @@ import { getRegisteredRoutes } from './routeRegistry';
 // Import feature routes so they register automatically
 import '../features/auth/authRoutes';
 import '../features/members/memberRoutes';
+import '../features/events/eventsRoutes';
 import '../features/store/storeRoutes';
 import '../features/finance/financeRoutes';
 import '../features/announcements/announcementsRoutes';

@@ -41,7 +41,12 @@ class EventViewSet(viewsets.ModelViewSet):
     """
     queryset = Event.objects.all().order_by('datetime')
     serializer_class = EventSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.AllowAny]
+
+    def get_permissions(self):
+        if self.action in ['create', 'update', 'partial_update', 'destroy', 'checkin_feed', 'stats']:
+            return [IsOfficer()]
+        return [permissions.AllowAny()]
 
     def get_queryset(self):
         queryset = super().get_queryset()
