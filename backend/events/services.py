@@ -216,6 +216,8 @@ def purchase_ticket(event_id: int, buyer_user=None, holder_name: str = "", holde
     return ticket
 
 
+from django.core.exceptions import ValidationError as DjangoValidationError
+
 @transaction.atomic
 def check_in_ticket(token: str) -> Ticket:
     """
@@ -232,7 +234,7 @@ def check_in_ticket(token: str) -> Ticket:
     try:
         # Lock ticket row exclusively
         ticket = Ticket.objects.select_for_update().select_related('event').get(token=token)
-    except (Ticket.DoesNotExist, ValueError):
+    except (Ticket.DoesNotExist, ValueError, DjangoValidationError):
         raise ValidationError({
             "detail": "Ticket not found. Invalid or unknown ticket token."
         })
