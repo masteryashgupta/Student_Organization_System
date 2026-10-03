@@ -10,6 +10,31 @@ import { Badge } from '../../components/ui/Badge';
 import CartDrawer from './CartDrawer';
 import api from '../../lib/api';
 
+function ProductDetailImage({ src, name, type }) {
+  const [imgError, setImgError] = useState(false);
+
+  if (!src || imgError) {
+    return (
+      <div className="w-full h-full bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-900 flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 p-8 text-center select-none">
+        <div className="w-20 h-20 rounded-3xl bg-white/80 dark:bg-slate-700/80 shadow-md flex items-center justify-center mb-4">
+          <ShoppingBag className="w-10 h-10 text-[#714B67] dark:text-purple-400" />
+        </div>
+        <span className="text-base font-extrabold uppercase tracking-wider text-slate-800 dark:text-slate-200 line-clamp-2">{name}</span>
+        <span className="text-xs font-semibold text-slate-400 dark:text-slate-400 uppercase mt-1">{type}</span>
+      </div>
+    );
+  }
+
+  return (
+    <img
+      src={src}
+      alt={name}
+      onError={() => setImgError(true)}
+      className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+    />
+  );
+}
+
 export default function ProductDetailPage() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -137,21 +162,10 @@ export default function ProductDetailPage() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 bg-white border border-border rounded-3xl p-6 sm:p-10 shadow-odoo-card">
         {/* Left: Product Media Gallery */}
         <div className="lg:col-span-6 flex flex-col items-center justify-center">
-          <div className="relative w-full aspect-square rounded-2xl bg-[#F4F6F8] border border-border overflow-hidden flex items-center justify-center group">
-            {product.image ? (
-              <img
-                src={product.image}
-                alt={product.name}
-                className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
-              />
-            ) : (
-              <div className="flex flex-col items-center justify-center text-[#66636A]">
-                <ShoppingBag className="w-20 h-20 mb-2 opacity-30" />
-                <span className="text-sm font-bold uppercase tracking-widest text-[#66636A]">{product.type}</span>
-              </div>
-            )}
+          <div className="relative w-full aspect-square rounded-2xl bg-[#F4F6F8] dark:bg-[#1A243B] border border-border dark:border-slate-800 overflow-hidden flex items-center justify-center group">
+            <ProductDetailImage src={product.image} name={product.name} type={product.type} />
 
-            <div className="absolute top-4 left-4">
+            <div className="absolute top-4 left-4 z-10">
               <Badge variant="accent" size="md">
                 {product.type_display || product.type?.toUpperCase()}
               </Badge>

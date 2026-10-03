@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate, Outlet } from 'react-router-dom';
 import { useAuth } from '../lib/AuthContext';
+import { useTheme } from '../lib/ThemeContext';
 import { getRegisteredNavItems } from './routeRegistry';
 import { Badge } from '../components/ui/Badge';
 import { Button } from '../components/ui/Button';
@@ -28,6 +29,7 @@ import {
 export default function AppShell() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { user, logout, isAuthenticated, isOfficer } = useAuth();
+  const { theme, toggleTheme, isDark } = useTheme();
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -49,13 +51,21 @@ export default function AppShell() {
     return Sparkles;
   };
 
-  const combinedNav = [
-    { path: '/', label: 'Overview', icon: Home },
-    ...navItems.map((item) => ({
-      ...item,
-      icon: getNavIcon(item.path),
-    })),
-  ];
+  const combinedNav = React.useMemo(() => {
+    const raw = [
+      { path: '/', label: 'Overview', icon: Home },
+      ...navItems.map((item) => ({
+        ...item,
+        icon: getNavIcon(item.path),
+      })),
+    ];
+    const seen = new Set();
+    return raw.filter((item) => {
+      if (!item.path || seen.has(item.path)) return false;
+      seen.add(item.path);
+      return true;
+    });
+  }, [navItems]);
 
   const getBadgeVariant = (role) => {
     switch (role) {
@@ -73,10 +83,10 @@ export default function AppShell() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col text-[#0F172A] selection:bg-[#0EA5E9] selection:text-white">
+    <div className="min-h-screen flex flex-col text-[#0F172A] selection:bg-[#0EA5E9] selection:text-white overflow-x-hidden max-w-full">
       {/* Top Floating Bar Header (Once UI Minimalist Style) */}
       <header className="sticky top-0 z-50 w-full pt-3 sm:pt-4 pb-2 px-4 sm:px-6 pointer-events-none">
-        <div className="max-w-7xl mx-auto flex items-center justify-between pointer-events-auto">
+        <div className="max-w-7xl mx-auto flex items-center justify-between pointer-events-auto gap-2">
           {/* Top-Left: Location / Campus Status (like "Asia/Jakarta" in reference) */}
           <div className="flex items-center gap-2 text-xs font-semibold text-[#64748B] shrink-0">
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
@@ -86,7 +96,7 @@ export default function AppShell() {
 
           {/* Top-Center: FLOATING PILL NAVBAR */}
           <nav
-            className="hidden md:inline-flex items-center gap-1 px-3 py-1.5 rounded-full pill-navbar"
+            className="hidden md:inline-flex items-center gap-1 px-3 py-1.5 rounded-full pill-navbar max-w-[calc(100vw-320px)] overflow-x-auto whitespace-nowrap scrollbar-none"
             aria-label="Main Navigation"
           >
             {/* Home circular button */}
@@ -114,8 +124,8 @@ export default function AppShell() {
                     to={item.path}
                     className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold transition-all ${
                       isActive
-                        ? 'bg-[#0F172A] text-white shadow-sm'
-                        : 'text-[#64748B] hover:text-[#0F172A] hover:bg-slate-100/70'
+                        ? 'bg-[#0F172A] dark:bg-white dark:text-[#0F172A] text-white shadow-sm'
+                        : 'text-[#64748B] dark:text-slate-300 hover:text-[#0F172A] dark:hover:text-white hover:bg-slate-100/70 dark:hover:bg-slate-800'
                     }`}
                   >
                     <IconComponent className="w-3.5 h-3.5 opacity-80" />
@@ -125,16 +135,20 @@ export default function AppShell() {
               })}
 
             {/* Vertical Divider */}
-            <div className="h-4 w-[1px] bg-slate-200/80 mx-1"></div>
+            <div className="h-4 w-[1px] bg-slate-200/80 dark:bg-slate-700 mx-1"></div>
 
-            {/* Quick action / Theme indicator (Moon icon like reference) */}
+            {/* Dark / Light Theme Toggle Button */}
             <button
               type="button"
-              onClick={() => window.location.reload()}
-              className="w-7 h-7 rounded-full flex items-center justify-center text-slate-500 hover:text-[#0F172A] hover:bg-slate-100 transition-colors"
-              title="Refresh platform"
+              onClick={toggleTheme}
+              className="w-7 h-7 rounded-full flex items-center justify-center text-slate-500 hover:text-[#0F172A] dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+              title={isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
             >
-              <Moon className="w-3.5 h-3.5" />
+              {isDark ? (
+                <Sun className="w-3.5 h-3.5 text-amber-400" />
+              ) : (
+                <Moon className="w-3.5 h-3.5" />
+              )}
             </button>
           </nav>
 
@@ -144,12 +158,12 @@ export default function AppShell() {
               <div className="flex items-center gap-2">
                 <Link
                   to="/members/me"
-                  className="flex items-center gap-2 pl-2 pr-3 py-1 rounded-full bg-white/90 border border-slate-200/80 shadow-sm hover:border-slate-300 transition-all text-xs font-medium"
+                  className="flex items-center gap-2 pl-2 pr-3 py-1 rounded-full bg-white/90 dark:bg-slate-800/90 border border-slate-200/80 dark:border-slate-700 shadow-sm hover:border-slate-300 dark:hover:border-slate-600 transition-all text-xs font-medium"
                 >
-                  <div className="w-6 h-6 rounded-full bg-[#0F172A] text-white flex items-center justify-center font-bold text-[10px]">
+                  <div className="w-6 h-6 rounded-full bg-[#0F172A] dark:bg-slate-700 text-white flex items-center justify-center font-bold text-[10px]">
                     {user?.name ? user.name.charAt(0).toUpperCase() : 'U'}
                   </div>
-                  <span className="hidden sm:inline font-semibold text-[#0F172A] max-w-[100px] truncate">
+                  <span className="hidden sm:inline font-semibold text-[#0F172A] dark:text-white max-w-[100px] truncate">
                     {user?.name || user?.username}
                   </span>
                 </Link>
@@ -182,10 +196,20 @@ export default function AppShell() {
               </div>
             )}
 
+            {/* Mobile Theme Toggle Button */}
+            <button
+              type="button"
+              onClick={toggleTheme}
+              className="md:hidden p-1.5 rounded-full bg-white/90 dark:bg-slate-800/90 border border-slate-200/80 dark:border-slate-700 text-slate-600 dark:text-slate-200 shadow-sm"
+              title={isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+            >
+              {isDark ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4" />}
+            </button>
+
             {/* Mobile Menu Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-1.5 rounded-full bg-white/90 border border-slate-200 text-slate-600 hover:text-slate-900"
+              className="md:hidden p-1.5 rounded-full bg-white/90 dark:bg-slate-800/90 border border-slate-200/80 dark:border-slate-700 text-slate-600 dark:text-slate-200"
               aria-label="Toggle Menu"
             >
               {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
@@ -227,25 +251,25 @@ export default function AppShell() {
       </main>
 
       {/* Minimalist Once UI Footer */}
-      <footer className="w-full border-t border-slate-200/70 bg-white/50 backdrop-blur-sm mt-auto py-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#64748B]">
+      <footer className="w-full border-t border-slate-200/70 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm mt-auto py-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#64748B] dark:text-slate-400">
           <div className="flex items-center gap-2">
-            <div className="w-5 h-5 rounded-md bg-[#0F172A] text-white flex items-center justify-center font-bold text-[10px]">
+            <div className="w-5 h-5 rounded-md bg-[#0F172A] dark:bg-slate-700 text-white flex items-center justify-center font-bold text-[10px]">
               S
             </div>
-            <span className="font-semibold text-[#0F172A]">Skyline Student Association</span>
+            <span className="font-semibold text-[#0F172A] dark:text-white">Skyline Student Association</span>
             <span>•</span>
             <span>Est. 2024</span>
           </div>
 
           <div className="flex items-center gap-4 font-medium">
-            <Link to="/events" className="hover:text-[#0F172A]">Events</Link>
-            <Link to="/store" className="hover:text-[#0F172A]">Merch</Link>
-            <Link to="/members" className="hover:text-[#0F172A]">Join Us</Link>
-            <Link to="/announcements" className="hover:text-[#0F172A]">News</Link>
+            <Link to="/events" className="hover:text-[#0F172A] dark:hover:text-white">Events</Link>
+            <Link to="/store" className="hover:text-[#0F172A] dark:hover:text-white">Merch</Link>
+            <Link to="/members" className="hover:text-[#0F172A] dark:hover:text-white">Join Us</Link>
+            <Link to="/announcements" className="hover:text-[#0F172A] dark:hover:text-white">News</Link>
           </div>
 
-          <p className="text-[11px] text-slate-400">
+          <p className="text-[11px] text-slate-400 dark:text-slate-500">
             Powered by Once UI Design System
           </p>
         </div>

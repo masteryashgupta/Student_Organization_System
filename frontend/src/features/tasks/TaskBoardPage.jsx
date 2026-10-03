@@ -310,8 +310,8 @@ export default function TaskBoardPage() {
 
   return (
     <div className="max-w-7xl mx-auto pb-24 space-y-8 animate-fadeIn">
-      {/* Top Header - High contrast dark text on light canvas */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200/80 pb-6">
+      {/* Top Header */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200/80 dark:border-slate-800 pb-6">
         <div>
           <div className="flex items-center gap-2 mb-2">
             <div className="dual-badge-pill">
@@ -324,10 +324,10 @@ export default function TaskBoardPage() {
               </span>
             </div>
           </div>
-          <h1 className="text-2xl sm:text-4xl font-extrabold text-[#0F172A] tracking-[-0.03em]">
-            Fundraiser Tasks & Volunteer Board
+          <h1 className="text-2xl sm:text-4xl font-extrabold text-[#0F172A] dark:text-white tracking-[-0.03em]">
+            Fundraiser Tasks &amp; Volunteer Board
           </h1>
-          <p className="text-sm text-[#475569] mt-1">
+          <p className="text-sm text-[#475569] dark:text-slate-400 mt-1">
             Coordinate who&apos;s baking, buying supplies, or running event tables with real-time financial tracking.
           </p>
         </div>
@@ -338,7 +338,7 @@ export default function TaskBoardPage() {
             type="button"
             onClick={() => refetchTasks()}
             disabled={isTasksFetching}
-            className="w-9 h-9 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-500 hover:text-[#0F172A] hover:border-slate-300 shadow-sm transition-all"
+            className="w-9 h-9 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-500 dark:text-slate-300 hover:text-[#0F172A] dark:hover:text-white hover:border-slate-300 dark:hover:border-slate-600 shadow-sm transition-all"
             title="Force Refresh Board"
           >
             <RefreshCw className={`w-4 h-4 ${isTasksFetching ? 'animate-spin text-sky-500' : ''}`} />
@@ -367,59 +367,59 @@ export default function TaskBoardPage() {
       </div>
 
       {/* --- EXECUTIVE "AT A GLANCE" PROGRESS BANNER --- */}
-      <div className="showcase-dark-frame p-6 sm:p-8 text-white relative overflow-hidden">
+      <div className="showcase-dark-frame p-6 sm:p-8 relative overflow-hidden">
         <div className="absolute top-0 right-0 -mr-16 -mt-16 w-72 h-72 bg-sky-500/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8 relative z-10">
           {/* Left: Project Selector & Mission Description */}
           <div className="space-y-3 max-w-xl">
             <div className="flex items-center gap-2.5 flex-wrap">
-              <span className="text-xs font-bold uppercase tracking-wider text-slate-400">
+              <span className="text-xs font-bold uppercase tracking-wider text-sky-700 dark:text-slate-400">
                 Fundraiser Scope:
               </span>
               <select
                 value={selectedProjectId}
                 onChange={(e) => setSelectedProjectId(e.target.value)}
-                className="bg-white/10 border border-white/15 text-white font-semibold text-xs rounded-xl px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-sky-400 transition-colors shadow-inner"
+                className="bg-sky-50 dark:bg-white/10 border border-sky-200 dark:border-white/15 text-sky-900 dark:text-white font-semibold text-xs rounded-xl px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-sky-400 transition-colors shadow-inner"
               >
-                <option value="all" className="bg-[#090D16] text-white">🌟 All Projects & Fundraisers</option>
+                <option value="all">🌟 All Projects &amp; Fundraisers</option>
                 {projects.map((p) => (
-                  <option key={p.id} value={p.id} className="bg-[#090D16] text-white">
+                  <option key={p.id} value={p.id}>
                     {p.name} {Number(p.goal_amount) > 0 ? `(Target: $${Number(p.goal_amount).toFixed(0)})` : ''}
                   </option>
                 ))}
               </select>
 
-              {/* Status "On Track" / "Goal Reached" Badge */}
+              {/* Status Badge */}
               {metrics.isFunded ? (
-                <span className="inline-flex items-center gap-1 text-[11px] font-bold px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                <span className="inline-flex items-center gap-1 text-[11px] font-bold px-2.5 py-1 rounded-full bg-emerald-100 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-500/30">
                   <Award className="w-3.5 h-3.5" /> Goal Reached ($)
                 </span>
               ) : metrics.isOnTrack ? (
-                <span className="inline-flex items-center gap-1 text-[11px] font-bold px-2.5 py-1 rounded-full bg-sky-500/20 text-sky-300 border border-sky-400/30">
+                <span className="inline-flex items-center gap-1 text-[11px] font-bold px-2.5 py-1 rounded-full bg-sky-100 dark:bg-sky-500/20 text-sky-700 dark:text-sky-300 border border-sky-300 dark:border-sky-400/30">
                   <TrendingUp className="w-3.5 h-3.5" /> On Track
                 </span>
               ) : (
-                <span className="inline-flex items-center gap-1 text-[11px] font-bold px-2.5 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                <span className="inline-flex items-center gap-1 text-[11px] font-bold px-2.5 py-1 rounded-full bg-amber-100 dark:bg-amber-500/20 text-amber-700 dark:text-amber-300 border border-amber-300 dark:border-amber-500/30">
                   <AlertCircle className="w-3.5 h-3.5" /> Needs Attention
                 </span>
               )}
             </div>
 
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-sky-900 dark:text-white tracking-tight">
               {activeProject ? activeProject.name : 'All Skyline Club Action Items'}
             </h2>
-            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+            <p className="text-xs sm:text-sm text-sky-700 dark:text-slate-300 leading-relaxed">
               {activeProject?.description ||
                 'Coordinating bake sales, charity drives, volunteer shifts, and supplies checklists across all active fundraisers.'}
             </p>
 
             {/* Treasury Ledger Verification Stamp */}
-            <div className="flex items-center gap-1.5 text-[11px] text-slate-400 pt-1">
-              <Zap className="w-3.5 h-3.5 text-sky-400" />
+            <div className="flex items-center gap-1.5 text-[11px] text-sky-600 dark:text-slate-400 pt-1">
+              <Zap className="w-3.5 h-3.5 text-sky-500" />
               <span>
                 Raised total queried live from central financial ledger (
-                <code className="text-sky-300 font-mono">core.Transaction</code>
+                <code className="text-sky-600 dark:text-sky-300 font-mono">core.Transaction</code>
                 ).
               </span>
             </div>
@@ -428,21 +428,21 @@ export default function TaskBoardPage() {
           {/* Right: Dual Progress Gauges (Financial Goal + Task Execution) */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4 min-w-[280px] sm:min-w-[340px] flex-shrink-0">
             {/* 1. FINANCIAL PROGRESS (Raised vs Goal) */}
-            <div className="bg-white/[0.04] border border-white/10 rounded-2xl p-4 space-y-2.5 shadow-md">
+            <div className="bg-white/60 dark:bg-white/[0.04] border border-sky-200 dark:border-white/10 rounded-2xl p-4 space-y-2.5 shadow-md">
               <div className="flex items-center justify-between text-xs">
-                <span className="text-slate-300 font-bold flex items-center gap-1.5">
-                  <DollarSign className="w-4 h-4 text-emerald-400" /> Funds Raised So Far
+                <span className="text-sky-800 dark:text-slate-300 font-bold flex items-center gap-1.5">
+                  <DollarSign className="w-4 h-4 text-emerald-500" /> Funds Raised So Far
                 </span>
-                <span className="font-mono font-black text-emerald-400 text-sm">
+                <span className="font-mono font-black text-emerald-600 dark:text-emerald-400 text-sm">
                   ${metrics.raised.toFixed(2)}
-                  <span className="text-slate-400 text-xs font-normal">
+                  <span className="text-sky-600 dark:text-slate-400 text-xs font-normal">
                     {' '}/ ${metrics.goal.toFixed(2)}
                   </span>
                 </span>
               </div>
 
               {/* Financial Progress Bar */}
-              <div className="w-full h-2.5 bg-white/10 rounded-full overflow-hidden p-0.5 border border-white/10">
+              <div className="w-full h-2.5 bg-sky-100 dark:bg-white/10 rounded-full overflow-hidden p-0.5 border border-sky-200 dark:border-white/10">
                 <div
                   className={`h-full rounded-full transition-all duration-700 shadow-sm ${
                     metrics.isFunded
@@ -453,9 +453,9 @@ export default function TaskBoardPage() {
                 />
               </div>
 
-              <div className="flex justify-between items-center text-[11px] text-slate-400">
+              <div className="flex justify-between items-center text-[11px] text-sky-600 dark:text-slate-400">
                 <span>{metrics.financialPct}% of fundraising target</span>
-                <span className="text-emerald-400 font-semibold">
+                <span className="text-emerald-600 dark:text-emerald-400 font-semibold">
                   {metrics.goal > metrics.raised
                     ? `$${(metrics.goal - metrics.raised).toFixed(2)} remaining`
                     : 'Target Met! 🎉'}
@@ -464,19 +464,19 @@ export default function TaskBoardPage() {
             </div>
 
             {/* 2. TASK EXECUTION PROGRESS (Done vs Total) */}
-            <div className="bg-white/[0.04] border border-white/10 rounded-2xl p-4 space-y-2.5 shadow-md">
+            <div className="bg-white/60 dark:bg-white/[0.04] border border-sky-200 dark:border-white/10 rounded-2xl p-4 space-y-2.5 shadow-md">
               <div className="flex items-center justify-between text-xs">
-                <span className="text-slate-300 font-bold flex items-center gap-1.5">
-                  <CheckCircle2 className="w-4 h-4 text-sky-400" /> Action Items Done
+                <span className="text-sky-800 dark:text-slate-300 font-bold flex items-center gap-1.5">
+                  <CheckCircle2 className="w-4 h-4 text-sky-500" /> Action Items Done
                 </span>
-                <span className="font-mono font-black text-sky-300 text-sm">
+                <span className="font-mono font-black text-sky-700 dark:text-sky-300 text-sm">
                   {metrics.completedTasks} / {metrics.totalTasks}
-                  <span className="text-slate-400 text-xs font-normal"> tasks</span>
+                  <span className="text-sky-500 dark:text-slate-400 text-xs font-normal"> tasks</span>
                 </span>
               </div>
 
               {/* Task Progress Bar */}
-              <div className="w-full h-2.5 bg-white/10 rounded-full overflow-hidden p-0.5 border border-white/10">
+              <div className="w-full h-2.5 bg-sky-100 dark:bg-white/10 rounded-full overflow-hidden p-0.5 border border-sky-200 dark:border-white/10">
                 <div
                   className="h-full bg-gradient-to-r from-sky-500 to-indigo-400 rounded-full transition-all duration-700 shadow-sm"
                   style={{ width: `${Math.max(0, Math.min(100, metrics.taskPct))}%` }}
@@ -485,17 +485,17 @@ export default function TaskBoardPage() {
 
               {/* Mini Column Counters */}
               <div className="grid grid-cols-3 gap-2 pt-0.5 text-center">
-                <div className="bg-white/[0.04] p-1.5 rounded-xl border border-white/10">
-                  <span className="text-[10px] text-slate-400 block font-medium">To Do</span>
-                  <span className="text-xs font-bold text-white font-mono">{todoTasks.length}</span>
+                <div className="bg-sky-50 dark:bg-white/[0.04] p-1.5 rounded-xl border border-sky-200 dark:border-white/10">
+                  <span className="text-[10px] text-sky-600 dark:text-slate-400 block font-medium">To Do</span>
+                  <span className="text-xs font-bold text-sky-900 dark:text-white font-mono">{todoTasks.length}</span>
                 </div>
-                <div className="bg-white/[0.04] p-1.5 rounded-xl border border-white/10">
-                  <span className="text-[10px] text-amber-400 block font-medium">Doing</span>
-                  <span className="text-xs font-bold text-amber-300 font-mono">{doingTasks.length}</span>
+                <div className="bg-sky-50 dark:bg-white/[0.04] p-1.5 rounded-xl border border-sky-200 dark:border-white/10">
+                  <span className="text-[10px] text-amber-600 dark:text-amber-400 block font-medium">Doing</span>
+                  <span className="text-xs font-bold text-amber-700 dark:text-amber-300 font-mono">{doingTasks.length}</span>
                 </div>
-                <div className="bg-white/[0.04] p-1.5 rounded-xl border border-white/10">
-                  <span className="text-[10px] text-emerald-400 block font-medium">Done</span>
-                  <span className="text-xs font-bold text-emerald-300 font-mono">{doneTasks.length}</span>
+                <div className="bg-sky-50 dark:bg-white/[0.04] p-1.5 rounded-xl border border-sky-200 dark:border-white/10">
+                  <span className="text-[10px] text-emerald-600 dark:text-emerald-400 block font-medium">Done</span>
+                  <span className="text-xs font-bold text-emerald-700 dark:text-emerald-300 font-mono">{doneTasks.length}</span>
                 </div>
               </div>
             </div>
@@ -503,8 +503,8 @@ export default function TaskBoardPage() {
         </div>
       </div>
 
-      {/* Filter and Search Bar - Clean Light Once UI Card */}
-      <div className="bg-white border border-slate-200/80 p-4 rounded-2xl shadow-once-card flex flex-col md:flex-row md:items-center justify-between gap-4">
+      {/* Filter and Search Bar */}
+      <div className="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 p-4 rounded-2xl shadow-once-card flex flex-col md:flex-row md:items-center justify-between gap-4">
         {/* Left: Search Input */}
         <div className="relative w-full md:w-80">
           <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
@@ -513,7 +513,7 @@ export default function TaskBoardPage() {
             placeholder="Search tasks, volunteers, or keywords..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl text-[#0F172A] placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:bg-white transition-all"
+            className="w-full pl-10 pr-4 py-2 text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-[#0F172A] dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:bg-white dark:focus:bg-slate-700 transition-all"
           />
         </div>
 
@@ -523,7 +523,7 @@ export default function TaskBoardPage() {
           <select
             value={priorityFilter}
             onChange={(e) => setPriorityFilter(e.target.value)}
-            className="bg-slate-50 border border-slate-200 text-[#0F172A] text-xs font-medium rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sky-500"
+            className="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-[#0F172A] dark:text-white text-xs font-medium rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sky-500"
           >
             <option value="all">All Priorities</option>
             <option value="urgent">🚨 Urgent</option>
@@ -538,8 +538,8 @@ export default function TaskBoardPage() {
               onClick={() => setOnlyMyTasks(!onlyMyTasks)}
               className={`px-3.5 py-2 rounded-xl text-xs font-semibold transition-all flex items-center gap-1.5 ${
                 onlyMyTasks
-                  ? 'bg-[#0F172A] text-white shadow-sm'
-                  : 'bg-slate-50 text-slate-600 hover:text-[#0F172A] border border-slate-200'
+                  ? 'bg-[#0F172A] dark:bg-sky-600 text-white shadow-sm'
+                  : 'bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:text-[#0F172A] dark:hover:text-white border border-slate-200 dark:border-slate-700'
               }`}
             >
               <UserCheck className="w-3.5 h-3.5" />
@@ -549,22 +549,22 @@ export default function TaskBoardPage() {
         </div>
       </div>
 
-      {/* --- KANBAN BOARD COLUMNS (TODO / DOING / DONE) - Clean Elevated Light Surfaces --- */}
+      {/* --- KANBAN BOARD COLUMNS --- */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* 1. TO DO COLUMN */}
-        <div className="bg-slate-50/80 border border-slate-200/80 rounded-3xl p-4 sm:p-5 flex flex-col min-h-[520px] shadow-sm">
+        <div className="bg-slate-50/80 dark:bg-slate-900/80 border border-slate-200/80 dark:border-slate-800 rounded-3xl p-4 sm:p-5 flex flex-col min-h-[520px] shadow-sm">
           {/* Column Header */}
-          <div className="flex items-center justify-between pb-3.5 mb-3 border-b border-slate-200">
+          <div className="flex items-center justify-between pb-3.5 mb-3 border-b border-slate-200 dark:border-slate-800">
             <div className="flex items-center gap-2">
               <span className="w-2.5 h-2.5 rounded-full bg-slate-400" />
-              <h3 className="text-xs font-bold text-[#0F172A] uppercase tracking-wider">To Do</h3>
-              <span className="text-[11px] font-bold bg-white text-slate-600 border border-slate-200 px-2 py-0.5 rounded-full font-mono">
+              <h3 className="text-xs font-bold text-[#0F172A] dark:text-white uppercase tracking-wider">To Do</h3>
+              <span className="text-[11px] font-bold bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 px-2 py-0.5 rounded-full font-mono">
                 {todoTasks.length}
               </span>
             </div>
             <button
               onClick={() => handleOpenNewTask('todo')}
-              className="p-1 text-slate-500 hover:text-[#0F172A] hover:bg-white rounded-lg transition-colors border border-transparent hover:border-slate-200"
+              className="p-1 text-slate-500 dark:text-slate-400 hover:text-[#0F172A] dark:hover:text-white hover:bg-white dark:hover:bg-slate-800 rounded-lg transition-colors border border-transparent hover:border-slate-200 dark:hover:border-slate-700"
               title="Add task to To Do"
             >
               <Plus className="w-4 h-4" />
@@ -576,7 +576,7 @@ export default function TaskBoardPage() {
             {isTasksLoading ? (
               <div className="p-8 text-center animate-pulse text-xs text-slate-400">Loading tasks...</div>
             ) : todoTasks.length === 0 ? (
-              <div className="py-12 text-center text-xs text-slate-400 border border-dashed border-slate-200 rounded-2xl bg-white/40">
+              <div className="py-12 text-center text-xs text-slate-400 border border-dashed border-slate-200 dark:border-slate-700 rounded-2xl bg-white/40 dark:bg-slate-800/20">
                 No tasks to do.
               </div>
             ) : (
@@ -598,19 +598,19 @@ export default function TaskBoardPage() {
         </div>
 
         {/* 2. DOING / IN PROGRESS COLUMN */}
-        <div className="bg-slate-50/80 border border-slate-200/80 rounded-3xl p-4 sm:p-5 flex flex-col min-h-[520px] shadow-sm">
+        <div className="bg-slate-50/80 dark:bg-slate-900/80 border border-slate-200/80 dark:border-slate-800 rounded-3xl p-4 sm:p-5 flex flex-col min-h-[520px] shadow-sm">
           {/* Column Header */}
-          <div className="flex items-center justify-between pb-3.5 mb-3 border-b border-amber-200">
+          <div className="flex items-center justify-between pb-3.5 mb-3 border-b border-amber-200 dark:border-amber-900/50">
             <div className="flex items-center gap-2">
               <span className="w-2.5 h-2.5 rounded-full bg-amber-500 animate-pulse" />
-              <h3 className="text-xs font-bold text-[#0F172A] uppercase tracking-wider">In Progress</h3>
-              <span className="text-[11px] font-bold bg-amber-50 text-amber-800 border border-amber-200 px-2 py-0.5 rounded-full font-mono">
+              <h3 className="text-xs font-bold text-[#0F172A] dark:text-white uppercase tracking-wider">In Progress</h3>
+              <span className="text-[11px] font-bold bg-amber-50 dark:bg-amber-900/40 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-800 px-2 py-0.5 rounded-full font-mono">
                 {doingTasks.length}
               </span>
             </div>
             <button
               onClick={() => handleOpenNewTask('doing')}
-              className="p-1 text-slate-500 hover:text-[#0F172A] hover:bg-white rounded-lg transition-colors border border-transparent hover:border-slate-200"
+              className="p-1 text-slate-500 dark:text-slate-400 hover:text-[#0F172A] dark:hover:text-white hover:bg-white dark:hover:bg-slate-800 rounded-lg transition-colors border border-transparent hover:border-slate-200 dark:hover:border-slate-700"
               title="Add task to In Progress"
             >
               <Plus className="w-4 h-4" />
@@ -622,7 +622,7 @@ export default function TaskBoardPage() {
             {isTasksLoading ? (
               <div className="p-8 text-center animate-pulse text-xs text-slate-400">Loading tasks...</div>
             ) : doingTasks.length === 0 ? (
-              <div className="py-12 text-center text-xs text-slate-400 border border-dashed border-slate-200 rounded-2xl bg-white/40">
+              <div className="py-12 text-center text-xs text-slate-400 border border-dashed border-slate-200 dark:border-slate-700 rounded-2xl bg-white/40 dark:bg-slate-800/20">
                 No tasks in progress.
               </div>
             ) : (
@@ -644,19 +644,19 @@ export default function TaskBoardPage() {
         </div>
 
         {/* 3. DONE / COMPLETED COLUMN */}
-        <div className="bg-slate-50/80 border border-slate-200/80 rounded-3xl p-4 sm:p-5 flex flex-col min-h-[520px] shadow-sm">
+        <div className="bg-slate-50/80 dark:bg-slate-900/80 border border-slate-200/80 dark:border-slate-800 rounded-3xl p-4 sm:p-5 flex flex-col min-h-[520px] shadow-sm">
           {/* Column Header */}
-          <div className="flex items-center justify-between pb-3.5 mb-3 border-b border-emerald-200">
+          <div className="flex items-center justify-between pb-3.5 mb-3 border-b border-emerald-200 dark:border-emerald-900/50">
             <div className="flex items-center gap-2">
               <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-              <h3 className="text-xs font-bold text-[#0F172A] uppercase tracking-wider">Done</h3>
-              <span className="text-[11px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200 px-2 py-0.5 rounded-full font-mono">
+              <h3 className="text-xs font-bold text-[#0F172A] dark:text-white uppercase tracking-wider">Done</h3>
+              <span className="text-[11px] font-bold bg-emerald-50 dark:bg-emerald-900/40 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 px-2 py-0.5 rounded-full font-mono">
                 {doneTasks.length}
               </span>
             </div>
             <button
               onClick={() => handleOpenNewTask('done')}
-              className="p-1 text-slate-500 hover:text-[#0F172A] hover:bg-white rounded-lg transition-colors border border-transparent hover:border-slate-200"
+              className="p-1 text-slate-500 dark:text-slate-400 hover:text-[#0F172A] dark:hover:text-white hover:bg-white dark:hover:bg-slate-800 rounded-lg transition-colors border border-transparent hover:border-slate-200 dark:hover:border-slate-700"
               title="Add task to Done"
             >
               <Plus className="w-4 h-4" />
@@ -668,7 +668,7 @@ export default function TaskBoardPage() {
             {isTasksLoading ? (
               <div className="p-8 text-center animate-pulse text-xs text-slate-400">Loading tasks...</div>
             ) : doneTasks.length === 0 ? (
-              <div className="py-12 text-center text-xs text-slate-400 border border-dashed border-slate-200 rounded-2xl bg-white/40">
+              <div className="py-12 text-center text-xs text-slate-400 border border-dashed border-slate-200 dark:border-slate-700 rounded-2xl bg-white/40 dark:bg-slate-800/20">
                 No tasks completed yet.
               </div>
             ) : (

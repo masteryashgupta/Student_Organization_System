@@ -14,13 +14,13 @@ export function Button({
   const baseStyles = 'inline-flex items-center justify-center font-medium transition-all duration-150 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 disabled:opacity-50 disabled:cursor-not-allowed';
 
   const variants = {
-    primary: 'bg-[#0F172A] hover:bg-slate-800 text-white shadow-sm hover:shadow active:scale-[0.99] border border-slate-900',
-    secondary: 'bg-white hover:bg-slate-50 text-[#0F172A] border border-slate-200 shadow-sm hover:border-slate-300',
-    outline: 'bg-white hover:bg-slate-50 text-[#0F172A] border border-slate-200 hover:border-slate-300 shadow-sm',
+    primary: 'bg-[#0F172A] dark:bg-slate-800 hover:bg-slate-800 dark:hover:bg-slate-700 text-white shadow-sm hover:shadow active:scale-[0.99] border border-slate-900 dark:border-slate-700',
+    secondary: 'bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-[#0F172A] dark:text-slate-100 border border-slate-200 dark:border-slate-700 shadow-sm hover:border-slate-300 dark:hover:border-slate-600',
+    outline: 'bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-[#0F172A] dark:text-slate-100 border border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 shadow-sm',
     accent: 'bg-[#0EA5E9] hover:bg-[#0284C7] text-white shadow-sm',
-    brand: 'bg-[#0F172A] hover:bg-slate-800 text-white shadow-sm',
+    brand: 'bg-[#0F172A] dark:bg-purple-700 hover:bg-slate-800 dark:hover:bg-purple-600 text-white shadow-sm',
     danger: 'bg-rose-600 hover:bg-rose-700 text-white shadow-sm',
-    ghost: 'bg-transparent hover:bg-slate-100 text-[#64748B] hover:text-[#0F172A]',
+    ghost: 'bg-transparent hover:bg-slate-100 dark:hover:bg-slate-800 text-[#64748B] dark:text-slate-300 hover:text-[#0F172A] dark:hover:text-white',
   };
 
   const sizes = {

@@ -83,7 +83,7 @@ export default function EventsListPage() {
   return (
     <div className="space-y-8 max-w-7xl mx-auto pb-12">
       {/* Header Banner */}
-      <div className="relative overflow-hidden rounded-3xl bg-white p-8 sm:p-10 border border-border shadow-odoo-card">
+      <div className="relative overflow-hidden rounded-3xl bg-white dark:bg-slate-900 p-8 sm:p-10 border border-border dark:border-slate-800 shadow-odoo-card">
         <div className="absolute top-0 right-0 -mt-12 -mr-12 w-96 h-96 bg-brand-500/5 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute bottom-0 left-1/3 -mb-16 w-80 h-80 bg-accent-500/5 rounded-full blur-3xl pointer-events-none" />
 
@@ -154,16 +154,16 @@ export default function EventsListPage() {
       )}
 
       {/* Controls Bar: Filters & Search */}
-      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 bg-white p-4 rounded-2xl border border-border shadow-odoo-card">
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 bg-white dark:bg-slate-900 p-4 rounded-2xl border border-border dark:border-slate-800 shadow-odoo-card">
         {/* Search */}
         <div className="relative flex-1 max-w-md">
-          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-ink-subtle pointer-events-none" />
+          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-ink-subtle dark:text-slate-400 pointer-events-none" />
           <input
             type="text"
             placeholder="Search by event title or venue..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 bg-canvas border border-border rounded-xl text-sm text-ink placeholder-ink-subtle focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-accent-500 transition-all"
+            className="w-full pl-10 pr-4 py-2 bg-canvas dark:bg-slate-800 border border-border dark:border-slate-700 rounded-xl text-sm text-ink dark:text-white placeholder-ink-subtle dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-accent-500 transition-all"
           />
         </div>
 
@@ -278,11 +278,11 @@ export default function EventsListPage() {
                   {/* Card Banner Image / Header Accent */}
                   <div className="relative h-28 bg-gradient-to-tr from-muted via-canvas to-brand-50 p-4 flex items-start justify-between border-b border-border">
                     {/* Date Badge */}
-                    <div className="flex flex-col items-center justify-center bg-white border border-border rounded-xl px-3 py-1 shadow-sm">
+                    <div className="flex flex-col items-center justify-center bg-white dark:bg-slate-800 border border-border dark:border-slate-700 rounded-xl px-3 py-1 shadow-sm">
                       <span className="text-[10px] font-black tracking-wider text-accent">
                         {dateInfo.month}
                       </span>
-                      <span className="text-lg font-extrabold text-ink leading-tight">
+                      <span className="text-lg font-extrabold text-ink dark:text-white leading-tight">
                         {dateInfo.day}
                       </span>
                     </div>

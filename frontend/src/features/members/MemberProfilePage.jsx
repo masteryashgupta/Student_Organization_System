@@ -51,7 +51,7 @@ export default function MemberProfilePage() {
         tier_id: parseInt(selectedTierId),
         payment_method: 'online_self_renewal',
       });
-      await refetchUser();
+      await refetchUser?.();
       await fetchProfile();
       setRenewModalOpen(false);
       addToast({

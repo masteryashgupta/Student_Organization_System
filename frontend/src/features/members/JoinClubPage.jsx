@@ -130,7 +130,7 @@ export default function JoinClubPage() {
           tier_id: parseInt(formData.tier_id),
           payment_method: 'mock_online',
         });
-        await refetchUser();
+        await refetchUser?.();
         addToast({
           title: 'Membership Activated!',
           description: res.data.message || 'You are now an active Skyline Club member.',
@@ -155,7 +155,7 @@ export default function JoinClubPage() {
         if (access) {
           localStorage.setItem('access_token', access);
           localStorage.setItem('refresh_token', refresh);
-          await refetchUser();
+          await refetchUser?.();
         }
 
         addToast({
