@@ -128,10 +128,11 @@ export default function EventCheckInPage() {
   const [manualToken, setManualToken] = useState('');
   const [scanResult, setScanResult] = useState(null); // { type: 'success'|'warning'|'error', title, message, ticket, timestamp }
   const [isProcessing, setIsProcessing] = useState(false);
-  const [autoResumeTimer, setAutoResumeTimer] = useState(null);
 
   const qrReaderRef = useRef(null);
   const html5QrCodeRef = useRef(null);
+  const lastScannedRef = useRef({ token: null, time: 0 });
+  const isProcessingRef = useRef(false);
 
   // Sync route param with state
   useEffect(() => {
@@ -181,6 +182,7 @@ export default function EventCheckInPage() {
       }
       html5QrCodeRef.current = null;
     }
+    isProcessingRef.current = false;
     setIsScannerActive(false);
   }, []);
 
@@ -237,25 +239,41 @@ export default function EventCheckInPage() {
     },
   });
 
-  // Handle scanned raw string
+  // Handle scanned raw string with debouncing and scanner pausing
   const handleDecodedToken = useCallback(
     (decodedText) => {
-      if (isProcessing) return;
+      const now = Date.now();
+      if (isProcessingRef.current) return;
 
       // Extract UUID token from raw text or URL
       let cleanToken = decodedText.trim();
-      // If QR encodes a URL like http://.../tickets/<uuid>/... or ?token=<uuid>
       const uuidRegex = /[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}/i;
       const match = cleanToken.match(uuidRegex);
       if (match) {
         cleanToken = match[0];
       }
 
+      // Ignore if identical token was already scanned within the last 6 seconds
+      if (lastScannedRef.current.token === cleanToken && now - lastScannedRef.current.time < 6000) {
+        return;
+      }
+
+      lastScannedRef.current = { token: cleanToken, time: now };
+      isProcessingRef.current = true;
       setIsProcessing(true);
-      // Pause scanner UI visually
+
+      // Pause the camera viewfinder so it freezes on the captured ticket
+      if (html5QrCodeRef.current && html5QrCodeRef.current.isScanning) {
+        try {
+          html5QrCodeRef.current.pause(true);
+        } catch (e) {
+          console.warn('Could not pause QR scanner:', e);
+        }
+      }
+
       checkInMutation.mutate(cleanToken);
     },
-    [isProcessing, checkInMutation]
+    [checkInMutation]
   );
 
   // Start Scanner
@@ -341,14 +359,31 @@ export default function EventCheckInPage() {
   // Clean up on unmount
   useEffect(() => {
     return () => {
-      if (html5QrCodeRef.current && html5QrCodeRef.current.isScanning) {
-        html5QrCodeRef.current.stop().catch(console.warn);
-      }
-      if (autoResumeTimer) {
-        clearTimeout(autoResumeTimer);
+      if (html5QrCodeRef.current) {
+        try {
+          if (html5QrCodeRef.current.isScanning) {
+            html5QrCodeRef.current.stop().catch(console.warn);
+          }
+          html5QrCodeRef.current.clear().catch(console.warn);
+        } catch (e) {}
       }
     };
-  }, [autoResumeTimer]);
+  }, []);
+
+  // Dismiss scan result and resume camera scanner
+  const handleNextScan = useCallback(() => {
+    setScanResult(null);
+    isProcessingRef.current = false;
+    setIsProcessing(false);
+
+    if (html5QrCodeRef.current) {
+      try {
+        html5QrCodeRef.current.resume();
+      } catch (e) {
+        console.warn('Could not resume QR scanner:', e);
+      }
+    }
+  }, []);
 
   // Manual Check-In Submit
   const handleManualSubmit = (e) => {
@@ -360,15 +395,10 @@ export default function EventCheckInPage() {
     const match = token.match(uuidRegex);
     if (match) token = match[0];
 
+    isProcessingRef.current = true;
     setIsProcessing(true);
     checkInMutation.mutate(token);
     setManualToken('');
-  };
-
-  // Dismiss scan result and resume
-  const handleNextScan = () => {
-    setScanResult(null);
-    setIsProcessing(false);
   };
 
   // Guard: Not an Officer
