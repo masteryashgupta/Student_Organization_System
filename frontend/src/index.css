@@ -267,3 +267,37 @@ button, a, input, select, textarea {
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* HTML5 QR Code Scanner Video Feed Styling */
+#qr-camera-stream {
+  width: 100% !important;
+  height: 100% !important;
+  position: relative !important;
+  background: #090D16 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  overflow: hidden !important;
+  border-radius: 1.5rem !important;
+}
+
+#qr-camera-stream video {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  border-radius: 1.5rem !important;
+  display: block !important;
+}
+
+#qr-camera-stream #qr-shaded-region {
+  border-color: rgba(9, 13, 22, 0.45) !important;
+  border-radius: 1rem !important;
+}
+
+#qr-camera-stream canvas {
+  display: none !important;
+}
+
+#qr-camera-stream img {
+  display: none !important;
+}
+

@@ -285,8 +285,12 @@ export default function EventCheckInPage() {
       html5QrCodeRef.current = qrCode;
 
       const config = {
-        fps: 15,
-        qrbox: { width: 260, height: 260 },
+        fps: 20,
+        qrbox: (viewfinderWidth, viewfinderHeight) => {
+          const minEdge = Math.min(viewfinderWidth, viewfinderHeight);
+          const qrboxSize = Math.max(200, Math.floor(minEdge * 0.75));
+          return { width: qrboxSize, height: qrboxSize };
+        },
         aspectRatio: 1.0,
       };
 
@@ -600,14 +604,12 @@ export default function EventCheckInPage() {
 
             <CardContent className="p-6 space-y-6">
               {/* QR Video Viewfinder Container */}
-              <div className="relative w-full aspect-square max-w-md mx-auto bg-slate-100/70 dark:bg-slate-900/70 backdrop-blur-md rounded-3xl overflow-hidden border-2 border-dashed border-border dark:border-slate-700 flex flex-col items-center justify-center shadow-inner">
+              <div className="relative w-full aspect-square max-w-md mx-auto bg-slate-950 rounded-3xl overflow-hidden border-2 border-dashed border-border dark:border-slate-700 flex flex-col items-center justify-center shadow-inner">
                 {/* HTML5 QR Container */}
                 <div
                   id="qr-camera-stream"
                   ref={qrReaderRef}
-                  className={`w-full h-full overflow-hidden flex items-center justify-center ${
-                    isScannerActive ? 'block' : 'hidden'
-                  }`}
+                  className={`w-full h-full ${!isScannerActive ? 'hidden' : ''}`}
                 />
 
                 {/* Inactive Camera State */}
