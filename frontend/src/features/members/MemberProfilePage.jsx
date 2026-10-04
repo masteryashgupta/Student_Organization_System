@@ -8,6 +8,7 @@ import { Button } from '../../components/ui/Button';
 import { Modal } from '../../components/ui/Modal';
 import { useToast } from '../../components/ui/Toast';
 import { ShieldCheck, Sparkles, Award, QrCode, RefreshCw, CheckCircle2, AlertTriangle, ArrowRight } from 'lucide-react';
+import { getRoleBadgeMeta } from '../../app/AppShell';
 
 export default function MemberProfilePage() {
   const { user, refetchUser } = useAuth();
@@ -18,6 +19,9 @@ export default function MemberProfilePage() {
   const [renewModalOpen, setRenewModalOpen] = useState(false);
   const [selectedTierId, setSelectedTierId] = useState('');
   const [renewing, setRenewing] = useState(false);
+
+  const roleMeta = getRoleBadgeMeta(user);
+  const RoleIcon = roleMeta.icon;
 
   useEffect(() => {
     fetchProfile();
@@ -100,11 +104,20 @@ export default function MemberProfilePage() {
               {(user?.name || user?.username || 'U').charAt(0).toUpperCase()}
             </div>
             <div>
-              <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-                {user?.name || user?.username}
-              </h1>
-              <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-                {user?.email} • Role: <span className="capitalize font-bold text-slate-800 dark:text-slate-200">{user?.role}</span>
+              <div className="flex items-center gap-3 flex-wrap">
+                <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+                  {user?.name || user?.username}
+                </h1>
+                <div
+                  className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold tracking-wide backdrop-blur-xl border ${roleMeta.badgeClass}`}
+                >
+                  <span className={`w-1.5 h-1.5 rounded-full ${roleMeta.dotClass} animate-pulse`}></span>
+                  <RoleIcon className="w-3.5 h-3.5" />
+                  <span>{roleMeta.label} ({roleMeta.sublabel})</span>
+                </div>
+              </div>
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+                {user?.email} • Active System Account
               </p>
             </div>
           </div>
