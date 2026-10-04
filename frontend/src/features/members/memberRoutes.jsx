@@ -1,20 +1,29 @@
 import React from 'react';
+import { Navigate } from 'react-router-dom';
 import JoinClubPage from './JoinClubPage';
 import MemberListPage from './MemberListPage';
 import MemberProfilePage from './MemberProfilePage';
 import VerifyMemberPage from './VerifyMemberPage';
+import ProtectedRoute from '../../components/auth/ProtectedRoute';
 import { useAuth } from '../../lib/AuthContext';
 import { registerFeature } from '../../app/routeRegistry';
 
 function MembersLanding() {
-  const { user, isOfficer, isAuthenticated } = useAuth();
+  const { isOfficer, isAuthenticated, loading } = useAuth();
+  if (loading) {
+    return (
+      <div className="min-h-[50vh] flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-brand-500/30 border-t-brand-600 rounded-full animate-spin" />
+      </div>
+    );
+  }
+  if (!isAuthenticated) {
+    return <Navigate to="/login?redirect=/members" replace />;
+  }
   if (isOfficer) {
     return <MemberListPage />;
   }
-  if (isAuthenticated) {
-    return <MemberProfilePage />;
-  }
-  return <JoinClubPage />;
+  return <MemberProfilePage />;
 }
 
 const memberRoutes = [
@@ -32,19 +41,35 @@ const memberRoutes = [
   },
   {
     path: '/members/me',
-    element: <MemberProfilePage />,
+    element: (
+      <ProtectedRoute>
+        <MemberProfilePage />
+      </ProtectedRoute>
+    ),
   },
   {
     path: '/members/profile',
-    element: <MemberProfilePage />,
+    element: (
+      <ProtectedRoute>
+        <MemberProfilePage />
+      </ProtectedRoute>
+    ),
   },
   {
     path: '/profile',
-    element: <MemberProfilePage />,
+    element: (
+      <ProtectedRoute>
+        <MemberProfilePage />
+      </ProtectedRoute>
+    ),
   },
   {
     path: '/members/verify',
-    element: <VerifyMemberPage />,
+    element: (
+      <ProtectedRoute volunteerOnly>
+        <VerifyMemberPage />
+      </ProtectedRoute>
+    ),
   },
 ];
 

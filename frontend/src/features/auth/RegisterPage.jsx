@@ -22,7 +22,7 @@ export default function RegisterPage() {
     phone: '',
     password: '',
     password_confirm: '',
-    role: 'public',
+    role: 'member',
   });
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -55,9 +55,17 @@ export default function RegisterPage() {
     e.preventDefault();
     if (!validate()) return;
     setLoading(true);
+
+    // Sanitize role so self-registration can never register as leader or admin
+    let safeRole = formData.role;
+    if (['leader', 'admin', 'superuser', 'staff'].includes(safeRole)) {
+      safeRole = 'member';
+    }
+
     try {
       await register({
         ...formData,
+        role: safeRole,
         username: formData.email,
       });
       toast.success('Account created successfully!');
@@ -216,17 +224,16 @@ export default function RegisterPage() {
 
               <div className="space-y-1 text-left">
                 <Select
-                  label="Initial Account Role"
+                  label="Account Type"
                   name="role"
                   value={formData.role}
                   onChange={handleChange}
                   options={[
-                    { value: 'public', label: 'Public Student / Guest' },
-                    { value: 'member', label: 'Student Member (Pending Dues)' },
-                    { value: 'volunteer', label: 'Volunteer' },
-                    { value: 'leader', label: 'Club Leader' },
+                    { value: 'member', label: 'Student Member (Club Member)' },
+                    { value: 'volunteer', label: 'Volunteer Contributor' },
+                    { value: 'public', label: 'Public Student / Campus Guest' },
                   ]}
-                  helperText="You can activate full membership benefits after completing dues payment."
+                  helperText="Leadership & Officer roles are appointed and assigned by Club Administrators."
                 />
               </div>
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import { registerFeature } from '../../app/routeRegistry';
+import ProtectedRoute from '../../components/auth/ProtectedRoute';
 import AnnouncementsFeedPage from './AnnouncementsFeedPage';
 import ComposeAnnouncementPage from './ComposeAnnouncementPage';
 import AnnouncementsArchivePage from './AnnouncementsArchivePage';
@@ -12,7 +13,14 @@ registerFeature({
   ],
   routes: [
     { path: '/announcements', element: <AnnouncementsFeedPage /> },
-    { path: '/announcements/compose', element: <ComposeAnnouncementPage /> },
+    {
+      path: '/announcements/compose',
+      element: (
+        <ProtectedRoute officerOnly>
+          <ComposeAnnouncementPage />
+        </ProtectedRoute>
+      ),
+    },
     { path: '/announcements/archive', element: <AnnouncementsArchivePage /> },
   ],
 });

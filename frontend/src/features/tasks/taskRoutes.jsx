@@ -1,11 +1,16 @@
 import React from 'react';
 import { registerFeature } from '../../app/routeRegistry';
+import ProtectedRoute from '../../components/auth/ProtectedRoute';
 import TaskBoardPage from './TaskBoardPage';
 
 const taskRoutes = [
   {
     path: '/tasks',
-    element: <TaskBoardPage />,
+    element: (
+      <ProtectedRoute>
+        <TaskBoardPage />
+      </ProtectedRoute>
+    ),
   },
 ];
 

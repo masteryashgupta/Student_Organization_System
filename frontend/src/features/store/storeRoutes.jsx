@@ -1,6 +1,7 @@
 import React from 'react';
 import { registerFeature } from '../../app/routeRegistry';
 import { CartProvider } from './CartContext';
+import ProtectedRoute from '../../components/auth/ProtectedRoute';
 import ProductCatalogPage from './ProductCatalogPage';
 import ProductDetailPage from './ProductDetailPage';
 import CartPage from './CartPage';
@@ -34,23 +35,43 @@ const storeRoutes = [
   },
   {
     path: '/store/checkout',
-    element: <StoreWrapper Component={CheckoutPage} />,
+    element: (
+      <ProtectedRoute>
+        <StoreWrapper Component={CheckoutPage} />
+      </ProtectedRoute>
+    ),
   },
   {
     path: '/store/orders/:id/confirmation',
-    element: <StoreWrapper Component={OrderConfirmationPage} />,
+    element: (
+      <ProtectedRoute>
+        <StoreWrapper Component={OrderConfirmationPage} />
+      </ProtectedRoute>
+    ),
   },
   {
     path: '/store/orders',
-    element: <StoreWrapper Component={MyOrdersPage} />,
+    element: (
+      <ProtectedRoute>
+        <StoreWrapper Component={MyOrdersPage} />
+      </ProtectedRoute>
+    ),
   },
   {
     path: '/store/manage/orders',
-    element: <StoreWrapper Component={OfficerOrdersPage} />,
+    element: (
+      <ProtectedRoute officerOnly>
+        <StoreWrapper Component={OfficerOrdersPage} />
+      </ProtectedRoute>
+    ),
   },
   {
     path: '/store/manage/inventory',
-    element: <StoreWrapper Component={OfficerInventoryPage} />,
+    element: (
+      <ProtectedRoute officerOnly>
+        <StoreWrapper Component={OfficerInventoryPage} />
+      </ProtectedRoute>
+    ),
   },
 ];
 

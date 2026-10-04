@@ -4,6 +4,7 @@ import EventDetailPage from './EventDetailPage';
 import EventCheckInPage from './EventCheckInPage';
 import EventFormPage from './EventFormPage';
 import EventStatsPage from './EventStatsPage';
+import ProtectedRoute from '../../components/auth/ProtectedRoute';
 import { registerFeature } from '../../app/routeRegistry';
 
 const eventsRoutes = [
@@ -13,27 +14,51 @@ const eventsRoutes = [
   },
   {
     path: '/events/new',
-    element: <EventFormPage />,
+    element: (
+      <ProtectedRoute officerOnly>
+        <EventFormPage />
+      </ProtectedRoute>
+    ),
   },
   {
     path: '/events/:id/edit',
-    element: <EventFormPage />,
+    element: (
+      <ProtectedRoute officerOnly>
+        <EventFormPage />
+      </ProtectedRoute>
+    ),
   },
   {
     path: '/events/checkin',
-    element: <EventCheckInPage />,
+    element: (
+      <ProtectedRoute volunteerOnly>
+        <EventCheckInPage />
+      </ProtectedRoute>
+    ),
   },
   {
     path: '/events/:id/checkin',
-    element: <EventCheckInPage />,
+    element: (
+      <ProtectedRoute volunteerOnly>
+        <EventCheckInPage />
+      </ProtectedRoute>
+    ),
   },
   {
     path: '/events/stats',
-    element: <EventStatsPage />,
+    element: (
+      <ProtectedRoute officerOnly>
+        <EventStatsPage />
+      </ProtectedRoute>
+    ),
   },
   {
     path: '/events/:id/stats',
-    element: <EventStatsPage />,
+    element: (
+      <ProtectedRoute officerOnly>
+        <EventStatsPage />
+      </ProtectedRoute>
+    ),
   },
   {
     path: '/events/:id',
